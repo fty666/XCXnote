@@ -1,0 +1,95 @@
+1，请求方法：
+	async goodCart() { 													 //固定格式async  await 同步获取
+      const json = await api.goodCart({									 //api.goodCart,接口路径		
+		//传递的参数
+        query: {
+          userId: 340,
+          page: 1,
+          pageSize: 10
+        }
+      });
+      if (json.data.state == 1) {
+        let datas = json.data.data;
+        for (let k = 0; k < datas.length; k++) {
+          datas[k].selected = false;
+          datas[k].Cnum = 1;
+        }
+        console.log(datas);
+        this.goodCart = datas;
+        this.$apply();
+      } else {
+      }
+    }
+
+2，获取globalData参数（this.$parent.globalData）
+	this.px2rpxHeight = this.$parent.globalData.px2rpxHeight;
+3，页面data调用定义的数据，在页面直接调用就行{{data}}
+4，components   页面组件列表
+5, 引入组件   
+	  例：js中： import Child from '../components/child';
+				 components={child:Child}
+		  页面: <child></child>
+6,组件循环  <repeat for=""></repeat>
+	<repeat for="{{}}"><child :item="item"></child></repeat>
+7,计算属性：computed  ，页面代码中直接用this.计算属性名引用（定义的名） 模板中直接使用{{计算属性名}}
+  页面插值  aPlus     ，脚本中通过this.aPlus来引用模板中{{aPlus}}插值
+	computed ={
+		aPlus(){return this.a+1}
+	}
+8,监听事件  watcher 监听页面数据事件，监听名与被监听的data一致
+	watch={
+		num(newValue,oldValue){console.log(${oldValue}->${newValue})}
+	}
+	onLoad(){this.num++;this.$apply()[同步该败上面的数据]}
+9,props传值   父子组件之间传值的一种机制，包括静态和动态，父组件中获取:直接获取静态传值 => :data;  父向子单向动态传值:=> :data.sync="";
+	父子组件中数据的绑定可以通过.sync修饰符进行绑定，也可通过在子组件props的方法中添加twoWay:true,实现；俩种方法如果一起则执行双向绑定
+	父向子传值：
+			父组件：<child :title="parentTitle" :syncTitle.sync="parentTitle" :twoWayTitle="parentTitle"></child>
+					data = {parentTitle: 'p-title'};
+			子组件：props = {// 静态获取  title: String,
+							// 父向子单向动态传值
+							syncTitle: {
+								type: String,
+								default: 'null'
+							},
+							//双向绑定
+							twoWayTitle: {
+								type: String,
+								default: 'nothing',
+								twoWay: true
+							}
+							};
+10,组件间的相互传递
+	1，$broadcast=>由父组件调用事件，发送给他下面的子组件
+	
+	2，$emit=>由子组件调用事件依次传递给父组件；
+		子组件中：    this.$emit('定义的名，在父组件中获取',);
+		父组件中获取：在events={
+							子组件中的命名（'传过来的值随便命名',event）{
+							console.log(传过来的值，随便命名)
+							}
+						}
+	3，$invoke=>是一个页面或组件直接调用其他组件的事件，先找到对应组件的路径然后直接调用  this.$invoke('./../ComB/ComG', 'someMethod', 'someArgs');
+		子组件中有一个方法，在父组件中如果要用直接用this.$invoke('组件的名称','要调用的子组件的方法')
+	
+11，组件的处理函数
+	1，bindtap   @tap="tap" 冒泡事件
+	2，catchtap  绑定小程序捕获型事件  
+	3, user      @childFn.user="parentFn" 绑定用户自定义组件，通过$emit触发
+
+12，事件传递参数 （只允许传递string）
+	<view @tap="tapName({{index}}, 'wepy', 'otherparams')"> Click me! </view>
+	methods: {
+		tapName (id, title, other, event) {
+			console.log(id, title, other)// output: 1, wepy, otherparams
+		}
+	}
+13，改变数据绑定方式 
+	<view>{{message}}</>
+	onLoad(){this.message='this.
+	
+	
+	赋值'}
+	
+	
+	

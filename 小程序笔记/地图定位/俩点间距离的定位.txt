@@ -1,0 +1,75 @@
+类似于美团骑手距离商家的定位：[可以直接在高德上直接下载小程序文件参考使用]
+页面
+<view class="map_box">
+  <map id="navi_map" longitude="116.451028" latitude="39.949643" scale="12" markers="{{markers}}" polyline="{{polyline}}"></map>
+</view>
+
+<view class="text_box">
+  <view class="text">骑手距您：{{distance}}</view>
+</view>
+
+
+JS文件
+	data:{
+		markers: [{//要在地图上显示的俩个地方点
+		  iconPath: "../../images/qi.png",//地图上要显示的图标
+		  id: 0,
+		  latitude: 39.989643,//维度地点
+		  longitude: 116.481028,//经度地点
+		  width: 50,//地图显示大小
+		  height: 50//地图显示大小
+		}, {
+		  iconPath: "../../images/zhon.png",
+		  id: 0,
+		  latitude: 39.90816,
+		  longitude: 116.434446,
+		  width: 50,
+		  height: 50
+		}],
+		distance: 18,
+		cost: '',
+		polyline: []
+	},
+	
+	onLoad: function () {
+		var that = this;
+		var key = Key;//自己的高德地图key
+		var myAmapFun = new amapFile.AMapWX({ key: key });
+		myAmapFun.getRidingRoute({
+		  origin: '116.481028,39.989643',
+		  destination: '116.434446,39.90816',
+		  success: function (data) {
+			console.log(data)
+			var points = [];
+			if (data.paths && data.paths[0] && data.paths[0].steps) {
+			  var steps = data.paths[0].steps;
+			  for (var i = 0; i < steps.length; i++) {
+				var poLen = steps[i].polyline.split(';');
+				for (var j = 0; j < poLen.length; j++) {
+				  points.push({
+					longitude: parseFloat(poLen[j].split(',')[0]),
+					latitude: parseFloat(poLen[j].split(',')[1])
+				  })
+				}
+			  }
+			}
+			that.setData({
+			  polyline: [{
+				points: points,
+				color: "#0091ff",
+				width: 6
+			  }]
+			});
+			if (data.paths[0] && data.paths[0].distance) {
+			  that.setData({
+				distance: data.paths[0].distance + '米'
+			  });
+			}
+		  },
+		  fail: function (info) {
+
+		  }
+		})
+	},
+	
+	
