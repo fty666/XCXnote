@@ -1,0 +1,20 @@
+1，建立连接，返回参数供后面使用
+	SocketTask = wx.connectSocket({
+        url: 'wss://www.yjwsch.com//MicroPlatform/websocket/' +data.data.data.user_id,  //web的地址，需要在微信公众平台上web上设置内容
+        });
+2，发送信息
+    SocketTask.send({
+      data: message,  //需要发送的参数
+      success: function () {
+        console.log('success')
+      }
+    })
+3，接收到的内容
+	SocketTask.onMessage(function (data) {
+        console.log('收到服务器内容：' + JSON.stringify(data));
+        console.log(data)
+      });
+4，关闭web
+	SocketTask.onClose(function (){
+		console.log('关闭成功')
+	})
