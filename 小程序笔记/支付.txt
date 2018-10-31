@@ -1,0 +1,31 @@
+微信支付后台接口根据微信api填写接口调取微信的支付接口返回参数：
+	
+	//后台接口需要的传递的参数，根据接口所需要的进行传递
+	let mydata = {
+      body: that.data.gnames,          //购买的商品名
+      uuid: that.data.ZFuuid,		   //支付的订单号，微信支付多个商品购买只允许传递一个订单号
+      money: that.data.summoney,	   //购买商品的金额
+      openid: app.globalData.weChat    //固定的用户wechat
+    }
+    util.myWxRequest(app.globalData.wxPayUrl, mydata, function (res) {
+      // 微信支付，api工具直接调用，拿拿取后台接口拿取返回的参数，进行支付
+      wx.requestPayment({
+        'timeStamp': res.data.data.timeStamp, 
+        'nonceStr': res.data.data.nonceStr,
+        'package': res.data.data.package,
+        'signType': 'MD5',
+        'paySign': res.data.data.paySign,
+        'success': function (res) {
+          app.globalData.buyGoods = '';
+          // 支付成功通知商家
+          let now = util.formatDate(new Date().getTime());
+          let userno = app.globalData.userId;
+          sendSocket(("时间：" + now + ' 发送人：'), userno);
+          wx.navigateTo({
+            url: '/pages/pay_success/pay_success'
+          })
+        },
+        'fail': function (res) {
+        }
+      });
+    })

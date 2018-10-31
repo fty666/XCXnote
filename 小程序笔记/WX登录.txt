@@ -1,0 +1,19 @@
+    // 用户登录小程序返回code唯一标识传给后台，返回小程序用户的基本信息
+    wx.login({
+      success: function (res) {
+        console.log(res)   //打印返回的数据值
+        if (res.code) {
+          //发起网络请求
+          wx.request({
+            url: 'https://www.zuoancellar.com/redwine/user/userLogin',
+            method: 'POST',
+            data: { code: res.code, scene: '' },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    });
