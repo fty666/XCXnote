@@ -1,0 +1,10 @@
+微信关注公众号：需要在微信公众号中进行相关配置
+	相关网页：
+		https://blog.csdn.net/zjx841471641/article/details/82868626
+	方法：
+		在小程序的接口配置中填写相关的配置信息，
+		然后在对应页面进行填写代码
+		<official-account></official-account>
+微信分享功能：
+	相关网页：https://blog.csdn.net/yelin042/article/details/79022837
+	方法：

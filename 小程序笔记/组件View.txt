@@ -1,0 +1,68 @@
+bindscrolltolower="事件"        			//用户滚动到底部触发的事件
+bindtouchmove="handletouchmove"				//页面滚动触发事件
+1，水平滑动的scroll-view   scroll-x
+	需要给scroll-view一个固定的宽度，设置属性scroll-x,并且设置样式white-space:nowrap;
+		.tui{
+			width: 100%;
+			height: 220px;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+    <view class="tui">
+      <scroll-view scroll-x="true" style="width:100%;" @tap="detail">
+        <block wx:for="[1,2,3,1,5,6]" wx:key="index">
+          <view style="width: 150px;display: inline-block;">
+            <view>
+              <image src="https://zuoanzac.oss-cn-beijing.aliyuncs.com/1540360191.jpg" class="Timg"></image>
+            </view>
+            <view class="Tname">左岸红酒</view>
+            <view class="Tprice">￥999</view>
+          </view>
+
+        </block>
+      </scroll-view>
+    </view>
+	
+2,竖直滑动的scroll-view    scroll-y
+	需要给scroll-view一个固定的高度，设置属性scroll-y,并且设置样式white-space:nowrap;
+	 <view class='recomm' style='width:100%;height:{{px2rpxHeight*600}}px;padding:0 {{30*px2rpxWidth}}px; box-sizing:border-box;'>
+		<scroll-view class="scroll" scroll-y="true" style='width:100%;;height:100%' bindscrolltolower='scrollToLower'>
+		  <!--相关推荐循环  -->
+		  <block wx:for="{{recommend}}" wx:key="{{item.id}}">
+			<navigator class="nav" url="/pages/goods_detail/goods_detail?id={{item.id}}">
+			  <view class='z2' style="width:{{px2rpxWidth*320*2}}rpx;height:{{580*px2rpxHeight}}px;">
+			</navigator>
+		  </block>
+		</scroll-view>
+	</view>
+	
+3，滚动轮播图：
+	<swiper indicator-dots="{{indicatorDots}}"    
+	  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+	  <block wx:for="{{imgUrls}}">
+		<swiper-item>
+		  <image src="{{item}}" class="slide-image" width="355" height="150"/>
+		</swiper-item>
+	  </block>
+	</swiper>
+	
+	indicator-dots：  									是否显示面板指示点  默认：false，直接不写该属性即为默认fasle
+	indicator-color： 									指示点颜色     rgba(0,0,0.3)
+	indicator-active-color								当前选中的指示点颜色  #000000
+	autoplay											是否自动切换  默认fasle
+	current												当前所在滑动的index
+	current-item-id										当前所在滑动的item-id,不能与current被同时指定
+	interval        									自动切换时间间隔   默认5000
+	duration											滑动动画时长  默认500，即滑动滚动页面图片的时间长，图片翻页的时间
+	circular											是否采用衔接滑动
+	常用的几个，具体参考文档  https://developers.weixin.qq.com/miniprogram/dev/component/swiper.html
+
+4，可移动区域视图    movable-area   movable-area 必须设置width和height属性，不设置默认为10px
+	scale-area       默认为false     当里面的movable-view设置为支持双指缩放时，设置此值可将缩放手势生效区域修改为整个movable-area
+	<movable-area style="height: 200px; width: 200px; background: red;">
+		<movable-view style="height: 50px; width: 50px; background: blue;" x="{{x}}" y="{{y}}" direction="all">
+		</movable-view>
+	</movable-area>
+	
+	direction 											movable-view的移动方向，属性值有all(无限制)、vertical（垂直）、horizontal（水平）、none（不动）  默认：none
+	inertia												movable-view是否带有惯性    默认fasle
