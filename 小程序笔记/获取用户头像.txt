@@ -1,5 +1,5 @@
 1, 页面必须进行小程序button按钮
-	页面： <button type="primary" bindtap="getUserInfo">获取用户信息</button>
+	页面： <button open-type='getUserInfo' bindtap="getUserInfo">获取用户信息</button>
 	 
 	JS方法：      
 		//  获取头像
