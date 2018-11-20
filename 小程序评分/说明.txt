@@ -1,0 +1,4 @@
+小程序文档：小程序，自定义组件开发，
+框架：https://weapp.iviewui.com/docs/guide/start
+dist目录为写好的组件，
+page目录为页面，需要在json文件中修改

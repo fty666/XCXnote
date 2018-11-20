@@ -1,0 +1,148 @@
+/*获取当前页url*/
+function getCurrentPageUrl() {
+  var pages = getCurrentPages() //获取加载的页面
+  var currentPage = pages[pages.length - 1] //获取当前页面的对象
+  var url = currentPage.route //当前页面url
+  return url
+}
+
+/*获取上一页url*/
+function getPrevPageUrl() {
+  let pages = getCurrentPages(); //获取加载的页面
+  let prevPage = pages[pages.length - 2]; //获取上一级页面的对象
+  let url = prevPage.route; //上一个页面url
+  return url;
+}
+
+
+/*获取上俩页url*/
+function getLastPageUrl() {
+  let pages = getCurrentPages(); //获取加载的页面
+  console.log(pages)
+  let prevPage = pages[pages.length - 4]; //获取上一级页面的对象
+  let url = prevPage.route; //上一个页面url
+  return url;
+}
+
+
+
+/**
+ * wx.request二次封装，普通的请求封装
+ */
+function myWxRequest(myurl, mydata, mysufun) {
+  wx.request({
+    url: myurl,
+    method: 'POST',
+    data: mydata,
+    header: {
+      'content-type': 'application/x-www-form-urlencoded'
+    },
+    success: function (res) {
+      if (res.data.state == 1) {
+        mysufun(res);
+      } else {
+        wx.showToast({
+          icon: 'none',
+          //    title: '您的网络太差'
+          title: res.data.message,
+          duration: 2000
+        });
+
+      }
+    }
+  });
+}
+
+
+/**
+ *遇到抛异常的，原生的返回
+ */
+function kumyWxRequest(myurl, mydata, mysufun) {
+  wx.request({
+    url: myurl,
+    method: 'POST',
+    data: mydata,
+    header: {
+      'content-type': 'application/x-www-form-urlencoded'
+    },
+    success: function (res) {
+      if (res.data.state == 1) {
+        mysufun(res);
+      } else {
+
+        setTimeout(function () {
+          wx.navigateBack({
+            delta: 1
+          });
+        }, 3000)
+
+        wx.showToast({
+          icon: 'none',
+          //    title: '您的网络太差'
+          duration: 5000,
+          title: res.data.message,
+        });
+      }
+    }
+  });
+}
+
+
+/**
+ * 验证正则
+ */
+function checkReg(flag, data) {
+  let reg = null;
+  switch (flag) {
+    case 1:
+      // 手机号
+      reg = /^1[34578]\d{9}$/;
+      break;
+    case 2:
+      // 身份证号
+      reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+      break;
+    case 3:
+      // 银行卡号
+      reg = /^([1-9]{1})(\d{15}|\d{18})$/;
+    case 4:
+      // 带小数的金额
+      reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+      break;
+    case 5:
+      // 折扣正则(如8.8)
+      reg = /[1-9](\.[1-9])?|0\.[1-9]/;
+      break;
+    case 6:
+      reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+      break;
+    case 7:
+      reg = /^[a-zA-Z0-9]{18,22}$/;
+      break;
+  }
+  return reg.test(data);
+}
+
+/**
+ * 判断值是否为空
+ *
+ */
+function isEmpty(data) {
+  if (data === "" || data === 0 || data === "0" || data === null || data === false || typeof data === 'undefined') {
+    return true;
+  }
+
+  if (typeof data == 'object') {
+    for (key in data) {
+      return false;
+    }
+    return true;
+  }
+
+  return false;
+}
+
+
+module.exports = {
+ 方法名：方法
+}

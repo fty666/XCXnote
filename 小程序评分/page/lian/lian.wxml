@@ -1,0 +1,2 @@
+<i-rate bind:change="onChange2" value="{{starIndex2}}" size="40">
+</i-rate>
