@@ -1,0 +1,166 @@
+
+安装完成vue之后
+vue init webpack '项目名称'
+npm install       //下载依赖
+npm run dev       //运行项目
+
+页面跳转
+  <router-link  to="/logo">
+            商城
+  </router-link>
+  this.$router.push({name:'路由命名',params:{参数名:参数值,参数名:参数值}})
+  this.$route.params.参数名
+  
+  跳转页面，带参数     this.$router.push({name:'logo',params:{index:'123133'}})
+  接收页面，获取参数   let index= this.$route.params.index;
+
+  
+7.session数据缓存：
+set:      sessionStorage.setItem('userInfo', JSON.stringify(resp.data));   ----对象
+get:      let userInfo =JSON.parse( sessionStorage.getItem("userInfo"))
+set:      sessionStorage.setItem('shopCode', resp.data.shopCode);    ----值
+get:      sessionStorage.getItem('shopCode')
+//清空缓存
+sessionStorage.clear('userInfo');
+//存本地缓存localStorage：
+window.localStorage.setItem('name', data.name);
+  
+  
+1， 引入vue.js       <script src="vue.js"></script>
+2,new  Vue对象 
+        window.onload=function(){
+            new Vue({
+                el:'#box',
+                data:{
+                    red:'red'
+                },
+                methods:{
+                }
+            });
+        };
+3， 传值   data:{直接命名定义}    页面{{命名直接解析}}   
+	v-mode="命名"  【表示定义的值双向绑定，命名的值变化，data也变化】 
+4，for循环
+		<li v-for="value in arr"> {{value}}   {{$index}}  </li>   //循环数组
+		<li v-for="value in json"> {{value}}   {{$index}}  {{$key}} </li> //循环对象
+		<li v-for="(k,v) in json">  {{k}}  {{v}}  {{$index}}  {{$key}}  </li>
+5, 事件 v-on:click="函数"  简写：@click="函数"
+		v-on:click(单击事件)
+6，阻止事件冒泡  @click.stop="";
+7, 阻止默认行为  @contextmenu.prevent="";
+8，键盘事件：@keydown="";按下键盘事件  
+			 @keyup="";抬起键盘事件    
+			 @event="";按下键盘具体查看
+9, 常用按键: @keyup.enter="";   回车键    
+             @keydown/@keyup.left="";   左   
+			 @keydown/@keyup.right="";  右  
+			 @keydown/@keyup.down="";   上  
+			 @keydown/@keyup.up="";     下
+10，图片属性：v-bind:src="";  简写： :src="";
+11,	模板： {{data}}   页面显示值
+		   {{*data}} 只绑定一次，
+		   {{{data}}} 会将HTML转意输出
+12，过滤器：设置data值的变化
+			{{msg | uppercase}}  将小写转化为大写
+			{{MSG | lowercase}}  将大写转化为小写
+			{{MSG | currency}}   金额标符
+13, 请求交互get post jsonp 
+	首先引入<script src="vue-resource.js"></script>
+		
+		
+	get：
+		this.$http.get('路径').then(function(res){
+		    alert(res.data);
+		},function(res){
+		    alert(res.status);
+		});
+		给服务发送数据:
+		this.$http.get('路径',{
+		    参数
+			a:1,
+		    b:2
+		}).then(function(res){
+		    alert(res.data);
+		},function(res){
+		    alert(res.status);
+		});
+	
+	post:
+		this.$http.post('路径',{
+		    a:1,
+		    b:20
+		},{
+		    emulateJSON:true
+		}).then(function(res){
+		    alert(res.data);
+		},function(res){
+		    alert(res.status);
+		});
+		
+	jsonp:（跨url请求获取其他路径的值）
+
+		https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&cb=jshow
+
+		this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{
+		    wd:'a'
+		},{
+		    jsonp:'cb'	//callback名字，默认名字就是"callback"
+		}).then(function(res){
+		    alert(res.data.s);
+		},function(res){
+		    alert(res.status);
+		});
+		
+14,钩子函数
+	created()    实例前创建，
+	
+15，父组件向子组件传值
+	在子组件props中定义一个值用来接收父组件传递过来的东西:props:["massage"]
+	在父组件中引入子组件：  import 命名子组件（例：child）  from '子组件的路径';
+							在父组件的components:{child,}
+							方法1：页面:  <child massage="向子组件传递"> </child>  （子组件页面会显示要父向子传递的值）
+							方法2：页面：<child v-bind="parent"></child>  data(){return{parent:'父组件中动态绑定要传递的值'}}
+16, 子组件向父组件传值
+	在子组件中的方法中创建：this.$emit("定义方法名例childMethod","需要向父组件传递的值")
+	在父组件中在页面的组件模块中：<child v-on:childMethod="父组件命名的方法接收:fuMethod"></child>
+	在父组件的方法中：fuMethod:function(data){console.log(data)}
+	
+17,vue页面跳转
+	this.$router.push({name:'路由命名',params:{参数名:参数值,参数名:参数值}})
+
+18，父组件调用子组件的方法：
+	在页面的父组件中定义方法名确认调用那个子组件    <child ref="命名调用那个子组件：profile"></child>
+	然后在父组件的方法中：fumethod(){this.$refs.profile.add();  //调用子组件的方法add()}
+	
+19,子组件调用父组件方法：
+	在父组件的页面中传递要调用的那个方法： <child @click="fuMethod"></child>
+	在子组件中的方法上直接调用：this.$emit('fuMethod', '传的参数')
+	
+	
+20，上传图片
+（引）import UpAli from '../issue/upload-ali.vue';（寻找文件）
+（注册）components: {
+            UpAli,
+        },
+（div）<div class="imgs" >
+            <up-ali class="img_cha" ref="aliComponent" @getUrl="imgUrl($event, 1)" :fileNumber="1"
+                :imgWidth="152" :imgHeight="152"
+                :defaultImg="msgList.user_head_portrait">
+			</up-ali>
+        </div>
+（js）// 设置上传图片组件返回路径方法
+        imgUrl(e) {
+            this.msgList.user_head_portrait = e[0];
+        },
+（css）	.imgs {
+			width: 152px;
+			height: 152px;
+			margin-left: 30px;
+			border: 1px dashed #8c939d;
+			position: relative;
+		}
+		.img_cha{
+			position: absolute;
+		}
+	
+ 
