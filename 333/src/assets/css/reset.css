@@ -1,0 +1,406 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "微软雅黑";
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/*a:hover{ color:#666; font-size:16px; text-decoration:underline;}*/
+
+header,
+nav,
+section,
+article,
+aside,
+footer,
+main {
+    display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+/* input {
+    outline: none;
+    border: none;
+    background-color: transparent;
+} */
+
+/* input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="radio"],
+input[type="checkbox"],
+select,
+option {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+} */
+
+/* input[type="date"]::-webkit-inner-spin-button {
+    display: none;
+}
+
+input[type="date"]::-webkit-clear-button {
+    display: none;
+}
+
+input[type="datetime-local"]::-webkit-inner-spin-button {
+    display: none;
+}
+
+input[type="datetime-local"]::-webkit-clear-button {
+    display: none;
+} */
+
+select::-ms-expand {
+    display: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th,
+td {
+    padding: 0;
+}
+
+.clearfix {
+    clear: both
+}
+
+p {
+    margin: 0;
+}
+
+iframe {
+    display: block;
+}
+
+/*单行文本溢出显示点*/
+
+.textover {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+*[contenteditable="true"]:empty:before {
+    content: attr(placeholder);
+    color: #999999;
+}
+
+/*重置滚动条样式并隐藏*/
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+
+::-webkit-scrollbar-track {
+    width: 4px;
+    height: 4px;
+    -webkit-box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.4);
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* 滚动条里面可以拖动的那部分 */
+
+::-webkit-scrollbar-thumb {
+    width: 2px;
+    -webkit-box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.4);
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/*定义滑块 内阴影+圆角*/
+
+::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 0 2ox rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.main-left-nav ul::-webkit-scrollbar {
+    display: none;
+}
+
+.menu_head {
+    cursor: pointer;
+}
+
+.layui-laypage-limits {
+    width: 68px !important;
+}
+
+.layui-laypage-limits select {
+    width: 68px !important;
+}
+
+/* 表格开始 */
+
+#myTable {
+    width: 100%;
+    position: relative;
+}
+
+#myTable ul {
+    width: 100%;
+    font-size: 12px;
+    color: #666;
+    line-height: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#myTable li {
+    text-align: center;
+    border: 1px solid #abd3db;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: none;
+    border-right: none;
+}
+#myTable li>div{
+    width: 60%;
+    height: 24px;
+    line-height: 24px;
+}
+#myTable li:nth-child(){}
+
+#myTable>ul:first-child {
+    font-weight: bold;
+    color: #0099ce;
+    background-color: #d5e9ed;
+    z-index: 9;
+    width: 100%;
+    border-top: 1px solid #abd3db;
+    z-index: 1;
+}
+
+#myTable>ul:first-child li {
+    position: relative;
+}
+
+.myTableDel {
+    background-color: #FF5722;
+    height: 22px;
+    line-height: 22px;
+    padding: 0 5px;
+    font-size: 12px;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    display: block;
+}
+.myTableBody ul:last-child li{
+    border-bottom: none !important;
+}
+
+.myTableBody {
+    max-height: calc(100vh - 200px);
+    overflow-y: scroll;
+    border-bottom: 1px solid #abd3db;
+}
+
+
+.myTable1 ul li:nth-child(1) {
+    width: 20%;
+}
+
+.myTable1 ul li:nth-child(2) {
+    width: 15%;
+}
+
+.myTable1 ul li:nth-child(3) {
+    width: 20%;
+}
+
+.myTable1 ul li:nth-child(4) {
+    width: 15%;
+}
+
+.myTable1 ul li:nth-child(5) {
+    width: 15%;
+}
+
+.myTable1 ul li:nth-child(6) {
+    width: 15%;
+}
+.myTableBody ul li:last-child{
+    width: 0 !important;
+    border: none;
+    overflow: hidden;
+}
+.myTable2 ul li:nth-child(1) {
+    width: 25%;
+}
+
+.myTable2 ul li:nth-child(2) {
+    width: 25%;
+}
+
+.myTable2 ul li:nth-child(3) {
+    width: 25%;
+}
+
+.myTable2 ul li:nth-child(4) {
+    width: 25%;
+}
+
+
+
+@charset "utf-8";
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "微软雅黑";
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+body, html, div, blockquote, img, label, p, h1, h2, h3, h4, h5, h6, pre, ul, ol,
+li, dl, dt, dd, form, a, fieldset, input, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.box {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-column-start {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.flex-around {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/*begin*/
+/*顶部搜索框*/
+.searchTop {
+  box-sizing: border-box;
+  padding: 25px 10px;
+}
+
+.searchTopl {
+  width: 85%;
+}
+
+.searchTopr {
+  width: 15%;
+}
+
+.searchTop .el-input {
+  width: 250px;
+  margin-right: 30px;
+}
+
+.searchTopl {
+  padding-left: 100px;
+}
+

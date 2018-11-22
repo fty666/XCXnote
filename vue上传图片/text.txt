@@ -1,0 +1,15 @@
+头部引入
+import UpAli from '../activity/upload-ali.vue';
+
+
+
+html代码
+<up-ali class="img_cha" ref="aliComponent" @getUrl="imgUrl1($event, 1)" :fileNumber="1"
+        :imgWidth="150" :imgHeight="150"
+        :defaultImg="photo"></up-ali>
+		
+
+// 设置上传图片组件返回路径方法
+imgUrl1(e) {
+    this.photo = e[0];
+},
