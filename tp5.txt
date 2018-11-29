@@ -1,0 +1,148 @@
+1,模块名小写，类名大写
+2，命名空间 namespace： app/模块名/类名   
+   类名中：class '定义的与外部类名名称一样'{}
+3，配置url     C:\Windows\System32\drivers\etc
+<VirtualHost *:80>
+    DocumentRoot "G:\xampp\htdocs"
+	ServerName localhost
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "G:\xampp\htdocs\tp5\public"
+	ServerName xx.cn
+</VirtualHost>
+4,访问url，三种path_info,混合，路由，  在config中配置
+  path_info形式： http://xx.cn/index/Index/index
+				  虚拟域名/模块名/类名/类
+  路由：
+		use think\Route     //引入Route类
+		Route::rule('路由表达式','路由地址','请求类型（get,post,put,delete,any(*)）','路由参数 [文档见]','变量规则[数组]')
+		
+		Route::get('访问名/:参数名?传递参数=参数','模块名/控制器名（类名）/方法名')
+  获取客户端传来的参数： 
+		use think\Request;
+		
+		原写法：
+			获取单个参数：Request::instance()->param('$name')
+			获取url?之后的参数：Request::instance()->get()
+			获取url中的参数：Request::instance()->route()
+			获取post中的参数：Request::instance()->post()
+		简写1：
+		public function(Request $request){
+			获取所有参数：$request->param()  
+		}
+		简写2：获取所有的 input('param.')
+5,参数验证  validate ：  use think\Validate
+	1,独立验证： $data=['name' => '传递的参数','email'=>'验证的参数'];
+			   $validate =new Validate([
+					'name'=>'require|max:10',   //验证规则
+					'email'=>'email'            //tp5自带的验证规则
+			   ])
+			   $res=$validate->batch()->check($data);  //进行验证
+			  var_dump($validate->getError());
+	
+	2,验证器：继承  Validate
+		class TextValidate extends Validate{
+			protected $rule=[ //验证规则   ，固定数组形式
+					'name'=>'require|max:10|isYanzhen',  
+					'email'=>'email'  
+			]
+		}
+		自定义验证规则：
+			protected function isYanzhen($value,$rule='',$data='',$field=''){
+				if($value){
+				}else{
+				}
+			}
+			
+		使用：   $validate=new TextValidate();
+				 $res=$validate->batch()->check($data);  //进行验证
+	
+6，抛异常   try{}catch(Exception $ex){}
+
+7,数据库连接,在databases.php 添加配置：
+	原生的查询：   use think\Db
+				   DB::query('select * from 表名 where 查询的条件=?',[$id]);
+	
+	使用构建器：	Db::table('表名')->where('字段名'，'表达式[= < > ...]'，'查询的条件')->find()    返回一条
+																		 ->select()   返回所有
+					Db::table('data')->data(['name'=>'tp','score'=>1000])->insert();     添加
+					Db::table('think_user')->where('id', 1)->update(['name' => 'thinkphp']);   修改
+					Db::table('think_user')->where('id',1)->delete();					删除
+					Db::table('think_user')->fetchSql()->where('id',1)->delete();	   fetchSql()显示sql语句 	
+				在配置中打开日志sql记录，
+	
+	模型ROM：数据库表的映射model	继承   extends Model  
+			
+				使用：  模型::get($id)
+				
+				新增：   $user = new User;
+						 $user->data([
+							'name'  =>  'thinkphp',
+							'email' =>  'thinkphp@qq.com'
+						 ]);
+						 $user->save();   //批量新增
+						 
+						$user->name     = 'onethink';
+						$user->email    = 'onethink@qq.com';
+						$user->isUpdate(false)->save();// 第二次开始必须使用下面的方式新增
+						
+						$list = [
+							['name'=>'thinkphp','email'=>'thinkphp@qq.com'],
+							['name'=>'onethink','email'=>'onethink@qq.com']
+						];
+						$user->saveAll($list);//一次性添加多条数据
+						
+				更新：   $user->update(['id' => 1, 'name' => 'thinkphp']);
+						 $user->where('id', 1)->update(['name' => 'thinkphp']);
+				
+				删除：	$user = User::get(1);
+						$user->delete();
+						
+						// 支持批量删除多个数据
+						User::destroy('1,2,3');
+						
+						// 删除状态为0的数据
+						User::destroy(['status' => 0]);
+						 
+						//通过数据库类的查询条件删除
+						 User::where('id','>',10)->delete();
+				
+				查询：
+						$user = User::get(1); //取出主键为1的数据
+						$user->where('name', 'thinkphp')->find();  // 查询单个数据
+						
+						User::where('id','>',10)->select();
+		聚合：  count  max   min  avg  sum   
+					
+				$user->where('status','>',0)->count();
+				$user->where('status',1)->avg('score');
+				
+		只读字段，修改：
+				protected $readonly = ['name','email'];    设置name email位只读
+				$user->name = 'TOPThink';
+				$user->email = 'Topthink@gmail.com';
+				$user->address = '上海静安区';
+				 // 保存更改后的用户数据
+				$user->save();  							//保存后只会对address字段进行修改
+				
+		软删除： use SoftDelete;							//引入SoftDelete使用
+				protected $deleteTime = 'delete_time';		//定义$deleteTime属性定义软删除标识
+				
+				User::destroy(1);		 $user->delete();					//进行软删除
+				User::destroy(1,true);	 $user->delete(true);					//真实删除
+				//查询不含软删除的数据
+				User::withTrashed()->find();
+				User::withTrashed()->select();
+				//只查询软删除的
+				User::onlyTrashed()->find();
+				User::onlyTrashed()->select();
+				
+8，关联模型  
+		一对一：   hasOne  hasOne('关联模型名','外键名','主键名',['模型别名定义'],'join类型');
+					
+					return $this->hasOne('Profile')    //对模型Profile进行关联
+					
+					Profile模型中:
+					return $this->hasOne('Profile')->field('id,name,email');   //在Profile模型中按条件field进行查找，返回数据	
+			

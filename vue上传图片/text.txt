@@ -10,6 +10,10 @@ html代码
 		
 
 // 设置上传图片组件返回路径方法
+components: {
+            UpAli,
+        },
+		
 imgUrl1(e) {
     this.photo = e[0];
 },
