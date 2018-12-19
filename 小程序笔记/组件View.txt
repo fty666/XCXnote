@@ -66,3 +66,20 @@ bindtouchmove="handletouchmove"				//页面滚动触发事件
 	
 	direction 											movable-view的移动方向，属性值有all(无限制)、vertical（垂直）、horizontal（水平）、none（不动）  默认：none
 	inertia												movable-view是否带有惯性    默认fasle
+	
+	
+	
+	          <!-- 赠送 -->
+          <!-- <view class='draw' style='width:{{150*px2rpxWidth*2}}px;margin-left:{{px2rpxWidth*30}}px'>
+            <view class='flex'>
+              <view class='money' style='margin-left:{{20*px2rpxWidth}}px;'>
+                赠
+              </view>
+              <view class='lin' style='width:{{80*px2rpxWidth*2}}px;height:{{30*px2rpxHeight*2}}px;margin-top:{{20*px2rpxHeight}}px;margin-left:{{20*px2rpxWidth}}px'>
+                <text class='qu' style='margin-left:{{px2rpxWidth*20}}px'>点击领取</text>
+              </view>
+            </view>
+            <view class='xia' style='margin-left:{{px2rpxWidth*20}}px'></view>
+            <view class='font' style='width:80%;height:{{40*px2rpxHeight*2}}px;margin-left:{{px2rpxWidth*30}}px;margin-top:{{20*px2rpxHeight}}px;'>玻璃水一瓶玻璃水一瓶</view>
+            <view class='time' style='margin-left:{{px2rpxWidth*20}}px;'>2018.8,30-2019.5.30</view>
+          </view> -->

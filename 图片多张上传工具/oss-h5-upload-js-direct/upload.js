@@ -3,6 +3,7 @@ accessid= 'LTAI8ygujYgDvLJ9';
 accesskey= 'nLrO1bpn9IOpEu0tt0zyAaChc22j0c';
 //host = 'http://jiaoyuvideo.oss-cn-beijing.aliyuncs.com';
 host = 'https://zuoanzac.oss-cn-beijing.aliyuncs.com';
+//host = 'http://washcarimg.oss-cn-beijing.aliyuncs.com';
 
 g_dirname = ''
 g_object_name = ''

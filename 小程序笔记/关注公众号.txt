@@ -7,4 +7,20 @@
 		<official-account></official-account>
 微信分享功能：
 	相关网页：https://blog.csdn.net/yelin042/article/details/79022837
+			  https://blog.csdn.net/sinat_41917956/article/details/80606459
 	方法：
+	自定义按钮
+		<view>
+			<button open-type='share'>转发</button>
+		</view>
+
+		  /**
+			**转发
+		  */
+		  onShareAppMessage: function () {
+			return {
+			  title: '提示',
+			  desc: '确定要分享该页面',
+			  path: '/pages/goods_detail/goods_detail?id=123'
+			}
+		  },	

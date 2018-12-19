@@ -1,3 +1,7 @@
+安装：git clone https://github.com/top-think/think tp5
+目录中：git clone https://github.com/top-think/framework thinkphp
+
+
 1,模块名小写，类名大写
 2，命名空间 namespace： app/模块名/类名   
    类名中：class '定义的与外部类名名称一样'{}
@@ -19,6 +23,7 @@
 		Route::rule('路由表达式','路由地址','请求类型（get,post,put,delete,any(*)）','路由参数 [文档见]','变量规则[数组]')
 		
 		Route::get('访问名/:参数名?传递参数=参数','模块名/控制器名（类名）/方法名')
+		Route::get('user/user', 'index【application下的命名模块】/User【控制器名】/index【调用的方法】');
   获取客户端传来的参数： 
 		use think\Request;
 		
@@ -32,14 +37,32 @@
 			获取所有参数：$request->param()  
 		}
 		简写2：获取所有的 input('param.')
-5,参数验证  validate ：  use think\Validate
-	1,独立验证： $data=['name' => '传递的参数','email'=>'验证的参数'];
+5,参数验证  validate ：  
+	1,独立验证： 
+			   use think\Validate
+			   $data=['name' => '传递的参数','email'=>'验证的参数'];
 			   $validate =new Validate([
 					'name'=>'require|max:10',   //验证规则
 					'email'=>'email'            //tp5自带的验证规则
 			   ])
-			   $res=$validate->batch()->check($data);  //进行验证
-			  var_dump($validate->getError());
+			   $res=$validate->batch()->check($data);  //进行验证，批量验证batch()
+			   var_dump($validate->getError());
+			  
+	【验证规则：require    			必须的，
+				max:25				不能超过25个字符
+				between:1,200		只能在1到200之间
+				notBetween:1,10		不能在1到10				
+				email				邮箱格式
+				integer				是否是整数
+				float				浮点数字
+				boolean				布尔型
+				alpha				判断是否是纯字母
+				mobile				判断有效手机号
+				idCard				判断身份证格式
+				'name'=>'length:4,10'		判断字段的值在4到10之间
+				'zip'=>'\d{6}'		正则验证
+				
+	 】
 	
 	2,验证器：继承  Validate
 		class TextValidate extends Validate{
@@ -60,7 +83,7 @@
 	
 6，抛异常   try{}catch(Exception $ex){}
 
-7,数据库连接,在databases.php 添加配置：
+7,数据库连接,在databases.php 添加配置：      json_encode($data)    返回json数组形式
 	原生的查询：   use think\Db
 				   DB::query('select * from 表名 where 查询的条件=?',[$id]);
 	
@@ -72,7 +95,7 @@
 					Db::table('think_user')->fetchSql()->where('id',1)->delete();	   fetchSql()显示sql语句 	
 				在配置中打开日志sql记录，
 	
-	模型ROM：数据库表的映射model	继承   extends Model  
+	模型ROM：数据库表的映射model	继承   extends Model     快速创建模型： php think make:model api/Banner    （哪个模块/模型名）
 			
 				使用：  模型::get($id)
 				
@@ -137,12 +160,48 @@
 				//只查询软删除的
 				User::onlyTrashed()->find();
 				User::onlyTrashed()->select();
+
+///explode(',',$data)拆分成数组
 				
-8，关联模型  
-		一对一：   hasOne  hasOne('关联模型名','外键名','主键名',['模型别名定义'],'join类型');
+8，关联模型     
+		一对一：   hasOne  hasOne('关联模型名','外键名','主键名',['模型别名定义'],'join类型');   表中没外键用
 					
 					return $this->hasOne('Profile')    //对模型Profile进行关联
 					
 					Profile模型中:
 					return $this->hasOne('Profile')->field('id,name,email');   //在Profile模型中按条件field进行查找，返回数据	
-			
+					
+					belongsTo     $this->belongsTo('关联的模型','外键','当前模型的主键')
+		
+		一对多：   hasMany()			 hasMany('关联模型的模型名字','外键','当前模型的主键');  表中有外键用
+		
+		多对多：   belongsToMany         belongsToMany('关联的模型'，'中间表表名','中间表的关联字段1','中间表的关联字段2')
+		
+
+9,调用模型下的多个方法：
+		模型::width(['方法','方法1.方法2'])->find();
+		
+10,隐藏不需要的模型字段 
+		toArray()  转化为数组形式,自行选择
+		2,$banner->hidden(['要隐藏的字段']);   //隐藏字段；
+		3,$banner-visible(['只显示的字段'])；  //只显示的字段；
+11，全局变量使用
+		extra  目录中的内容自动加载 
+				return [ '定义的名'=>'定义的内容' ]
+		
+		使用获取变量：  $name=config('setting.定义的名')
+
+12，读取器，获取器
+		public function getURL(读取的字段名，首字母大写)Attr($value,$data){
+					$value  字段内容
+					$data   当前表中的内容
+		} 
+13，config 中将是否匹配全部路由打开true，路由定义将依次匹配所有的路由		
+14，查询返回具体个数，排序
+	self::limit($count)->order('time desc')->select();
+	self::limit(参数)->order('字段名 排序顺序')->select();
+15，模型请求返回数组
+	在databases文件中寻找数据集返回类型
+	resultset_type      改为  collection
+
+16，
