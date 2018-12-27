@@ -1,0 +1,47 @@
+一，子组件向父组件传值：
+	1，子组件中
+	methods = {
+      formSubmit(e) {
+        console.log('form发生了submit事件，携带数据为：', e.detail.value)
+        this.info = e.detail.value;
+        this.$emit('finfos',this.info);		//绑定向父组件传递的参数，以及父组件中的方法
+        this.$apply();
+      },
+    };
+	
+	2，父组件中
+	<template>
+		 <add v-on:finfos="finfos"></add>			【组件中监听方法名】
+	</template>
+	
+	
+    methods = {
+      finfos:function(info) {						【父组件方法中获取传过来的值】
+        console.log('子组件闯过来的')
+        console.log(info)
+      }
+    }
+	
+二，父组件向子组件传值：
+	1，父组件中
+	<template>
+	  <view class="container">
+		  <list  :inputname.sync="infos"></list>		【双向绑定要传递的值】
+	  </view>
+	</template>
+	
+	2，子组件中
+	props={
+      inputname:{
+        twoway:true						【双向绑定值】
+      },
+    };
+	
+	watch={								【监听事件可以获取到传过来的值】
+      inputname(a,b){
+        console.log('子组件')
+        console.log(a)
+        console.log(b)
+        // console.log(this.inputname);
+      }
+    }

@@ -1,0 +1,76 @@
+https://segmentfault.com/a/1190000014474289
+https://www.jianshu.com/p/8a2a730d9e60
+
+创建文件夹components，建立自己文件page
+
+一，子组件向父组件传递值：
+	1，子组件中：xml文件：
+	<form bindsubmit="formSubmit" bindreset="formReset">
+	  <view>
+		姓名：
+		<input type='text' name="name" value=''></input>
+	  </view>
+	  <view>
+		年龄
+		<input type='text' name="age" value=''></input>
+	  </view>
+	  <view><button form-type='submit' catchtap='_info'>提交</button></view>   catchtap事件为父组件与子组件的公共方法，由子向父组件传递值
+	</form>
+	
+	2，js文件：
+	  /**
+	   * 组件的方法列表
+	   */
+	  methods: {
+		//子组件内自己的方法
+		formSubmit(e) {
+		  // console.log(e.detail.value)
+		  this.setData({
+			info: e.detail.value
+		  })
+		},
+		//公共方法，子组件向父组件传值，建议以_开头，triggerEvent用于触发事件
+		_info(){
+		  this.triggerEvent("info", this.data.info)     
+		                  【"内部为方法名，父子组件的私有方法名，如_info",后面的为要传递的值】
+		}
+	  }
+	3，父组件中：先配置json文件
+		4，json文件：
+	    "usingComponents": {
+			"address": "../components/address/address",   //子组件的文件名路径
+			}
+		5，xml文件：
+		 <add id="add" title="父组件要传过去的" bind:info="_info"></add>       【id定义的为组件名称,bind事件为父子组件的公共方法名】
+		 
+		6，js文件： 【this.selectComponent('#picker-date').onshow()，selectComponent选择某个组件中的方法】
+		Page({
+
+		  /**
+		   * 生命周期函数--监听页面初次渲染完成
+		   */
+		  onReady: function() {
+			//获得组件列表中的第一个组件，
+			this.address = this.selectComponent("#address");
+		  },
+		  //父子组件的方法
+		  _info(e) {
+			console.log(e.detail)
+		  }
+		})
+		
+二，父组件向子组件传值
+	父组件中：
+	1，xml文件中，创立事件方法
+		<button catchtap='father'>父向子传值</button>
+	2，js文件：
+		father(){
+			let data=[1,2,3,4,5];
+			let add = this.selectComponent("#add");		【选取要给哪个组件进行传值，selectComponent】
+			add.btn_star(data);							【定义子组件中接收的方法，和需要传递的值】
+		}
+	子组件中：
+	3，js文件中
+	    btn_star:function(obj){						【在父组件定义好的方法中直接打印获取传过来的值】
+		  console.log(obj)
+		}

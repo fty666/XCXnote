@@ -1,0 +1,22 @@
+ 1，并列排走
+	display: flex;
+	display: inline-flex;
+
+2，flex-direction，决定排队的顺序
+	flex-direction:row;						主轴水平方向，起点在左端
+	flex-direction:row-reverse;				主轴水平方向，起点在右端
+	flex-direction:column;					主轴为垂直方向，起点在上沿
+	flex-direction:column-reverse			主轴为垂直方向，起点在下沿
+
+3，flex-wrap,排序超出部分排序
+	flex-wrap:nowrap						默认不换行
+	flex-wrap:wrap							换行，第一行在上方
+	flex-wrap:wrap-reverse					换行，第一行在下方
+	
+4，justify-content，主轴方向的排列方向
+	justify-content:flex-start				默认排列从左往右
+	justify-content:flex-end				排列从右往左
+	justify-content:center					居中排列
+	justify-content:space-between			俩端对齐，项目之间的间隔都相等
+	justify-content:space-around			每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
+	

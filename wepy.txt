@@ -1,5 +1,5 @@
 全局安装和更新：npm install wepy-cli -g
-创建项目名称：wepy init standard my-project
+创建项目名称：wepy init standard my-project          【esl为No】
 安装依赖：npm  install
 开启实时编译：wepy build --watch
 
@@ -27,6 +27,20 @@
       } else {
       }
     }
+	
+	获取数据时 
+	在app.wpy中引入polyfill  : 
+	import 'wepy-async-function'; 
+	在app.wpy中使API promise化
+	export default class extends wepy.app {
+
+    constructor () {
+        super();
+        this.use('promisify');
+    }
+
+	}
+	
 
 2，获取globalData参数（this.$parent.globalData）
 	this.px2rpxHeight = this.$parent.globalData.px2rpxHeight;
