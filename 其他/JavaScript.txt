@@ -1,0 +1,85 @@
+1，写入Html输出	document.write();
+   document.write("<h1>This is a heading</h1>");
+2,动态改变Html内容innerHTML，可以使用\进行换行
+	x=document.getElementById("demo")  //查找元素
+	x.innerHTML="Hello JavaScript";    //改变内容
+3，javaScript的编写需要在<script></script>标签内编写
+4,变量类型，定义变量var定义
+	var x= 'sasaa';  			字符串
+	var x=6;					数字
+	var x						undefined
+	var x=true					布尔型
+	var x=new array();			数组
+	var x={name:'fty'}			对象
+	var x=null;					null
+5,循环语句中Continue表示跳过这一个，然后执行下一个
+
+DOM操作
+	var x =document.getElementById(id)  		根据id名获取元素节点
+	var y=x.getElementsByTagName("p");			根据标签名查找，根据查找的id获取该元素下的所有p标签
+	
+	document.getElementById("image").src="landscape.jpg";			改变 HTML 元素的属性
+	document.getElementById("p2").style.color="blue";				改变HTML css属性
+	
+事件
+	页面事件：
+	onload="fun()";				用户进入时会触发
+	onunload="fun()";			用户离开时触发
+	onchange="fun()";			当内容发生改变时
+	鼠标事件：
+	onmouseover="fun()"			当鼠标移动上去时触发
+	onmouseout="fun()"			当鼠标离开时触发
+	
+	onmousedown="fun()"			当鼠标点击时会触发
+	onmouseup="fun()"			当鼠标点击离开时触发
+	
+	创建新元素：
+	var para=document.createElement("p");					创建新的标签元素
+	var node=document.createTextNode("这是新段落。");		写入该标签内的内容
+	para.appendChild(node);									追加新的文本节点
+	
+	删除元素：
+	var parent=document.getElementById("div1");
+	var child=document.getElementById("p1");
+	parent.removeChild(child);
+	
+	parentNode获取子元素的父元素：
+	var child=document.getElementById("p1");
+	child.parentNode.removeChild(child);
+	
+6，Date日期，获取时间
+	var myDate=new Date() 				获取当前的时间
+	myDate.setFullYear(2008,7,9)		给日期对象设置一个固定的日期
+	getDate()							返回当前月中的某一天1-31
+	getDay()							返回星期几0-6
+	getMonth()							返回月份0-11
+	getFullYear()						返回4位数年份如，2018
+	getHours()							返回小时数，0-23
+	getMinutes()						返回对象的分钟数0-59
+	getSeconds()						返回对象的秒数0-59
+	
+7，数组
+	for(x in arr){arr[x]}				循环数组
+	arr1.concat.arr2 【concat】			合并数组
+	arr.join(".")	【join】			将数组组成字符串
+	arr.sort()							对数组进行排序
+
+8,算数
+	math.round()						四舍五入
+	math.ceil()							对数进行上舍入
+	math.floor()						对数进行下舍入
+	math.random()						0到1之间的随机数
+	math.max()							返回最大的数
+	math.min()							返回最小的数
+	
+BOM操作   window操作
+	window.history						浏览器的历史
+	history.back()						后退浏览器
+	history.forward()					前进浏览器
+	
+	alert("文本")						提示文本框
+	confirm("文本")						确认框
+	prompt('文本','默认值')				提示框
+	
+		
+	

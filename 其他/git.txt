@@ -1,0 +1,24 @@
+1，版本回退：
+	git log  						查看上传版本记录
+	git log --pretty=oneline		更清晰的查看以前的版本信息
+	git reset --hard HEAD^          回到上一个版本
+	git reset --hard HEAD^^         上上一个  【HEAD~100表示上100个版本】
+	git reset --hard 10121a(commit id)			可以拿到commit id 直接指定到那个版本,版本号写5,6个就可以，自动查找
+	git reflog   					git提供命令来记录每一次命令，方便关闭电脑后进行查找版本号
+
+2,撤销修改
+	git checkout -- 文件名			把工作区的修改全部撤销
+	
+3，删除文件
+	rm 文件名	
+4,创建分支,合并分支
+	git checkout -b dev					创建分支dev并切换到dev分支
+	git branch 							查看当前分支
+	git checkout master					切换到主分支中
+	git merge dev						merge命令合并指定分支到当前分支
+	git branch -d dev					删除没用的其他分支
+5,解决冲突
+	git pull 							将远程master分支获取下来，在本地合并
+	
+	
+	

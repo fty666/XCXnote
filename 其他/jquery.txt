@@ -1,0 +1,69 @@
+选择器：
+1，jQuery,元素选择器：
+	$(this).hide();   					//隐藏当前实例
+	$("#test").hide();					//隐藏id为test的实例
+	$("p").hide();						//隐藏所有<p>标签
+	$(".test").hide();					//隐藏所有class为test的标签
+2，属性选择器
+	$("[href]")							//选取所有带href属性的元素
+3，css选择器
+	$("p").css("background-color","red");
+4，显示，隐藏 hide()	show()
+	$(selector).toggle(speed,callback);
+	可选的 speed 参数规定隐藏/显示的速度，可以取以下值："slow"、"fast" 或毫秒。
+	可选的 callback 参数是 toggle() 方法完成后所执行的函数名称。
+	
+5,淡入淡出
+	fadeIn()							淡入
+	fadeOut()							淡出
+	fadeToggle()						淡入淡出
+	fadeTo()							允许渐变为给定的不透明度（值介于 0 与 1 之间）
+	
+6，滑动
+	slideDown()							用于向下滑动元素
+	slideUp()							向上滑动元素
+	slideToggle()						可向上向下滑动
+	animate()							自定义动画效果
+	stop()								停止动画
+	
+7，删除
+	remove()							删除被选元素及其子元素
+	empty()								删除被选元素的子元素
+	
+8,	DOM元素
+	查找父类：
+	parent()							方法返回被选元素的直接父元素，该方法只会获取一个父元素
+	parents()							返回被选元素的所有祖先元素，它一路向上直到文档的根元素
+	parentsUntil()		$("span").parentsUntil("div")		介于俩者之间的所有父元素
+	
+	查找子类：
+	children()							返回被选元素的所有直接子元素
+	$("div").children("p.1");			使用可选参数来过滤对子元素的搜索,搜索子类元素中P标签为1的元素操作
+	find()								返回被选元素的后代元素，一路向下直到最后一个后代
+	
+	查找同胞元素
+	siblings()							返回被选元素的所有同胞元素
+	next()								返回被选元素的下一个同胞元素
+	nextAll()							返回被选元素的所有跟随的同胞元素
+	nextUntil()							返回介于两个给定参数之间的所有跟随的同胞元素
+	
+	过滤元素
+	first()								返回被选元素的首个元素
+	last()								返回被选元素的最后一个元素
+	eq() 								返回被选元素中带有指定索引号的元素
+	filter()							允许您规定一个标准。不匹配这个标准的元素会被从集合中删除，匹配的元素会被返回
+	not()								返回不匹配标准的所有元素
+	
+9,AJAX	与服务器交换数据的艺术，它在不重载全部页面的情况下，实现了对部分网页的更新	
+
+    3,通用方式    $.ajax({
+                            url:'1.php',                【url请求的脚本】
+                            date:'id=100&age=10',       【data发送的数据】
+                            dataType:'json',            【dataType数据的类型】
+                            type:'GET',                 【type请求的类型  get或post】
+                            success:function(data){},   【success成功的执行代码】
+                            error:function(){},         【error失败的执行代码】
+                            timeout:3000,               【timeout 超出时间】
+                            async:false                 【async是否异步   true  异步  false 同步】
+                        })	
+	
