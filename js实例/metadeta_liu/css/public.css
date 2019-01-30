@@ -1,0 +1,67 @@
+/*边框*/
+.bd{
+    border:1px solid #ddd;
+}
+body{
+    overflow-y: auto;
+    overflow-x:hidden ;
+}
+.list{
+    /*display: none;*/
+}
+.listBox{
+    display: none;
+}
+.container-fluid{
+    padding: 0;
+}
+.col-sm-2{
+    padding: 0;
+}
+.labelBox,.formBox{
+    width: 100%;
+    overflow: hidden;
+}
+.labelBox {
+    height: 30px;
+    line-height: 30px;
+    padding-left: 5px;
+}
+.labelBox ul{
+    overflow: hidden;
+    margin-bottom: 0;
+}
+.labelBox li{
+    float: left;
+    margin-right: 10px;
+    cursor:pointer;
+}
+.labelBox .form-control{
+    padding: 0;
+    height: 28px;
+    display:inline-block;
+    width: 70%;
+}
+.labelBox .btn{
+    padding: 4px 12px;
+}
+/*主题部分*/
+.themeBox{
+    overflow-y: auto;
+    height: 100%;
+}
+.table thead tr{
+    background-color: #D7D7D7;
+}
+.table th{
+    text-align: center;
+}
+.table td:last-child{
+    text-align: center;
+}
+.table td a{
+    margin-right: 10px;
+}
+.table .bgColer{
+    background-color: #f1f5f9;
+}

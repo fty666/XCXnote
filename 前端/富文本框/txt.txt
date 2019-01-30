@@ -1,0 +1,12 @@
+网址：https://blog.csdn.net/div_ma/article/details/79536634
+
+1，安装vue-quill-editor
+2，在main.js中引入
+	import  VueQuillEditor from 'vue-quill-editor'
+	// require styles 引入样式
+	import 'quill/dist/quill.core.css'
+	import 'quill/dist/quill.snow.css'
+	import 'quill/dist/quill.bubble.css'
+	Vue.use(VueQuillEditor)
+	
+3，引入模板UE.vue使用

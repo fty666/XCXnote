@@ -1,4 +1,4 @@
-
+ npm install -g vue-cli				全局安装，脚手架构建工具
 安装完成vue之后
 vue init webpack '项目名称'						【esl为No】
 npm install       //下载依赖

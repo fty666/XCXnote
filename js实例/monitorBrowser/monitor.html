@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+浏览器监听
+<script type="text/javascript">
+    // 移动了就更新最近一次移动的时间。
+    document.onmousemove = function(){
+        window.lastMove = new Date().getTime();
+    };
+    window.lastMove = new Date().getTime();//最近一次移动时间
+    window.setInterval(function(){//每1秒钟检查一次。
+        var now = new Date().getTime();
+// 如果超时了
+        if( now - lastMove > 1000){
+// 自己写了撒。
+            console.log(1)
+        }
+    }, 10000);
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+只能导出表格，必须是表格组件，并且表格内部不能有btn操作方法
+1，安装xlsx组件，file-saver组件
+
+
+2，main.js中引用
+	import elxel from './assets/js/elxel'
+	Vue.use(elxel)
+	
+	
+3，vue文件中使用
+	//调用elxel公共方法，exportFunc('要导出表格选择器id','导出表格的名称');
+	<el-button type="success" @click="exportFunc('listTable','财务清清单')">导出</el-button>
+	
+	//导出表格的外包裹id选择器
+	<div id="listTable">"表格"</div>	

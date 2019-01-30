@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作indexedDB</title>
+</head>
+<body>
+操作indexedDB数据库！！！！
+
+
+<script>
+//    var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+//    var request=window.indexedDB.open('testDB');
+    var myDB={
+        name:'user',
+        version:1,
+        db:null
+    };
+//    创建数据库表方法
+    function openDB (name,version) {
+        var version=version || 1;
+        var request=window.indexedDB.open(name,version);
+        request.onerror=function(e){
+            console.log(e.currentTarget.error.message);
+        };
+        request.onsuccess=function(e){
+            myDB.db=e.target.result;
+        };
+        request.onupgradeneeded=function(e){
+            var db=e.target.result;
+            if(!db.objectStoreNames.contains('students')){
+                var store   =   db.createObjectStore('students',{keyPath:"id"});
+                store.createIndex('nameIndex',"name",{unique:true});
+            }
+            console.log('DB version changed to '+version);
+        };
+    };
+    var students = {
+        id:001,
+        name:"aaa",
+        age:12
+    };
+//    存值方法
+function addDate(db,storeName,data){
+    var transaction=db.transaction(storeName,'readwrite');
+    var store=transaction.objectStore(storeName);
+
+//    for(var i=0;i<studentss.length;i++){
+        store.add(data);
+//    }
+}
+openDB(myDB.name,myDB.version);
+setTimeout(function(){
+    addDate(myDB.db,"students",students)
+},1000)
+
+//通过传值查找数据方法
+function getDataByKey(db,storeName,value){
+    var transaction=db.transaction(storeName,'readwrite');
+    var store=transaction.objectStore(storeName);
+    var request=store.get(value);
+    request.onsuccess=function(e){
+        var student=e.target.result;
+        console.log(student.name);
+    };
+}
+//通过传值查找数据
+setTimeout(function(){
+    getDataByKey(myDB.db,"students",001)
+},1000)
+//更新值方法
+function updateDataByKey(db,storeName,value){
+    var transaction=db.transaction(storeName,'readwrite');
+    var store=transaction.objectStore(storeName);
+    var request=store.get(value);
+    request.onsuccess=function(e){
+        var student=e.target.result;
+        student.age=35;
+        store.put(student);
+    };
+}
+setTimeout(function(){
+    updateDataByKey(myDB.db,"students",001)
+},1000)
+
+
+//var myDBs={
+//    name:'test',
+//    version:3,
+//    db:null
+//};
+//关闭数据库
+//openDB(myDBs.name,myDBs.version);
+//setTimeout(function(){
+//    deleteDB(myDBs.db);
+//    deleteDB(myDBs.name);
+//},500);
+
+
+</script>
+</body>
+</html>

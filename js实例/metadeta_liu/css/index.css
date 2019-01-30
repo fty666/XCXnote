@@ -1,0 +1,17 @@
+body{
+    overflow: hidden;
+    min-width: 1200px;
+}
+.container-fluid{
+    padding: 0;
+}
+
+.heda img{
+    height: 60px;
+}
+.logo {
+    min-width: 200px;
+}
+iframe{
+    overflow-y: auto;
+}

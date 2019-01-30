@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        h3{
+            margin-top: 10px !important;
+            margin-bottom: 10px !important;
+            font-weight: 100 ;
+            color: #555;
+            font-size: 20px;
+        }
+        .list-unstyled{overflow: hidden; width: 100%;}
+        .navigation{background-color: #fff;border: 1px solid #ddd; margin-top: 20px ;}
+        .navigation,.uPcoming_Box{ padding: 10px;overflow: hidden;border-radius: 10px;}
+        .navigation .list-unstyled { padding-left: 13%; }
+        .navigation .list-unstyled li{ float: left; margin-right: 30px; text-align: center;cursor:pointer}
+        .list-unstyled span{ font-size: 35px;padding: 15px;border-radius: 50%;}
+        .navigation p{ margin-bottom: 0px; margin-top: 20px; }
+        /*列表部分*/
+        .uPcoming_Box{padding: 5px 0;}
+        .uPcoming_Box .uPcoming_list_header{  border-bottom: 1px solid #ddd;overflow: hidden;}
+        .uPcoming_Box>div{ width: 49%;}
+        .uPcoming_Box ul, .uPcoming_list_header{  padding-left: 20px;  }
+        .uPcoming_Box .uPcoming_list{ background-color: #fff; }
+        .uPcoming_Box li{  margin-top: 3px;  }
+        .uPcoming_list{ margin-top: 20px;border-radius: 10px;}
+        .uPcoming_list_header .pull-right{padding-right: 20px;line-height: 40px; }
+        .uPcoming_list_box{ max-height:300px; overflow:hidden;}
+
+        /*设置内容按钮样式*/
+        .uPcoming_list_box .btn{
+            padding:  2px 5px !important;
+            font-size: 12px;
+        }
+        .uPcoming_list_box .glyphicon{
+            margin-right: 3px
+        }
+        /*便签单独样式*/
+        .notes p{padding: 0 20px ;border-bottom: 1px solid #ddd; }
+        .notes a{  font-size: 18px;font-weight: 900;}
+        .notes .uPcoming_list_box span{color: #999;font-size: 12px;line-height: 20px;}
+    </style>
+</head>
+<body style="background-color: #F1F1F1;padding-right: 10px;margin-bottom: 100px;">
+<!--主题部分-->
+<div class="">
+    <!--图标导航部分-->
+    <div class="navigation" >
+        <ul class="list-unstyled">
+            <li>
+                <span class="glyphicon glyphicon-file" style="background-color: #DD4810"></span>
+                <p> 待阅文件 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-comment" style="background-color: #98B50E"></span>
+                <p> 邮件 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-phone" style="background-color: #3F74BA"></span>
+                <p> 手机 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-print" style="background-color: #FF9A00"></span>
+                <p> 打印 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-camera" style="background-color: #05961A"></span>
+                <p> 图片 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-wrench" style="background-color: #0091FF"></span>
+                <p> 设置 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-cutlery" style="background-color: #98B900"></span>
+                <p> 投票管理 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-eye-open" style="background-color: #FF9A00"></span>
+                <p> 查看 </p>
+            </li>
+        </ul>
+    </div>
+    <!--列表部分-->
+    <div class="uPcoming_Box">
+        <!--左侧列表-->
+        <div class=" pull-left">
+            <!--第一个内容盒子  通知公告-->
+            <div class="uPcoming_list">
+                <div class="uPcoming_list_header">
+                    <h3 class="pull-left" title="通知公告">通知公告</h3>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary sWitch" title="显示/隐藏"><span class="glyphicon glyphicon-plus"></span></button>
+                        <button type="button" class="btn btn-primary" title="更多"><span class="glyphicon glyphicon-list"></span></button>
+                    </div>
+                </div>
+                <div class="uPcoming_list_box">
+                    <table class="table table-striped text-center">
+                        <thead>
+                            <tr >
+                                <td>发布</td>
+                                <td>日期</td>
+                                <td>状态</td>
+                                <td>标题</td>
+                                <td>操作</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr title="当前为紧急通知">
+                                <td>总公司</td>
+                                <td>2017-11-22</td>
+                                <td>紧急</td>
+                                <td>周一上午全体会议</td>
+                                <td><button class="btn"> <span class="glyphicon glyphicon-search"></span>查看</button></td>
+                            </tr>
+                            <tr title="当前为普通通知">
+                                <td>总公司</td>
+                                <td>2017-11-22</td>
+                                <td>普通</td>
+                                <td>周一上午全体会议</td>
+                                <td><button class="btn"> <span class="glyphicon glyphicon-search"></span>查看</button></td>
+                            </tr>
+                            <tr title="当前为一般通知">
+                                <td>总公司</td>
+                                <td>2017-11-22</td>
+                                <td>一般</td>
+                                <td>周一上午全体会议</td>
+                                <td><button class="btn"> <span class="glyphicon glyphicon-search"></span>查看</button></td>
+                             </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--第二个内容盒子  我的流程-->
+            <div class="uPcoming_list">
+                <div class="uPcoming_list_header">
+                    <h3 class="pull-left">流程管理</h3>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary sWitch" title="显示/隐藏"><span class="glyphicon glyphicon-plus"></span></button>
+                        <button type="button" class="btn btn-primary" title="更多"><span class="glyphicon glyphicon-list"></span></button>
+                    </div>
+                </div>
+                <div class="uPcoming_list_box">
+                    <table class="table table-striped text-center ">
+                        <thead>
+                        <tr >
+                            <td>类型</td>
+                            <td>日期</td>
+                            <td>状态</td>
+                            <td>标题</td>
+                            <td>操作</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr title="当前为紧急通知">
+                            <td>日计划</td>
+                            <td>2017-11-22</td>
+                            <td>未完成</td>
+                            <td>见客户</td>
+                            <td><button class="btn"> <span class="glyphicon glyphicon-search"></span>查看</button></td>
+                        </tr>
+                        <tr title="当前为紧急通知">
+                            <td>日计划</td>
+                            <td>2017-11-23</td>
+                            <td>未完成</td>
+                            <td>签合同</td>
+                            <td><button class="btn"> <span class="glyphicon glyphicon-search"></span>查看</button></td>
+                        </tr>
+                        <tr title="当前为紧急通知">
+                            <td>日计划</td>
+                            <td>2017-11-24</td>
+                            <td>未完成</td>
+                            <td>请假</td>
+                            <td><button class="btn"> <span class="glyphicon glyphicon-search"></span>查看</button></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <!--右侧列表-->
+        <div class=" pull-right">
+            <!--第一个内容盒子 我的便签-->
+            <div class="notes uPcoming_list">
+                <!--第一个内容盒子 我的便签-->
+                <div class="uPcoming_list_header">
+                    <h3 class="pull-left">我的便签</h3>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary sWitch" title="显示/隐藏"><span class="glyphicon glyphicon-plus"></span></button>
+                        <button type="button" class="btn btn-primary" title="更多"><span class="glyphicon glyphicon-list"></span></button>
+                    </div>
+                </div>
+                <div class="uPcoming_list_box">
+                    <p>
+                        <a href="#" class=" show">无标题   <span class="pull-right">2011-11-22</span></a>
+                        asdas
+                    </p>
+                    <p>
+                        <a href="#" class=" show">你好   <span class="pull-right">2011-11-22</span></a>
+                        你在干什么啊
+                    </p>
+                </div>
+            </div>
+            <!--第二个内容盒子  我的工作计划-->
+            <div class="uPcoming_list">
+                <div class="uPcoming_list_header">
+                    <h3 class="pull-left">工作计划</h3>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary sWitch" title="显示/隐藏"><span class="glyphicon glyphicon-plus"></span></button>
+                        <button type="button" class="btn btn-primary" title="更多"><span class="glyphicon glyphicon-list"></span></button>
+                    </div>
+                </div>
+                <div class="uPcoming_list_box">
+                    <table class="table table-striped text-center ">
+                        <thead>
+                        <tr >
+                            <td>类型</td>
+                            <td>日期</td>
+                            <td>状态</td>
+                            <td>标题</td>
+                            <td>操作</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr title="当前为紧急通知">
+                            <td>日计划</td>
+                            <td>2017-11-22</td>
+                            <td>未完成</td>
+                            <td>总结日报</td>
+                            <td><button class="btn"> <span class="glyphicon glyphicon-search"></span>查看</button></td>
+                        </tr>
+                        <tr title="当前为紧急通知">
+                            <td>日计划</td>
+                            <td>2017-11-23</td>
+                            <td>未完成</td>
+                            <td>总结周报</td>
+                            <td><button class="btn"> <span class="glyphicon glyphicon-search"></span>查看</button></td>
+                        </tr>
+                        <tr title="当前为紧急通知">
+                            <td>日计划</td>
+                            <td>2017-11-24</td>
+                            <td>未完成</td>
+                            <td>总结月报</td>
+                            <td><button class="btn"> <span class="glyphicon glyphicon-search"></span>查看</button></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+    </div>
+</div>
+<script src="js/jquery-3.2.1.js"></script>
+<script>
+    $(".sWitch").click(function(){
+        console.log($(this).parent().parent().siblings(".uPcoming_list_box").css("display"));
+        if($(this).parent().parent().siblings(".uPcoming_list_box").css("display")=="block"){
+            $(this).parent().parent().siblings(".uPcoming_list_box").slideUp(500)
+            $(this).children("span").removeClass("glyphicon-plus").addClass("glyphicon-minus")
+        }else{
+            $(this).parent().parent().siblings(".uPcoming_list_box").slideDown(500)
+            $(this).children("span").removeClass("glyphicon-minus").addClass("glyphicon-plus")
+        }
+
+
+
+    })
+</script>
+</body>
+</html>

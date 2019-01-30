@@ -1,0 +1,24 @@
+1，安装，ali-oss组件
+//common.js中定义阿里库的基本信息
+    Vue.prototype.$ali = {                                             //阿里云OSS key参数(上传文件和图片需要的)
+          region: 'oss-cn-beijing',
+          accessKeyId: 'LTAI8ygujYgDvLJ9',
+          accessKeySecret: 'nLrO1bpn9IOpEu0tt0zyAaChc22j0c',
+          bucket: 'star-1'
+    }
+
+2，头部引入
+import UpAli from '../activity/upload-ali.vue';
+
+3，html代码
+<up-ali class="img_cha" ref="aliComponent" @getUrl="imgUrl1($event, 1)" :fileNumber="1"
+        :imgWidth="150" :imgHeight="150"
+        :defaultImg="photo"></up-ali>
+		
+4，components: {				// 设置上传图片组件返回路径方法
+            UpAli,
+        },
+		
+5，imgUrl1(e) {
+    this.photo = e[0];
+},

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/page.css">
+    <style>
+        label{
+            height: 34px;
+            line-height: 34px;
+            text-align: right;
+        }
+        .userBox ,.city{
+            padding-top: 15px;
+        }
+        h5{
+            padding-left: 5px;
+        }
+    </style>
+</head>
+<body >
+<div class="container-fluid">
+    <!--列表-->
+    <div class="list">
+        <div style="height:100%;" class="col-sm-2" >
+            <iframe src="orgTree.html" frameborder="0" width="100%"height="600"></iframe>
+        </div>
+        <div class="col-sm-10 themeBox">
+            <div class="labelBox form-group">
+                <ul class="list-unstyled">
+                    <li onclick="operating($(this),'')"><span class="glyphicon glyphicon-plus-sign" ></span>新增</li>
+                    <li onclick="operating($(this),'open')"><span class="glyphicon glyphicon-folder-open"></span>修改</li>
+                    <li onclick="operating($(this),'delect')"><span class="glyphicon glyphicon-trash"></span>删除</li>
+                    <li onclick="backgroundSwitch($(this),'previous')"><span class="glyphicon glyphicon-circle-arrow-up"></span>上一条</li>
+                    <li onclick="backgroundSwitch($(this),'next')"><span class="glyphicon glyphicon-circle-arrow-down"></span>下一条</li>
+                    <li class="pull-right"><input type="text" class="form-control"> <button class="btn btn-success">检索</button></li>
+                </ul>
+            </div>
+            <div class="formBox">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr >
+                        <th></th>
+                        <th>姓名</th>
+                        <th>年龄</th>
+                        <th>出生日期</th>
+                        <th>性别</th>
+                        <th>电话</th>
+                        <th>身份证号</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="bgColer" onclick="backgroundSwitch($(this,'clicks'))">
+                        <td><input type="radio" name="list"></td>
+                        <td>MissLiu</td>
+                        <td>11</td>
+                        <td>1993.12.12</td>
+                        <td>男</td>
+                        <td>11111111111</td>
+                        <td>111111111111111111</td>
+                        <td><a href="javascript:0"  onclick="operating($(this),'delect')" data-nuber=0>删除</a><a href="javascript:0" onclick="operating($(this),'View')">查看</a></td>
+                    </tr>
+                    <tr onclick="backgroundSwitch($(this,'clicks'))">
+                        <td><input type="radio" name="list"></td>
+                        <td>MissLiu</td>
+                        <td>11</td>
+                        <td>1993.12.12</td>
+                        <td>男</td>
+                        <td>11111111111</td>
+                        <td>111111111111111111</td>
+                        <td><a href="javascript:0"  onclick="operating($(this),'delect')" data-nuber=1>删除</a><a href="javascript:0" onclick="operating($(this),'View')">查看</a></td>
+                    </tr>
+                    <tr onclick="backgroundSwitch($(this,'clicks'))">
+                        <td><input type="radio" name="list"></td>
+                        <td>MissLiu</td>
+                        <td>11</td>
+                        <td>1993.12.12</td>
+                        <td>男</td>
+                        <td>11111111111</td>
+                        <td>111111111111111111</td>
+                        <td><a href="javascript:0"  onclick="operating($(this),'delect')" data-nuber=2>删除</a><a href="javascript:0" onclick="operating($(this),'View')">查看</a></td>
+                    </tr>
+                    <tr onclick="backgroundSwitch($(this,'clicks'))">
+                        <td><input type="radio" name="list"></td>
+                        <td>MissLiu</td>
+                        <td>11</td>
+                        <td>1993.12.12</td>
+                        <td>男</td>
+                        <td>11111111111</td>
+                        <td>111111111111111111</td>
+                        <td><a href="javascript:0"  onclick="operating($(this),'delect')">删除</a><a href="javascript:0" onclick="operating($(this),'View')">查看</a></td>
+                    </tr>
+                    <tr onclick="backgroundSwitch($(this,'clicks'))">
+                        <td><input type="radio" name="list"></td>
+                        <td>MissLiu</td>
+                        <td>11</td>
+                        <td>1993.12.12</td>
+                        <td>男</td>
+                        <td>11111111111</td>
+                        <td>111111111111111111</td>
+                        <td><a href="javascript:0"  onclick="operating($(this),'delect')">删除</a><a href="javascript:0" onclick="operating($(this),'View')">查看</a></td>
+                    </tr>
+                    <tr onclick="backgroundSwitch($(this,'clicks'))">
+                        <td><input type="radio" name="list"></td>
+                        <td>MissLiu</td>
+                        <td>11</td>
+                        <td>1993.12.12</td>
+                        <td>男</td>
+                        <td>11111111111</td>
+                        <td>111111111111111111</td>
+                        <td><a href="javascript:0"  onclick="operating($(this),'delect')">删除</a><a href="javascript:0" onclick="operating($(this),'delect')">查看</a></td>
+                    </tr>
+                    <tr onclick="backgroundSwitch($(this,1))">
+                        <td><input type="radio" name="list"></td>
+                        <td>MissLiu</td>
+                        <td>11</td>
+                        <td>1993.12.12</td>
+                        <td>男</td>
+                        <td>11111111111</td>
+                        <td>111111111111111111</td>
+                        <td><a href="javascript:0"  onclick="operating($(this),'delect')">删除</a><a href="javascript:0" onclick="operating($(this),'delect')">查看</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pageTest" style="overflow: hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--详情部分-->
+    <div class="listBox container-fluid" style="padding: 0 10px;margin-bottom: 200px;" >
+        <!--用户信息-->
+        <div class="user form-group">
+            <div class="">
+                <h5>用户信息</h5>
+            </div>
+            <div class="userBox bd">
+                <div class=" form-group   row" >
+                    <div class="col-sm-6">
+                        <label class=" control-label col-sm-2">工单号</label>
+                        <div class="col-sm-8">
+                            <input  class="form-control " placeholder="请输入工单号"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class=" control-label col-sm-2">姓名</label>
+                        <div class="col-sm-8">
+                            <input  class="form-control" placeholder=" 请输入姓名"/>
+                        </div>
+                    </div>
+                </div>
+                <div class=" form-group   row" >
+                    <div class="col-sm-6">
+                        <label class=" control-label col-sm-2">身份证</label>
+                        <div class="col-sm-8">
+                            <input  class="form-control " placeholder="请输入身份证"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class=" control-label col-sm-2">手机号</label>
+                        <div class="col-sm-8">
+                            <input  class="form-control" placeholder=" 请输入手机号"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--用户地址-->
+        <div class="city bd form-group">
+            <div class=" form-group   row" >
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">身份证</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control " placeholder="请输入身份证"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">手机号</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control" placeholder=" 请输入手机号"/>
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group   row" >
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">身份证</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control " placeholder="请输入身份证"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">手机号</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control" placeholder=" 请输入手机号"/>
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group   row" >
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">身份证</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control " placeholder="请输入身份证"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">手机号</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control" placeholder=" 请输入手机号"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--用户地址-->
+        <div class="city bd form-group">
+            <div class=" form-group   row" >
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">身份证</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control " placeholder="请输入身份证"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">手机号</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control" placeholder=" 请输入手机号"/>
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group   row" >
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">身份证</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control " placeholder="请输入身份证"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">手机号</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control" placeholder=" 请输入手机号"/>
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group   row" >
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">身份证</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control " placeholder="请输入身份证"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">手机号</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control" placeholder=" 请输入手机号"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--用户地址-->
+        <div class="city bd form-group">
+            <div class=" form-group   row" >
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">身份证</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control " placeholder="请输入身份证"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">手机号</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control" placeholder=" 请输入手机号"/>
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group   row" >
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">身份证</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control " placeholder="请输入身份证"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">手机号</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control" placeholder=" 请输入手机号"/>
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group  row" >
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">身份证</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control " placeholder="请输入身份证"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class=" control-label col-sm-2">手机号</label>
+                    <div class="col-sm-8">
+                        <input  class="form-control" placeholder=" 请输入手机号"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--操作选项-->
+        <duv class="  form-group  ">
+            <button class="btn btn-success">
+                保存
+            </button>
+            <button class="btn btn-danger">
+                删除
+            </button>
+            <button class="btn btn-default">
+                取消
+            </button>
+        </duv>
+    </div>
+
+
+</div>
+
+<script src="js/jquery-3.2.1.js"></script>
+<script src="js/function.js"></script>
+<script type="text/javascript" src="js/page.js"></script>
+<script>
+//    记录当前被选中的列表第几个
+    var index=0;
+//    点击列表调用列表背景切换
+//    $("tbody tr").click(function(){
+//        backgroundSwitch($(this,"click"))
+//    })
+//列表页切换方法
+    function  backgroundSwitch(_this,event){
+
+        if(event=="previous"){
+            index--;
+            if(index<=0){
+                index=0;
+            }
+        }else if(event=="next"){
+            index++;
+            if(index>=$("tbody tr").length){
+                index=$("tbody tr").length-1;
+            }
+        }else{
+            index =_this.index();
+        }
+        $("tbody tr").eq(index).addClass("bgColer").siblings().removeClass("bgColer");
+        _this.children().eq(0).children("input").attr("checked",true);
+
+    }
+//    列表删除 新增方法
+    function operating(_this,event){
+//        空为新增
+        if(event==""){
+            $(".list").hide();
+            $(".listBox").show();
+        }else if(event=="delect"){
+                index=0;
+//                调用AJAX方法
+        }else if(event=="open"){
+//            打开当前页面
+            $("tbody tr").eq(index)
+            $(".list").hide();
+            $(".listBox").show();
+//            调用AJAX方法
+        }else if(event=="View"){
+//            查看方法
+            $(".list").hide();
+            $(".listBox").show();
+//            调用AJAX方法
+        }
+
+    }
+
+//    分页
+$('.pageTest').page({
+    leng: 66,//分页总数
+    activeClass: 'activP' , //active 类样式定义
+    clickBack:function(page){
+        console.log(page)
+    }
+})
+</script>
+</body>
+</html>

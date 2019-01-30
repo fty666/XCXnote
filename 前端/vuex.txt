@@ -1,0 +1,46 @@
+		https://www.bilibili.com/video/av36610432/?redirectFrom=h5
+		
+		
+		1，/*
+			  state中相当于定义一个全局的变量，存储数据，
+			  页面如果调用这个全局的变量
+			  this.$store.state.变量名
+		 */
+		 
+		 
+		 
+		 
+		2 ，/*
+			1，mutations中为修改state变量的方法
+			方法名（state，要修改的内容）
+
+			页面调用方法名：
+			this.$store.commit('方法名')
+
+		   2， 获取state变量数据的第二种方法，了解就行
+			getters:{
+			  方法名：addcount(state){
+				return state.变量名
+			  }
+			}
+			页面使用：
+			this.$store.getters.方法名
+		   */
+		   
+		   
+		   
+		   
+		   
+		   
+		3， /*
+			  actions与mutations一样修改state变量，
+			  mutations必须是同步请求
+			  actions修改可以使异步请求
+			  1，方法名（context）{}   context为一个容器，容器内有许多封装好的方法调用
+			  2，{commit}为异步请求方法，省略context，{}直接调用方法
+				方法名（{commit}）{
+				  commit('修改的变量'，'修改的内容')   调用的为mutations方法中的变量
+				}
+			  页面使用：
+			  this.$store.dispatch(方法名)
+			  * */

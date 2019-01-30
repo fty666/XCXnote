@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        a{
+            color: #333;
+            list-style: none;
+        }
+        .list-unstyled{
+            overflow: hidden;
+            width: 100%;
+        }
+        .navigation{
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+        .navigation,.listBox{
+            margin: 20px 0;
+            padding: 10px;
+            overflow: hidden;
+            border-radius: 10px;
+
+        }
+        .navigation .list-unstyled {
+            padding-left: 13%;
+        }
+        .navigation .list-unstyled li{
+            float: left;
+            margin-right: 30px;
+            text-align: center;
+            cursor:pointer
+
+        }
+        .list-unstyled span{
+           font-size: 35px;
+            padding: 15px;
+            border-radius: 50%;
+        }
+        .navigation p{
+            margin-bottom: 0px;
+            margin-top: 20px;
+        }
+        /*列表部分*/
+
+        .listBox{
+            padding: 5px 0;
+        }
+        .listBox h4{
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+           margin-right: 100px;
+        }
+        .listBox b{
+            border-bottom: 3px solid #4374B0;
+            padding-bottom: 10px;
+
+        }
+        .listBox>div{
+            width: 49%;
+            background-color: #fff;
+            border-radius: 5px;
+            padding-left: 20px;
+
+        }
+        .listBox li{
+            margin-top: 3px;
+        }
+        .list_title a{
+            color: #3D73B5;
+            font-size: 12px;
+            line-height: 20px;
+
+        }
+    </style>
+</head>
+<body style="background-color: #F1F1F1 ;padding-right: 10px;">
+<!--主题部分-->
+<div class="">
+    <!--图标导航部分-->
+    <div class="navigation" >
+        <ul class="list-unstyled">
+            <li>
+                <span class="glyphicon glyphicon-file" style="background-color: #DD4810"></span>
+                <p> 待阅文件 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-comment" style="background-color: #98B50E"></span>
+                <p> 邮件 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-phone" style="background-color: #3F74BA"></span>
+                <p> 手机 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-print" style="background-color: #FF9A00"></span>
+                <p> 打印 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-camera" style="background-color: #05961A"></span>
+                <p> 图片 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-wrench" style="background-color: #0091FF"></span>
+                <p> 设置 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-cutlery" style="background-color: #98B900"></span>
+                <p> 投票管理 </p>
+            </li>
+            <li>
+                <span class="glyphicon glyphicon-eye-open" style="background-color: #FF9A00"></span>
+                <p> 查看 </p>
+            </li>
+        </ul>
+    </div>
+    <!--列表部分-->
+    <div class="listBox">
+        <div class="leftList pull-left">
+           <div class="list_title"><b>内部信息</b><a href="#" class="pull-right">更多&gt&gt</a></div>
+            <ul class="list-unstyled">
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+
+            </ul>
+        </div>
+        <div class="rightList pull-right">
+            <h4><b>内部信息</b><a href="#" class="pull-right">更多&gt&gt</a></h4>
+            <ul class="list-unstyled">
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+                <li><a href="#">这是一条内部信息</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+官网：https://v-charts.js.org/#/
+
+1，安装v-charts，并在main.js引用使用
+	import VCharts from 'v-charts'
+	Vue.use(VCharts)
+
+2,vue中使用
+	<!--图表-->
+    <el-dialog title="图表查看" :visible="centerDialogVisible" @close="close" size="small">
+      <ve-histogram :data="chartData" :settings="chartSettings"></ve-histogram>
+    </el-dialog>
+	
+	//data值传参
+	return{
+		this.chartSettings={
+        showLine: ['流水/日']
+		}
+		chartData:{
+          columns: ['日期','总单量', '流水/日',],
+          rows:[]
+        },
+	}
+	
+	
+	  getInfos(){
+        this._getData('adminActivity/getWasteBookByDay', {
+          startTime: '',
+          endTime: '',
+          page:1,
+          pageSize:20,
+          type: '',
+        }, data => {
+          this.box=[];
+          this.info = data.pageInfo.list;
+          console.log(this.info)
+          var arr=this.info;
+          for(var i=this.info.length-1;i>=0;i--){
+            this.box.push({
+              '日期':this.info[i].time,
+              '总单量':this.info[i].num,
+              '流水/日':this.info[i].money
+            })
+          }
+          console.log(this.box)
+          this.chartData.rows=this.box;
+        })
+      },

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>云平台主页</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <!--<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">-->
+    <link rel="stylesheet" href="css/b.tabs.css">
+    <link rel="stylesheet" href="fonts/glyphicons-halflings-regular.woff">
+    <link rel="stylesheet" href="fonts/glyphicons-halflings-regular.ttf">
+    <style type="text/css">
+        /*表头样式*/
+        .heda{
+            height: 60px;
+            background:url(imges/title.png)no-repeat;
+            width:100%;
+            min-width:900px;
+            height:60px;
+            background-size:100% 100%;
+        }
+        div.menuSideBar { }
+        div.menuSideBar li.nav-header { font-size: 14px; padding: 3px 15px; }
+        div.menuSideBar .nav-list > li > a, div.menuSideBar .dropdown-menu li a { -webkit-border-radius: 0px; -moz-border-radius: 0px; -ms-border-radius: 0px; border-radius: 0px; }
+        .bodyBox .content{
+            width: 85%;
+        }
+        #mainFrameTabs{
+            background-color: #fff;
+            margin-left: 15px;
+            border-radius: 7px;
+            padding-top: 10px;
+        }
+    </style>
+
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/function.js"></script>
+    <script>
+        dyniframesize();
+    </script>
+
+</head>
+<body>
+<!--头部-->
+    <div class=" heda">
+        <!--左侧Logo-->
+        <div class="pull-left  text-center"  >
+          <div class="logo">
+              <img src="imges/logo1.jpg" alt=""  >
+          </div>
+        </div>
+    </div>
+<!--主题部分-->
+    <div class=" bodyBox container-fluid">
+        <div class="pull-left " style="padding:10px 0;width:15%;max-width: 200px;">
+            <div class=" menuSideBar">
+                <ul class="  list-unstyled" id="menuSideBar">
+                    <li class="nav-divider">  <div>
+                        <span class="glyphicon glyphicon-wrench"></span>
+                    </div>菜单1
+                        <ul class="list-unstyled childreList">
+                            <li mid="tab1" funurl="uPcoming.html"><a href="javaxcript:0">页面1</a></li>
+                            <li mid="tab2" funurl="features.html"><a href="javaxcript:0">页面2</a></li>
+                            <li mid="tab3" funurl="html3.html"><a href="javaxcript:0">页面3</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-divider">  <div>
+                        <span class="glyphicon glyphicon-cutlery" ></span>
+                    </div>菜单2
+                        <ul class="list-unstyled childreList">
+                        <li mid="tab11" funurl="html1.html">页面11</li>
+                        <li mid="tab22" funurl="html22.html">页面22</a></li>
+                        <li mid="tab33" funurl="html33.html">页面32</a></li>
+                    </ul></li>
+                    <li class="nav-divider"><div>
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    </div>菜单3
+                        <ul class="list-unstyled childreList">
+                        <li mid="tab11" funurl="html1.html">页面11</li>
+                        <li mid="tab22" funurl="html22.html">页面22</a></li>
+                        <li mid="tab33" funurl="html33.html">页面32</a></li>
+                    </ul></li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="pull-left content pull-left" style="background-color:#F1F1F1">
+            <div class="contentBox" id="mainFrameTabs" >
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active noclose"><a href="#bTabs_navTabsMainPage" data-toggle="tab">首页</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="bTabs_navTabsMainPage">
+                        <iframe src="uPcoming.html" frameborder="0" scrolling="yes" id="Upcoming" width="100%"></iframe>
+                    </div>
+                </div>
+                <!--iframe-->
+
+            </div>
+        </div>
+    </div>
+<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+<script type="text/javascript" src="js/index/b.tabs.js" ></script>
+<script type="text/javascript" src="js/index/demo.js" ></script>
+<script>
+    window.onload=function(){
+        $("iframe").css("height",$(window).height()-110);
+        $("iframe").css("width",$(".col-sm-10").width());
+         $(window).resize(function() {
+             $("iframe").css("height",$(window).height()-110)
+             $("iframe").css("width",$(".col-sm-10").width())
+         });
+
+    }
+    $(function () {
+//        点击一级菜单出现手风琴效果
+        $("#menuSideBar").children("li").click(function () {
+            if ($(this).children("ul").css("display") != "block") {
+                $(this).siblings().children("ul").slideUp();
+                $(this).children("ul").slideDown();
+//                $(this).children("ul").slideUp();
+            }
+        })
+
+    })
+</script>
+</body>
+</html>
