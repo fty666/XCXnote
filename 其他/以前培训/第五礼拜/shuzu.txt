@@ -1,0 +1,72 @@
+<?php
+     /*
+     一·file_get_contents('文件名') 
+            获取文件内容,返回字符
+        str_replace(查啥,换成啥,在哪儿查)   替换
+        file_put_contents('文件名',内容)  写回到文件中去
+    */
+    /*
+     二 定义数组：下标为数字 索引数组
+        下标字符：关联数组   
+    */
+        $a[0]= '内容';
+        $jc[0] = '姜超';
+        $jc[1] = '男';
+        $jc[2] = 18;
+        $jc[] = '内蒙'; // 方括中不加内容, 会用数组中最大下标+1
+        $jc[2] = 27;    //覆盖上面的字节2
+        echo $jc[0];   
+        echo $jc[1];
+        echo $jc[2],'<br>';
+    //三：定义数组的几种方式：1通过array()定义
+    $fty = array('fty','nan',);
+    $fty2 = array('name'=>'fty','sex'=>'nan','age'=>18);
+    echo '<pre>';  //是数组可以顺序排列
+    print_r($fty);  //输出数组的方式
+    //通过[]定义 php>=5.4版本以上可以使用
+    $fty=['name'=>'fty','sex'=>'nan','age'=>20];
+    print_r ($fty);
+    /*
+      四：foreach(数组 as 下表参数=>值形参)
+        {  
+        }
+       遍历：对数组中的每一个元素组个操作，排序出来
+    */
+    $fty = ['name' =>'fty','sex'=>'nan','age'=>55];
+    foreach($fty as $key=>$value)   
+    //$key相当于数组中的下标数字   $value 相当于数组中的值
+    {
+        echo $key,'---',$value
+    }
+      // 求上面数组中所有值的和
+        $arr = [9, 1, 2, 8, 3, 7];
+        $sum = 0;
+        foreach($arr as $k=>$v){
+             $sum += $v;
+        }
+        echo $sum,'<hr>';
+    // 求上面数组中元素的个数
+        $n = 0;
+        foreach($arr as $k=>$v){
+            $n++;
+        }
+        echo $n;
+    
+    // 判断某个值在不在数组中
+    
+    $names = ['李路', '刘洋', '宋猛', '范俊磊', '郎涛', '张玉川'];
+        // 王东东在不在数组中
+        foreach($names as $k=>$v){
+            if ($v=='王东东') {
+                die('找到他了!!!');
+            }
+        }
+        echo '没找到';
+     
+    // 判断某个变量是不是数组
+    $a = [];
+     function my_is_array($a)
+    {
+        return getType($a)=='array' ? true : false;
+    }
+?>

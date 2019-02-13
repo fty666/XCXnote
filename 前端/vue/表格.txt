@@ -1,0 +1,143 @@
+		<el-table
+        :data="service"        					//data定义的参数
+        border
+        style="width: 100%"
+      >
+        <el-table-column
+          type="index"
+          label="序号"
+          align="center"
+          width="100">
+        </el-table-column>
+        <el-table-column
+          prop="profile"
+          label="头像"
+          align="center"
+          width="300">
+          <template slot-scope="scope">
+            <img :src="imggerUrl+scope.row.profile" alt="" style="width:100px;height:100px">
+          </template>
+        </el-table-column>
+        <el-table-column
+          width="250"
+          prop="nickname"
+          label="昵称"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="realname"
+          width="250"
+          align="center"
+          label="真实姓名">
+        </el-table-column>
+        <el-table-column
+          prop="mobile"
+          width="250"
+          align="center"
+          label="手机号">
+        </el-table-column>
+        <el-table-column
+          prop="service"
+          width="200"
+          align="center"
+          label="客服号"
+        >
+        </el-table-column>
+        <el-table-column
+          width="200"
+          align="center"
+          label="在线状态"
+          prop="online_status">
+          <template slot-scope="scope">
+            <span>{{scope.row.online_status|now }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          width="200"
+          align="center"
+          label="账户状态"
+          prop="status">
+          <template slot-scope="scope">
+            <span style="color: red" @click="operation(scope.row)">{{scope.row.status|type}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="mobile"
+          width="200"
+          align="center"
+          label="手机号">
+        </el-table-column>
+        <el-table-column
+          label="操作"
+          align="center"
+          width="370">
+          <template slot-scope="scope">
+            <div class="flex">
+              <div style="color: #0099ce;padding-left: 120px" @click="edit(scope.row)">编辑</div>
+              <div style="color: #0099ce;padding-left: 30px" @click="del(scope.row.id)">删除</div>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+	  
+	  
+2,js,filters验证
+
+	filters: {
+      type: function (arg) {
+        if (arg == 1) {
+          return '禁用'
+        } else if (arg == 2) {
+          return '启用'
+        }
+      },
+      now: function (arg) {
+        if (arg == 1) {
+          return '离线'
+        } else if (arg == 2) {
+          return '在线'
+        } else if (arg == 3) {
+          return '忙碌'
+        } else if (arg == 4) {
+          return '离开'
+        }
+      }
+    },
+	
+	method{
+		//提示是否确定
+		 operation(val) {
+			var status = '';
+			var ti = '';
+			if (val.status == 1) {
+			  status = 2;
+			  ti = '启用'
+			} else {
+			  status = 1;
+			  ti = '禁用'
+			}
+			//提示
+			this.$confirm('是否' + ti + '此客服?', '提示', {
+			  confirmButtonText: '确定',
+			  cancelButtonText: '取消',
+			  type: 'warning'
+			}).then(() => {
+			  this._getData('v1/service/changeStatus', {
+				  id: val.id,
+				  status: status
+				},
+				data => {
+				  this.$message({
+					type: 'success',
+					message: '操作成功'
+				  });
+				  this.getService();
+				})
+			}).catch(() => {
+			  this.$message({
+				type: 'info',
+				message: '已取消'
+			  });
+			});
+		},
+	}

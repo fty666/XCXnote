@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title></title>
+        <style>
+            body{background-color:
+                <?php
+                    if (empty($_POST['color']))
+                    {
+                        $_POST['color']='red';
+                    }
+                        echo $_POST['color'];
+                ?>;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="beijintu.php" method="post">
+                颜色：<select name="color">
+                            <option <?php if($_POST['color']=='red') {(echo 'selected';)}?> value="red">红</option>
+                            <option <?php if($_POST['color']=='blue') {(echo 'selected';)}?> value="blue">蓝</option>
+                            <option <?php if($_POST['color']=='green') {(echo 'selected';)}?> value="green">绿</option>
+                            <option <?php if($_POST['color']=='pink') {(echo 'selected';)}?> value="pink">粉</option>
+                      </select>
+                      <input type="submit" value="提交">
+        </form>
+    <body>
+</html>

@@ -1,25 +1,28 @@
-首先引入amap-wx.js文件
+https://lbs.amap.com/api/wx/gettingstarted
+1,微信公众号平台上将高德的请求地址添加到合法域名中
+
+2，首先引入amap-wx.js文件，命名为amapFile
   sucFun=>成功时返回的函数
   errFun=>失败时返回的函数
   
-  //页面js直接调用
-      utilFunctions.amapFilePackage((data) => {
+3，页面js直接调用
+    utilFunctions.amapFilePackage((data) => {
       console.log(data);//调用函数返回附近的定位地址
     }, () => { });
   
   
-  封装好的函数：
-  amapFilePackage(sucFun, errFun) {
-    let myAmapFun = new amapFile.AMapWX({ key: 自己的高德key });
-    myAmapFun.getRegeo({
-      success: function (data) {
-        //成功回调
-        sucFun(data)
-      },
-      fail: function (info) {
-        //失败回调
-        console.log(info)
-        errFun(info);
-      }
-    })
-  },
+	封装好的函数：
+	  amapFilePackage(sucFun, errFun) {
+		let myAmapFun = new amapFile.AMapWX({ key: 自己的高德key });
+		myAmapFun.getRegeo({
+		  success: function (data) {
+			//成功回调
+			sucFun(data)
+		  },
+		  fail: function (info) {
+			//失败回调
+			console.log(info)
+			errFun(info);
+		  }
+		})
+	  },

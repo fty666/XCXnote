@@ -1,0 +1,68 @@
+<?php
+    /*
+        流程结构：控制代码的执行顺序，
+                  以及那些代码执行那些不执行。
+        顺序结构，分支结构（也叫选择结构），循环结构
+     */
+     /*
+       一， 单分支
+        if（判段语句）
+            {
+            //条件满足就执行这里的代码
+            }
+    */
+    if(empty($_GET['uname']))
+    {
+        $_GET['uname'] = '访客';
+    }
+    echo $_GET['uname'],'上午好';
+    /*
+        二，双分支
+        if(判断语句)
+        {
+            //条件成立执行这里
+        }else
+            {
+                //不成立执行这里
+            }
+    */
+    if (is_numeric($_POST['score']))
+        {
+            echo '是数字';
+        }else
+        {
+            echo'不是数字';
+        }
+    /*
+        用变量的值和case后面的值做比较，
+        如果相等就执行后面的代码
+        遇到break跳出语法判断
+        
+        switch(变量){
+            case 值 ：代码；break;
+            case 值 ：代码；break;
+            default:代码；
+        }
+    */
+    //例子  输入年份判断多少天
+    $mon = $_POST['mon'];
+      switch($mon){
+        case 1: 
+        case 3: 
+        case 5: 
+        case 7: 
+        case 8: 
+        case 10: 
+        case 12: echo $mon.'月31天'; break;
+        
+        case 2: echo '2月28天'; break;
+        
+        case 4: 
+        case 6: 
+        case 9: 
+        case 11: echo $mon.'月30天'; break;
+        
+        default:
+            echo '你输入的月份不合法';
+    }
+?>

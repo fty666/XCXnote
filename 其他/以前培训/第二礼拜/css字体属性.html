@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>css</title>
+        <style type="text/css">
+            p.p1:first-letter{      /*首字下沉*/
+                font-size:30px;
+                float:left;
+                long-height:1.5;
+                font-weight:20px;
+                bold;}
+            p.p2:first-line{      /*首行变色*/
+                background-color:#ddd;
+                color:blue;}
+            ul li:first-child{color:#fc0;} /*每个ul中的第一个li*/
+            ul li:last-child{color:green;} /*每个ul中的最后一个li*/
+            ul li:nth-child(2){background-color:#ddd;} /*每个ul中的第、n个*/
+            div.d1{
+                width:400px;
+                border:1px solid #f0c;
+                text-indent:2em;/*首行缩进俩个字*/
+                text-decoration:underline;/*添加下划线*/
+                color:red;
+                font:15px/1.5 华文彩云,微软雅黑;
+                letter-spacing:1px;
+                }
+            div.d2{
+                text-align:center;
+                text-transform:capitalize;
+                /*text-transform:uppercase;*//*小写变大写*/
+                direction:rtl;unicdoe-bidi:bidi-ocerride;
+                text-shadow:2px 5px 15px red;/*阴影*/
+                }
+        </style>
+    </head>
+    <body>
+        <p class="p1">加油加油加油</p>
+        <p class="p2">强大是什么 不是不败 是屡战屡败</p>
+        <ul>
+            <li>如果你强大</li>
+            <li>很好</li>
+            <li>很好</li>
+        </ul>
+        <div class="d1">家不用太大 充满笑声温馨就好</div>
+        <div class="d2">最熟悉的陌生人family</div>
+    </body>
+</html>

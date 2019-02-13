@@ -41,7 +41,7 @@ https://www.jianshu.com/p/8a2a730d9e60
 			"address": "../components/address/address",   //子组件的文件名路径
 			}
 		5，xml文件：
-		 <add id="add" title="父组件要传过去的" bind:info="_info"></add>       【id定义的为组件名称,bind事件为父子组件的公共方法名】
+		 <address id="address" title="父组件要传过去的" bind:info="_info"></address>       【id定义的为组件名称,bind事件为父子组件的公共方法名】
 		 
 		6，js文件： 【this.selectComponent('#picker-date').onshow()，selectComponent选择某个组件中的方法】
 		Page({

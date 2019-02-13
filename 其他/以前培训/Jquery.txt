@@ -1,0 +1,79 @@
+1，简介  免费的开源的javascript库
+2, 作用  方便完成web前段的相关操作，
+         例如节点操作，元素操作，事件绑定,ajax操作，且解决了大多数的兼容性问题
+
+3,使用   本地配置：<script type="" src="hquery.js"></script>
+         访问远程文件：<script src="http://www.wzwyxi.cn"></script>(有jquert的网页路径)
+4，检查配置   alert($)  $是jquery对象的缩写
+
+
+==================================================================
+重点：
+    一，查找元素
+        1，基本获取：通过id查找元素：       $('#id')
+                     通过标签名或者元素     $('div')
+                     通过class属性获取      $('.class')
+                     逗号并列获取           $('#id,.class')  (,表示俩者都一起获取到)  
+                     空格层级获取           $('#id .class') （空格表示层级关系获取）
+        
+        
+        2,过滤获取：获取第一个元素        $('li:first')
+                    获取最后一个元素      $('li:last')
+                    获取指定索引的元素    $('li:eq(5)')    $('li').eq(5)
+                    获取包含指定文本的元素    $('li:contains("国")')
+                    通过属性查找元素       $('input[name=usrname]') 通过单个属性名和属性值查找
+                                           $('input[type=text][name=phone]')  通过多个属性名和属性值查找
+                                           
+                                           
+        3，父子节点获取：获取所有的元素：       $('ul').children()
+                         获取第一个子元素       $('ul li:first-child')
+                         获取最后一个子元素：   $('ul li:last-child')
+                         获取指定顺序第几个元素：$('ul li:nth-child(1)')
+                         获取下一个元素：       $('#id').next()
+                         获取上一个元素：       $('#id').prev()
+                         获取父级元素：         $('#id').parent()
+                         获取先辈元素：         $('#id').parents('tr')
+                         获取同辈级元素：       $('#id').siblings()
+                         在父级元素中查找元素   $('ul').find('.class')
+
+    二，元素操作
+        1，属性操作    
+            attr()  获取匹配的元素集合中的第一个元素的属性的值 或 设置每一个匹配元素的一个或多个属性。
+            removeAttr()    从每一个匹配的元素中删除一个属性   括号里面写要删除的属性
+        
+        2,样式操作  
+            css()     添加css样式   如：css({border:solid 1px blue,color:red})   多个添加用逗号隔开
+            addclass()    添加class样式   一个或多个要添加到元素中的CSS类名，请用空格分开
+            removeClass()  从所有匹配的元素中删除全部或者指定的类。一个或多个要删除的CSS类名，请用空格分开
+        
+        3,文本操作
+            text()   获取文本值  不能解析 a 标签  所以会返回 a 标签字符
+            html()   获取文本值   能解析 a   标签 只返回 文本值
+            
+        4，form元素的操作
+           值的获取和设置    获取   $(element).val()
+                             设置   $(element).val('要设置的值')
+                             匹配所有可用元素   $(':enabled')    如匹配所有input元素  $('input:enabled')
+                             匹配所有不可用元素  $(':disabled')  如查找所有不可用的input元素 $('input:disabled')
+                             匹配所有选中的被选中元素(复选框、单选框等，不包括select中的option)   $(':checked')
+                                          查找所有选中的复选框元素     $("input:checked")
+                            匹配所有选中的option元素    $(':selected')
+                                          查找所有选中的选项元素     $("select option:selected")
+                                          
+          
+        5,其他      1,获取相对与文档的偏移量(元素距离文档的左偏移量和上偏移量返回数字类型)   offset()
+                                左偏移量  offset().left   距离顶部的偏移量：  offset().top
+                    2,获取元素相对于父级的偏移量    position()     获取匹配元素相对父元素的偏移,返回的对象包含两个整型属性：top 和 left
+                    3,获取或设置文档的滚动位置   scrollLeft()    获取匹配元素相对滚动条左部的偏移，滚动条离左部的距离  也可以设置默认值如  $(document).scrollLeft(100)
+                                                 scrollTop()     获取元素相对滚动条顶部的偏移量，滚动条距离顶部的距离  也可以设置默认值如  $(document).scrollerTop(100)
+                    
+                    4,宽度和高度   width
+                        获取可视区域的宽度：$(window).width()
+                        获取整个文档的宽度：$('document').width()
+                        获取元素本身的宽度：$('#id').width()
+                                    height
+                        获取可视区域的高度： $(window).height()
+                                             $('document').height()
+                                             $('#id').height()
+                                             
+                

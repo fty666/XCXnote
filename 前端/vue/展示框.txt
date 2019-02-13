@@ -1,0 +1,16 @@
+      <el-dialog
+        title=""
+        :visible.sync="centerDialogVisible"
+        width="30%"
+        center>
+		
+		内容
+	
+	</el-dialog>
+	
+2,js中
+	data(){
+		return{
+		centerDialogVisible：false
+		} 
+	}

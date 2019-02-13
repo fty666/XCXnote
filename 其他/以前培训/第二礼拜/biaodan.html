@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>表单</title>
+    </head>
+    <body>
+        <h3>表单</h3>
+        <form action="1.php" method="post">
+        账号：<input type="text" name="username" value="请输入账号!" readonly /><br />
+        密码：<input type="password" name="userpass" disabled /><br />
+        地址:<input type="text" name="address" size="88" /><br />
+        头像：<input type="file" name="pic" multiple /><br />
+        单选：<input type="radio" name="sex" value="1" />男<br />
+               <input type="radio" name="sex" value="2" />女<br />
+        多选：<input type="checkbox" name="like[]" value="0" />少女
+              <input type="checkbox" name="like[]" value="1" />少妇
+              <input type="checkbox" name="like[]" value="2" />萝莉
+        下拉框：<select type="shenfe"><br />
+                    <option value="北京">北京</option>
+                    <option value="山西">山西</option>
+                    <option value="上海">上海</option>
+                </select></br />
+        <fieldset>
+        <legend>html表单</legend>
+        简介：<textarea name="jianjie" rows="20" cols="50">这家伙很懒000</textarea>
+        <br />
+        搜索：<input type="search" name="sou" list="mylist">
+                    <datalist id="mylist">
+                        <option value="欧洲">英国</option>
+                        <option value="亚洲">中国</option>
+                        <option value="非洲">牙买加</option>
+                        <option value="北美洲">美国</option>
+                        <option value="南美洲">巴西</option>
+                    </datalist><br />
+         邮箱：<input type="eamil" name="umail"><br />
+         日期：<input type="date" name="udate"><br />                                                     
+         时间：<input type="time" name="utime"><br />
+         颜色：<input type="color" name="ucolor"><br />
+         网址：<input type="url" name="wangzhi"><br />
+         </fieldset><br />
+         英雄：
+            <select name="hreo">
+                <optgroup label="上路">
+                    <option>鳄鱼</option>
+                </optgroup>
+                <optgroup label="中路">
+                    <option>艾克</option>
+                </optgroup>
+                <optgroup label="下路">
+                    <option>大嘴</option>
+                </optgroup>
+            </select>
+        <input type="submit" value="提交按钮">
+        </form>
+    </body>
+</html>

@@ -1,0 +1,103 @@
+一，节点操作
+    1,创建元素节点(直接添加节点)    $('<div></div>')
+                                    $('<div class='cur'><span>hello</span></div>')
+    
+    2,插入节点：  1,内部尾部添加【append()  appendTo()】
+                    $(parent).append(newNode)     newNode(要添加的节点).appendTo(parent)
+                  2,内部头部添加【preend()  preendTo()】
+                    $(parent).preend(newNode)     newNode.preendTo(parent)
+                  3,元素外部之后添加 【after()  insertAfter()】
+                    $(element).after(newNode)       newNode.insertAfter(element)
+                  4,元素外部之前添加【before()   insertBefore()】
+                    $(parent).before(newNode)    newNode.insertBefore(element)
+               
+    3，删除节点   1，$(element).remove()     删除当前节点   如：$('#dvs div:first').remove();
+                  2，$(element).empty()       清空节点    如：$('#dvs').empty();
+                  
+    4，替换节点    $(element).replaceWith(newNode)       如$('#dvs div:first').replaceWith(ds)             
+    
+    5，克隆节点    $(elemnet).clone(true)         如:$('#dvs div:first').fir.clone(true)
+    
+    6,包裹节点(wrap)     $(element).wrap('<div></div>')   当前元素被其他的元素包裹
+                如：  var dis = $('<div class="bgwrap"></div>');    $('#dvs').wrap(dis);  （设置bgwrap属性）
+                
+    7,解包裹节点   (unwrap)               如：  $('#dvs').unwrap();
+    
+    
+=============================================================
+
+二，事件
+    1,事件绑定     $('element').click(function(){})  [单击事件]
+                   $('element').dbclick(function(){}) [双击事件]
+      加载完毕事件(文档加载完之后才触发事件): 【ready()】
+                   $(documnet).ready(function(){})
+                   $(function(){})      【ready  也可以省略不写】
+    
+    2,方法绑定：   I:  $(element).bind('click',function(){})
+                       $(element).unbind('click')
+                  
+                  II:  $(element).on('click',function(){})
+                  
+        动态绑定  IV:  $(element).live('click', function(){})
+    
+    3，事件触发（刷新页面自动触发 trigger）：   $(element).trigger('click');
+    
+    4,阻止事件冒泡和默认行为：     return false
+    
+    5,获取当前鼠标的位置：  【client  获取鼠标到可视区域的边（浏览器的边框）不会随着文档的滚动改变而发生变化
+                              page     获取鼠标到文档的边的距离，会随着滚动条的变化添加隐藏边距离】
+                             $(element).click(function(e){var cx = e.clientX
+                                                          var cy = e.clientY
+                                                          var px = e.pageX
+                                                            var py = e.pageY
+                                                        }) 
+    
+    
+========================================================================
+三，AJAX
+    $.【传参方式】('服务器脚本'，{参数},服务器返回的结果)
+    PHP传到JS的数据是以数组的形式传过来的 ，而且只能在PHP里面识别 要想传到JS中能识别的 必须用json_encode()转化
+    js接收到PHP传过来的字符串，然后将它转化成对象的方法：
+            1，eval('var arr='+date)
+            
+            2,$.get('2.php',{},function(date){
+                console.log(date);
+            },'json')
+            
+            3,console.log(JSON.parse(date))
+    1,GET  方式       $.get('1.php',{},function(){});
+    
+    2,POST 方式        $.post('1.php',{name:'fty',age:20},function(){})
+    
+    3,通用方式    $.ajax({
+                            url:'1.php',                【url请求的脚本】
+                            date:'id=100&age=10',       【data发送的数据】
+                            dataType:'json',            【dataType数据的类型】
+                            type:'GET',                 【type请求的类型  get或post】
+                            success:function(data){},   【success成功的执行代码】
+                            error:function(){},         【error失败的执行代码】
+                            timeout:3000,               【timeout 超出时间】
+                            async:false                 【async是否异步   true  异步  false 同步】
+                        })
+
+=============================================================================
+四，特效
+    1，快速显示隐藏:     显示：$('element').show()     【括号里面可以添加时间】
+                         隐藏：$('element').hide()     【括号里可以写时间】
+    
+    2，滚动显示和隐藏：  向下显示： $('element').slideDown()  【括号里可以加时间，速度 fast  快速  slow 慢】
+                         向上隐藏： $('element').slideUp()    【同上】
+    
+    3，渐隐渐显：       渐隐：fadeOut()                 【同上】
+                        渐显： fadeIn()                 【同上】
+    
+    4，自定义动画：      animate()   添加css样式用逗号隔开，要改变背景颜色时需要引入插件【jquery.color.js】
+                      	$('#dvs').animate({
+                                left:'100px',
+                                top:'50px',
+                                borderRadius:'50%',
+                                backgroundColor:'blue'
+                            },3000)
+    
+    5，延时 ，延缓实现特效       delay()
+                       例子：$('#dvs').slideUp(200).delay(3000).fadeIn(2000);

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>xinwen</title>
+        <style type="text/css">
+            body,div,ul,li,a{margin:0px;hidding:0px;}
+            ul{list-style:none;}
+            a{font-size:10px/1.5 red 微软雅黑;letter-spacing:1px;}
+            a:hover{#blue;text-decoration:none;}
+            a:visited{#ddd;text-decoration:none;}
+            a:double{#green;text-decoration:none;}
+            a:link{#black;text-decoration:none;}
+            #newlist{
+                width:400px;height:200px;
+                border:1px solid #ddd;
+                }
+            #newlist .header{
+                width:400px;height:30px;
+                background-color:#ddd;
+                }
+            #newlist .header h4{
+                font-size:20px;
+                line-height:30px;
+                margin:0px;
+                padding-left:15px;
+                }
+            #newlist .new ul li span{
+                font-size:16px;
+                color:green;
+                float:right;
+                padding-right:0px;}
+            #newlist .new ul li{
+                width:80%;
+                padding-left:10px;
+                border-bottom:1px solid #ddd;
+                margin-bottom:5px;
+                white-space:nowrap;
+                overflow:hidden;
+                text-overflow:ellipsis;
+                }
+        </style>
+    </head>
+    <body>
+        <div id="newlist">
+            <div class="header"><h4>新闻大报到</h4></div>
+            <div class="new">
+                <ul>
+                    <li><span>[2017-11-25]</span><a href="#">早间报道晚间报道午夜报道</a></li>
+                    <li><span>[2017-11-25]</span><a href="#">早间报道晚间报道午夜报道</a></li>
+                    <li><span>[2017-11-25]</span><a href="#">早间报道晚间报道午夜报道</a></li>
+                    <li><span>[2017-11-25]</span><a href="#">早间报道晚间报道午夜报道</a></li>
+                    <li><span>[2017-11-25]</span><a href="#">早间报道晚间报道午夜报道</a></li>
+                    <li><span>[2017-11-25]</span><a href="#">早间报道晚间报道午夜报道</a></li>
+                    <li><span>[2017-11-25]</span><a href="#">早间报道晚间报道午夜报道</a></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

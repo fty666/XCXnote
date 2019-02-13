@@ -1,0 +1,37 @@
+<?php
+    /*一:改变数组中元素的值*/
+    $a = [10,20,30,40];
+    foreach($a as $k=>&$v) 
+        //1，用&符直接让$k与$v建立关系改变
+        {      
+            //$a[$k]=$v+6;
+            //2，直接通过数组名[$k] 对数组进行操作
+            $v += 9;
+        }
+        print_r($a);
+     /*
+     二，超全局数组:超越文件本身,在另一个文件也有效的数组
+        $_GET   $_POST    $_REQUEST(即包含$_GET,又包含$_POST)
+        $_COOKIE   $_SESSION  (项目中会讲)
+        $_FILES  与文件上传有关的数组
+        $_SERVER
+    */
+    echo '<pre>';
+    echo $_SERVER['SERVER_ADDR'],'<br>'; // 服务器端的IP地址
+    echo $_SERVER['REMOTE_ADDR'],'<br>'; // 浏览器端的IP地址
+    echo $_SERVER['REQUEST_URI'],'<br>'; // 网站内部地址,带后面的参数
+    echo $_SERVER['SCRIPT_NAME'],'<br>'; // 网站内部地址,不带参数
+    /*三，字符串可以像数组一样通过下标访问单个字符
+            strlen （计算字符粗昂的长度，字符节）
+    */
+        
+    $str = 'i like you';
+     echo $str[2];
+     echo $str{3};
+     //方向输出字符串
+    $tmp = ''; 
+    for($i = $n-1; $i >= 0; $i--){
+          $tmp .= $str[$i];
+    }
+    echo $tmp;
+?>

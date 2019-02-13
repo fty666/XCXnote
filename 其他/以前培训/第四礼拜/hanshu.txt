@@ -1,0 +1,114 @@
+<?php
+    /*
+     一：  函数：
+            1，一段代码     2，可以多次调用执行     3，有一个名字
+            function 函数名（参数列表）
+            {
+                函数体（一段代码）
+            }
+            函数可以先调用后执行，因为定义的函数会提前加载到内存中
+    */
+    hanshu();
+    echo '调用函数';
+    HANSHU();  //函数名称不区分大小写，但请尽量按原有名称写
+    //定义函数
+    function hanshu()
+        {
+            echo '<table border>';
+            for ($i=1; $i<=3;$i++)
+            {
+                echo'<tr>';
+                    for ($a=1;$a<=3;$a++)
+                    {
+                        echo '<td>'
+                        echo '3行3列表格';
+                        echo '</td>'
+                    }
+                echo'</tr>';
+            }
+            echo '</table>';    
+        }
+    /*
+    二:  $row ,$col 形式上的参数，简称形参(没有给定义的函数)
+        $a = 2;$b=3; 实际调用时给的参数，简称实参
+        形参=实参； 调用函数时，实参赋值给形参
+         Too few arguments to function mkTable(), 1 passed
+         （调用函数时，参数太少了，只给了一个参数）
+         mmTable few arguments to function mkTable()
+         (通用了一个未定义的函数)
+    */
+    //定义函数
+    function(3,3);//定义实参3，3 赋值给下面的形参
+    function mkTable($row ,$col)  //用形参定义函数 赋值实参输出函数
+    {
+        echo '<table border=1>';
+            for($a=$row;$a<=$row;$a++)
+            {
+                echo '<tr>';
+                    for($b=$col; $b<=$col;$b++)
+                    {
+                        echo '<td>';
+                        echo '三行三列表格';
+                        echo '</td>';
+                    }
+                
+                echo '</tr>';
+            }
+        echo '<table>';
+    }
+    /*
+    三：  return 
+        1,代表函数的返回值
+        2，可以返回任意函数
+        3，return之后的语句不会执行
+        4，如果只写return或者只写return函数返回NULL
+    */
+    echo add(5,7)*2;
+    function add($a,$b)
+    {
+        return $a +$b;  //return后面的不再输出
+        return '后面不输出';
+        echo '不输出';
+    }
+    /*
+    四： 局部函数：函数内部定义，在内部使用，函数结束时自动销毁
+        静态函数：函数内部定义，在内部使用函数结束时不销毁（static）
+        全局变量：自定义他的位置开始，一直到代码结束都可以使用
+        （使用方式一：golbal $a;   表明之后的$a 是一个全局变量
+                      echo $a;
+          方式二：使用全局变量$a echo $GLOBALS['a'];）
+   */
+    function test()
+    {
+        static $b = 10;
+        //这句话只执行一次  (静态函数 函数结束时$b=10不销毁)
+        echo $b;
+        $b++;
+        
+        $a = 10;
+        //局部函数 函数结束时$a=10自动销毁
+        $a++;
+    }
+    $a = 12;
+    test();
+    function test()
+        {
+            方式一 ：
+            global $a;
+            echo $a;
+            
+            方式二：使用全局变量$a
+            echo $GLOBALS['a'];
+        }
+     /*    引用传参：让实参和形参建立引用关系，
+     五： 改变一个变量另一个也发生变化*/
+        $a = 5; //定义一个实参
+        test($a);
+        echo $a;
+        function test(&$x)  //将实参$a赋值给形参    
+                //加&连接将实参和形参建立关系一个发生变化另一个也变
+            {
+                $x += 11;
+            }
+     
+?>

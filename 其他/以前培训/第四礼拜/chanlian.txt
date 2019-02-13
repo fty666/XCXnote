@@ -1,0 +1,24 @@
+<?php
+    /*
+    一：常量：
+        1）存储数据 2）多次使用  3）数据不能改变
+        常量名用大写（基本上都是） 
+    */
+    //1，使用 define 定义常量
+    define('XDL','兄弟连');
+    echo XDL;
+    //二 ，定义常量
+    // XDL = 'asdad';  不能重新赋值
+    //define('XDL','asdsadsd'); 不能重新定义
+    // unset(XDL);   不能销毁
+    //2,使用const 定义  一般使用这种
+    const XDL='兄弟连';
+    echo XDL;
+   //三，系统常量，也叫魔术常量
+    echo PHP_VERSION     //PHP 版本类型
+    echo PHP_OS          //电脑的系统类型
+    echo __FILE__        //文件的储存路径
+    echo __DIR__         //文件的具体储存路径
+    echo __LINE__        //文件的行数
+    
+?>

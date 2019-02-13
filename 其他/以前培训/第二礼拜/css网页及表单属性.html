@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>css</title>
+        <style type="text/css">
+            ul{list-style:none;}
+            ul li{color:blue;font-size:20px; font-family:华文彩云;}
+            ul li.c1{color:red;}
+            ul li:hover{background-color:#ddd; font-size:30px;}
+            a:link{color:black; text-decoration:none;} /*去掉下划线*/          /*未访问时*/
+            a:visited{color:#fc0;}     /*访问后*/
+            a:active{color:pink; text-decoration:none;}         /*点击链接后*/
+            a:hover{color:#ddd;}            /*鼠标悬停时*/
+            input[name*="uname"]{border:2px solid blue;}    /*实线*/
+            input[name="age"]{border:2px dashed red;}      /*虚线*/
+            input[name="phone"]{border:2px double green;}   /*双线*/
+            input[name="address"]{border:2px inset #ddd;}   /*内嵌*/
+            input[name="umail"]{border:2px dotted pink;}    /*点状*/
+        </style>
+    </head>
+    <body>
+        <ul>
+            <li class="c1">好好学习</li>
+            <li>天天向上</li>
+            <li>努力不简单</li>
+            <li>坚持有回报</li>
+        </ul>
+        <a href="biaoge.html">表格</a>
+        <a href="biaodan.html">表单</a>
+        <a href="biaogebiaodanhunhe.html">混合</a></br>
+        <form action="1.php" method="post">
+            姓名：<input type="text" name="uname" /><br />
+            年龄：<input type="text" name="age" /><br />
+            邮箱：<input type="email" name="umail" /><br />
+            地址：<input type="text" name="address" /><br />
+            电话：<input type="number" name="number" /><br />
+        </form>
+    </body>
+</html>
