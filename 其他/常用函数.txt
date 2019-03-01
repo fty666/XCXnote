@@ -1,0 +1,99 @@
+1，match()，检测一个字符串是否存在另一个中，或者是正则方式验证
+	方法一直接使用：检测str中是否含有aaa如果有返回true
+	str='aaabbb';
+	str.match('aaa')
+	方法二正则验证：
+	str='asasssa';	prg=/^S$/; 
+	str.match(prg)
+2,typeof(),返回数据类型
+
+
+
+String,字符串方法：
+
+	3，search(),用于检测指定字符串存在于另一个字符串中，若在返回子串的起始位置
+		var str='url';
+		var n=str.search('adasurlasdas');
+	4,replace(),用于字符串中用一些字符替换另一个字符串中的内容
+		var str='hello word';
+		var text=str.replace('hello','hi')
+	5,indexOf(),来定位某个字符串在另一个字符串出现的首次位置
+		var str='hello word';
+		var n=str.indexOf('hello');
+	6,字符串转化大小写，toUpperCase()    toLowerCase();
+		var str='hello WORD';
+		var Dstr=str.toUpperCase();  //转化为大写
+		var Xstr=str.toLowerCase();  //转化为小写
+
+	7，split()，字符串转化为数组
+		text='a,ba,c,f';
+		text.split(',');  //按逗号将字符串分割成数组
+		
+		截取如果方法只有一个值，则截取改索引之后的所有
+	8,slice(开始位置，结束位置)， 按索引提取字符串的片段
+		vat str="hello  word";
+		str.slice(1,5);    //输出 ello
+
+	9，substr(开始截取的索引,截取的长度length)，按索引和长度提取字符串
+		var str="hello word";
+		str.substr(2,3)    //输出llo
+	10, substring()，截取字符串开始的索引到结束时的，不包括结束的索引的字符
+		var str="hello word";
+		str.substring(3)   //输出lo word!
+		str.substring(3,7)  //输出lo w
+	11， valueOf()，返回该字符串的原始值 
+		str="hello word";
+		str.valueOf();   //输出hello word
+	12,toString()，返回字符串的内容，  
+		str = 'hello word'；
+		str.toString();    //输出hello word
+	13,chartAt()，返回指定索引位置的字符;
+		str="hello word";
+		n=str.chartAt(3)   //输出l
+		
+array数组对象方法：
+	1，filter()，检测另一个数组中的是否存在元素
+		var ages = [32, 33, 16, 40];
+		function checkAdult(age) {
+			return age >= 18;
+		}
+		function myFunction() {
+			document.getElementById("demo").innerHTML = ages.filter(checkAdult);
+		}
+		//输出32,33,40
+	2,includes()，判断一个数组是否包含一个指定的值，
+		[1,2,3].includes(2)     //输出为true
+	3,isArray(),判断一个对象是否为数组
+		arr=[1,2,3];    
+		Array.isArray(arr)     //输出为true
+	4,join(),将数组转化为字符串
+		arr=[1,2,3];
+		arr.join()         //输出1，2，3
+		arr.join('and')    //输出1and2and3
+	5，pop(),删除最后一个数组元素，并返回新数组
+		arr=[1,2,3];
+		arr.pop();    //输出1，2
+	6，push(),向数组的末尾添加一个元素，并返回新的数组
+		arr=[1,2,3];
+		arr.push('4');		//输出1,2,3,4
+	7，reverse(),反转数组中的元素顺序
+		arr=[1,2,3];
+		arr.reverse()      //输出3,2,1
+	8，shift(),删除第一个元素，并返回新的数组
+		arr=[1,2,3];
+		arr.shift()			//输出2,3·
+		arr.toString()				//输出1,2,3
+		
+math方法：
+	1，ceil(),对数进行上舍入
+		Math.ceil(1.4);		//输出2
+	2,floor(),对数进行下舍入
+		Math.floor(1.6)		//输出1
+	3，max(),返回最大值
+		Math.max(10,30)		//输出30
+	4，min(),返回最小值
+		Math.min(5,10)		//输出5
+	5，random()，返回0（包含）~~ 1（不包含）的随机数
+		Math.random()		//输出随机
+	6，round(),四舍五入
+		Math.round()		//四舍五入

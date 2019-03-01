@@ -47,6 +47,16 @@ DOM操作
 	var child=document.getElementById("p1");
 	child.parentNode.removeChild(child);
 	
+	监听浏览器页面变化事件resize
+	$(window).on("resize",function{
+	});
+	
+	触发某个节点上的事件trigger
+	$(window).trigger('resize');
+	
+	
+	
+	
 6，Date日期，获取时间
 	var myDate=new Date() 				获取当前的时间
 	myDate.setFullYear(2008,7,9)		给日期对象设置一个固定的日期
@@ -80,6 +90,54 @@ BOM操作   window操作
 	alert("文本")						提示文本框
 	confirm("文本")						确认框
 	prompt('文本','默认值')				提示框
+	
+	
+	
+1，改变css样式,获取元素
+	x=doucment.getElementById('demo');
+	x.style.color="red";
+2，onload()事件，当用户进入页面时加载
+3，onunload()事件,当用户离开页面时触发
+4，onchange()事件，input框内的值发生改变时触发
+5，onmouseover()，鼠标移动到时触发
+	<div onmouseover="fun()"></div>
+6,onmouseout(),鼠标离开时触发
+	<div onmouseout="fun()"></div>
+7,onmousedown(),鼠标点击时触发
+	<div onmouseout="fun()"></div>
+8,onmouseup(),鼠标离开时触发
+	<div onmouseup="fun()"></div>
+
+9,document元素监听事件，addEventListener()，监听页面标签属性	
+	<div id="docu"></div>
+	var docu=doucment.getElementById('docu');
+	docu.addEventListener('click',fun())    //监听如果点击时触发什么事件
+10，window浏览器监听事件，addEventListener(),监听浏览器属性
+		window.addEventListener('name',function(){
+			浏览器打开或刷新要触发的内容
+		})
+11,移除监听的事件，removeEventListener
+		doucment.getElementById('id').removeEventListener('mousemove',fun)
+12,创建一个新的元素，createElement();  添加新的元素：appendChild();  将元素添加到最前面insertBefore()；  移除已存在的元素：removeChild();   
+		var p=doucment.createElement('p');//创建一个新的元素标签
+		var node=doucment.createTextNode('这是一个新的段落'); //为新建的元素添加文本
+		p.appendChild(node);  //将文本添加到新的元素
+		
+		var elem=document.getElementById('elem');
+		elem.insertBefore('p添加的','elem谁前面');
+		
+13,获取同一属性元素的集合，collection,
+		var myCollection = document.getElementsByTagName("p");
+		var i;
+		for (i = 0; i < myCollection.length; i++) {
+			myCollection[i].style.backgroundColor = "red";
+		}
+14，获取同一属性的元素标签，querySelectorAll('标签')
+	var myNodelist = document.querySelectorAll("p");
+	var i;
+	for (i = 0; i < myNodelist.length; i++) {
+		myNodelist[i].style.backgroundColor = "red";
+	}
 	
 		
 	

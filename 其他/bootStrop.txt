@@ -1,0 +1,42 @@
+ 响应式：媒体查询或js监听页面宽度事件方法
+ 
+ BBG-BootStrop网页，修改bootstrop的按钮颜色生成
+ 1，/-----头部------/
+ <header>
+	//响应式布局
+	//响应式工具，区别页面能显示在那些不同的屏幕大小上
+	 <div class="container-fluid visible-xs">
+			//格栅布局
+		  <div class="row">
+			<div class="col-md-6">.col-md-6</div>
+		  </div>
+	</div>
+ </header>
+
+ 2，data属性传值
+		<div data-name='姓名' data-age='18'><div>
+		<button id="btn">获取数据</button>
+		<button id="btn1">修改数据</button>
+		<script>
+			//获取data数据
+			$('#btn').on('click',function(){
+			   console.log($('div').data('name')); 		//获取name的值
+				console.log($('div').data('age'));		//获取age的值
+			})
+			
+			//修改data数据
+			$('#btn1').on('click',function(){
+				$('div').data('name','fty');
+				$('div').data({'name':'fty'},{'age':'18'})
+			})
+		</script>
+
+3,each,循环遍历，获取属性标签
+		$allitems=$('#id' .item);
+		$allitems.each(function(index,item){
+			
+		})
+
+4,图片：img-responsive 将图片响应式化
+		<img src="" class="img-responsive"></img>
+ 

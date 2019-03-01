@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Basic Panel - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="./EasyUi/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="./EasyUi/themes/icon.css">
+	<script type="text/javascript" src="./EasyUi/jquery.min.js"></script>
+	<script type="text/javascript" src="./index.js"></script>
+	<script type="text/javascript" src="./EasyUi/jquery.easyui.min.js"></script>
+</head>
+<body>
+   <div id="box" style="width: 600px;height: 400px">
+        <div data-options="
+            region:'north',
+            collapsible:false,
+            border:false,
+            "
+         style="height: 100px">
+             上面的内容
+        </div>
+        <div data-options="region:'south',title:'下南'" style="height: 100px"></div>
+        <div data-options="region:'west',title:'左西'" style="width: 100px"></div>
+        <div data-options="region:'east',title:'右东'" style="width: 100px"></div>
+        <div data-options="region:'center',title:'中间'" style="width: 100px"></div>
+    </div>
+</body>
+</html>
