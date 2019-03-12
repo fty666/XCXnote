@@ -1,0 +1,34 @@
+    //  启用禁用
+      operation(val) {
+        var status = '';
+        var ti = '';
+        if (val.status == 1) {
+          status = 2;
+          ti = '启用'
+        } else {
+          status = 1;
+          ti = '禁用'
+        }
+        this.$confirm('是否' + ti + '此客服?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('v1/service/changeStatus', {
+              id: val.id,
+              status: status
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+              this.getService();
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      },

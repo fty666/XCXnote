@@ -1,0 +1,259 @@
+<template>
+  <div class="body" style="width: 98%;margin-left: 10px">
+    <!--经销商库存-->
+    <div class="head">
+      <div class="backfont"> 统计信息</div>
+    </div>
+    <div class="flex xiu" style="height: 120px">
+      <el-table
+        :data="tableData"
+        border
+        style="width:100%">
+        <el-table-column
+          prop="date"
+          label="消费总额"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          align="center"
+          label="订单总数">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          align="center"
+          label="可用积分">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          align="center"
+          label="商品评价数"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          align="center"
+          label="退货次数">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          align="center"
+          label="收藏商品">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          align="center"
+          label="邀请好友数">
+        </el-table-column>
+      </el-table>
+    </div>
+    
+    <!--购入管理-->
+    <div class="head">
+      <div class="backfont"> 收货地址</div>
+    </div>
+    <div class="flex xiu" style="height: auto">
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%;margin-bottom: 30px">
+        <el-table-column
+          prop="date"
+          label="收货地址"
+          align="center"
+          min-width="180">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="手机号"
+          align="center"
+          min-width="180">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          label="详细地址"
+          align="center"
+          min-width="200">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="邮编"
+          align="center"
+          min-width="180">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="默认地址"
+          align="center"
+          min-width="150">
+        </el-table-column>
+      </el-table>
+    </div>
+  <!--订单记录-->
+    <div class="head">
+      <div class="backfont"> 订单记录</div>
+    </div>
+    <div class="flex xiu" style="height: auto">
+      <div style="width: 100%">
+        <el-table
+          :data="tableData"
+          border
+          style="width: 100%">
+          <el-table-column
+            prop="date"
+            label="订单类型"
+            align="center"
+            min-width="160">
+          </el-table-column>
+          <el-table-column
+            prop="name"
+            label="订单编号"
+            align="center"
+            min-width="180">
+          </el-table-column>
+          <el-table-column
+            prop="date"
+            label="提交时间"
+            align="center"
+            min-width="160">
+          </el-table-column>
+          <el-table-column
+            prop="date"
+            label="商品信息"
+            align="center"
+            min-width="200">
+          </el-table-column>
+          <el-table-column
+            prop="date"
+            label="金额"
+            align="center"
+            min-width="120">
+          </el-table-column>
+          <el-table-column
+            prop="date"
+            label="订单状态"
+            align="center"
+            min-width="160">
+          </el-table-column>
+          <el-table-column
+            align="center"
+            label="操作">
+            <template slot-sope="">
+              <div style="color: deepskyblue">查看</div>
+            </template>
+          </el-table-column>
+      
+        </el-table>
+      </div>
+      <div class="pag" style="margin:10px 0px 20px 60%;">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage4"
+          :page-sizes="[20, 50, 100]"
+          :page-size="5"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total=totals>
+        </el-pagination>
+      </div>
+    </div>
+    
+    <!--积分记录-->
+    <div class="head">
+      <div class="backfont"> 积分记录</div>
+    </div>
+    <div class="flex xiu" style="height: auto">
+      <div style="width: 100%;margin-bottom: 30px">
+        <el-table
+          :data="tableData"
+          border
+          style="width: 100%">
+          <el-table-column
+            prop="date"
+            label="日期"
+            align="center"
+            min-width="150">
+          </el-table-column>
+          <el-table-column
+            prop="name"
+            label="项目"
+            align="center"
+            min-width="200">
+          </el-table-column>
+          <el-table-column
+            prop="address"
+            align="center"
+            label="积分变动"
+            min-width="180">
+          </el-table-column>
+          <el-table-column
+            prop="address"
+            align="center"
+            label="当前积分"
+            min-width="180">
+          </el-table-column>
+        </el-table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "",
+    data() {
+      return {
+        tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }],
+        options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }],
+        value: ''
+      }
+    },
+    methods:{
+      info(){
+        this.$router.push({name:'buyInfo'})
+      }
+    }
+  }
+</script>
+
+<style scoped>
+  .clos {
+    text-align: left;
+    width: 130px;
+    height: 30px;
+    border: 1px solid black;
+    font-size: 15px;
+    text-align: center;
+    line-height: 30px;
+    margin: 30px 0px 0px 0px;
+  }
+  
+  .xfont{
+    margin: 20px 0px 0px 30px;
+    font-size: 14px;
+  }
+  .xfont2{
+    width: 200px;
+    margin: 20px 0px 0px 0px;
+    text-align: left;
+    font-size: 14px;
+  }
+  
+  .sou {
+    width: 100%;
+    height: 50px;
+    padding: 20px 0px 0px 35px;
+    font-size: 15px;
+    color: #999999;;
+  }
+</style>

@@ -1,0 +1,283 @@
+<template>
+  <div class="body">
+    <!--表头-->
+    <div class="tou">
+      <div class="font">二级分类管理</div>
+    </div>
+    <!--选择分类-->
+    <div class="table" style="height:auto;">
+      <div class="flex">
+        <div class="class">商品分类：</div>
+        <div class="class1">
+          <el-select v-model="value" style="width: 450px">
+            <el-option
+              v-for="item in options"
+              :key="item.index"
+              :label="item.label"
+              :value="item.value"
+              @click.native="selec()"
+            >
+            </el-option>
+          </el-select>
+        </div>
+      </div>
+      <div class="flex">
+        <div class="add">
+          <el-input v-model="name" placeholder="请输入分类"></el-input>
+        </div>
+        <div class="add1" @click="addClass()">
+          添加二级分类
+        </div>
+      </div>
+      <!--表格-->
+      <div class="biao">
+        <el-table
+          ref="singleTable"
+          :data="classList"
+          highlight-current-row
+          border
+          style="width: 80%;margin-bottom: 30px">
+          <el-table-column
+            type="index"
+            align="center"
+            label="序号"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            property="name"
+            label="分类名称"
+            align="center"
+            min-width="193">
+          </el-table-column>
+          <el-table-column
+            property="goods_count"
+            label="商品数量"
+            align="center"
+            min-width="180">
+          </el-table-column>
+          <el-table-column
+            min-width="130"
+            align="center"
+            label="操作">
+            <template slot-scope="scope">
+              <div class="flex">
+                <div style="color: #0099ce;padding-left: 25px" @click="edit(scope.row.id)">修改</div>
+                <div style="color: #0099ce;padding-left: 10px" @click="del(scope.row)">删除</div>
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      
+      <!--修改-->
+      <div>
+        <el-dialog
+          title=""
+          :visible.sync="centerDialogVisible"
+          width="30%"
+          center>
+          <div class="xiu">
+            <div class="edit">修改分类名称</div>
+            <div class="flex">
+              <div class="edit1" style="margin-left:20%">修改为：</div>
+              <div class="edit2" style="margin-left: 0px">
+                <el-input v-model="input" placeholder="请输入内容"></el-input>
+              </div>
+            </div>
+            <div class="flex" style="margin-left: 0%">
+              <div class="logBtn1" style="margin-left: 35%" @click="submit()">
+                <el-button size="medium" type="primary">提交</el-button>
+              </div>
+              <div class="logBtn2">
+                <el-button size="medium" @click="esc()">取消</el-button>
+              </div>
+            </div>
+          </div>
+        </el-dialog>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        options: [],
+        value: '洋酒',
+        name: '',
+        classList: [],
+        centerDialogVisible: false,
+        input: '',
+        eid: ''
+      }
+    },
+    methods: {
+      //添加分类
+      addClass() {
+        if (this.value == '' || this.name == '') {
+          this.$message({
+            showClose: true,
+            message: '请完善分类信息',
+            type: 'error'
+          });
+        } else {
+          this.$confirm('是否添加该分类', '提示', {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this._getData('/api/v1/goods_group/create', {
+                name: this.name,
+                group_name: this.value,
+              },
+              data => {
+                this.gclass();
+                this.$message({
+                  type: 'success',
+                  message: '操作成功'
+                });
+              })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            });
+          });
+        }
+      },
+      //获取分类
+      gclass() {
+        this._getData('/api/v1/goods_group/getSub', {group_name: this.value}, data => {
+          this.classList = data;
+        })
+      },
+      //修改分类
+      selec() {
+        this.gclass();
+      },
+      //修改
+      edit: function (val) {
+        this.centerDialogVisible = true;
+        this.eid = val;
+      },
+      //删除
+      del(val) {
+        if (parseInt(val.goods_count) != 0) {
+          this.$message({
+            showClose: true,
+            message: '该分类下有商品不能删除',
+            type: 'error'
+          });
+        } else {
+          this.$confirm('是否删除该分类', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this._getData('/api/v1/goods_group/delete', {
+                id: val.id
+              },
+              data => {
+                this.$message({
+                  type: 'success',
+                  message: '操作成功'
+                });
+                this.gclass();
+              })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            });
+          });
+        }
+      },
+      esc() {
+        this.centerDialogVisible = false;
+      },
+      //  提交
+      submit(val) {
+        this.$confirm('是否修改此分类?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/goods_group/edit', {
+              id: this.eid,
+              name: this.input
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+              this.gclass();
+              this.centerDialogVisible = false;
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+        
+      }
+    },
+    created() {
+      this.gclass();
+    }
+  }
+</script>
+
+<style scoped>
+  .font {
+    font-size: 18px;
+    color: black;
+    line-height: 64px;
+    text-align: left;
+    margin-left: 20px;
+  }
+  
+  /*表格*/
+  .table {
+    width: 98%;
+    border: 1px solid #ddd;
+    height: 500px;
+  }
+  
+  .class {
+    margin-top: 40px;
+    margin-left: 25%;
+  }
+  
+  .class1 {
+    margin-top: 30px;
+    margin-left: 30px;
+  }
+  
+  .add {
+    margin-left: 35%;
+    margin-top: 30px;
+    width: 185px;
+    height: 30px;
+  }
+  
+  .add1 {
+    width: 124px;
+    height: 40px;
+    background-color: rgba(0, 153, 153, 1);
+    text-align: center;
+    line-height: 40px;
+    border-radius: 5px;
+    margin-left: 25px;
+    margin-top: 30px;
+    font-size: 14px;
+    color: white;
+  }
+  
+  .biao {
+    margin-top: 50px;
+    margin-left: 20%;
+  }
+</style>

@@ -1,0 +1,397 @@
+<template>
+  <div class="body">
+    <router-link to="/member/member">
+      <div class="clos">返回列表</div>
+    </router-link>
+    <!--用户信息-->
+    <div class="head">
+      <div class="font"> 用户信息</div>
+    </div>
+    <div class="flex xiu" style="height: 120px">
+      <div class="sequence" style="width: 90%;margin: 30px 0px 0px 0px">
+        <div class="flex pian" style="margin-left: 30px">
+          <div>用户ID：</div>
+          <div>{{this.userInfo.id}}</div>
+        </div>
+        <div class="flex pian">
+          <div>用户账号：</div>
+          <div>{{this.userInfo.mobile}}</div>
+        </div>
+        <div class="flex pian">
+          <div>注册时间：</div>
+          <div>{{this.userInfo.create_time}}</div>
+        </div>
+        <div class="flex pian">
+          <div>所属地区：</div>
+          <div>{{this.userInfo.alliance}}</div>
+        </div>
+        <div class="flex " style="margin-left: 30px">
+          <div>昵称：</div>
+          <div>{{this.userInfo.nickname}}</div>
+        </div>
+        <div class="flex" style="margin-left:13.5%">
+          <div>生日：</div>
+          <div>{{this.userInfo.birthday}}</div>
+        </div>
+        <div class="flex" style="margin-left: 13.5%;">
+          <div>性别：</div>
+          <div>{{this.userInfo.sex}}</div>
+        </div>
+      </div>
+      <div class="imgs">
+        <img :src="imggerUrl+this.userInfo.photo">
+      </div>
+    </div>
+    
+    <!--统计信息-->
+    <div class="head">
+      <div class="font"> 统计信息</div>
+    </div>
+    <div class="flex xiu" style="height: 120px">
+      <el-table
+        :data="userInfo.order"
+        border
+        style="width:100%">
+        <el-table-column
+          prop="payment_total"
+          label="消费总额"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="order_count"
+          align="center"
+          label="订单总数">
+        </el-table-column>
+        <el-table-column
+          prop="wallet"
+          align="center"
+          label="可用积分">
+        </el-table-column>
+        <el-table-column
+          prop="comment"
+          align="center"
+          label="商品评价数"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="back_total"
+          align="center"
+          label="退货次数">
+        </el-table-column>
+        <el-table-column
+          prop="collect"
+          align="center"
+          label="收藏商品">
+        </el-table-column>
+        <el-table-column
+          prop="invite"
+          align="center"
+          label="邀请好友数">
+        </el-table-column>
+      </el-table>
+    </div>
+    
+    <!--收货地址-->
+    <div class="head">
+      <div class="font"> 收货地址</div>
+    </div>
+    <div class="flex xiu" style="height: auto">
+      <el-table
+        :data="userInfo.address"
+        border
+        style="width: 100%;margin-bottom: 30px">
+        <el-table-column
+          prop="name"
+          label="姓名"
+          align="center"
+          min-width="180">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          label="收货地址"
+          align="center"
+          min-width="180">
+        </el-table-column>
+        <el-table-column
+          prop="mobile"
+          label="手机号"
+          align="center"
+          min-width="180">
+        </el-table-column>
+        <el-table-column
+          prop="city"
+          label="详细地址"
+          align="center"
+          min-width="200">
+        </el-table-column>
+        <el-table-column
+          label="默认地址"
+          align="center"
+          min-width="150">
+          <template slot-scope="scope">
+            <div v-if="scope.row.defaults=='1'">是</div>
+            <div v-else>否</div>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+    
+    <!--订单记录-->
+    <div class="head">
+      <div class="font"> 订单记录</div>
+    </div>
+    <div class="flex xiu" style="height: auto">
+      <div class="flex sou">
+        <div style="margin-top: 10px">订单类型：</div>
+        <div>
+          <el-select v-model="Otype" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.index"
+              size="small"
+              :label="item.label"
+              :value="item.value"
+              @click.native="selec()"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div class="btn" style="margin: -8px 0px 0px 40px">
+          <el-button type="primary" size="small" icon="el-icon-search">搜索</el-button>
+        </div>
+      </div>
+      <div style="width: 100%">
+        <el-table
+          :data="orderList"
+          border
+          style="width: 100%">
+          <el-table-column
+            prop="type"
+            label="订单类型"
+            align="center"
+            min-width="160">
+          </el-table-column>
+          <el-table-column
+            prop="user_code"
+            label="订单编号"
+            align="center"
+            min-width="180">
+          </el-table-column>
+          <el-table-column
+            prop="create_time"
+            label="提交时间"
+            align="center"
+            min-width="160">
+          </el-table-column>
+          <el-table-column
+            prop="goods_info"
+            label="商品信息"
+            align="center"
+            min-width="200">
+          </el-table-column>
+          <el-table-column
+            prop="payment_price"
+            label="金额"
+            align="center"
+            min-width="120">
+          </el-table-column>
+          <el-table-column
+            prop="status"
+            label="订单状态"
+            align="center"
+            min-width="160">
+          </el-table-column>
+          <el-table-column
+            align="center"
+            label="操作">
+            <template slot-sope="">
+              <div style="color: deepskyblue">查看</div>
+            </template>
+          </el-table-column>
+        
+        </el-table>
+      </div>
+      <div class="pag" style="margin:10px 0px 20px 60%;">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage4"
+          :page-sizes="[20, 50, 100]"
+          :page-size="5"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total=totals>
+        </el-pagination>
+      </div>
+    </div>
+    
+    <!--积分记录-->
+    <div class="head">
+      <div class="font"> 积分记录</div>
+    </div>
+    <div class="flex xiu" style="height: auto">
+      <div style="width: 100%;margin-bottom: 30px">
+        <el-table
+          :data="userInfo.address"
+          border
+          style="width: 100%">
+          <el-table-column
+            prop="date"
+            label="日期"
+            align="center"
+            min-width="150">
+          </el-table-column>
+          <el-table-column
+            prop="name"
+            label="项目"
+            align="center"
+            min-width="200">
+          </el-table-column>
+          <el-table-column
+            prop="address"
+            align="center"
+            label="积分变动"
+            min-width="180">
+          </el-table-column>
+          <el-table-column
+            prop="address"
+            align="center"
+            label="当前积分"
+            min-width="180">
+          </el-table-column>
+        </el-table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "",
+    data() {
+      return {
+        tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普'
+        }],
+        options: [
+          {
+            value: '2',
+            label: '经销商订单'
+          },
+          {
+            value: '4',
+            label: '自提订单'
+          },
+          {
+            value: '1',
+            label: '会员订单'
+          },
+          {
+            value: '3',
+            label: '积分兑换'
+          }
+        ],
+        value: '',
+        //参数
+        userInfo: {},
+        page: 1,
+        pageSize: 10,
+        currentPage4: 1,
+        totals: 10,
+        orderList: [],
+        Otype:''
+      }
+    },
+    methods: {
+      userIn() {
+        this.uId = sessionStorage.getItem('userId');
+        this._getData('/api/v1/user/index', {
+          id: sessionStorage.getItem('userId'),
+        }, data => {
+          console.log(data)
+          this.userInfo = data.data[0];
+        })
+      },
+      //订单记录
+      getorder() {
+        this._getData('/api/v1/order/index', {
+          page: this.page,
+          pageSize: this.pageSize,
+          user_mobile: sessionStorage.getItem('mobile')
+        }, data => {
+          console.log(data)
+          this.orderList = data.data;
+          this.totals = data.total;
+        })
+      },
+      //选择
+      selec(){
+        this._getData('/api/v1/order/index', {
+          page: this.page,
+          pageSize: this.pageSize,
+          type:this.Otype,
+          user_mobile: sessionStorage.getItem('mobile')
+        }, data => {
+          console.log(data)
+          this.orderList = data.data;
+          this.totals = data.total;
+        })
+      },
+      //每页显示多少数据
+      handleSizeChange(val) {
+        this.pageSize = val;
+      },
+      //第几页
+      handleCurrentChange(val) {
+        this.page = val;
+      },
+    },
+    created() {
+      this.userIn();
+      this.getorder();
+    }
+  }
+</script>
+
+<style scoped>
+  .clos {
+    text-align: left;
+    width: 130px;
+    height: 30px;
+    border: 1px solid black;
+    font-size: 15px;
+    text-align: center;
+    line-height: 30px;
+    margin: 30px 0px 0px 0px;
+  }
+  
+  .font {
+    text-align: left;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    line-height: 50px;
+  }
+  
+  /*用户信息*/
+  .imgs {
+    border: 1px solid #ddd;
+    width: 80px;
+    height: 80px;
+    margin-top: 20px;
+  }
+  
+  .pian {
+    width: 20%;
+    margin-left: 5%;
+  }
+  
+  .sou {
+    width: 100%;
+    height: 50px;
+    padding: 20px 0px 0px 35px;
+    font-size: 15px;
+    color: #999999;;
+  }
+</style>
