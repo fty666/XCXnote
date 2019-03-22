@@ -24,7 +24,8 @@ get:      sessionStorage.getItem('shopCode')
 sessionStorage.clear('userInfo');
 //存本地缓存localStorage：
 window.localStorage.setItem('name', data.name);
-  
+
+element时间格式    value-format="yyyy-MM-dd"  
   
 1， 引入vue.js       <script src="vue.js"></script>
 2,new  Vue对象 

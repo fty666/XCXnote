@@ -1,5 +1,7 @@
-只能导出表格，必须是表格组件，并且表格内部不能有btn操作方法
+﻿只能导出表格，必须是表格组件，并且表格内部不能有btn操作方法
 1，安装xlsx组件，file-saver组件
+
+npm install file-saver xlsx --save-dev
 
 
 2，main.js中引用
@@ -13,3 +15,33 @@
 	
 	//导出表格的外包裹id选择器
 	<div id="listTable">"表格"</div>	
+	
+	  <el-menu-item index="/content/bannerList">BANNER列表</el-menu-item>
+	  
+	  
+	  
+	          this.$confirm('是否回购这些商品?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/buyback_record/coerce', {
+              user_code: sessionStorage.get('userCode'),
+              order_code: this.orderCode,
+              goodsId: val.goods_id,
+              num: val.num,
+              price: val.price
+            },
+            data => {
+              this.getOrder();
+            })
+          this.$message({
+            type: 'success',
+            message: '操作成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
