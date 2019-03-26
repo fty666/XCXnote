@@ -4,12 +4,12 @@
     <div class="flex whiteT">
       <div class="font">用户账户：</div>
       <div class="input2">
-        <el-input v-model="input" style="margin-top: 10px;width: 180px"  placeholder="输入用户账户"></el-input>
+        <el-input v-model="filter.mobile" style="margin-top: 10px;width: 150px" placeholder="输入用户账户"></el-input>
       </div>
       
       <div class="font">反馈类型：</div>
       <div class="input2">
-        <el-select v-model="value"  style="margin-top: 10px;width: 180px" placeholder="请选择">
+        <el-select v-model="filter.type" style="margin-top: 10px;width: 180px" placeholder="请选择">
           <el-option
             v-for="item in options"
             size="small"
@@ -23,29 +23,36 @@
       <div class="font">反馈时间：</div>
       <div class="input">
         <el-date-picker
-          v-model="value6"
-          style="width: 220px"
-          type="datetimerange"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          :default-time="['12:00:00']">
+          v-model="filter.start_time"
+          style="width: 135px;"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="选择日期">
         </el-date-picker>
       </div>
       
-      <!--按钮-->
-      <div class="btn" style="margin-left: 10%">
-        <el-button type="primary" icon="el-icon-search">搜索</el-button>
+      <div class="font" style="margin-left: 2%">至</div>
+      <div class="input" style="margin-left: 1%">
+        <el-date-picker
+          v-model="filter.end_time"
+          value-format="yyyy-MM-dd"
+          style="width: 135px;"
+          type="date"
+          placeholder="选择日期">
+        </el-date-picker>
       </div>
-      <div class="btn2">
-        <el-button class="buttons3" icon="el-icon-refresh">重置</el-button>
+      <!--按钮-->
+      <div class="font" style="margin-left: 20px">
+        <el-button type="primary" icon="el-icon-search" @click="getList">搜索</el-button>
+        <el-button class="buttons3" icon="el-icon-refresh" @click="reset">重置</el-button>
       </div>
     </div>
     <!--表格-->
     <div class="head right">
-      <div class="head1">导出数据</div>
-      <div class="head1">排列方式</div>
+      <div class="head1" style="cursor: pointer" @click="openExcel('alertData','用户反馈查看列表')">导出数据</div>
+      <!--<div class="head1">排列方式</div>-->
     </div>
-    <div>
+    <div id="alertData">
       <el-table
         ref="multipleTable"
         :data="tableData3"
@@ -60,41 +67,47 @@
           width="70">
         </el-table-column>
         <el-table-column
+          prop="user_code"
           label="用户账户"
           align="center"
-          min-width="170">
-          <template slot-scope="scope">{{ scope.row.date }}</template>
+          min-width="150">
+        
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="nickname"
           label="昵称"
           align="center"
           min-width="162">
         </el-table-column>
         <el-table-column
-          prop="address"
-          min-width="120"
+          prop="type"
+          min-width="100"
           align="center"
           label="反馈类型"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="content"
           label="反馈内容"
           align="center"
-          min-width="300">
+          min-width="250">
         </el-table-column>
         <el-table-column
           prop="name"
           label="图片"
           align="center"
-          min-width="150">
+          min-width="180">
+          <template slot-scope="scope">
+            <div>
+              <img :src="imggerUrl+scope.row.img" class="imgs">
+            </div>
+          </template>
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="create_time"
           label="反馈时间"
           align="center"
-          min-width="120">
+          min-width="160">
         </el-table-column>
       </el-table>
     </div>
@@ -103,8 +116,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
-        :page-sizes="[20, 50, 100]"
-        :page-size="5"
+        :page-sizes="[10, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
       </el-pagination>
@@ -115,14 +127,14 @@
 <script>
   export default {
     name: "",
-    data(){
-      return{
-        input:'',
-        value1:'',
-        value6:'',
+    data() {
+      return {
+        // 表单数组
+        filter: {
+          page: 1,
+          pageSize: 20,
+        },
         //页码参数
-        page: 1,
-        pageSize: 20,
         currentPage4: 1,
         totals: 20,
         options: [{
@@ -142,16 +154,26 @@
           label: '北京烤鸭'
         }],
         value: '',
-        tableData3: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市'
-        }],
-        inputs2:'',
+        tableData3: [{}],
         multipleSelection: []
       }
     },
     methods: {
+      getList() {
+        this._getData('/api/v1/user_feedback/index', this.filter,
+          data => {
+            console.log(data.data);
+            this.tableData3 = data.data;
+            this.totals = data.total;
+          })
+      },
+      reset() {
+        this.filter = {};
+      },
+      //导出EXCEL/exportFunc为elxel.js里方法
+      openExcel(val, name) {
+        this.exportFunc(val, name)
+      },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
@@ -165,6 +187,9 @@
         this.page = val;
         this.getService();
       },
+    },
+    created() {
+      this.getList();
     }
   }
 </script>

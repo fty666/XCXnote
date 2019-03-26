@@ -111,6 +111,7 @@
                 <span slot="title">内容管理</span>
               </template>
               <el-menu-item index="/content/contentManage">BANNER图标管理</el-menu-item>
+              <el-menu-item index="/content/bannerList">BANNER列表</el-menu-item>
               <el-menu-item index="/content/shopManage">橱窗商品管理</el-menu-item>
               <el-menu-item index="/content/searchManage">热门搜索管理</el-menu-item>
               <el-menu-item index="/content/contentRule">规则提示弹窗管理</el-menu-item>

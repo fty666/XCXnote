@@ -43,6 +43,8 @@ import dealerAudit from '@/pages/dealer/dealerAudit'
 import dealerManage from '@/pages/dealer/dealerManage'
 //经销商回购管理
 import dealerBuy from '@/pages/dealer/dealerBuy'
+//回购记录
+import buyRecord from '@/pages/dealer/buyRecord'
 //订单管理
 import orderList from '@/pages/order/orderList'
 //订单信息
@@ -75,6 +77,8 @@ import editWare from '@/pages/warehouse/editWare'
 import inventoryInfo from '@/pages/warehouse/inventoryInfo'
 //内容管理
 import contentManage from '@/pages/content/contentManage'
+//banner表格
+import bannerList from '@/pages/content/bannerList'
 //橱窗商品管理
 import shopManage from '@/pages/content/shopManage'
 //热门搜索管理
@@ -234,6 +238,12 @@ export default new Router({
           name:'dealerBuy',
           component:dealerBuy
         },
+      //  回购记录
+        {
+          path:'/dealer/buyRecord',
+          name:'buyRecord',
+          component:buyRecord
+        },
       //  订单管理
         {
           path:'/order/orderList',
@@ -329,6 +339,12 @@ export default new Router({
           path:'/content/contentManage',
           name:'contentManage',
           component:contentManage
+        },
+        //  banner表格显示
+        {
+          path:'/content/bannerList',
+          name:'bannerList',
+          component:bannerList
         },
       //  橱窗商品管理
         {

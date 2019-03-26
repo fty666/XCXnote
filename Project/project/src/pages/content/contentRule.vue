@@ -6,7 +6,7 @@
     <div class="bian">
       <!--下拉-->
       <div class="selec">
-        <el-select v-model="value" style="width: 500px" placeholder="回购规则提示文字">
+        <el-select v-model="type" style="width: 500px" placeholder="回购规则提示文字">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -17,7 +17,7 @@
       </div>
       <!--文字-->
       <div class="bj">
-        <div class="font">积分规则：</div>
+        <div class="font" v-model="sort">积分规则：</div>
       </div>
       <!--输入框-->
       <div class="txt">
@@ -26,7 +26,7 @@
           style="height: 150px"
           :rows="6"
           placeholder="请输入内容"
-          v-model="textarea">
+          v-model="content">
         </el-input>
       </div>
       <!--按钮-->
@@ -42,34 +42,51 @@
     name: "",
     data() {
       return {
+        // 积分规则
+        type:1,
+        content:'',
+        sort:'',
         textarea: '',
         options: [{
           value: '选项1',
-          label: '黄金糕'
+          label: '积分规则'
         }, {
           value: '选项2',
-          label: '双皮奶'
+          label: '经销商规则'
         }, {
           value: '选项3',
-          label: '蚵仔煎'
+          label: '回购规则'
         }, {
           value: '选项4',
-          label: '龙须面'
+          label: '经销商余额'
         }, {
           value: '选项5',
-          label: '北京烤鸭'
+          label: '邀请规则'
         }],
         value: ''
       }
     },
     methods: {
+      //  获取积分规则
+      getInfo() {
+        this._getData('/api/v1/rule/show',{
+            type:1
+          },
+          data => {
+            console.log(data)
+            // this.orderInfo = data;
+          })
+      },
       edit() {
         this.centerDialogVisible = true;
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       }
-    }
+    },
+    created(){
+      this.getInfo();
+    },
   }
 </script>
 

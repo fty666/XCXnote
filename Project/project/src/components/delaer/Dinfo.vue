@@ -1,27 +1,12 @@
 <template>
-	<div class="body" style="width: 98%;margin-left: 10px">
+  <div class="body" style="width: 98%;margin-left: 10px">
     <!--银行卡信息-->
     <div class="head">
       <div class="backfont"> 银行卡信息</div>
     </div>
-    <div class="flex xiu" style="height: 80px">
-      <div class="xfont">持卡人：</div>
-      <div class="xfont2">范腾远</div>
-      <div class="xfont">卡号：</div>
-      <div class="xfont2">范腾远</div>
-      <div class="xfont">银行：</div>
-      <div class="xfont2">范腾远</div>
-      <div class="xfont">卡类型：</div>
-      <div class="xfont2" style="width: 150px">范腾远</div>
-    </div>
-    
-    <!--经销商库存-->
-    <div class="head">
-      <div class="backfont"> 经销商库存</div>
-    </div>
     <div class="flex xiu" style="height: auto">
       <el-table
-        :data="tableData"
+        :data="cards"
         border
         style="width: 100%;height: auto;">
         <el-table-column
@@ -31,7 +16,49 @@
           width="80">
         </el-table-column>
         <el-table-column
-          prop="date"
+          prop="user_name"
+          label="持卡人"
+          align="center"
+          min-width="130">
+        </el-table-column>
+        <el-table-column
+          prop="bank_card_number"
+          label="卡号"
+          align="center"
+          min-width="200">
+        </el-table-column>
+        <el-table-column
+          prop="bank_card"
+          label="银行"
+          align="center"
+          min-width="247">
+        </el-table-column>
+        <el-table-column
+          prop="type"
+          label="卡类型"
+          align="center"
+          min-width="180">
+        </el-table-column>
+      </el-table>
+    </div>
+    
+    <!--经销商库存-->
+    <div class="head">
+      <div class="backfont"> 经销商库存</div>
+    </div>
+    <div class="flex xiu" style="height: auto">
+      <el-table
+        :data="inventoryList"
+        border
+        style="width: 100%;height: auto;">
+        <el-table-column
+          label="序号"
+          type="index"
+          align="center"
+          width="80">
+        </el-table-column>
+        <el-table-column
+          prop="id"
           label="商品编号"
           align="center"
           min-width="180">
@@ -41,21 +68,28 @@
           label="商品图片"
           align="center"
           min-width="200">
+          <template slot-scope="scope">
+            <div>
+              <img :src="imggerUrl+scope.row.goods.list_img" class="imgs">
+            </div>
+          </template>
         </el-table-column>
         <el-table-column
-          prop="name"
           label="商品名称"
           align="center"
           min-width="247">
+          <template slot-scope="scope">
+            <div>{{scope.row.goods.goods_name}}</div>
+          </template>
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="num"
           label="经销商库存"
           align="center"
           min-width="180">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="create_time"
           label="更新时间"
           align="center"
           min-width="180">
@@ -70,50 +104,49 @@
     <div class="flex xiu" style="height: auto">
       <div style="width: 100%;height: auto;">
         <el-table
-          :data="tableData"
+          :data="purchaseList"
           border
           style="width: 100%">
           <el-table-column
-            prop="date"
+            prop="type"
             label="订单类型"
             align="center"
             min-width="150">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="order_code"
             label="订单编号"
             align="center"
             min-width="200">
           </el-table-column>
           <el-table-column
-            prop="address"
+            prop="create_time"
             label="提交时间"
             min-width="147"
             align="center">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="goodsInfo"
             label="商品信息"
             align="center"
             min-width="250">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="payment_price"
             label="金额"
             align="center"
             min-width="100">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="status"
             label="订单状态"
             align="center"
             min-width="100">
           </el-table-column>
           <el-table-column
-            prop="address"
             min-width="120"
             align="center"
-            label="地址">
+            label="操作">
             <template slot-scope="scope">
               <div class="flex">
                 <div style="color: #0099ce;padding-left: 38px" @click="info(scope.row.id)">查看</div>
@@ -124,48 +157,48 @@
       </div>
     </div>
     
-    <!--积分记录-->
+    <!--卖出记录-->
     <div class="head">
       <div class="backfont"> 卖出记录</div>
     </div>
     <div class="flex xiu" style="height: auto">
       <div style="width: 100%">
         <el-table
-          :data="tableData"
+          :data="saleList"
           border
           style="width: 100%">
           <el-table-column
-            prop="date"
+            prop="type"
             label="订单类型"
             align="center"
             min-width="180">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="order_code"
             label="订单编号"
             align="center"
             min-width="200">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="create_time"
             label="提交时间"
             align="center"
             min-width="160">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="goodsInfo"
             label="商品信息"
             align="center"
             min-width="217">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="payment_price"
             label="金额"
             align="center"
             min-width="110">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="status"
             label="订单状态"
             align="center"
             min-width="120">
@@ -176,41 +209,78 @@
             min-width="80"
             align="center">
             <template slot-scope="scope">
-                <div style="color: #0099ce;" @click="info(scope.row.id)">查看</div>
+              <div style="color: #0099ce;" @click="info(scope.row.id)">查看</div>
             </template>
           </el-table-column>
         </el-table>
       </div>
     </div>
-	</div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "",
-      data() {
-        return {
-          tableData: [{
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市'
-          }],
-          options: [{
-            value: '选项1',
-            label: '黄金糕'
-          }, {
-            value: '选项2',
-            label: '双皮奶'
-          }],
-          value: ''
-        }
-      },
-      methods:{
-        info(){
-          this.$router.push({name:'buyInfo'})
-        }
+  export default {
+    name: "",
+    data() {
+      return {
+        //记录
+        dealerList: {},
+        inventoryList: [],
+        purchaseList: [],
+        saleList: [],
+        cards: []
       }
+    },
+    methods: {
+      //银行卡信息
+      getCards() {
+        this._getData('/api/v1/bank_card/getUserCard', {
+            user_code: sessionStorage.getItem('userCode'),
+          },
+          data => {
+          console.log(data)
+            this.cards = data;
+          })
+      },
+      //经销商库存
+      inventory() {
+        this._getData('/api/v1/dealer_warehouse/dealerGoods', {
+            userCode: sessionStorage.getItem('userCode'),
+          },
+          data => {
+            this.inventoryList = data.data;
+          })
+      },
+      //购入记录
+      purchase() {
+        this._getData('/api/v1/dealer/buy', {
+            userCode: sessionStorage.getItem('userCode'),
+            order_status: 'desc'
+          },
+          data => {
+            this.purchaseList = data.data;
+          })
+      },
+      //卖出记录
+      getSale() {
+        this._getData('/api/v1/dealer/sale', {
+            userCode: sessionStorage.getItem('userCode'),
+          },
+          data => {
+            this.saleList = data.data;
+          })
+      },
+      info() {
+        this.$router.push({name: 'buyInfo'})
+      },
+    },
+    created() {
+      this.inventory();
+      this.purchase();
+      this.getSale();
+      this.getCards();
     }
+  }
 </script>
 
 <style scoped>
@@ -225,11 +295,12 @@
     margin: 30px 0px 0px 0px;
   }
   
-  .xfont{
+  .xfont {
     margin: 20px 0px 0px 30px;
     font-size: 14px;
   }
-  .xfont2{
+  
+  .xfont2 {
     width: 200px;
     margin: 20px 0px 0px 0px;
     text-align: left;

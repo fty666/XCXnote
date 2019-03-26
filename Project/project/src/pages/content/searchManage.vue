@@ -19,7 +19,7 @@
           </el-table-column>
           <el-table-column
             label="内容"
-            prop="name"
+            prop="content"
             align="center"
             min-width="425">
           </el-table-column>
@@ -29,7 +29,7 @@
             align="center"
             min-width="150">
             <template slot-scope="scope">
-              <div style="color: deepskyblue" @click="edit()">添加至热门搜索</div>
+              <div style="color: deepskyblue" @click="edit(scope.row)">添加至热门搜索</div>
             </template>
           </el-table-column>
         </el-table>
@@ -44,10 +44,10 @@
       <div class="flex">
         <div class="ju">输入内容：</div>
         <div class="ju2">
-          <el-input v-model="input" placeholder="请输入内容"></el-input>
+          <el-input v-model="filter.content" placeholder="请输入内容"></el-input>
         </div>
         <div class="ju2">
-          <el-button  class="buttons buttons2">添加</el-button>
+          <el-button  class="buttons buttons2" @click="addnew">添加</el-button>
         </div>
       </div>
       <div class="sequence" style="width: 80%;">
@@ -94,6 +94,7 @@
     data() {
       return {
         input: '',
+        filter:[],
         centerDialogVisible: false,
         multipleSelection: [],
         tableData: [{
@@ -104,19 +105,64 @@
       }
     },
     methods: {
-      edit() {
-        this.centerDialogVisible = true;
+      //获取列表
+      getOrder() {
+        this._getData('/api/v1/user_search/userTop10', {
+          page: this.page,
+          pageSize: this.pageSize,
+        }, data => {
+          console.log(data);
+          this.tableData = data;
+          this.totals = data.total;
+        })
+      },
+      //添加至热门搜索
+      edit(val) {
+        console.log(555);
+        this.$confirm('是否将' + val.content + '添加至热门搜索?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/user_search/createHot', {
+              content: val.content,
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功',
+              });
+              this.getOrder();
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+        
+      },
+      // 添加
+      addnew(){
+        this._getData('/api/v1/user_search/createHot',this.filter, {
+        
+        }, data => {
+          this.shopList = data.data;
+        })
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       }
+    },
+    created(){
+      this.getOrder()
     }
   }
 </script>
 
 <style scoped>
   .bian {
-    height: 500px;
+    height: 550px;
     width: 99.90%;
     border: 1px solid #ddd;
   }
@@ -126,7 +172,7 @@
     margin-top: 20px;
   }
   .ju{
-      margin: 80px 0px 0px 200px;
+    margin: 80px 0px 0px 200px;
   }
   .ju2{
     margin: 70px 0px 0px 50px;

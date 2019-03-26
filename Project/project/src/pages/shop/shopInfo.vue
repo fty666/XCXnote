@@ -29,16 +29,15 @@
       <!--第四行-->
       <div class="han">
         <div class="Tfont" style="width: 8%;line-height: 100px">商品图片:</div>
-        <div class="Tfont Tpic">
-          <img :src="imggerUrl+shopInfo.goods_img">
+        <div class="Tfont">
+          <img :src="imggerUrl+shopInfo.list_img" class="imgs">
         </div>
-        <div class="Tfont Tpic"></div>
       </div>
       <!--第五行-->
       <div class="han">
         <div class="Tfont" style="width: 8%;line-height: 100px">商品详情:</div>
-        <div class="Tfont Tpic">
-          <img :src="imggerUrl+shopInfo.details_img">
+        <div class="Tfont">
+          <img :src="imggerUrl+shopInfo.details_img" class="Tpic">
         </div>
       </div>
       <!--第六行-->
@@ -117,8 +116,8 @@
             align="center"
             min-width="150">
             <template slot-scope="scope">
-              <div>
-                <img :src="imggerUrl+scope.row.img">
+              <div v-for="(item,index) in scope.row.img.split(',')" :key="index">
+                <img :src="imggerUrl+item" class="imgs">
               </div>
             </template>
           </el-table-column>
@@ -134,7 +133,7 @@
             min-width="80">
             <template slot-scope="scope">
               <div v-if="scope.row.status=='显示'" style="color: deepskyblue" @click="hidden(scope.row.id)">禁止显示</div>
-              <div v-else style="color: deepskyblue"  @click="show(scope.row.id)">显示</div>
+              <div v-else style="color: deepskyblue" @click="show(scope.row.id)">显示</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -146,6 +145,16 @@
             </template>
           </el-table-column>
         </el-table>
+        <div class="pags" style="margin:30px 50px 30px 0px">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage4"
+            :page-sizes="[10, 50, 100]"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total='totals'>
+          </el-pagination>
+        </div>
       </div>
     </div>
     <!--修改-->
@@ -167,10 +176,10 @@
           </div>
           <div style="margin: 5px 0px 0px 20px;color: #ddd;">注：回复内容会在前台显示。</div>
           <div class="flex">
-            <div class="logBtn1" style="margin:15px 0px 0px 25%">
+            <div class="logBtn1" style="margin:15px 0px 0px 25%" @click="submit()">
               <el-button size="medium" type="primary">提交</el-button>
             </div>
-            <div class="logBtn2" style="margin:15px 0px 0px 10%">
+            <div class="logBtn2" style="margin:15px 0px 0px 10%" @click="esc()">
               <el-button size="medium">取消</el-button>
             </div>
           </div>
@@ -190,25 +199,42 @@
         //商品id
         sid: "",
         shopInfo: {},
-        commonts: []
+        commonts: [],
+        //页码参数
+        page: 1,
+        pageSize: 10,
+        currentPage4: 1,
+        totals: 20
       };
     },
     methods: {
       //获取商品信息
       getInfo() {
-        this._getData('/api/v1/goods/show', {id: this.$route.params.id}, data => {
+        this._getData('/api/v1/goods/show', {id: sessionStorage.getItem('ids')}, data => {
+          console.log(data)
           this.shopInfo = data;
         })
       },
       //获取商品评论
       getComment() {
-        this._getData('/api/v1/comment/goodsComment', {id: this.$route.params.id}, data => {
+        this._getData('/api/v1/comment/goodsComment', {id: sessionStorage.getItem('ids')}, data => {
           console.log(data)
           this.commonts = data;
+          this.totals = data.length;
         })
       },
+      //每页显示多少数据
+      handleSizeChange(val) {
+        this.pageSize = val;
+        this.getComment();
+      },
+      //第几页
+      handleCurrentChange(val) {
+        this.page = val;
+        this.getComment();
+      },
       //显示
-      show(val){
+      show(val) {
         this.$confirm('是否显示此评论?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -231,8 +257,12 @@
           });
         });
       },
+      //回复评论
+      submit(){
+      
+      },
       //隐藏评论
-      hidden(val){
+      hidden(val) {
         console.log(val)
         this.$confirm('是否禁止显示此评论?', '提示', {
           confirmButtonText: '确定',
@@ -297,8 +327,8 @@
   }
   
   .Tpic {
-    width: 88px;
-    height: 88px;
+    width: 150px;
+    height: 450px;
     border: 1px solid #ddd;
     margin-left: 10px;
   }

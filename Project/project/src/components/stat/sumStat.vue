@@ -9,51 +9,52 @@
       <div :class="['head1',Tday==true?'bj':'']" @click="XTday()">按年统计</div>
       <div class="head1" style="width: 150px;border: 1px solid #ddd">
         <el-date-picker
-          v-model="value1"
+          v-model="Stimes"
           style="width: 150px"
           type="date"
           size="mini"
+          value-format="yyyy-MM-dd"
           placeholder="选择日期">
         </el-date-picker>
       </div>
     </div>
     <div style="width: 99.8%;margin: 10px 0px 0px 0px">
       <el-table
-        :data="tableData"
+        :data="platformList"
         border
         style="width: 100%">
         <el-table-column
-          prop="date"
+          prop="countOrder"
           label="总订单数"
           align="center"
           min-width="180">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="validOrderCount"
           align="center"
           label="有效订单数"
           min-width="180">
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="noValidOrderCount"
           align="center"
           min-width="180"
           label="无效订单数">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="normalPayTotal"
           align="center"
           label="总营业额"
           min-width="180">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="refundPayTotal"
           align="center"
           label="已退款金额"
           min-width="180">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="profit"
           align="center"
           label="平台利润"
           min-width="189">
@@ -65,31 +66,64 @@
 
 <script>
   export default {
-    name: "",
     data() {
       return {
-        value1:'',
+        Stimes: '',
         //选择
         yday: true,
         Qday: false,
         Tday: false,
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市'
-        }]
+        platformList: []
+      }
+    },
+    watch: {
+      Stimes(v, o) {
+        console.log(v)
+        this.selectTimes();
       }
     },
     methods: {
+      //获取平台总营业额
+      getSum(val) {
+        var data = {};
+        if (val != '') {
+          data.create_time = val;
+        }
+        data.consigner_type = 1;
+        this._getData('/api/v1/order/businessVolume', data, data => {
+          this.circulation(data, data => {
+            this.platformList = data;
+          })
+        })
+      },
+      //选择年月
+      selectTimes() {
+        var data = {};
+        data.create_time = this.Stimes;
+        data.consigner_type = 1;
+        this._getData('/api/v1/order/businessVolume', data, data => {
+          this.circulation(data, data => {
+            this.platformList = data;
+          })
+        })
+      },
       //选择背景
       Xyday() {
         this.Tselect(1);
+        this.getSum();
       },
       XQday() {
         let data = this.Tselect(2);
+        this.getTimes('M', data => {
+          this.getSum(data);
+        })
       },
       XTday() {
         this.Tselect(3);
+        this.getTimes('Y', data => {
+          console.log(data)
+          this.getSum(data);
+        })
       },
       Tselect(flag) {
         this.yday = false;
@@ -107,6 +141,9 @@
             break;
         }
       }
+    },
+    created() {
+      this.getSum();
     }
   }
 </script>

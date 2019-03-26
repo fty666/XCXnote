@@ -9,26 +9,34 @@
       <div class="flex">
         <div class="class">商品分类：</div>
         <div class="class1">
-          <el-select v-model="value" style="width: 450px">
+          <el-select v-model="value" style="width: 450px;margin-left: 5px">
             <el-option
               v-for="item in options"
               :key="item.index"
               :label="item.label"
-              :value="item.value"
-              @click.native="selec()"
-            >
+              :value="item.value">
             </el-option>
           </el-select>
         </div>
       </div>
-      <div class="flex">
-        <div class="add">
-          <el-input v-model="name" placeholder="请输入分类"></el-input>
+      <div class="flex" style="margin-left:25% ">
+        <div style="margin-top: 40px ">分类名：</div>
+        <div style="margin: 30px 0px 0px 50px">
+          <el-input v-model="name"  style="width: 450px;" placeholder="请输入分类"></el-input>
         </div>
-        <div class="add1" @click="addClass()">
+      </div>
+      <div class="flex" style="margin-left:25% ">
+        <div style="margin-top: 40px ">分类图片：</div>
+        <div style="margin: 30px 0px 0px 50px">
+          <upali class="img_cha" ref="aliComponent" @getUrl="imgUrl1($event, 1)" :fileNumber="1"
+                  :imgWidth="120" :imgHeight="120"
+                  :defaultImg="photo"></upali>
+        </div>
+        <div class="add1" style="text-align: center" @click="addClass()">
           添加二级分类
         </div>
       </div>
+      
       <!--表格-->
       <div class="biao">
         <el-table
@@ -41,7 +49,7 @@
             type="index"
             align="center"
             label="序号"
-            width="150">
+            width="100">
           </el-table-column>
           <el-table-column
             property="name"
@@ -50,10 +58,20 @@
             min-width="193">
           </el-table-column>
           <el-table-column
+            label="分类图片"
+            align="center"
+            min-width="150">
+            <template slot-scope="scope">
+              <div>
+                <img :src="imggerUrl+scope.row.img" class="imgs">
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column
             property="goods_count"
             label="商品数量"
             align="center"
-            min-width="180">
+            min-width="130">
           </el-table-column>
           <el-table-column
             min-width="130"
@@ -61,14 +79,13 @@
             label="操作">
             <template slot-scope="scope">
               <div class="flex">
-                <div style="color: #0099ce;padding-left: 25px" @click="edit(scope.row.id)">修改</div>
+                <div style="color: #0099ce;padding-left: 25px" @click="edit(scope.row)">修改</div>
                 <div style="color: #0099ce;padding-left: 10px" @click="del(scope.row)">删除</div>
               </div>
             </template>
           </el-table-column>
         </el-table>
       </div>
-      
       <!--修改-->
       <div>
         <el-dialog
@@ -76,12 +93,20 @@
           :visible.sync="centerDialogVisible"
           width="30%"
           center>
-          <div class="xiu">
+          <div class="xiu" style="height: 400px">
             <div class="edit">修改分类名称</div>
             <div class="flex">
               <div class="edit1" style="margin-left:20%">修改为：</div>
               <div class="edit2" style="margin-left: 0px">
                 <el-input v-model="input" placeholder="请输入内容"></el-input>
+              </div>
+            </div>
+            <div class="flex">
+              <div style="margin: 80px 0px 0px 22%">分类图片：</div>
+              <div style="margin: 30px 0px 0px 50px">
+                <upali class="img_cha" ref="aliComponent" @getUrl="editimgUrl1($event, 1)" :fileNumber="1"
+                       :imgWidth="120" :imgHeight="120"
+                       :defaultImg="editphoto"></upali>
               </div>
             </div>
             <div class="flex" style="margin-left: 0%">
@@ -100,22 +125,47 @@
 </template>
 
 <script>
+  import upali from '@/components/upload-ali'
+  
   export default {
     data() {
       return {
-        options: [],
+        options: [{
+          value: '洋酒',
+          label: '洋酒'
+        }, {
+          value: '葡萄酒',
+          label: '葡萄酒'
+        }, {
+          value: '酒具周边',
+          label: '酒具周边'
+        }, {
+          value: '红酒套装',
+          label: '红酒套装'
+        }],
         value: '洋酒',
         name: '',
         classList: [],
         centerDialogVisible: false,
         input: '',
-        eid: ''
+        eid: '',
+        photo:'',
+        editphoto:'',
+        eidtInfo:{}
       }
+    },
+    watch: {
+      value(v, o) {
+        this.gclass();
+      }
+    },
+    components: {
+      upali
     },
     methods: {
       //添加分类
       addClass() {
-        if (this.value == '' || this.name == '') {
+        if (this.value == '' || this.name == ''|| this.photo=='') {
           this.$message({
             showClose: true,
             message: '请完善分类信息',
@@ -130,6 +180,7 @@
             this._getData('/api/v1/goods_group/create', {
                 name: this.name,
                 group_name: this.value,
+                img:this.photo
               },
               data => {
                 this.gclass();
@@ -151,10 +202,6 @@
         this._getData('/api/v1/goods_group/getSub', {group_name: this.value}, data => {
           this.classList = data;
         })
-      },
-      //修改分类
-      selec() {
-        this.gclass();
       },
       //修改
       edit: function (val) {
@@ -204,8 +251,9 @@
           type: 'warning'
         }).then(() => {
           this._getData('/api/v1/goods_group/edit', {
-              id: this.eid,
-              name: this.input
+              id: this.eid.id,
+              name: this.input,
+              img:this.editphoto
             },
             data => {
               this.$message({
@@ -222,7 +270,13 @@
           });
         });
         
-      }
+      },
+      imgUrl1(e) {
+        this.photo = e[0];
+      },
+      editimgUrl1(e) {
+        this.editphoto = e[0];
+      },
     },
     created() {
       this.gclass();
@@ -270,8 +324,8 @@
     text-align: center;
     line-height: 40px;
     border-radius: 5px;
-    margin-left: 25px;
-    margin-top: 30px;
+    margin-left: 15%;
+    margin-top: 50px;
     font-size: 14px;
     color: white;
   }

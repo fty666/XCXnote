@@ -7,20 +7,18 @@
       <!--订单记录-->
       <div class="head" style="margin-top: 0px">
         <div class="Jfont">&nbsp;&nbsp;&nbsp;&nbsp;库存详情</div>
-        
-        <!--数量-->
-        <div class="flex" style="margin-top: 20px;">
-          <div class="state flex" style="background-color:rgba(0, 153, 153, 1);">
-            <div class="state2" style="color: white">全部商品</div>
-            <div class="state3" style="color: white">(1000)</div>
+        <div class="flex" style="margin-top: 10px;">
+          <div :class="['state', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
+            <div class="state2">全部商品</div>
+            <div class="state3">({{this.winState.all}})</div>
           </div>
-          <div class="state flex">
+          <div :class="['state', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
             <div class="state2">酒类商品</div>
-            <div class="state3">(1000)</div>
+            <div class="state3">({{this.winState.yes}})</div>
           </div>
-          <div class="state flex" style="width: 130px">
+          <div :class="['state', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
             <div class="state2">非酒类商品</div>
-            <div class="state3">(1000)</div>
+            <div class="state3">({{this.winState.no}})</div>
           </div>
         </div>
         <!--搜索-->
@@ -46,13 +44,10 @@
         </div>
         <!--表格头-->
         <div class="head right bianju">
-          <div class="head1">批量删除</div>
-          <div class="head1">导出订单</div>
-          <div class="head1">显示条数</div>
-          <div class="head1">排序方式</div>
+          <div class="head1" @click="exportFunc('joinList','加盟商列表')">导出表格</div>
         </div>
         <!--表格-->
-        <div class="bianju">
+        <div class="bianju" id="joinList">
           <el-table
             ref="multipleTable"
             :data="stockInfo"
@@ -77,7 +72,7 @@
               align="center"
               min-width="150">
               <template slot-scope="scope">
-                <div><img :src="scope.row.goods_img"></div>
+                <div><img :src="imggerUrl+scope.row.list_img" class="imgs"></div>
               </template>
             </el-table-column>
             <el-table-column
@@ -110,23 +105,22 @@
               align="center"
               min-width="130">
             </el-table-column>
-            <el-table-column
-              label="操作"
-              align="center"
-              min-width="100"
-              show-overflow-tooltip>
-              <template slot-scope="scope">
-                <div style="color: #0099ce;" @click="add()">补货</div>
-              </template>
-            </el-table-column>
+            <!--<el-table-column-->
+            <!--label="操作"-->
+            <!--align="center"-->
+            <!--min-width="100"-->
+            <!--show-overflow-tooltip>-->
+            <!--<template slot-scope="scope">-->
+            <!--<div style="color: #0099ce;" @click="add()">补货</div>-->
+            <!--</template>-->
+            <!--</el-table-column>-->
           </el-table>
           <div class="pag">
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
               :current-page="currentPage4"
-              :page-sizes="[20, 50, 100]"
-              :page-size="5"
+              :page-sizes="[10, 50, 100]"
               layout="total, sizes, prev, pager, next, jumper"
               :total=totals>
             </el-pagination>
@@ -167,18 +161,10 @@
 
 <script>
   export default {
-    name: "",
     data() {
       return {
         centerDialogVisible: false,
         input: '',
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }],
         value: '',
         //  库存信息
         stockInfo: [],
@@ -189,16 +175,26 @@
         totals: 20,
         goodsName: '',
         goodsId: '',
+        winState: {},
+        //背景选择
+        sum: true,
+        month: false,
+        day: false,
+        wines: '',
       }
     },
     methods: {
       //获取信息
       getStock() {
-        this._getData('/api/v1/alliance/getGoods', {
-          warehouseId: sessionStorage.getItem('joinId'),
-          page: this.page,
-          pageSize: this.pageSize
-        }, data => {
+        var datas = {};
+        this.getMessag(datas);
+      },
+      //获取信息
+      getMessag(datas) {
+        datas.page = this.page;
+        datas.pageSize = this.pageSize;
+        datas.warehouseId = sessionStorage.getItem('joinId');
+        this._getData('/api/v1/alliance/getGoods', datas, data => {
           console.log(data)
           this.stockInfo = data.data;
           this.totals = data.total;
@@ -207,15 +203,32 @@
       add() {
         this.centerDialogVisible = true;
       },
+      //获取统计
+      getState() {
+        this._getData('/api/v1/alliance/countStock', {
+          id: sessionStorage.getItem('joinId')
+        }, data => {
+          console.log(data)
+          this.winState = data;
+        })
+      },
       //  搜索
       search() {
+        var data = {};
+        if (this.goodsId != '') {
+          data.goodsId = this.goodsId;
+        }
+        if (this.goodsName != '') {
+          data.goodsName = this.goodsName;
+        }
         this._getData('/api/v1/alliance/getGoods', {
           warehouseId: sessionStorage.getItem('joinId'),
           page: this.page,
           pageSize: this.pageSize,
-          goodsId: this.goodsId,
-          goodsName: this.goodsName
+          goodsId: data.goodsId,
+          goodsName: data.goodsName
         }, data => {
+          console.log(data)
           this.stockInfo = data.data;
           this.totals = data.total;
         })
@@ -229,16 +242,69 @@
       //每页显示多少数据
       handleSizeChange(val) {
         this.pageSize = val;
-        this.getStock()
+        if (this.goodsId != '' || this.goodsName != '') {
+          this.search();
+        } else if (this.wines != '') {
+          var datas = {wine: this.wines};
+          this.getMessag(datas);
+        } else {
+          this.getStock()
+        }
       },
       //第几页
       handleCurrentChange(val) {
         this.page = val;
-        this.getStock()
+        if (this.goodsId != '' || this.goodsName != '') {
+          this.search();
+        } else if (this.wines != '') {
+          var datas = {wine: this.wines};
+          this.getMessag(datas);
+        } else {
+          this.getStock()
+        }
       },
+      //  选择背景
+      Xsum() {
+        this.wines = '';
+        this.getStock();
+        this.select(1);
+      },
+      Xmonth() {
+        this.wines = '1';
+        var datas = {wine: 1};
+        this.getMessag(datas);
+        this.select(2);
+      },
+      Xday() {
+        this.wines = '2';
+        var datas = {wine: 2};
+        this.getMessag(datas);
+        this.select(3);
+      },
+      select(flag) {
+        this.sum = false;
+        this.month = false;
+        this.day = false;
+        this.bshop = false;
+        switch (flag) {
+          case 1:
+            this.sum = true;
+            break;
+          case 2:
+            this.month = true;
+            break;
+          case 3:
+            this.day = true;
+            break;
+          case 4:
+            this.bshop = true;
+            break;
+        }
+      }
     },
     created() {
       this.getStock();
+      this.getState();
     }
   }
 </script>

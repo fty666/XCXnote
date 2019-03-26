@@ -4,21 +4,9 @@
       <div class="clos" style="margin-left: 13px">返回列表</div>
     </router-link>
     <!--头部-->
-    <div class="flex" style="margin-top: 30px;">
-      <div class="state flex" style="background-color:rgba(0, 153, 153, 1);">
-        <div class="state2" style="color: white">全部商品</div>
-        <div class="state3" style="color: white">(1000)</div>
-      </div>
-      <div class="state flex">
-        <div class="state2">酒类商品</div>
-        <div class="state3">(1000)</div>
-      </div>
-      <div class="state flex">
-        <div class="state2">非酒类商品</div>
-        <div class="state3">(1000)</div>
-      </div>
+    <div>
+      <state></state>
     </div>
-    
     <!--搜索-->
     <div class="search flex">
       <!--编号-->
@@ -158,6 +146,7 @@
 </template>
 
 <script>
+  import state from '@/components/wineStat'
   export default {
     data() {
       return {
@@ -181,6 +170,9 @@
         multipleSelection: [],
         centerDialogVisible: false
       };
+    },
+    components: {
+      state
     },
     methods: {
       edit() {

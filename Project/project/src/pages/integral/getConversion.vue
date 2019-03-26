@@ -23,44 +23,44 @@
     <div class="flex whiteT">
       <div class="font">用户账户：</div>
       <div class="input">
-        <el-input v-model="input"  placeholder="输入用户账户"></el-input>
+        <el-input v-model="user_mobile" placeholder="输入用户账户"></el-input>
       </div>
       
       <div class="font">商品名称：</div>
       <div class="input">
-        <el-input v-model="input"  placeholder="输入商品名称"></el-input>
+        <el-input v-model="goods_name" placeholder="输入商品名称"></el-input>
       </div>
       
       <div class="font">提交时间：</div>
       <div class="input">
         <el-date-picker
-          v-model="value6"
-          style="width: 200px"
+          v-model="times"
           type="datetimerange"
+          style="width: 230px"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
           :default-time="['12:00:00']">
         </el-date-picker>
       </div>
       
       <!--按钮-->
-      <div class="btn" style="margin-left: 15%">
+      <div class="btn" style="margin-left: 15%" @click="submit()">
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
       </div>
-      <div class="btn2">
-        <el-button type="primary" icon="el-icon-refresh">重置</el-button>
+      <div class="btn2" @click="res()">
+        <el-button class="buttons3" icon="el-icon-refresh">重置</el-button>
       </div>
     </div>
     <!--表格-->
     <div class="head right">
       <div class="head1">导出数据</div>
-      <div class="head1">显示条数</div>
       <div class="head1">排列方式</div>
     </div>
     <div>
       <el-table
         ref="multipleTable"
-        :data="tableData3"
+        :data="orderList"
         tooltip-effect="dark"
         style="width: 100%"
         border>
@@ -73,44 +73,44 @@
         <el-table-column
           label="兑换方式"
           align="center"
-          min-width="150">
-          <template slot-scope="scope">{{ scope.row.date }}</template>
+          prop="type"
+          min-width="110">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="order_code"
           label="订单编号"
           align="center"
-          min-width="140">
+          min-width="150">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="create_time"
           label="提交时间"
           align="center"
-          min-width="127">
+          min-width="150">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="goodsInfo"
           label="商品信息"
           align="center"
           min-width="200">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="mobile"
           label="用户账户"
           align="center"
           min-width="120">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="use_integral"
           label="消耗积分"
           align="center"
-          min-width="100">
+          min-width="90">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="integral_money"
           label="抵扣金额"
           align="center"
-          min-width="100">
+          min-width="90">
         </el-table-column>
         <el-table-column
           prop="address"
@@ -119,7 +119,7 @@
           min-width="100"
           show-overflow-tooltip>
           <template slot-scope="scope">
-              <div style="color: #0099ce;" @click="del(scope.row.id)">查看订单</div>
+            <div style="color: #0099ce;" @click="del(scope.row.id)">查看订单</div>
           </template>
         </el-table-column>
       </el-table>
@@ -140,39 +140,79 @@
 
 <script>
   export default {
-    name: "",
-    data(){
-      return{
-        input:'',
-        value1:'',
-        value6:'',
-        //页码参数
+    data() {
+      return {
+        //参数
         page: 1,
-        pageSize: 20,
+        pageSize: 10,
         currentPage4: 1,
-        totals: 20,
-        tableData3: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市'
-        }],
-        multipleSelection: []
+        totals: 10,
+        orderList:[],
+        user_mobile:'',
+        goods_name:'',
+        times:''
       }
     },
     methods: {
-      handleSelectionChange(val) {
-        this.multipleSelection = val;
+      //获取兑换订单
+      getConversion() {
+        this._getData('/api/v1/integral_record/exchangeIntegral', {
+          page: this.page,
+          pageSize: this.pageSize
+        }, data => {
+          this.orderList=data.data;
+          this.totals=data.total;
+          this.goods_name='';
+          this.user_mobile='';
+          this.times='';
+        })
+      },
+      //提交
+      submit(){
+        var data={};
+        if(this.user_mobile!=''){
+          data.user_mobile=this.user_mobile;
+        }
+        if(this.goods_name!=''){
+          data.goods_name=this.goods_name;
+        }
+        if(this.times!=''){
+          data.start_time=this.times[0];
+          data.end_time=this.times[1];
+        }
+        this._getData('/api/v1/integral_record/exchangeIntegral', {
+          page: this.page,
+          pageSize: this.pageSize,
+          end_time:data.end_time,
+          start_time:data.start_time,
+          goods_name:data.goods_name,
+          user_mobile:data.user_mobile,
+        }, data => {
+          this.orderList=data.data;
+          this.totals=data.total;
+        })
+        
+      },
+      //重置
+      res(){
+        this.goods_name='';
+        this.user_mobile='';
+        this.times='';
+        this.getConversion();
       },
       //每页显示多少数据
       handleSizeChange(val) {
         this.pageSize = val;
-        this.getService();
+        this.getConversion();
       },
       //第几页
       handleCurrentChange(val) {
         this.page = val;
-        this.getService();
+        this.getConversion();
       },
+    },
+    created(){
+      this.getConversion();
     }
   }
 </script>

@@ -11,11 +11,13 @@
       <div :class="['head1',Tday==true?'bj':'']" @click="XTday()">最近30天</div>
       <div class="head1" style="width: 150px;border: 1px solid #ddd">
         <el-date-picker
-          v-model="value1"
-          style="width: 150px"
-          type="date"
-          size="mini"
-          placeholder="选择日期">
+          v-model="times"
+          type="daterange"
+          value-format="yyyy-MM-dd"
+          size="small"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
         </el-date-picker>
       </div>
     </div>
@@ -23,12 +25,12 @@
       <div class="tables">
         <el-table
           ref="multipleTable"
-          :data="tableData3"
+          :data="State"
           tooltip-effect="dark"
           style="width: 100%"
           border>
           <el-table-column
-            type="index"
+            prop="orderCount"
             label="订单数"
             align="center"
             min-width="94">
@@ -36,24 +38,24 @@
           <el-table-column
             label="有效订单"
             align="center"
+            prop="validOrderCount"
             min-width="140">
-            <template slot-scope="scope">{{ scope.row.date }}</template>
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="orderMain"
             label="总订单金额"
             align="center"
             min-width="140">
           </el-table-column>
           <el-table-column
-            prop="address"
+            prop="refundPrimeTotal"
             align="center"
             min-width="140"
             label="退款金额"
             show-overflow-tooltip>
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="orderMemberCount"
             label="有订单会员数"
             align="center"
             min-width="140">
@@ -63,7 +65,7 @@
       <!--付款转化-->
       <div class="lu ">
         <div class="lfont1">付款转化率</div>
-        <div class="lfont2">68.77%</div>
+        <div class="lfont2">{{this.percent}}</div>
       </div>
     </div>
   </div>
@@ -74,30 +76,58 @@
     name: "",
     data() {
       return {
-        input: '',
-        value1: '',
-        value6: '',
-        tableData3: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市'
-        }],
+        times: '',
+        State: [],
+        percent: '',
         //选择
         yday: true,
         Qday: false,
         Tday: false
       }
     },
+    watch:{
+      times(v,o){
+        this.selTime();
+      }
+    },
     methods: {
+      //获取交易记录
+      getState() {
+        this._getData('/api/v1/data_statistics/yesterdayBusiness', {},
+          data => {
+            console.log(data)
+            this.percent = data.payChangePercent;
+            this.circulation(data, data => {
+              this.State = data;
+            })
+          })
+      },
       //选择背景
       Xyday() {
         this.Tselect(1);
+        this.getState();
       },
       XQday() {
         let data = this.Tselect(2);
+        this._getData('/api/v1/data_statistics/old7Business', {},
+          data => {
+            console.log(data)
+            this.percent = data.payChangePercent;
+            this.circulation(data, data => {
+              this.State = data;
+            })
+          })
       },
       XTday() {
         this.Tselect(3);
+        this._getData('/api/v1/data_statistics/old30Business', {},
+          data => {
+            console.log(data)
+            this.percent = data.payChangePercent;
+            this.circulation(data, data => {
+              this.State = data;
+            })
+          })
       },
       Tselect(flag) {
         this.yday = false;
@@ -114,7 +144,25 @@
             this.Tday = true;
             break;
         }
+      },
+    //  时间选择
+      selTime(){
+        console.log(this.times);
+        this._getData('/api/v1/data_statistics/cycleBusiness', {
+            start_time:this.times[0],
+            end_time:this.times[1],
+          },
+          data => {
+            console.log(data)
+            this.percent = data.payChangePercent;
+            this.circulation(data, data => {
+              this.State = data;
+            })
+          })
       }
+    },
+    created() {
+      this.getState();
     }
   }
 </script>

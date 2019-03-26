@@ -43,11 +43,19 @@ a{
   display: flex;
   justify-content: space-between;
 }
+.Xbj {
+  background-color: rgba(0, 153, 153, 1);
+  color: white;
+}
 .body{
   width: 82%;
   margin-left: 40px;
 }
-
+.Tabless{
+  border: 1px solid #ddd;
+  height:auto;
+  margin-bottom:150px;
+}
 .tou{
   background-color: #ddd;
   width: 98.2%;
@@ -267,6 +275,10 @@ a{
 .xiu{
   border: 1px solid #ddd;
   height: 240px;
+}
+.imgs{
+  width: 150px;
+  height: 150px;
 }
 /*修改样式完*/
 </style>

@@ -1,53 +1,39 @@
 <template>
   <div class="body">
     <!--数量-->
-    <div class="flex" style="margin-top: 20px;">
-      <div class="state flex" style="background-color:rgba(0, 153, 153, 1);">
-        <div class="state2" style="color: white">全部商品</div>
-        <div class="state3" style="color: white">(1000)</div>
-      </div>
-      <div class="state flex">
-        <div class="state2">未配货</div>
-        <div class="state3">(1000)</div>
-      </div>
-      <div class="state flex">
-        <div class="state2">已配货</div>
-        <div class="state3">(1000)</div>
-      </div>
-      <div class="state flex">
-        <div class="state2">已发货</div>
-        <div class="state3">(1000)</div>
-      </div>
+    <div>
+      <Ostate></Ostate>
     </div>
     <!--搜索-->
     <div class="flex whiteT">
       <div class="font">用户账户：</div>
       <div class="input">
-        <el-input v-model="input"  placeholder="输入用户账户"></el-input>
+        <el-input v-model="user_mobile" placeholder="输入用户账户"></el-input>
       </div>
       
       <div class="font">商品名称：</div>
       <div class="input">
-        <el-input v-model="input"  placeholder="输入商品名称"></el-input>
+        <el-input v-model="goods_name" placeholder="输入商品名称"></el-input>
       </div>
       
       <div class="font">提交时间：</div>
       <div class="input">
         <el-date-picker
-          v-model="value6"
+          v-model="times"
           type="datetimerange"
-          style="width: 200px"
+          style="width: 230px"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
           :default-time="['12:00:00']">
         </el-date-picker>
       </div>
       
       <!--按钮-->
-      <div class="btn" style="margin-left: 20%">
+      <div class="btn" style="margin-left: 20%" @click="search()">
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
       </div>
-      <div class="btn2">
+      <div class="btn2" @click="res()">
         <el-button class="buttons3" icon="el-icon-refresh">重置</el-button>
       </div>
     </div>
@@ -60,7 +46,7 @@
     <div>
       <el-table
         ref="multipleTable"
-        :data="tableData3"
+        :data="orderList"
         tooltip-effect="dark"
         style="width: 100%"
         border>
@@ -71,40 +57,40 @@
           width="55">
         </el-table-column>
         <el-table-column
+          prop="order_code"
           label="订单编号"
           align="center"
           min-width="150">
-          <template slot-scope="scope">{{ scope.row.date }}</template>
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="create_time"
           label="提交时间"
           align="center"
-          min-width="120">
+          min-width="160">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="goodsInfo"
           label="商品信息"
           align="center"
           min-width="246">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="money"
           label="实收款"
           align="center"
           min-width="100">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="mobile"
           label="用户账户"
           align="center"
-          min-width="180">
+          min-width="150">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="get_integral"
           label="领取积分"
           align="center"
-          min-width="120">
+          min-width="100">
         </el-table-column>
         <el-table-column
           prop="address"
@@ -113,7 +99,7 @@
           min-width="120"
           show-overflow-tooltip>
           <template slot-scope="scope">
-              <div style="color: #0099ce;" @click="del(scope.row.id)">查看订单</div>
+            <div style="color: #0099ce;" @click="del(scope.row.id)">查看订单</div>
           </template>
         </el-table-column>
       </el-table>
@@ -133,40 +119,84 @@
 </template>
 
 <script>
+  import Ostate from '@/components/orderStat'
   export default {
-    name: "",
-    data(){
-      return{
-        input:'',
-        value1:'',
-        value6:'',
-        //页码参数
+    data() {
+      return {
+        //参数
         page: 1,
         pageSize: 20,
         currentPage4: 1,
         totals: 20,
-        tableData3: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市'
-        }],
+        orderList: [],
+        user_mobile: '',
+        goods_name: '',
+        times: '',
         multipleSelection: []
       }
     },
+    components:{
+      Ostate
+    },
     methods: {
+      //查看积分订单
+      IntegralOrder() {
+        this._getData('/api/v1/integral_record/getOrderIntegral', {
+          page: this.page,
+          pageSize: this.pageSize
+        }, data => {
+          this.orderList = data.data;
+          this.totals = data.total;
+        })
+      },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
       //每页显示多少数据
       handleSizeChange(val) {
         this.pageSize = val;
-        this.getService();
+        this.IntegralOrder();
       },
       //第几页
       handleCurrentChange(val) {
         this.page = val;
-        this.getService();
+        this.IntegralOrder();
       },
+      //  搜索
+      search() {
+        var data = {};
+        if (this.user_mobile != '') {
+          data.user_mobile = this.user_mobile;
+        }
+        if (this.goods_name != '') {
+          data.goods_name = this.goods_name;
+        }
+        if (this.times != '') {
+          data.start_time = this.times[0];
+          data.end_time = this.times[1];
+        }
+        this._getData('/api/v1/integral_record/getOrderIntegral', {
+          page: this.page,
+          pageSize: this.pageSize,
+          goods_name: data.goods_name,
+          user_mobile: data.user_mobile,
+          start_time: data.start_time,
+          end_time: data.end_time
+        }, data => {
+          this.orderList = data.data;
+          this.totals = data.total;
+        })
+      },
+      //  重置
+      res() {
+        this.user_mobile = '';
+        this.goods_name = '';
+        this.times = '';
+        this.IntegralOrder();
+      },
+    },
+    created() {
+      this.IntegralOrder();
     }
   }
 </script>

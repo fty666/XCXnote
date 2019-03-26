@@ -96,7 +96,7 @@
         _this.fileName.push(file.name);
         let file_suffix = file.name.substr(file.name.lastIndexOf("."));
         ////限制火狐浏览器————上传图片限制
-        let suffix = ['.jpeg','.jpg','.png','.PNG','.JPG','JPEG','.gif'];
+        let suffix = ['.jpeg','.jpg','.png','.PNG','.JPG','JPEG','.gif','.mp4'];
         if(suffix.indexOf(file_suffix)<0){
           /* this.$notify.error({
 			   title: '警告',
@@ -107,19 +107,14 @@
           return;
         }
         let file_name = (Date.parse(new Date()) / 1000) + file_suffix;
-        console.log(OSS)
-        console.log(this.$ali)
-        const client = new OSS.Wrapper(this.$ali);
-        console.log(client)
+        const client = new OSS(this.$ali);
         client.multipartUpload(file_name, file, {
-          progress: function* (p) {
-            console.log('Progress: ' + p);
-          }
+          // progress: function* (p) {
+          //   console.log('Progress: ' + p);
+          // }
         }).then(function (result) {
           Message.success({message: '上传成功!'});
           _this.fileArr.push(result.name);
-          console.log(  _this.fileArr)
-
         }).catch(function (err) {
           Message.error({message: '上传失败!'});
         });
@@ -175,7 +170,7 @@
   .hj-upload{
     width: 175px;
     height: 105px;
-  // border: 1px dashed #8c939d;
+    border: 1px dashed #8c939d;
     border-radius: 6px;
     position: relative;
     display: flex;
@@ -210,7 +205,7 @@
     opacity: 0;
   }
   .hj-icon{
-    color: #000;
+    color: #ff0a14;
     margin-left: 16px;
     font-size: 22px;
     display: none;

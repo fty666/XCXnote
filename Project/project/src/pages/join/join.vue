@@ -4,24 +4,24 @@
     <div class="flex whiteT">
       <div class="font">用户ID：</div>
       <div class="input">
-        <el-input v-model="input" placeholder="请输入ID"></el-input>
+        <el-input v-model="id" placeholder="请输入ID"></el-input>
       </div>
       
       <div class="font">名称：</div>
       <div class="input">
-        <el-input v-model="input" placeholder="请输入名称"></el-input>
+        <el-input v-model="name" placeholder="请输入名称"></el-input>
       </div>
       
       <div class="font">地区：</div>
       <div class="input">
-        <el-input v-model="input" placeholder="请输入地区"></el-input>
+        <el-input v-model="district" placeholder="请输入地区"></el-input>
       </div>
       
       <!--按钮-->
-      <div class="btn">
+      <div class="btn" @click="search()">
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
       </div>
-      <div class="btn2">
+      <div class="btn2" @click="res()">
         <el-button type="primary" icon="el-icon-refresh">重置</el-button>
       </div>
     
@@ -33,11 +33,11 @@
           <div><img src="@/img/add.png" class="addimg"></img></div>
           <div style="font-size: 11px">&nbsp;添加加盟商</div>
         </div>
-        <div class="right">
-          <div class="head1">导出数据</div>
-          <div class="head1">批量删除</div>
-        </div>
       </router-link>
+      <div class="right">
+        <div class="head1">导出数据</div>
+        <div class="head1" @click="batch()">批量删除</div>
+      </div>
     </div>
     <!--表格-->
     <div>
@@ -113,9 +113,9 @@
           show-overflow-tooltip>
           <template slot-scope="scope">
             <div class="sequence" style="width: 120px">
-              <div style="color: #0099ce;padding-left: 15px" @click="stock(scope.row.id)">库存</div>
+              <div style="color: #0099ce;padding-left: 15px" @click="stock(scope.row.warehouseId)">库存</div>
               <div style="color: #0099ce;padding-left: 10px" @click="edit(scope.row)">编辑</div>
-              <div style="color: #0099ce;padding-left: 16.5px" @click="order(scope.row.id)">订货</div>
+              <div style="color: #0099ce;padding-left: 16.5px" @click="order(scope.row)">订货</div>
               <div style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除</div>
             </div>
           </template>
@@ -127,22 +127,19 @@
 
 <script>
   export default {
-    name: "",
     data() {
       return {
         input: '',
-        tableData3: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市'
-        }],
-        multipleSelection: [],
+        ids: '',
         //参数
-        joinList:[],
+        joinList: [],
         page: 1,
         pageSize: 20,
         currentPage4: 1,
-        totals: 20
+        totals: 20,
+        id: '',
+        name: '',
+        district: ''
       }
     },
     methods: {
@@ -152,29 +149,116 @@
           page: this.page,
           pageSize: this.pageSize
         }, data => {
-          this.joinList=data.data;
-          this.totals=data.total;
+          this.joinList = data.data;
+          this.totals = data.total;
           console.log(data)
         })
       },
       //库存
       stock(val) {
+        console.log(val)
         this.$router.push({name: 'joinStock'})
         sessionStorage.setItem('joinId', val);
       },
       //订货
-      order() {
-        this.$router.push({name: 'joinOrder'})
+      order(val) {
+        sessionStorage.setItem('joinInfo', JSON.stringify(val));
+        this.$router.push({name: 'joinOrder'});
+        
       },
       //编辑
-      edit() {
+      edit(val) {
+        console.log(val)
+        sessionStorage.setItem('edits', JSON.stringify(val))
         this.$router.push({name: 'editJoin'});
       },
+      //搜索
+      search() {
+        var data = {};
+        if (this.id != '') {
+          data.id = this.id;
+        }
+        if (this.name != '') {
+          data.name = this.name;
+        }
+        if (this.district != '') {
+          data.district = this.district;
+        }
+        this._getData('/api/v1/alliance/index', {
+          page: this.page,
+          pageSize: this.pageSize,
+          id: data.id,
+          name: data.name,
+          district: data.district
+        }, data => {
+          this.joinList = data.data;
+          this.totals = data.total;
+        })
+      },
+      //重置
+      res() {
+        this.id = '';
+        this.name = '';
+        this.district = '';
+        this.getJoin();
+      },
+      //删除
+      del(val) {
+        this.$confirm('是否删除此加盟商?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/alliance/delete', {
+              id: val,
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+              this.getJoin();
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      },
+      //批量删除
+      batch() {
+        this.$confirm('是否批量删除这些加盟商?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/alliance/batchDelete', {
+              ids: this.ids,
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+              this.getJoin();
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      },
       handleSelectionChange(val) {
-        this.multipleSelection = val;
+        var ids = '';
+        for (let i = 0; i < val.length; i++) {
+          ids += val[i].id + ',';
+        }
+        this.ids = ids;
       }
     },
-    created(){
+    created() {
       this.getJoin();
     }
   }

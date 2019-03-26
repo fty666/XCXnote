@@ -4,24 +4,24 @@
     <div class="flex whiteT">
       <div class="font">ID：</div>
       <div class="input">
-        <el-input v-model="input" placeholder="请输入ID"></el-input>
+        <el-input v-model="id" placeholder="请输入ID"></el-input>
       </div>
       
       <div class="font">账号：</div>
       <div class="input">
-        <el-input v-model="input" placeholder="请输入账号"></el-input>
+        <el-input v-model="mobile" placeholder="请输入账号"></el-input>
       </div>
       
       <div class="font">昵称：</div>
       <div class="input">
-        <el-input v-model="input" placeholder="请输入昵称"></el-input>
+        <el-input v-model="nickname" placeholder="请输入昵称"></el-input>
       </div>
       
       <!--按钮-->
-      <div class="btn" style="margin-left: 30%">
+      <div class="btn" style="margin-left: 30%" @click="search()">
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
       </div>
-      <div class="btn2">
+      <div class="btn2" @click="res()">
         <el-button class="buttons3" icon="el-icon-refresh">重置</el-button>
       </div>
     
@@ -29,12 +29,12 @@
     
     <!--表格头-->
     <div class="head right">
-      <div class="head1">导出数据</div>
-      <div class="head1">批量删除</div>
+      <div class="head1" @click="exportFunc('dealerTable','经销商列表')">导出数据</div>
+      <!--<div class="head1">批量删除</div>-->
     </div>
     
     <!--表格-->
-    <div>
+    <div id="dealerTable">
       <el-table
         ref="multipleTable"
         :data="dealerList"
@@ -82,11 +82,11 @@
           prop="status"
           min-width="150">
           <template slot-scope="scope">
-            <div class="flex" v-if="scope.row.status=='关闭'">
+            <div class="flex" v-if="scope.row.status=='禁用'">
               <div>&nbsp;&nbsp;已禁用</div>
               <div @click="start(scope.row.id)" class="operate">&nbsp;&nbsp;启用</div>
             </div>
-            <div v-else class="flex">
+            <div class="flex" v-if="scope.row.status=='启用'">
               <div>&nbsp;&nbsp;已启用</div>
               <div @click="disable(scope.row.id)" class="operate">&nbsp;&nbsp;禁用</div>
             </div>
@@ -99,10 +99,20 @@
           min-width="100"
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <div style="color: #0099ce;" @click="info(scope.row.id)">查看详情</div>
+            <div style="color: #0099ce;" @click="info(scope.row)">查看详情</div>
           </template>
         </el-table-column>
       </el-table>
+      <div class="pags">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage4"
+          :page-sizes="[10, 50, 100]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total=totals>
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -113,31 +123,28 @@
     data() {
       return {
         input: '',
-        tableData3: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
         multipleSelection: [],
         //  参数
         dealerList: [],
         //页码参数
         page: 1,
-        pageSize: 20,
+        pageSize: 10,
         currentPage4: 1,
-        totals: 20
+        totals: 20,
+        id: '',
+        mobile: '',
+        nickname: ''
       }
     },
     methods: {
       //  获取经销商
       getDear() {
-        this._getData(' /api/v1/dealer/index', {
+        this._getData('/api/v1/dealer/index', {
           page: this.page,
           pageSize: this.pageSize
         }, data => {
-          console.log(data)
-          this.dealerList=data.data;
-          this.totals=data.total;
+          this.dealerList = data.data;
+          this.totals = data.total;
         })
       },
       //  禁用
@@ -189,14 +196,67 @@
         });
       },
       //  查看详情
-      info() {
+      info(val) {
+        sessionStorage.setItem('dealerId',val.id)
+        sessionStorage.setItem('userCode',val.user_code)
         this.$router.push({name: 'dealerInfo'})
+      },
+      //搜索
+      search() {
+        var data = {};
+        if (this.id != '') {
+          data.id = this.id;
+        }
+        if (this.mobile != '') {
+          data.mobile = this.mobile;
+        }
+        if (this.nickname != '') {
+          data.nickname = this.nickname;
+        }
+        this._getData('/api/v1/dealer/index', {
+          page: this.page,
+          pageSize: this.pageSize,
+          id: data.id,
+          mobile: data.mobile,
+          nickname: data.nickname
+        }, data => {
+          this.dealerList = data.data;
+          this.totals = data.total;
+          this.id = '';
+          this.mobile = '';
+          this.nickname = '';
+        })
+      },
+      //重置
+      res(){
+        this.id = '';
+        this.mobile = '';
+        this.nickname = '';
+        this.getDear();
+      },
+      //每页显示多少数据
+      handleSizeChange(val) {
+        this.pageSize = val;
+        if (this.id != '' || this.mobile != '' || this.nickname != '') {
+          this.search();
+        } else {
+          this.getDear();
+        }
+      },
+      //第几页
+      handleCurrentChange(val) {
+        this.page = val;
+        if (this.id != '' || this.mobile != '' || this.nickname != '') {
+          this.search();
+        } else {
+          this.getDear();
+        }
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       }
     },
-    created(){
+    created() {
       this.getDear();
     }
   }

@@ -8,35 +8,35 @@
       <div class="sequence kuan">
         <div class="fonts flex">
           <div>订单编号：</div>
-          <div>编号007</div>
+          <div>{{this.orderInfo.order_code}}</div>
         </div>
         <div class="fonts flex">
           <div>创建时间：</div>
-          <div>编号007</div>
+          <div>{{this.orderInfo.create_time}}</div>
         </div>
         <div class="fonts flex">
           <div>付款时间：</div>
-          <div>编号007</div>
+          <div>{{this.orderInfo.payment_time}}</div>
         </div>
         <div class="fonts flex">
           <div>订单归属：</div>
-          <div>编号007</div>
+          <div>{{this.orderInfo.type}}</div>
         </div>
         <div class="fonts flex">
           <div>用户账户：</div>
-          <div>编号007</div>
+          <div>{{this.orderInfo.type}}</div>
         </div>
         <div class="fonts flex">
           <div>支付方式：</div>
-          <div>编号007</div>
+          <div>{{this.orderInfo.mode}}</div>
         </div>
         <div class="fonts flex">
           <div>交易号：</div>
-          <div>编号007</div>
+          <!--<div>{{this.orderInfo.invoice.order_uuid}}</div>-->
         </div>
         <div class="fonts flex">
           <div>获得积分：</div>
-          <div>编号007</div>
+          <div>{{this.orderInfo.integral}}</div>
         </div>
         <div class="fonts flex">
           <div>发货转态：</div>
@@ -44,7 +44,7 @@
         </div>
         <div class="fonts flex">
           <div>物流单号：</div>
-          <div>编号007</div>
+          <div>{{this.orderInfo.transNO}}</div>
         </div>
         <div class="fonts flex" style="width: 100%;">
           <div>用户备注：</div>
@@ -65,15 +65,21 @@
       <div class="sequence kuan">
         <div class="fonts flex">
           <div>发货类型：</div>
-          <div>编号007</div>
+          <div>{{orderInfo.type}}</div>
         </div>
         <div class="fonts flex">
           <div>发票抬头：</div>
-          <div>编号007</div>
+          <div>{{orderInfo.invoice}}</div>
         </div>
         <div class="fonts flex" style="width: 100%;">
           <div>商品信息：</div>
-          <div>编号007</div>
+          <div>
+            <div v-for="(item,index) in orderInfo.goods" :key='index'>
+              <div>
+                {{item.goods_name}}
+              </div>
+            </div>
+          </div>
         </div>
         <div class="fonts flex" style="width: 100%;">
           <div>收票人信息：</div>
@@ -86,50 +92,53 @@
     <div class="head">
       <div class="backfont"> 商品信息</div>
     </div>
-    <div class="flex xiu" style="height: auto">
-      <div>
-        <el-table
-          :data="tableData"
-          border
-          style="width: 100%">
-          <el-table-column
-            prop="name"
-            label="图片"
-            align="center"
-            min-width="180">
-          </el-table-column>
-          <el-table-column
-            prop="date"
-            label="商品名称"
-            align="center"
-            min-width="263">
-          </el-table-column>
-          <el-table-column
-            prop="date"
-            label="单价"
-            align="center"
-            min-width="150">
-          </el-table-column>
-          <el-table-column
-            prop="date"
-            label="数量"
-            align="center"
-            min-width="150">
-          </el-table-column>
-          <el-table-column
-            prop="date"
-            label="小计"
-            align="center"
-            min-width="150">
-          </el-table-column>
-        </el-table>
-      </div>
+    <div class="xiu" style="height: auto">
+      <el-table
+        :data="orderInfo.goods"
+        border
+        style="width: 100%">
+        <el-table-column
+          prop="date"
+          label="图片"
+          align="center"
+          min-width="180">
+          <template slot-scope="scope">
+            <div>
+              <img src="" alt="">
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="goods_name"
+          label="商品名称"
+          align="center"
+          min-width="250">
+        </el-table-column>
+        <el-table-column
+          prop="price"
+          label="单价"
+          align="center"
+          min-width="150">
+        </el-table-column>
+        <el-table-column
+          prop="num"
+          label="数量"
+          align="center"
+          min-width="150">
+        </el-table-column>
+        <el-table-column
+          prop="goods_count"
+          label="小计"
+          align="center"
+          min-width="150">
+        </el-table-column>
+      </el-table>
       <div class="flex" style="margin: 30px 0px 30px 0px">
         <div style="margin: 30px 0px 30px 150px">积分抵扣：￥1.55</div>
         <div style="margin: 30px 0px 30px 100px">运费：0</div>
         <div class="flex" style="margin: 30px 30px 30px 150px">
-            <div>应付金额：</div>
-            <div style="color: red;">￥18654</div>
+          <div>应付金额：</div>
+          <div style="color: red;">￥{{orderInfo.payment_price}}</div>
         </div>
       </div>
     </div>
@@ -200,14 +209,9 @@
 
 <script>
   export default {
-    name: "",
     data() {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市'
-        }],
+        tableData: [],
         options: [{
           value: '选项1',
           label: '黄金糕'
@@ -220,9 +224,24 @@
         dealer: true,
         members: false,
         textarea: '',
-        checked2:''
+        checked2: '',
+        orderInfo: {},
       }
     },
+    methods: {
+      //  获取订单详情
+      getInfo() {
+        this._getData('/api/v1/order/show', {
+          id: sessionStorage.getItem('orderId'),
+        }, data => {
+          console.log(data)
+          this.orderInfo = data;
+        })
+      }
+    },
+    created() {
+      this.getInfo();
+    }
   }
 </script>
 
@@ -266,19 +285,21 @@
     width: 85%;
   }
   
-  .imgs{
+  .imgs {
     width: 20px;
     height: 20px;
     margin: 10px 0px 0px 20px;
   }
-  .show{
+  
+  .show {
     width: 100%;
     text-align: left;
     margin: 5px 0px 0px 20px;
     font-size: 12px;
     color: #999999;
   }
-  .selects{
+  
+  .selects {
     margin: 10px 0px 20px 20px;
     
   }

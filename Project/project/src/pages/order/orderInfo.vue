@@ -29,7 +29,7 @@
     </div>
     <!--订单信息-->
     <div v-if="dealer==true">
-      <orderInfo></orderInfo>
+      <orderInfo ref="headerChild"></orderInfo>
     </div>
     <!--收货信息-->
     <div v-else>
@@ -38,7 +38,7 @@
       </div>
       <div class="flex xiu" style="height: 140px;width: 100%">
         <div class="sfont">
-          收货地址：天津市滨海新区
+          收货地址：{{this.$refs.headerChild.orderInfo.address}}
         </div>
       </div>
     </div>
@@ -49,7 +49,6 @@
   import orderInfo from '@/components/order/orderInfo'
   
   export default {
-    name: "",
     data() {
       return {
         tableData: [{

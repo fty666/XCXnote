@@ -38,8 +38,8 @@
           <div>{{this.userInfo.sex}}</div>
         </div>
       </div>
-      <div class="imgs">
-        <img :src="imggerUrl+this.userInfo.photo">
+      <div>
+        <img :src="imggerUrl+this.userInfo.photo" class="imgs">
       </div>
     </div>
     
@@ -49,7 +49,7 @@
     </div>
     <div class="flex xiu" style="height: 120px">
       <el-table
-        :data="userInfo.order"
+        :data="userInfo.count"
         border
         style="width:100%">
         <el-table-column
@@ -151,8 +151,7 @@
               size="small"
               :label="item.label"
               :value="item.value"
-              @click.native="selec()"
-            >
+              @click.native="selec()">
             </el-option>
           </el-select>
         </div>
@@ -184,7 +183,7 @@
             min-width="160">
           </el-table-column>
           <el-table-column
-            prop="goods_info"
+            prop="goods_names"
             label="商品信息"
             align="center"
             min-width="200">
@@ -211,13 +210,12 @@
         
         </el-table>
       </div>
-      <div class="pag" style="margin:10px 0px 20px 60%;">
+      <div class="pags">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
           :page-sizes="[20, 50, 100]"
-          :page-size="5"
           layout="total, sizes, prev, pager, next, jumper"
           :total=totals>
         </el-pagination>
@@ -231,34 +229,38 @@
     <div class="flex xiu" style="height: auto">
       <div style="width: 100%;margin-bottom: 30px">
         <el-table
-          :data="userInfo.address"
+          :data="integralList"
           border
           style="width: 100%">
           <el-table-column
-            prop="date"
+            prop="create_time"
             label="日期"
             align="center"
             min-width="150">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="mold"
             label="项目"
             align="center"
             min-width="200">
           </el-table-column>
           <el-table-column
-            prop="address"
+            prop="Integral"
             align="center"
             label="积分变动"
             min-width="180">
           </el-table-column>
-          <el-table-column
-            prop="address"
-            align="center"
-            label="当前积分"
-            min-width="180">
-          </el-table-column>
         </el-table>
+        <div class="pags">
+          <el-pagination
+            @size-change="JhandleSizeChange"
+            @current-change="JhandleCurrentChange"
+            :current-page="JcurrentPage4"
+            :page-sizes="[10, 50, 100]"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total=interTotal>
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -269,11 +271,6 @@
     name: "",
     data() {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普'
-        }],
         options: [
           {
             value: '2',
@@ -294,23 +291,49 @@
         ],
         value: '',
         //参数
-        userInfo: {},
+        userInfo: [],
         page: 1,
         pageSize: 10,
         currentPage4: 1,
         totals: 10,
         orderList: [],
-        Otype:''
+        Otype: '',
+        //积分
+        integralList: [],
+        interTotal: 10,
+        Jpage: 1,
+        JpageSize: 10,
+        JcurrentPage4: 1,
+      }
+    },
+    watch: {
+      Otype(v, o) {
+        this.selec();
       }
     },
     methods: {
+      //用户信息
       userIn() {
         this.uId = sessionStorage.getItem('userId');
-        this._getData('/api/v1/user/index', {
+        this._getData('/api/v1/user/show', {
           id: sessionStorage.getItem('userId'),
         }, data => {
+          this.userInfo = data;
+          this.getInter();
+        })
+      },
+      //积分记录
+      getInter() {
+        console.log('user_code')
+        console.log(this.userInfo)
+        this._getData('/api/v1/integral_record/index', {
+          page: this.Jpage,
+          pageSize: this.JpageSize,
+          user_code: this.userInfo.user_code,
+        }, data => {
           console.log(data)
-          this.userInfo = data.data[0];
+          this.integralList = data.data;
+          this.interTotal = data.total;
         })
       },
       //订单记录
@@ -326,14 +349,13 @@
         })
       },
       //选择
-      selec(){
+      selec() {
         this._getData('/api/v1/order/index', {
           page: this.page,
           pageSize: this.pageSize,
-          type:this.Otype,
+          type: this.Otype,
           user_mobile: sessionStorage.getItem('mobile')
         }, data => {
-          console.log(data)
           this.orderList = data.data;
           this.totals = data.total;
         })
@@ -341,10 +363,30 @@
       //每页显示多少数据
       handleSizeChange(val) {
         this.pageSize = val;
+        if (this.Otype != '') {
+          this.selec();
+        } else {
+          this.getorder()
+        }
       },
       //第几页
       handleCurrentChange(val) {
         this.page = val;
+        if (this.Otype != '') {
+          this.selec();
+        } else {
+          this.getorder()
+        }
+      },
+      //每页显示多少数据
+      JhandleSizeChange(val) {
+        this.JpageSize = val;
+        this.getInter();
+      },
+      //第几页
+      JhandleCurrentChange(val) {
+        this.Jpage = val;
+        this.getInter();
       },
     },
     created() {

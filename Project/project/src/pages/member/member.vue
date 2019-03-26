@@ -40,10 +40,10 @@
     </div>
     <!--表格-->
     <div class="head right">
-      <div class="head1">导出数据</div>
+      <div class="head1" @click="exportFunc('memberList','会员列表')">导出数据</div>
       <div class="head1" @click="batch()">批量禁用</div>
     </div>
-    <div>
+    <div id="memberList">
       <el-table
         ref="multipleTable"
         :data="userList"
@@ -59,6 +59,7 @@
         <el-table-column
           prop="id"
           label="用户ID"
+          sortable
           align="center"
           min-width="130">
         </el-table-column>
@@ -77,11 +78,12 @@
         <el-table-column
           prop="create_time"
           label="注册时间"
+          sortable
           align="center"
           min-width="120">
         </el-table-column>
         <el-table-column
-          prop="alliance[0].district"
+          prop="alliance.district"
           label="所属地区"
           align="center"
           min-width="102">
@@ -106,7 +108,7 @@
           align="center"
           min-width="110">
           <template slot-scope="scope">
-            <div class="flex" v-if="scope.row.status=='关闭'">
+            <div class="flex" v-if="scope.row.status=='关闭' || scope.row.status=='禁用'">
               <div>&nbsp;&nbsp;已禁用</div>
               <div @click="start(scope.row.id)" class="operate">&nbsp;&nbsp;启用</div>
             </div>
@@ -130,8 +132,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
-          :page-sizes="[20, 50, 100]"
-          :page-size="5"
+          :page-sizes="[10, 50, 100]"
           layout="total, sizes, prev, pager, next, jumper"
           :total=totals>
         </el-pagination>
@@ -164,7 +165,7 @@
     methods: {
       //获取用户
       getUser() {
-        this._getData('api/v1/user/index', {
+        this._getData('/api/v1/user/index', {
           page: this.page,
           pageSize: this.pageSize
         }, data => {
@@ -180,7 +181,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this._getData('api/v1/user/userClose', {
+          this._getData('/api/v1/user/userClose', {
               id: val,
             },
             data => {
@@ -223,17 +224,29 @@
       },
       //搜索
       search() {
-        console.log(this.value6);
-        this._getData('api/v1/user/index', {
+        var data = {};
+        if (this.id != '') {
+          data.id = this.id;
+        }
+        if (this.mobile != '') {
+          data.mobile = this.mobile;
+        }
+        if (this.nickname != '') {
+          data.nickname = this.nickname;
+        }
+        if (this.value6 != '') {
+          data.start_time = this.value6[0];
+          data.end_time = this.value6[0];
+        }
+        this._getData('/api/v1/user/index', {
           page: this.page,
           pageSize: this.pageSize,
-          id: this.id,
-          mobile: this.mobile,
-          nickname: this.nickname,
-          start_time: this.value6[0],
-          end_time: this.value6[1]
+          id: data.id,
+          mobile: data.mobile,
+          nickname: data.nickname,
+          start_time: data.start_time,
+          end_time: data.end_time
         }, data => {
-          console.log(data)
           this.userList = data.data;
           this.totals = data.total;
         })
@@ -254,30 +267,29 @@
       },
       //批量删除
       handleSelectionChange(val) {
-        var ids='';
+        var ids = '';
         var arr = val;
         for (var i = 0; i < arr.length; i++) {
-          ids = ids+arr[i].id + ',';
+          ids = ids + arr[i].id + ',';
         }
-        this.ids=ids;
+        this.ids = ids;
       },
-      batch(){
-        console.log(this.ids)
+      batch() {
         this.$confirm('是否禁用这些用户?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this._getData('/api/v1/user/batchClose', {
-              ids: this.ids,
-            }, data => {
+            ids: this.ids,
+          }, data => {
             this.getUser();
-            this.ids='';
+            this.ids = '';
             this.$message({
-                type: 'success',
-                message: '操作成功'
-              });
-            })
+              type: 'success',
+              message: '操作成功'
+            });
+          })
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -288,15 +300,23 @@
       //每页显示多少数据
       handleSizeChange(val) {
         this.pageSize = val;
-        this.getUser();
+        if (this.id != '' || this.mobile != '' || this.nickname != '' || this.value6 != '') {
+          this.search();
+        } else {
+          this.getUser();
+        }
       },
       //第几页
       handleCurrentChange(val) {
         this.page = val;
-        this.getUser();
+        if (this.id != '' || this.mobile != '' || this.nickname != '' || this.value6 != '') {
+          this.search();
+        } else {
+          this.getUser();
+        }
       },
     },
-    created() {
+    created(){
       this.getUser();
     }
   }
