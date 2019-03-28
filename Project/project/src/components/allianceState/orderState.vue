@@ -92,7 +92,7 @@
     },
     watch: {
       times(v, o) {
-        this.getTimes();
+        this.selcTimes();
       }
     },
     methods: {
@@ -103,7 +103,7 @@
         })
       },
       //时间选择
-      getTimes() {
+      selcTimes() {
         this._getData('/api/v1/alliance/yearMonthDayOrder', {
           create_time: this.times
         }, data => {

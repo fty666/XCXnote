@@ -47,41 +47,13 @@
           <el-input v-model="filter.content" placeholder="请输入内容"></el-input>
         </div>
         <div class="ju2">
-          <el-button  class="buttons buttons2" @click="addnew">添加</el-button>
+          <el-button class="buttons buttons2" @click="addnew">添加</el-button>
         </div>
       </div>
       <div class="sequence" style="width: 80%;">
-        <div class="flex" style="width: 200px">
-          <div class="font">拉菲</div>
-          <div class="font2">删除</div>
-        </div>
-        <div class="flex" style="width: 200px">
-          <div class="font">拉菲</div>
-          <div class="font2">删除</div>
-        </div>
-        <div class="flex" style="width: 200px">
-          <div class="font">拉菲</div>
-          <div class="font2">删除</div>
-        </div>
-        <div class="flex" style="width: 200px">
-          <div class="font">拉菲</div>
-          <div class="font2">删除</div>
-        </div>
-        <div class="flex" style="width: 200px">
-          <div class="font">拉菲</div>
-          <div class="font2">删除</div>
-        </div>
-        <div class="flex" style="width: 200px">
-          <div class="font">拉菲</div>
-          <div class="font2">删除</div>
-        </div>
-        <div class="flex" style="width: 200px">
-          <div class="font">拉菲</div>
-          <div class="font2">删除</div>
-        </div>
-        <div class="flex" style="width: 200px">
-          <div class="font">拉菲</div>
-          <div class="font2">删除</div>
+        <div class="flex" style="width: 300px" v-for="(item,index) in hotList">
+          <div class="font">{{item.content}}</div>
+          <div class="font2" @click="Gdel(item.id)">删除</div>
         </div>
       </div>
     </div>
@@ -94,14 +66,11 @@
     data() {
       return {
         input: '',
-        filter:[],
+        filter: [],
         centerDialogVisible: false,
         multipleSelection: [],
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }]
+        tableData: [],
+        hotList: []
       }
     },
     methods: {
@@ -111,14 +80,43 @@
           page: this.page,
           pageSize: this.pageSize,
         }, data => {
-          console.log(data);
           this.tableData = data;
           this.totals = data.total;
         })
       },
+      //热门规则设置
+      getHot() {
+        this._getData('/api/v1/user_search/hot', {},
+          data => {
+            this.hotList=data;
+          })
+      },
+      //删除
+      Gdel(val){
+        this.$confirm('是否删除此热门?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/user_search/delete', {
+              id: val,
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+              this.getHot();
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      },
       //添加至热门搜索
       edit(val) {
-        console.log(555);
         this.$confirm('是否将' + val.content + '添加至热门搜索?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -143,19 +141,19 @@
         
       },
       // 添加
-      addnew(){
-        this._getData('/api/v1/user_search/createHot',this.filter, {
-        
-        }, data => {
+      addnew() {
+        this._getData('/api/v1/user_search/createHot', this.filter, data => {
           this.shopList = data.data;
+          this.getHot();
         })
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       }
     },
-    created(){
-      this.getOrder()
+    created() {
+      this.getOrder();
+      this.getHot()
     }
   }
 </script>
@@ -166,26 +164,32 @@
     width: 99.90%;
     border: 1px solid #ddd;
   }
+  
   .Wtable {
     width: 70%;
     margin-left: 200px;
     margin-top: 20px;
   }
-  .ju{
+  
+  .ju {
     margin: 80px 0px 0px 200px;
   }
-  .ju2{
+  
+  .ju2 {
     margin: 70px 0px 0px 50px;
   }
   
   /*删除*/
-  .font{
-    margin: 20px 0px 0px 80px;
+  .font {
+    margin: 20px 0px 0px 20px;
     font-size: 16px;
+    text-align: right;
     color: black;
+    width: 200px;
   }
-  .font2{
-    margin: 20px 0px 0px 30px;
+  
+  .font2 {
+    margin: 20px 0px 0px 10px;
     color: #3399FF;
     line-height: 60px;
   }

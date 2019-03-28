@@ -78,7 +78,7 @@
                 <span slot="title">订单管理</span>
               </template>
               <el-menu-item index="/order/orderList">订单管理</el-menu-item>
-              <el-menu-item index="/order/orderManage">配货管理</el-menu-item>
+              <!--<el-menu-item index="/order/orderManage">配货管理</el-menu-item>-->
               <el-menu-item index="/order/orderRefund">退款处理</el-menu-item>
             </el-submenu>
             <!--积分管理-->

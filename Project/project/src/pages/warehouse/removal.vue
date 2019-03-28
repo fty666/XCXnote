@@ -53,7 +53,7 @@
     <!--表格-->
     <div class="head right">
       <div class="head1">导出数据</div>
-      <div class="head1" @click="batch()">批量删除</div>
+      <!--<div class="head1" @click="batch()">批量删除</div>-->
     </div>
     <div>
       <el-table
@@ -61,10 +61,9 @@
         :data="runList"
         tooltip-effect="dark"
         style="width: 100%"
-        @selection-change="handleSelectionChange"
         border>
         <el-table-column
-          type="selection"
+          type="index"
           align="center"
           label="序号"
           width="55">
@@ -157,7 +156,7 @@
       runInfo(datas) {
         datas.page = this.page;
         datas.pageSize = this.pageSize;
-        this._getData('/api/v1/put_warehouse/index', datas,
+        this._getData('/api/v1/delivery_warehouse/index', datas,
           data => {
             console.log(data)
             this.runList = data.data;

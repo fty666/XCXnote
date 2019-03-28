@@ -92,7 +92,7 @@
     },
     watch: {
       times(v, o) {
-        this.getTimes();
+        this.selecTimes();
       }
     },
     methods: {
@@ -103,8 +103,7 @@
         })
       },
       //时间选择
-      getTimes() {
-        console.log(this.times)
+      selecTimes() {
         this._getData('/api/v1/alliance/yearMonthDayMember', {
           create_time: this.times
         }, data => {
@@ -119,7 +118,6 @@
       XQday() {
         let data = this.Tselect(2);
         this.getTimes('M', data => {
-          console.log(data)
           this._getData('/api/v1/alliance/yearMonthMember', {create_time: data}, data => {
             this.membeList = data;
           })

@@ -82,9 +82,9 @@
           show-overflow-tooltip>
           <template slot-scope="scope">
             <div class="flex">
-              <div style="color: #0099ce;padding-left: 8px" @click="inven(scope.row.id)">库存</div>
+              <div style="color: #0099ce;padding-left: 8px" @click="inven(scope.row)">库存</div>
               <div style="color: #0099ce;padding-left: 8px" @click="bank(scope.row.id)">入库管理</div>
-              <div style="color: #0099ce;padding-left: 4px" @click="bank(scope.row.id)">出库管理</div>
+              <div style="color: #0099ce;padding-left: 4px" @click="removal(scope.row.id)">出库管理</div>
               <div style="color: #0099ce;padding-left: 4px" @click="edit(scope.row.id)">编辑</div>
               <div style="color: #0099ce;padding-left: 4px" @click="del(scope.row.id)">删除</div>
             </div>
@@ -186,7 +186,9 @@
         this.$router.push({name: 'editWare'})
       },
       //  库存信息
-      inven() {
+      inven(val) {
+        console.log(val)
+        sessionStorage.setItem('inventory',val.id)
         this.$router.push({name: 'inventoryInfo'})
       },
       //  编辑
@@ -196,6 +198,10 @@
       //  入库管理
       bank() {
         this.$router.push({name: 'ruBank'})
+      },
+    //出库管理
+      removal(){
+        this.$router.push({name: 'removal'})
       }
     },
     created() {

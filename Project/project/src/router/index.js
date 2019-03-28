@@ -71,6 +71,8 @@ import warehouseList from '@/pages/warehouse/warehouseList'
 import warehouseManage from '@/pages/warehouse/warehouseManage'
 //入库管理
 import ruBank from '@/pages/warehouse/ruBank'
+//出库管理
+import removal from '@/pages/warehouse/removal'
 //仓库编辑
 import editWare from '@/pages/warehouse/editWare'
 //库存
@@ -118,311 +120,317 @@ export default new Router({
       name: 'login',
       component: login
     },
-  //  后台页面
+    //  后台页面
     {
-      path:'/index',
-      name:'index',
-      component:index,
-      children:[
+      path: '/index',
+      name: 'index',
+      component: index,
+      children: [
         {
-        //  首页
-          path:'/list/index',
-          name:'list',
-          component:list
+          //  首页
+          path: '/list/index',
+          name: 'list',
+          component: list
         },
         {
-        //  商品列表
-          path:'/shop/shopList',
-          name:'shopList',
-          component:shopList
+          //  商品列表
+          path: '/shop/shopList',
+          name: 'shopList',
+          component: shopList
         },
         {
           //添加商品
-          path:'/shop/addShop',
-          name:'addShop',
-          component:addShop
+          path: '/shop/addShop',
+          name: 'addShop',
+          component: addShop
         },
         {
           //商品分类
-          path:'/shop/shopClass',
-          name:'shopClass',
-          component:shopClass
+          path: '/shop/shopClass',
+          name: 'shopClass',
+          component: shopClass
         },
         //商品详情
         {
-          path:'/shop/shopInfo',
-          name:'shopInfo',
-          component:shopInfo
+          path: '/shop/shopInfo',
+          name: 'shopInfo',
+          component: shopInfo
         },
         {
-        //  会员列表
-          path:'/member/member',
-          name:'member',
-          component:member
+          //  会员列表
+          path: '/member/member',
+          name: 'member',
+          component: member
         },
         {
           //  会员信息
-          path:'/member/memberInfo',
-          name:'memberInfo',
-          component:memberInfo
+          path: '/member/memberInfo',
+          name: 'memberInfo',
+          component: memberInfo
         },
         //加盟商列表
         {
-          path:'/join/join',
-          name:'join',
-          component:join
+          path: '/join/join',
+          name: 'join',
+          component: join
         },
         //添加加盟商
         {
-          path:'/join/addJoin',
-          name:'addJoin',
-          component:addJoin
+          path: '/join/addJoin',
+          name: 'addJoin',
+          component: addJoin
         },
-      //  编辑加盟商
+        //  编辑加盟商
         {
-          path:'/join/editJoin',
-          name:'editJoin',
-          component:editJoin
+          path: '/join/editJoin',
+          name: 'editJoin',
+          component: editJoin
         },
-      //  加盟商库存
+        //  加盟商库存
         {
-          path:'/join/joinStock',
-          name:'joinStock',
-          component:joinStock
+          path: '/join/joinStock',
+          name: 'joinStock',
+          component: joinStock
         },
-      //  加盟商订货
+        //  加盟商订货
         {
-          path:'/join/joinOrder',
-          name:'joinOrder',
-          component:joinOrder
+          path: '/join/joinOrder',
+          name: 'joinOrder',
+          component: joinOrder
         },
-      //  经销商列表
+        //  经销商列表
         {
-          path:'/dealer/dealerList',
-          name:'dealerList',
-          component:dealerList
+          path: '/dealer/dealerList',
+          name: 'dealerList',
+          component: dealerList
         },
-      //  经销商详情
+        //  经销商详情
         {
-          path:'/dealer/dealerInfo',
-          name:'dealerInfo',
-          component:dealerInfo
+          path: '/dealer/dealerInfo',
+          name: 'dealerInfo',
+          component: dealerInfo
         },
-      //  资质审核
+        //  资质审核
         {
-          path:'/dealer/auditInfo',
-          name:'auditInfo',
-          component:auditInfo
+          path: '/dealer/auditInfo',
+          name: 'auditInfo',
+          component: auditInfo
         },
-      //  购入详情,订单
+        //  购入详情,订单
         {
-          path:'/dealer/buyInfo',
-          name:'buyInfo',
-          component:buyInfo
+          path: '/dealer/buyInfo',
+          name: 'buyInfo',
+          component: buyInfo
         },
-      //  经销商审核
+        //  经销商审核
         {
-          path:'/dealer/dealerAudit',
-          name:'dealerAudit',
-          component:dealerAudit
+          path: '/dealer/dealerAudit',
+          name: 'dealerAudit',
+          component: dealerAudit
         },
-      //  经销商购入管理
+        //  经销商购入管理
         {
-          path:'/dealer/dealerManage',
-          name:'dealerManage',
-          component:dealerManage
+          path: '/dealer/dealerManage',
+          name: 'dealerManage',
+          component: dealerManage
         },
-      //  回购管理
+        //  回购管理
         {
-          path:'/dealer/dealerBuy',
-          name:'dealerBuy',
-          component:dealerBuy
+          path: '/dealer/dealerBuy',
+          name: 'dealerBuy',
+          component: dealerBuy
         },
-      //  回购记录
+        //  回购记录
         {
-          path:'/dealer/buyRecord',
-          name:'buyRecord',
-          component:buyRecord
+          path: '/dealer/buyRecord',
+          name: 'buyRecord',
+          component: buyRecord
         },
-      //  订单管理
+        //  订单管理
         {
-          path:'/order/orderList',
-          name:'orderList',
-          component:orderList
+          path: '/order/orderList',
+          name: 'orderList',
+          component: orderList
         },
-      //  订单信息
+        //  订单信息
         {
-          path:'/order/orderInfo',
-          name:'orderInfo',
-          component:orderInfo
+          path: '/order/orderInfo',
+          name: 'orderInfo',
+          component: orderInfo
         },
-      //  配货管理
+        //  配货管理
         {
-          path:'/order/orderManage',
-          name:'orderManage',
-          component:orderManage
+          path: '/order/orderManage',
+          name: 'orderManage',
+          component: orderManage
         },
-      //退款处理
+        //退款处理
         {
-          path:'/order/orderRefund',
-          name:'orderRefund',
-          component:orderRefund
+          path: '/order/orderRefund',
+          name: 'orderRefund',
+          component: orderRefund
         },
-      //  退款信息
+        //  退款信息
         {
-          path:'/order/RefundInfo',
-          name:'RefundInfo',
-          component:RefundInfo
+          path: '/order/RefundInfo',
+          name: 'RefundInfo',
+          component: RefundInfo
         },
-      //  积分兑换设置
+        //  积分兑换设置
         {
-          path:'/integral/integralConvert',
-          name:'integralConvert',
-          component:integralConvert
+          path: '/integral/integralConvert',
+          name: 'integralConvert',
+          component: integralConvert
         },
-      //  领取积分订单
+        //  领取积分订单
         {
-          path:'/integral/getIntegral',
-          name:'getIntegral',
-          component:getIntegral
+          path: '/integral/getIntegral',
+          name: 'getIntegral',
+          component: getIntegral
         },
-      //  添加积分商品
+        //  添加积分商品
         {
-          path:'/integral/addIntehral',
-          name:'addIntehral',
-          component:addIntehral
+          path: '/integral/addIntehral',
+          name: 'addIntehral',
+          component: addIntehral
         },
-      //  兑换积分订单
+        //  兑换积分订单
         {
-          path:'/integral/getConversion',
-          name:'getConversion',
-          component:getConversion
+          path: '/integral/getConversion',
+          name: 'getConversion',
+          component: getConversion
         },
-      //  积分统计
+        //  积分统计
         {
-          path:'/integral/integralStat',
-          name:'integralStat',
-          component:integralStat
+          path: '/integral/integralStat',
+          name: 'integralStat',
+          component: integralStat
         },
-      //  仓库总览
+        //  仓库总览
         {
-          path:'/warehouse/warehouseList',
-          name:'warehouseList',
-          component:warehouseList
+          path: '/warehouse/warehouseList',
+          name: 'warehouseList',
+          component: warehouseList
         },
         //入库管理
         {
-          path:'/warehouse/ruBank',
-          name:'ruBank',
-          component:ruBank
+          path: '/warehouse/ruBank',
+          name: 'ruBank',
+          component: ruBank
         },
-      //  仓库管理
+        //出库管理
         {
-          path:'/warehouse/warehouseManage',
-          name:'warehouseManage',
-          component:warehouseManage
+          path: '/warehouse/removal',
+          name: 'removal',
+          component: removal
         },
-      //  仓库编辑
+        //  仓库管理
         {
-          path:'/warehouse/editWare',
-          name:'editWare',
-          component:editWare
+          path: '/warehouse/warehouseManage',
+          name: 'warehouseManage',
+          component: warehouseManage
         },
-      //  库存
+        //  仓库编辑
         {
-          path:'/warehouse/inventoryInfo',
-          name:'inventoryInfo',
-          component:inventoryInfo
+          path: '/warehouse/editWare',
+          name: 'editWare',
+          component: editWare
         },
-      //  内容管理
+        //  库存
         {
-          path:'/content/contentManage',
-          name:'contentManage',
-          component:contentManage
+          path: '/warehouse/inventoryInfo',
+          name: 'inventoryInfo',
+          component: inventoryInfo
+        },
+        //  内容管理
+        {
+          path: '/content/contentManage',
+          name: 'contentManage',
+          component: contentManage
         },
         //  banner表格显示
         {
-          path:'/content/bannerList',
-          name:'bannerList',
-          component:bannerList
+          path: '/content/bannerList',
+          name: 'bannerList',
+          component: bannerList
         },
-      //  橱窗商品管理
+        //  橱窗商品管理
         {
-          path:'/content/shopManage',
-          name:'shopManage',
-          component:shopManage
+          path: '/content/shopManage',
+          name: 'shopManage',
+          component: shopManage
         },
-      //  热门搜索管理
+        //  热门搜索管理
         {
-          path:'/content/searchManage',
-          name:'searchManage',
-          component:searchManage
+          path: '/content/searchManage',
+          name: 'searchManage',
+          component: searchManage
         },
-      //  规则提示弹窗管理
+        //  规则提示弹窗管理
         {
-          path:'/content/contentRule',
-          name:'contentRule',
-          component:contentRule
+          path: '/content/contentRule',
+          name: 'contentRule',
+          component: contentRule
         },
-      //  反馈设置
+        //  反馈设置
         {
-          path:'/feedback/feedbackAdd',
-          name:'feedbackAdd',
-          component:feedbackAdd
+          path: '/feedback/feedbackAdd',
+          name: 'feedbackAdd',
+          component: feedbackAdd
         },
-      //  用户反馈查看
+        //  用户反馈查看
         {
-          path:'/feedback/feedbackUser',
-          name:'feedbackUser',
-          component:feedbackUser
+          path: '/feedback/feedbackUser',
+          name: 'feedbackUser',
+          component: feedbackUser
         },
-      //  平台营业额统计
+        //  平台营业额统计
         {
-          path:'/finance/financeList',
-          name:'financeList',
-          component:financeList
+          path: '/finance/financeList',
+          name: 'financeList',
+          component: financeList
         },
-      //  加盟商业绩统计
+        //  加盟商业绩统计
         {
-          path:'/finance/performance',
-          name:'performance',
-          component:performance
+          path: '/finance/performance',
+          name: 'performance',
+          component: performance
         },
-      //  提现记录
+        //  提现记录
         {
-          path:'/finance/withdraw',
-          name:'withdraw',
-          component:withdraw
+          path: '/finance/withdraw',
+          name: 'withdraw',
+          component: withdraw
         },
-      //  交易统计
+        //  交易统计
         {
-          path:'/stat/dealStat',
-          name:'dealerStat',
-          component:dealerStat
+          path: '/stat/dealStat',
+          name: 'dealerStat',
+          component: dealerStat
         },
-      //  酒品统计
+        //  酒品统计
         {
-          path:'/stat/wineStat',
-          name:'wineStat',
-          component:wineStat
+          path: '/stat/wineStat',
+          name: 'wineStat',
+          component: wineStat
         },
-      //  权限管理
+        //  权限管理
         {
-          path:'/power/power',
-          name:'power',
-          component:power
+          path: '/power/power',
+          name: 'power',
+          component: power
         },
-      //  添加账号
+        //  添加账号
         {
-          path:'/power/addPower',
-          name:'addPower',
-          component:addPower
+          path: '/power/addPower',
+          name: 'addPower',
+          component: addPower
         },
         //  修改账号
         {
-          path:'/power/editPower',
-          name:'editPower',
-          component:editPower
+          path: '/power/editPower',
+          name: 'editPower',
+          component: editPower
         },
       ],
     }

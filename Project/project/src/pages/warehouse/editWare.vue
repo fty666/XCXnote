@@ -87,14 +87,7 @@
             callback(new Error('手机号输入有误'))
           }
         }
-        this._getData('v1/service/hasMobile', {mobile: value}, data => {
-          console.log(data)
-          if (data == 1) {
-            callback(new Error('该手机号已经注册过'))
-          } else {
-            callback()
-          }
-        })
+        callback();
       };
       return {
         input: '',
@@ -125,7 +118,7 @@
         },
       }
     },
-    methods:{
+    methods: {
       //  提交添加
       submit(formName) {
         console.log(formName)
