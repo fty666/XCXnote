@@ -140,8 +140,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
-          :page-sizes="[20, 50, 100]"
-          :page-size="5"
+          :page-sizes="[10, 50, 100]"
           layout="total, sizes, prev, pager, next, jumper"
           :total=totals>
         </el-pagination>
@@ -156,7 +155,7 @@
       return {
         //页码参数
         page: 1,
-        pageSize: 20,
+        pageSize: 10,
         currentPage4: 1,
         totals: 20,
         auditList: [],
@@ -294,7 +293,7 @@
         if (this.id != '' || this.mobile != '' || this.nickname != '' || this.district != '' || this.start_time != '' || this.end_time != '') {
           this.search();
         } else {
-          this.getService();
+          this.getAudit();
         }
       },
       //第几页
@@ -303,7 +302,7 @@
         if (this.id != '' || this.mobile != '' || this.nickname != '' || this.district != '' || this.start_time != '' || this.end_time != '') {
           this.search();
         } else {
-          this.getService();
+          this.getAudit();
         }
       },
     },

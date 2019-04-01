@@ -185,9 +185,6 @@
               align="center"
               width="60">
               <template slot-scope="scope">
-                <!--<div class="imgBox">-->
-                <!--<img :src="imggerUrl+scope.row.list_img" alt="">-->
-                <!--</div>-->
                 <el-radio v-model="addShopBox.goodsId" :label="scope.row.id"></el-radio>
               </template>
             </el-table-column>

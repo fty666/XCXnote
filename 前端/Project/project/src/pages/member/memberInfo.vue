@@ -151,8 +151,7 @@
               size="small"
               :label="item.label"
               :value="item.value"
-              @click.native="selec()"
-            >
+              @click.native="selec()">
             </el-option>
           </el-select>
         </div>
@@ -211,13 +210,12 @@
         
         </el-table>
       </div>
-      <div class="pags" >
+      <div class="pags">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
           :page-sizes="[20, 50, 100]"
-          :page-size="5"
           layout="total, sizes, prev, pager, next, jumper"
           :total=totals>
         </el-pagination>
@@ -252,20 +250,13 @@
             label="积分变动"
             min-width="180">
           </el-table-column>
-          <!--<el-table-column-->
-          <!--prop="address"-->
-          <!--align="center"-->
-          <!--label="当前积分"-->
-          <!--min-width="180">-->
-          <!--</el-table-column>-->
         </el-table>
-        <div class="pags" >
+        <div class="pags">
           <el-pagination
             @size-change="JhandleSizeChange"
             @current-change="JhandleCurrentChange"
             :current-page="JcurrentPage4"
-            :page-sizes="[20, 50, 100]"
-            :page-size="5"
+            :page-sizes="[10, 50, 100]"
             layout="total, sizes, prev, pager, next, jumper"
             :total=interTotal>
           </el-pagination>
@@ -315,6 +306,11 @@
         JcurrentPage4: 1,
       }
     },
+    watch: {
+      Otype(v, o) {
+        this.selec();
+      }
+    },
     methods: {
       //用户信息
       userIn() {
@@ -323,13 +319,16 @@
           id: sessionStorage.getItem('userId'),
         }, data => {
           this.userInfo = data;
+          this.getInter();
         })
       },
       //积分记录
       getInter() {
+        console.log('user_code')
+        console.log(this.userInfo)
         this._getData('/api/v1/integral_record/index', {
-          page:this.Jpage,
-          pageSize:this.JpageSize,
+          page: this.Jpage,
+          pageSize: this.JpageSize,
           user_code: this.userInfo.user_code,
         }, data => {
           console.log(data)
@@ -393,7 +392,6 @@
     created() {
       this.userIn();
       this.getorder();
-      this.getInter();
     }
   }
 </script>

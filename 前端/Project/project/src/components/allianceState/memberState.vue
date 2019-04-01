@@ -13,10 +13,11 @@
           <div :class="['head1',all==true?'bj':'']" @click="Xall()">全部</div>
           <div class="head1" style="width: 150px;border: 1px solid #ddd">
             <el-date-picker
-              v-model="value1"
+              v-model="times"
               style="width: 150px"
               type="date"
               size="mini"
+              value-format="yyyy-MM-dd"
               placeholder="选择日期">
             </el-date-picker>
           </div>
@@ -79,8 +80,7 @@
     name: "memberState",
     data() {
       return {
-        value: 1,
-        value1: "",
+        times: '',
         membeList: [],
         //选择
         yday: true,
@@ -90,10 +90,23 @@
         totals: ''
       }
     },
+    watch: {
+      times(v, o) {
+        this.selecTimes();
+      }
+    },
     methods: {
       //获取会员
       getMembe() {
         this._getData('/api/v1/alliance/yesterdayMember', {}, data => {
+          this.membeList = data;
+        })
+      },
+      //时间选择
+      selecTimes() {
+        this._getData('/api/v1/alliance/yearMonthDayMember', {
+          create_time: this.times
+        }, data => {
           this.membeList = data;
         })
       },
@@ -105,7 +118,6 @@
       XQday() {
         let data = this.Tselect(2);
         this.getTimes('M', data => {
-          console.log(data)
           this._getData('/api/v1/alliance/yearMonthMember', {create_time: data}, data => {
             this.membeList = data;
           })

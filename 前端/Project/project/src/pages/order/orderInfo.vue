@@ -3,7 +3,7 @@
     <!--头部-->
     <div class="spaces whiteT kuan">
       <div style="width: 80%">
-        <div class="font1">当前订单转态：待发货</div>
+        <div class="font1">当前订单转态：{{this.orderList}}</div>
         <div class="flex">
           <div class="bian">发货</div>
           <div class="bian">修改收货信息</div>
@@ -13,7 +13,13 @@
           <div class="bian">订单退款</div>
         </div>
       </div>
-      <router-link to="/order/orderList">
+      <router-link to="/order/orderList" v-if="orderManag==1">
+        <div class="bian" style="margin: 40px 20px 0px 0px">返回列表</div>
+      </router-link>
+      <router-link to="/integral/getIntegral" v-if="orderManag==2">
+        <div class="bian" style="margin: 40px 20px 0px 0px">返回列表</div>
+      </router-link>
+      <router-link to="/integral/getConversion" v-if="orderManag==3">
         <div class="bian" style="margin: 40px 20px 0px 0px">返回列表</div>
       </router-link>
     </div>
@@ -29,7 +35,7 @@
     </div>
     <!--订单信息-->
     <div v-if="dealer==true">
-      <orderInfo ref="headerChild"></orderInfo>
+      <orderInfo ref="headerChild" v-on:Status="Status"></orderInfo>
     </div>
     <!--收货信息-->
     <div v-else>
@@ -51,28 +57,20 @@
   export default {
     data() {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市'
-        }],
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }],
-        value: '',
-        //  经销商信息选择
         dealer: true,
-        members: false
+        members: false,
+        orderManag: false,
+        orderList: {}
       }
     },
     components: {
       orderInfo
     },
     methods: {
+      Status(Status) {
+        console.log(Status)
+        this.orderList = Status;
+      },
       //经销商信息
       dealerInfo() {
         this.dealer = true;
@@ -82,7 +80,25 @@
       member() {
         this.dealer = false;
         this.members = true;
+      },
+      //  页面跳转
+      skip(val) {
+        switch (val) {
+          case '订单管理':
+            this.orderManag = '1';
+            break;
+          case'已领取积分订单':
+            this.orderManag = '2';
+            break;
+          case'已兑换积分订单':
+            this.orderManag = '3';
+            break;
+        }
       }
+    },
+    created() {
+      this.Status();
+      this.skip(sessionStorage.getItem('page'))
     }
   }
 </script>

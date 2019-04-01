@@ -24,8 +24,8 @@
       </div>
       
       <div class="font">操作类型：</div>
-      <div class="input">
-        <el-select v-model="type" placeholder="操作类型">
+      <div class="input" style="width: 140px">
+        <el-select v-model="type" placeholder="选择操作类型">
           <el-option label="用户下单" value="1"></el-option>
           <el-option label="编辑库存" value="2"></el-option>
         </el-select>
@@ -42,7 +42,6 @@
           value-format="yyyy-MM-dd">
         </el-date-picker>
       </div>
-      
       <!--按钮-->
       <div class="btn" style="margin-left: 20%" @click="submit()">
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
@@ -54,7 +53,7 @@
     <!--表格-->
     <div class="head right">
       <div class="head1">导出数据</div>
-      <div class="head1" @click="batch()">批量删除</div>
+      <!--<div class="head1" @click="batch()">批量删除</div>-->
     </div>
     <div>
       <el-table
@@ -62,10 +61,9 @@
         :data="runList"
         tooltip-effect="dark"
         style="width: 100%"
-        @selection-change="handleSelectionChange"
         border>
         <el-table-column
-          type="selection"
+          type="index"
           align="center"
           label="序号"
           width="55">
@@ -147,11 +145,11 @@
         totals: 20,
         multipleSelection: '',
         runList: [],
+        Wine: '',
         //背景选择
         sum: true,
         month: false,
         day: false,
-        Wine: ''
       }
     },
     methods: {
@@ -161,10 +159,10 @@
         this.runInfo(datas);
       },
       runInfo(datas) {
-        datas.warehouse_id = sessionStorage.getItem('wareId')
         datas.page = this.page;
         datas.pageSize = this.pageSize;
-        this._getData('/api/v1/put_warehouse/index', datas,
+        datas.warehouse_id = sessionStorage.getItem('wareId')
+        this._getData('/api/v1/delivery_warehouse/index', datas,
           data => {
             this.runList = data.data;
             this.totals = data.total;
@@ -249,20 +247,20 @@
       },
       //  选择背景
       Xsum() {
-        this.getRun();
         this.Wine = '';
+        this.getRun();
         this.select(1);
       },
       Xmonth() {
-        var datas = {wine: 1};
         this.Wine = 1;
-        this.runInfo(datas);
+        var datas = {wine: 1};
+        this.runInfo(datas)
         this.select(2);
       },
       Xday() {
-        var datas = {wine: 2};
         this.Wine = 2;
-        this.runInfo(datas);
+        var datas = {wine: 2};
+        this.runInfo(datas)
         this.select(3);
       },
       select(flag) {

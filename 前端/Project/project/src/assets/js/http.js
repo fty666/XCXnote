@@ -3,7 +3,7 @@ import qs from 'qs'
 import { Message } from 'element-ui';
 // import Cookies from 'js-cookie'
 
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 10000;
 axios.defaults.baseURL ='';
 
 

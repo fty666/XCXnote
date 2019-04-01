@@ -2,19 +2,19 @@
   <div class="body">
     <!--头部-->
     <div class="flex" style="margin-top: 60px;">
-      <div class="state flex" style="background-color:rgba(0, 153, 153, 1);">
-        <div class="state2" style="color: white">全部商品</div>
-        <div class="state3" style="color: white">({{this.stateList.allCount}})</div>
+      <div :class="['state', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
+        <div class="state2">全部</div>
+        <div class="state3">({{this.stateList.allCount}})</div>
       </div>
-      <div class="state flex">
+      <div :class="['state', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
         <div class="state2">已上架</div>
         <div class="state3">({{this.stateList.goodsUp}})</div>
       </div>
-      <div class="state flex">
+      <div :class="['state', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
         <div class="state2">已下架</div>
         <div class="state3">({{this.stateList.goodsDown}})</div>
       </div>
-      <div class="state flex">
+      <div :class="['state', 'flex',bshop==true?'Xbj':'']" style="margin-left: 0px" @click="Xshop()">
         <div class="state2">经销商酒</div>
         <div class="state3">({{this.stateList.dealer}})</div>
       </div>
@@ -123,19 +123,25 @@
           label="库存数量"
           align="center"
           prop="num"
-          min-width="80">
+          min-width="60">
         </el-table-column>
         <el-table-column
           label="前台销量"
           align="center"
           prop="salesVolume"
-          min-width="80">
+          min-width="60">
         </el-table-column>
         <el-table-column
           label="上架数量"
           align="center"
-          prop="num"
-          min-width="80">
+          min-width="120">
+          <template slot-scope="scope">
+            <div style="margin-bottom: 20px">数量：{{scope.row.num}}</div>
+            <div>
+              修改：
+              <el-input @blur="modify(scope.row)" v-model="scope.row.input" style="width: 90px" size="small"></el-input>
+            </div>
+          </template>
         </el-table-column>
         <el-table-column
           label="操作"
@@ -148,8 +154,7 @@
                 <div v-if="scope.row.status=='下架'">上架</div>
                 <div v-else>下架</div>
               </div>
-              <!--<div style="color: #0099ce;padding-left: 8px" @click="look(scope.row.id)">查看</div>-->
-              <!--<div style="color: #0099ce;padding-left: 10px" @click="edit(scope.row)">编辑</div>-->
+              <div style="color: #0099ce;padding-left: 8px" @click="look(scope.row.id)">查看</div>
               <div style="color: #0099ce;padding-left: 10px" @click="modifyShop(scope.row)">修改</div>
               <div style="color: #0099ce;padding-left: 8px" @click="del(scope.row.id)">删除</div>
             </div>
@@ -184,6 +189,7 @@
 
 <script>
   import XiuGai from '@/components/xiugai'
+  
   export default {
     components: {
       XiuGai
@@ -192,11 +198,9 @@
       return {
         xShop: {},                    // 要修改的商品详情
         dialogVisible: false,        // 修改商品弹窗
-        input: '',
         options: [],
         multipleSelection: [],
-        //  传参
-        shopList: [],
+        shopList: [],     //商品列表
         page: 1,
         pageSize: 10,
         bid: '',
@@ -204,7 +208,12 @@
         id: '',
         currentPage4: 1,
         totals: 10,
-        stateList:[],
+        stateList: [],  //统计参数
+        //背景选择
+        sum: true,
+        month: false,
+        day: false,
+        bshop: false
       };
     },
     methods: {
@@ -231,7 +240,6 @@
       //  查看商品列表
       getShop() {
         this._getData('/api/v1/goods/index', {page: this.page, pageSize: this.pageSize}, data => {
-          console.log(data.data)
           this.shopList = data.data;
           this.totals = data.total;
           this.getState();
@@ -354,8 +362,8 @@
         this.getShop();
       },
       //关闭修改页面
-      closes(){
-        this.dialogVisible=false;
+      closes() {
+        this.dialogVisible = false;
       },
       //批量删除
       batch() {
@@ -384,12 +392,54 @@
         });
       },
       //获取统计
-      getState(){
-        this._getData('/api/v1/goods/goodsUpDownStatistics', {
-          }, data => {
-            console.log(data)
-          this.stateList=data;
-          })
+      getState() {
+        this._getData('/api/v1/goods/goodsUpDownStatistics', {}, data => {
+          console.log(data)
+          this.stateList = data;
+        })
+      },
+      //修改上架
+      modify(val) {
+        var editNum = '';
+        console.log(val)
+        if (val.input) {
+          if (val.input > val.num) {
+            this.$message({
+              type: 'info',
+              message: '超过原有上架数量'
+            });
+            return false;
+          } else {
+            editNum = val.input;
+          }
+        } else {
+          editNum = val.num;
+        }
+        this.$confirm('是否修改上架数量?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+          
+          
+          
+        }).then(() => {
+          this._getData('/api/v1/goods/editNum', {
+              id: val.id,
+              num: editNum
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+              this.getShop();
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
       },
       //编辑
       edit(val) {
@@ -412,6 +462,66 @@
           this.getShop();
         }
       },
+      //  选择全部
+      Xsum() {
+        this.select(1);
+        this.getShop();
+      },
+      Xmonth() {
+        let datas = {
+          page: this.page,
+          pageSize: this.pageSize,
+          status: 2
+        }
+        this.condition(datas);
+        this.select(2);
+      },
+      Xday() {
+        let datas = {
+          page: this.page,
+          pageSize: this.pageSize,
+          status: 1
+        }
+        this.condition(datas);
+        this.select(3);
+      },
+      Xshop() {
+        let datas = {
+          page: this.page,
+          pageSize: this.pageSize,
+          is_dealer: 1
+        }
+        this.condition(datas);
+        this.select(4);
+      },
+      select(flag) {
+        this.sum = false;
+        this.month = false;
+        this.day = false;
+        this.bshop = false;
+        switch (flag) {
+          case 1:
+            this.sum = true;
+            break;
+          case 2:
+            this.month = true;
+            break;
+          case 3:
+            this.day = true;
+            break;
+          case 4:
+            this.bshop = true;
+            break;
+        }
+      },
+      //  按条件搜索
+      condition(datas) {
+        this._getData('/api/v1/goods/index', datas, data => {
+          this.shopList = data.data;
+          this.totals = data.total;
+          this.getState();
+        })
+      }
     },
     created() {
       this.getShop();

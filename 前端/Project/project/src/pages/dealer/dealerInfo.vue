@@ -53,7 +53,7 @@
     </div>
     <!--经销商信息-->
     <div v-if="dealer==true">
-      <Dinfo ref="headerChild"></Dinfo>
+      <Dinfo ref="headerChild" :deInfo="dealerList"></Dinfo>
     </div>
     <div v-else>
       <MemberInfo ></MemberInfo>
@@ -102,7 +102,6 @@
         this._getData('/api/v1/user/show', {
           id: sessionStorage.getItem('dealerId'),
         }, data => {
-          console.log(data)
           this.dealerList=data;
         })
       },

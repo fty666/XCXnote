@@ -1,7 +1,19 @@
 <template>
   <div class="body">
-    <div>
-      <state></state>
+    <div>操作人ID没写</div>
+    <div class="flex" style="margin-top: 20px;">
+      <div :class="['state', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
+        <div class="state2">全部商品</div>
+        <!--<div class="state3">({{this.WList.allCount}})</div>-->
+      </div>
+      <div :class="['state', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
+        <div class="state2">酒类商品</div>
+        <!--<div class="state3">({{this.WList.wine}})</div>-->
+      </div>
+      <div :class="['state', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
+        <div class="state2">非酒类商品</div>
+        <!--<div class="state3">({{this.WList.noWine}})</div>-->
+      </div>
     </div>
     <!--搜索-->
     <div class="flex whiteT">
@@ -104,7 +116,6 @@
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
         :page-sizes="[20, 50, 100]"
-        :page-size="5"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
       </el-pagination>
@@ -187,11 +198,11 @@
         center>
         <div class="xiu" style="height: auto">
           <div class="edit" style="background-color: rgba(26, 188, 156, 1);">回购规则设置</div>
-          <div style="margin: 20px 0px 10px 20px;">商品名称：{{this.lookWare.goods_name}}</div>
+          <div style="margin: 20px 0px 10px 20px;">商品名称：{{this.editWare.goods_name}}</div>
           <div>
             <template>
               <el-table
-                :data="lookWare.warehouse_goods"
+                :data="LookList"
                 border
                 style="width: 100%">
                 <el-table-column
@@ -237,8 +248,6 @@
 </template>
 
 <script>
-  import state from '@/components/wineStat'
-  
   export default {
     name: "",
     data() {
@@ -254,38 +263,62 @@
         editshop: false,
         wareList: [],
         lookWare: [],
+        editWare: {},
+        LookList: [],
         //搜索
         id: '',
         goods_name: '',
+        WList: {},
+        //背景选择
+        sum: true,
+        month: false,
+        day: false,
+        Pwine: ''
       }
-    },
-    components: {
-      state
     },
     methods: {
       //查看仓库
       getWare() {
-        this._getData('/api/v1/goods/warehouse', {
-          page: this.page,
-          pageSize: this.pageSize
-        }, data => {
+        var datas = {};
+        this.wareInfo(datas);
+      },
+      wareInfo(datas) {
+        datas.page = this.page;
+        datas.pageSize = this.pageSize;
+        this._getData('/api/v1/goods/warehouse', datas, data => {
           this.wareList = data.data;
           this.totals = data.total;
         })
       },
-      handleSelectionChange(val) {
-        this.multipleSelection = val;
-        this.getWare();
+      //  查看酒品
+      wineList() {
+        this._getData('/api/v1/goods/wineOrNoStatistics', {}, data => {
+          this.WList = data;
+        })
       },
       //每页显示多少数据
       handleSizeChange(val) {
         this.pageSize = val;
-        this.getWare();
+        if (this.id != '' || this.goods_name != '') {
+          this.search();
+        } else if (this.Pwine != '') {
+          var datas = {wine: this.Pwine};
+          this.wareInfo(datas)
+        } else {
+          this.getWare();
+        }
       },
       //第几页
       handleCurrentChange(val) {
         this.page = val;
-        this.getWare();
+        if (this.id != '' || this.goods_name != '') {
+          this.search();
+        } else if (this.Pwine != '') {
+          var datas = {wine: this.Pwine};
+          this.wareInfo(datas)
+        } else {
+          this.getWare();
+        }
       },
       //搜索
       search() {
@@ -314,7 +347,6 @@
       },
       //修改
       editInfo(val) {
-        console.log(val)
         this.$confirm('是否修改此库存?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -323,9 +355,9 @@
           this._getData('/api/v1/warehouse_goods/editNum', {
             warehouse_goods_id: val.id,
             warehouse_goods_num: val.editNum,
-            goodsId: val.goodsId,
-            warehouse_goods_stock:val.warehouse_goods_stock,
-            operator:''
+            goods_id: val.goodsId,
+            warehouse_goods_stock: val.warehouse_goods_stock,
+            operator: ''
           }, data => {
             this.$message({
               type: 'success',
@@ -354,12 +386,53 @@
         this.centerDialogVisible = false;
       },
       eidt(val) {
-        this.lookWare = val;
+        console.log(val)
+        this.editWare = val;
+        this.LookList = val.warehouse_goods;
         this.editshop = true;
       },
+      //  选择背景
+      Xsum() {
+        this.getWare();
+        this.Pwine = '';
+        this.select(1);
+      },
+      Xmonth() {
+        this.Pwine = 1;
+        var datas = {wine: 1};
+        this.wareInfo(datas);
+        this.select(2);
+      },
+      Xday() {
+        this.Pwine = 2;
+        var datas = {wine: 2};
+        this.wareInfo(datas);
+        this.select(3);
+      },
+      select(flag) {
+        this.sum = false;
+        this.month = false;
+        this.day = false;
+        this.bshop = false;
+        switch (flag) {
+          case 1:
+            this.sum = true;
+            break;
+          case 2:
+            this.month = true;
+            break;
+          case 3:
+            this.day = true;
+            break;
+          case 4:
+            this.bshop = true;
+            break;
+        }
+      }
     },
     created() {
       this.getWare();
+      this.wineList()
     }
   }
 </script>

@@ -150,10 +150,9 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage4"
-            :page-sizes="[20, 50, 100]"
-            :page-size="5"
+            :page-sizes="[10, 50, 100]"
             layout="total, sizes, prev, pager, next, jumper"
-            :total=totals>
+            :total='totals'>
           </el-pagination>
         </div>
       </div>
@@ -177,10 +176,10 @@
           </div>
           <div style="margin: 5px 0px 0px 20px;color: #ddd;">注：回复内容会在前台显示。</div>
           <div class="flex">
-            <div class="logBtn1" style="margin:15px 0px 0px 25%">
+            <div class="logBtn1" style="margin:15px 0px 0px 25%" @click="submit()">
               <el-button size="medium" type="primary">提交</el-button>
             </div>
-            <div class="logBtn2" style="margin:15px 0px 0px 10%">
+            <div class="logBtn2" style="margin:15px 0px 0px 10%" @click="esc()">
               <el-button size="medium">取消</el-button>
             </div>
           </div>
@@ -203,7 +202,7 @@
         commonts: [],
         //页码参数
         page: 1,
-        pageSize: 20,
+        pageSize: 10,
         currentPage4: 1,
         totals: 20
       };
@@ -221,6 +220,7 @@
         this._getData('/api/v1/comment/goodsComment', {id: sessionStorage.getItem('ids')}, data => {
           console.log(data)
           this.commonts = data;
+          this.totals = data.length;
         })
       },
       //每页显示多少数据
@@ -256,6 +256,10 @@
             message: '已取消'
           });
         });
+      },
+      //回复评论
+      submit(){
+      
       },
       //隐藏评论
       hidden(val) {

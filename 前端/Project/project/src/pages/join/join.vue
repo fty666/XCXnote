@@ -113,7 +113,7 @@
           show-overflow-tooltip>
           <template slot-scope="scope">
             <div class="sequence" style="width: 120px">
-              <div style="color: #0099ce;padding-left: 15px" @click="stock(scope.row.id)">库存</div>
+              <div style="color: #0099ce;padding-left: 15px" @click="stock(scope.row.warehouseId)">库存</div>
               <div style="color: #0099ce;padding-left: 10px" @click="edit(scope.row)">编辑</div>
               <div style="color: #0099ce;padding-left: 16.5px" @click="order(scope.row)">订货</div>
               <div style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除</div>
@@ -127,20 +127,19 @@
 
 <script>
   export default {
-    name: "",
     data() {
       return {
         input: '',
-        ids:'',
+        ids: '',
         //参数
-        joinList:[],
+        joinList: [],
         page: 1,
         pageSize: 20,
         currentPage4: 1,
         totals: 20,
-        id:'',
-        name:'',
-        district:''
+        id: '',
+        name: '',
+        district: ''
       }
     },
     methods: {
@@ -150,9 +149,8 @@
           page: this.page,
           pageSize: this.pageSize
         }, data => {
-          this.joinList=data.data;
-          this.totals=data.total;
-          console.log(data)
+          this.joinList = data.data;
+          this.totals = data.total;
         })
       },
       //库存
@@ -167,41 +165,42 @@
         
       },
       //编辑
-      edit() {
+      edit(val) {
+        sessionStorage.setItem('edits', JSON.stringify(val))
         this.$router.push({name: 'editJoin'});
       },
       //搜索
-      search(){
-        var data={};
-        if(this.id!=''){
-          data.id=this.id;
+      search() {
+        var data = {};
+        if (this.id != '') {
+          data.id = this.id;
         }
-        if(this.name!=''){
-          data.name=this.name;
+        if (this.name != '') {
+          data.name = this.name;
         }
-        if(this.district!=''){
-          data.district=this.district;
+        if (this.district != '') {
+          data.district = this.district;
         }
         this._getData('/api/v1/alliance/index', {
           page: this.page,
           pageSize: this.pageSize,
-          id:data.id,
-          name:data.name,
-          district:data.district
+          id: data.id,
+          name: data.name,
+          district: data.district
         }, data => {
-          this.joinList=data.data;
-          this.totals=data.total;
+          this.joinList = data.data;
+          this.totals = data.total;
         })
       },
       //重置
-      res(){
-        this.id='';
-        this.name='';
-        this.district='';
+      res() {
+        this.id = '';
+        this.name = '';
+        this.district = '';
         this.getJoin();
       },
       //删除
-      del(val){
+      del(val) {
         this.$confirm('是否删除此加盟商?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -225,7 +224,7 @@
         });
       },
       //批量删除
-      batch(){
+      batch() {
         this.$confirm('是否批量删除这些加盟商?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -249,14 +248,14 @@
         });
       },
       handleSelectionChange(val) {
-        var ids='';
-        for(let i=0;i<val.length;i++){
-            ids+=val[i].id+',';
+        var ids = '';
+        for (let i = 0; i < val.length; i++) {
+          ids += val[i].id + ',';
         }
-        this.ids=ids;
+        this.ids = ids;
       }
     },
-    created(){
+    created() {
       this.getJoin();
     }
   }

@@ -59,6 +59,7 @@
         <el-table-column
           prop="id"
           label="用户ID"
+          sortable
           align="center"
           min-width="130">
         </el-table-column>
@@ -77,6 +78,7 @@
         <el-table-column
           prop="create_time"
           label="注册时间"
+          sortable
           align="center"
           min-width="120">
         </el-table-column>
@@ -106,7 +108,7 @@
           align="center"
           min-width="110">
           <template slot-scope="scope">
-            <div class="flex" v-if="scope.row.status=='关闭'">
+            <div class="flex" v-if="scope.row.status=='关闭' || scope.row.status=='禁用'">
               <div>&nbsp;&nbsp;已禁用</div>
               <div @click="start(scope.row.id)" class="operate">&nbsp;&nbsp;启用</div>
             </div>
@@ -130,8 +132,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
-          :page-sizes="[20, 50, 100]"
-          :page-size="5"
+          :page-sizes="[10, 50, 100]"
           layout="total, sizes, prev, pager, next, jumper"
           :total=totals>
         </el-pagination>
@@ -164,7 +165,7 @@
     methods: {
       //获取用户
       getUser() {
-        this._getData('api/v1/user/index', {
+        this._getData('/api/v1/user/index', {
           page: this.page,
           pageSize: this.pageSize
         }, data => {
@@ -180,7 +181,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this._getData('api/v1/user/userClose', {
+          this._getData('/api/v1/user/userClose', {
               id: val,
             },
             data => {
@@ -237,7 +238,7 @@
           data.start_time = this.value6[0];
           data.end_time = this.value6[0];
         }
-        this._getData('api/v1/user/index', {
+        this._getData('/api/v1/user/index', {
           page: this.page,
           pageSize: this.pageSize,
           id: data.id,
@@ -315,7 +316,7 @@
         }
       },
     },
-    created() {
+    created(){
       this.getUser();
     }
   }

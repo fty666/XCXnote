@@ -10,10 +10,12 @@
           </div>
           <div :class="['head1',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday">按月统计</div>
           <div :class="['head1',Tday==true?'bj':'']" @click="XTday()">按年统计</div>
+          <div :class="['head1',all==true?'bj':'']" @click="Xall()">全部</div>
           <div class="head1" style="width: 150px;border: 1px solid #ddd">
             <el-date-picker
-              v-model="value1"
+              v-model="times"
               style="width: 150px"
+              value-format="yyyy-MM-dd"
               type="date"
               size="mini"
               placeholder="选择日期">
@@ -78,20 +80,33 @@
     name: "memberState",
     data() {
       return {
-        value: 1,
-        value1: "",
+        times:'',
         membeList: [],
         //选择
         yday: true,
         Qday: false,
         Tday: false,
-        totals: ''
+        totals: '',
+        all: '',
+      }
+    },
+    watch: {
+      times(v, o) {
+        this.selcTimes();
       }
     },
     methods: {
       //获取会员
       getMembe() {
         this._getData('/api/v1/alliance/yesterdayMember', {}, data => {
+          this.membeList = data;
+        })
+      },
+      //时间选择
+      selcTimes() {
+        this._getData('/api/v1/alliance/yearMonthDayOrder', {
+          create_time: this.times
+        }, data => {
           this.membeList = data;
         })
       },
@@ -104,7 +119,7 @@
         let data = this.Tselect(2);
         this.getTimes('M', data => {
           console.log(data)
-          this._getData('/api/v1/alliance/yearMonthMember', {create_time:data}, data => {
+          this._getData('/api/v1/alliance/yearMonthMember', {create_time: data}, data => {
             this.membeList = data;
           })
         })
@@ -112,15 +127,22 @@
       XTday() {
         this.Tselect(3);
         this.getTimes('Y', data => {
-          this._getData('/api/v1/alliance/yearMember', {create_time:data}, data => {
+          this._getData('/api/v1/alliance/yearMember', {create_time: data}, data => {
             this.membeList = data;
           })
+        })
+      },
+      Xall() {
+        this.Tselect(4);
+        this._getData('/api/v1/alliance/allOrder', {}, data => {
+          this.membeList = data;
         })
       },
       Tselect(flag) {
         this.yday = false;
         this.Qday = false;
         this.Tday = false;
+        this.all = false;
         switch (flag) {
           case 1:
             this.yday = true;
@@ -130,6 +152,9 @@
             break;
           case 3:
             this.Tday = true;
+            break;
+          case 4:
+            this.all = true;
             break;
         }
       }

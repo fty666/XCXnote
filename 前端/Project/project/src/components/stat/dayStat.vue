@@ -19,47 +19,47 @@
     </div>
     <div style="width: 99.8%;margin: 10px 0px 0px 0px">
       <el-table
-        :data="tableData"
+        :data="dayList"
         border
         style="width: 100%">
         <el-table-column
-          prop="date"
-          label="月份"
+          prop="times"
+          label="日期"
           align="center"
           min-width="120">
         </el-table-column>
         <el-table-column
-          prop="date"
+          prop="countOrder"
           label="总订单数"
           align="center"
           min-width="160">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="validOrderCount"
           align="center"
           label="有效订单数"
           min-width="160">
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="noValidOrderCount"
           align="center"
           min-width="160"
           label="无效订单数">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="normalPayTotal"
           align="center"
           label="总营业额"
           min-width="150">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="refundPayTotal"
           align="center"
           label="已退款金额"
           min-width="150">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="profit"
           align="center"
           label="平台利润"
           min-width="189">
@@ -75,24 +75,44 @@
     name: "",
     data() {
       return {
-        tableData: [{
-          value1:'',
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市'
-        }],
         //选择
         yday: true,
         Qday: false,
-        Tday: false
+        Tday: false,
+        value1:'',
+        dayList:[]
       }
     },
     methods: {
+      //获取过去7天统计
+      getDay(){
+        this._getData('/api/v1/order/old7day', {
+          consigner_type:1
+        }, data => {
+          for(let item in data){
+            data[item].times=item;
+            this.dayList.push(data[item])
+          }
+        })
+      },
+      //获取过去30天的统计
+      threeDay(){
+        this._getData('/api/v1/order/old30day', {
+          consigner_type:1
+        }, data => {
+          for(let item in data){
+            data[item].times=item;
+            this.dayList.push(data[item])
+          }
+        })
+      },
       //选择背景
       Xyday() {
+        this.getDay();
         this.Tselect(1);
       },
       XQday() {
+        this.threeDay()
         let data = this.Tselect(2);
       },
       XTday() {
@@ -114,6 +134,9 @@
             break;
         }
       }
+    },
+    created(){
+      this.getDay();
     }
   }
 </script>

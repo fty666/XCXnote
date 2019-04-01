@@ -99,8 +99,7 @@
           min-width="100"
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <!--<div style="color: #0099ce;" @click="info(scope.row.id)">查看详情</div>-->
-            <div style="color: #0099ce;">查看详情</div>
+            <div style="color: #0099ce;" @click="info(scope.row)">查看详情</div>
           </template>
         </el-table-column>
       </el-table>
@@ -198,7 +197,8 @@
       },
       //  查看详情
       info(val) {
-        sessionStorage.setItem('dealerId',val)
+        sessionStorage.setItem('dealerId',val.id)
+        sessionStorage.setItem('userCode',val.user_code)
         this.$router.push({name: 'dealerInfo'})
       },
       //搜索

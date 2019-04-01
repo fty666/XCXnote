@@ -1,12 +1,30 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  // provide(){
+  //   return{
+  //     reload:this.reload
+  //   }
+  // },
+  // data(){
+  //   return{
+  //     isRouterAlive:true
+  //   }
+  // },
+  // methods:{
+  //   reload(){
+  //     this.isRouterAlive=false;
+  //     this.$nextTick(function () {
+  //       this.isRouterAlivetrue=true;
+  //     })
+  //   }
+  // }
 }
 </script>
 
@@ -42,6 +60,10 @@ a{
 .spaces{
   display: flex;
   justify-content: space-between;
+}
+.Xbj {
+  background-color: rgba(0, 153, 153, 1);
+  color: white;
 }
 .body{
   width: 82%;

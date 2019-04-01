@@ -1,24 +1,5 @@
 <template>
   <div class="body">
-    <!--数量-->
-    <div class="flex" style="margin-top: 20px;">
-      <div class="state flex" style="background-color:rgba(0, 153, 153, 1);">
-        <div class="state2" style="color: white">全部商品</div>
-        <div class="state3" style="color: white">(1000)</div>
-      </div>
-      <div class="state flex">
-        <div class="state2">未配货</div>
-        <div class="state3">(1000)</div>
-      </div>
-      <div class="state flex">
-        <div class="state2">已配货</div>
-        <div class="state3">(1000)</div>
-      </div>
-      <div class="state flex">
-        <div class="state2">已发货</div>
-        <div class="state3">(1000)</div>
-      </div>
-    </div>
     <!--搜索-->
     <div class="flex whiteT">
       <div class="font">用户账户：</div>
@@ -119,7 +100,7 @@
           min-width="100"
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <div style="color: #0099ce;" @click="del(scope.row.id)">查看订单</div>
+            <div style="color: #0099ce;" @click="look(scope.row.id)">查看订单</div>
           </template>
         </el-table-column>
       </el-table>
@@ -130,7 +111,6 @@
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
         :page-sizes="[20, 50, 100]"
-        :page-size="5"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
       </el-pagination>
@@ -144,13 +124,13 @@
       return {
         //参数
         page: 1,
-        pageSize: 10,
+        pageSize: 20,
         currentPage4: 1,
         totals: 10,
-        orderList:[],
-        user_mobile:'',
-        goods_name:'',
-        times:''
+        orderList: [],
+        user_mobile: '',
+        goods_name: '',
+        times: ''
       }
     },
     methods: {
@@ -160,58 +140,72 @@
           page: this.page,
           pageSize: this.pageSize
         }, data => {
-          this.orderList=data.data;
-          this.totals=data.total;
-          this.goods_name='';
-          this.user_mobile='';
-          this.times='';
+          this.orderList = data.data;
+          this.totals = data.total;
+          this.goods_name = '';
+          this.user_mobile = '';
+          this.times = '';
         })
       },
       //提交
-      submit(){
-        var data={};
-        if(this.user_mobile!=''){
-          data.user_mobile=this.user_mobile;
+      submit() {
+        var data = {};
+        if (this.user_mobile != '') {
+          data.user_mobile = this.user_mobile;
         }
-        if(this.goods_name!=''){
-          data.goods_name=this.goods_name;
+        if (this.goods_name != '') {
+          data.goods_name = this.goods_name;
         }
-        if(this.times!=''){
-          data.start_time=this.times[0];
-          data.end_time=this.times[1];
+        if (this.times != '') {
+          data.start_time = this.times[0];
+          data.end_time = this.times[1];
         }
         this._getData('/api/v1/integral_record/exchangeIntegral', {
           page: this.page,
           pageSize: this.pageSize,
-          end_time:data.end_time,
-          start_time:data.start_time,
-          goods_name:data.goods_name,
-          user_mobile:data.user_mobile,
+          end_time: data.end_time,
+          start_time: data.start_time,
+          goods_name: data.goods_name,
+          user_mobile: data.user_mobile,
         }, data => {
-          this.orderList=data.data;
-          this.totals=data.total;
+          this.orderList = data.data;
+          this.totals = data.total;
         })
         
       },
       //重置
-      res(){
-        this.goods_name='';
-        this.user_mobile='';
-        this.times='';
+      res() {
+        this.goods_name = '';
+        this.user_mobile = '';
+        this.times = '';
         this.getConversion();
       },
       //每页显示多少数据
       handleSizeChange(val) {
         this.pageSize = val;
-        this.getConversion();
+        if (this.user_mobile != '' || this.goods_name != '' || this.times != '') {
+          this.submit();
+        } else {
+          this.getConversion();
+        }
       },
       //第几页
       handleCurrentChange(val) {
         this.page = val;
-        this.getConversion();
+        if (this.user_mobile != '' || this.goods_name != '' || this.times != '') {
+          this.submit();
+        } else {
+          this.getConversion();
+        }
       },
+    //  查看订单
+      look(val){
+        sessionStorage.setItem('orderId', val);
+        sessionStorage.setItem('page', '已兑换积分订单')
+        this.$router.push({name: 'orderInfo'})
+      }
     },
-    created(){
+    created() {
       this.getConversion();
     }
   }
