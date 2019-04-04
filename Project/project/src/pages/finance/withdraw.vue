@@ -45,10 +45,10 @@
     </div>
     <!--表格头-->
     <div class="head right">
-      <div class="head1">导出数据</div>
+      <div class="head1 Mouse"  @click="exportFunc('withList','提现记录清单')">导出数据</div>
     </div>
     <!--表格-->
-    <div>
+    <div id="withList">
       <el-table
         ref="multipleTable"
         :data="drawList"
@@ -112,13 +112,13 @@
           show-overflow-tooltip>
           <template slot-scope="scope">
             <div class="flex">
-              <div v-if="scope.row.status=='通过'" class="btns" @click="affirm(scope.row.id)">确认打款</div>
-              <div v-if="scope.row.status=='打款'" class="btns" @click="del()">删除</div>
+              <div v-if="scope.row.status=='通过'" class="btns Mouse" @click="affirm(scope.row.id)">确认打款</div>
+              <div v-if="scope.row.status=='打款'" class="btns Mouse" @click="del()">删除</div>
               <div v-if="scope.row.status=='拒绝'" class="btns">已驳回</div>
-              <div v-if="scope.row.status=='删除'" class="btns">已删除</div>
+              <div v-if="scope.row.status=='删除'" class="btns ">已删除</div>
               <div v-if="scope.row.status=='提交'">
-                <div class="btns" @click="pass(scope.row.id)">通过</div>
-                <div class="btns" @click="down(scope.row.id)">驳回</div>
+                <div class="btns Mouse" @click="pass(scope.row.id)">通过</div>
+                <div class="btns Mouse" @click="down(scope.row.id)">驳回</div>
               </div>
             </div>
           </template>

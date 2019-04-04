@@ -44,10 +44,10 @@
     </div>
     <!--选择信息-->
     <div class="flex" style="margin-top: 30px;">
-      <div :class="[ 'state','flex', dealer==true?'bj':'']" @click="dealerInfo()">
+      <div :class="[ 'state','Mouse','flex', dealer==true?'bj':'']" @click="dealerInfo()">
         <div class="state2">经销商信息</div>
       </div>
-      <div :class="[ 'state','flex', members==true?'bj':'']" @click="member()" style="margin-left: 0px">
+      <div :class="[ 'state','Mouse','flex', members==true?'bj':'']" @click="member()" style="margin-left: 0px">
         <div class="state2">会员信息</div>
       </div>
     </div>
@@ -72,18 +72,6 @@
     },
     data() {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }],
         value: '',
         //  经销商信息选择
         dealer: true,

@@ -2,39 +2,39 @@
   <div class="body">
     <!--数量-->
     <div class="flex" style="margin-top: 20px;">
-      <div :class="['state', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
+      <div :class="['state','Mouse', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
         <div class="state2">全部申请</div>
-        <div class="state3">(1000)</div>
+        <!--<div class="state3">(1000)</div>-->
       </div>
-      <div :class="['state', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
+      <div :class="['state', 'Mouse', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
         <div class="state2">待处理</div>
-        <div class="state3">(1000)</div>
+        <!--<div class="state3">(1000)</div>-->
       </div>
-      <div :class="['state', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
+      <div :class="['state', 'Mouse', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
         <div class="state2">退货中</div>
-        <div class="state3">(1000)</div>
+        <!--<div class="state3">(1000)</div>-->
       </div>
-      <div :class="['state', 'flex',bshop==true?'Xbj':'']" style="margin-left: 0px" @click="Xshop()">
+      <div :class="['state','Mouse', 'flex',bshop==true?'Xbj':'']" style="margin-left: 0px" @click="Xshop()">
         <div class="state2">已完成</div>
-        <div class="state3">(1000)</div>
+        <!--<div class="state3">(1000)</div>-->
       </div>
-      <div :class="['state', 'flex',down==true?'Xbj':'']" style="margin-left: 0px" @click="Xdown()">
+      <div :class="['state','Mouse', 'flex',down==true?'Xbj':'']" style="margin-left: 0px" @click="Xdown()">
         <div class="state2">已拒绝</div>
-        <div class="state3">(1000)</div>
+        <!--<div class="state3">(1000)</div>-->
       </div>
-      <div :class="['state', 'flex',all==true?'Xbj':'']" style="margin-left: 0px" @click="Xall()">
-        <div class="state2">全部订单</div>
-        <div class="state3">(1000)</div>
+      <div :class="['state','Mouse', 'flex',all==true?'Xbj':'']" style="margin-left: 0px" @click="Xall()">
+        <div class="state2">平台订单</div>
+        <!--<div class="state3">(1000)</div>-->
       </div>
     </div>
     <!--搜索-->
     <div class="flex whiteT">
       <div class="font">订单编号：</div>
       <div class="input">
-        <el-input v-model="order_code" placeholder="输入订单编号"></el-input>
+        <el-input v-model="order_code" style="width: 200px" placeholder="输入订单编号"></el-input>
       </div>
       
-      <div class="font">用户账号：</div>
+      <div class="font" style="margin-left: 100px">用户账号：</div>
       <div class="input">
         <el-input v-model="mobile" placeholder="输入用户账号"></el-input>
       </div>
@@ -49,11 +49,9 @@
           end-placeholder="结束日期"
           value-format="yyyy-MM-dd">
         </el-date-picker>
-      
       </div>
-      
       <!--按钮-->
-      <div class="btn" style="margin-left: 20%" @click="search()">
+      <div class="btn" style="margin-left: 12%" @click="search()">
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
       </div>
       <div class="btn2" @click="res()">
@@ -62,8 +60,8 @@
     </div>
     <!--表格-->
     <div class="head right">
-      <div class="head1" @click="exportFunc('refund','退款列表')">导出数据</div>
-      <div class="head1" @click="batch()">批量删除</div>
+      <div class="head1 Mouse" @click="exportFunc('refund','退款列表')">导出数据</div>
+      <div class="head1 Mouse" @click="batch()">批量删除</div>
     </div>
     <div id="refund">
       <el-table
@@ -72,6 +70,7 @@
         tooltip-effect="dark"
         style="width: 100%"
         @selection-change="handleSelectionChange"
+        @sort-change='sortChange'
         border>
         <el-table-column
           type="selection"
@@ -81,6 +80,7 @@
         <el-table-column
           label="所属地区"
           prop="consigner"
+          sortable="custom"
           min-width="100"
           align="center">
         </el-table-column>
@@ -93,6 +93,7 @@
         <el-table-column
           prop="apply_time"
           align="center"
+          sortable
           label="申请时间"
           min-width="120">
         </el-table-column>
@@ -115,10 +116,14 @@
           min-width="100">
         </el-table-column>
         <el-table-column
-          prop="status"
           align="center"
+          sortable="custom"
+          prop="status"
           label="申请状态"
           min-width="80">
+          <template slot-scope="scope">
+            {{scope.row.status|status}}
+          </template>
         </el-table-column>
         <el-table-column
           prop="mark"
@@ -130,6 +135,7 @@
           prop="update_time"
           align="center"
           label="处理时间"
+          sortable
           min-width="120">
         </el-table-column>
         <el-table-column
@@ -139,7 +145,7 @@
           show-overflow-tooltip>
           <template slot-scope="scope">
             <div class="flex">
-              <div style="color: #0099ce;padding-left: 10px" @click="look(scope.row.id)">查看订单</div>
+              <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="look(scope.row)">查看订单</div>
             </div>
           </template>
         </el-table-column>
@@ -161,6 +167,22 @@
 
 <script>
   export default {
+    filters: {
+      status: function (arg) {
+        switch (arg) {
+          case 2:
+            return "退款完成";
+          case 3:
+            return "退货完成";
+          case 4:
+            return "申请退款";
+          case 5:
+            return "拒绝";
+          case 6:
+            return "换货中";
+        }
+      }
+    },
     data() {
       return {
         order_code: '',
@@ -181,7 +203,10 @@
         day: false,
         bshop: false,
         all: false,
-        down: false
+        down: false,
+        //  排序
+        district: 'desc',
+        Otypes: 'desc'
       }
     },
     methods: {
@@ -200,7 +225,6 @@
           datas.mobile = this.mobile;
         }
         if (this.value6 != '') {
-          console.log(this.value6);
           datas.start_time = this.value6[0];
           datas.end_time = this.value6[1];
         }
@@ -269,7 +293,9 @@
         }
       },
       //  查看退款信息
-      look() {
+      look(val) {
+        sessionStorage.setItem('refoundId', val.id);
+        sessionStorage.setItem('StatusD', val.status)
         this.$router.push({name: 'RefundInfo'})
       },
       //  选择背景
@@ -338,11 +364,33 @@
         datas.pageSize = this.pageSize;
         this._getData('/api/v1/order_detail/refund', datas,
           data => {
-            console.log(data)
             this.refundList = data.data;
             this.totals = data.total;
           })
-      }
+      },
+      //  排序
+      sortChange(column, prop, order) {
+        if (column.prop == 'consigner') {
+          var datas = {};
+          if (this.district == 'asc') {
+            this.district = 'desc';
+          } else {
+            this.district = 'asc';
+          }
+          datas.order_consigner = this.district;
+          this.gain(datas);
+        }
+        if (column.prop == 'status') {
+          var datas = {};
+          if (this.Otypes == 'asc') {
+            this.Otypes = 'desc';
+          } else {
+            this.Otypes = 'asc';
+          }
+          datas.order_status = this.Otypes;
+          this.gain(datas);
+        }
+      },
     },
     created() {
       this.getRefund();

@@ -37,7 +37,10 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('addList')">提交</el-button>
+        <el-button class="buttons" type="primary" @click="submitForm('addList')">提交</el-button>
+        <router-link to="/join/join">
+          <el-button class="buttons">返回</el-button>
+        </router-link>
       </el-form-item>
     </el-form>
   </div>

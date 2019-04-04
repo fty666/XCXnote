@@ -4,18 +4,18 @@
     <div class="flex whiteT">
       <div class="font">用户账户：</div>
       <div class="input2">
-        <el-input v-model="filter.mobile" style="margin-top: 10px;width: 150px" placeholder="输入用户账户"></el-input>
+        <el-input v-model="mobile" style="margin-top: 10px;width: 150px" placeholder="输入用户账户"></el-input>
       </div>
       
       <div class="font">反馈类型：</div>
       <div class="input2">
-        <el-select v-model="filter.type" style="margin-top: 10px;width: 180px" placeholder="请选择">
+        <el-select v-model="type" style="margin-top: 10px;width: 180px" placeholder="请选择">
           <el-option
             v-for="item in options"
             size="small"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            :key="item.id"
+            :label="item.content"
+            :value="item.content">
           </el-option>
         </el-select>
       </div>
@@ -23,7 +23,7 @@
       <div class="font">反馈时间：</div>
       <div class="input">
         <el-date-picker
-          v-model="filter.start_time"
+          v-model="start_time"
           style="width: 135px;"
           type="date"
           value-format="yyyy-MM-dd"
@@ -34,7 +34,7 @@
       <div class="font" style="margin-left: 2%">至</div>
       <div class="input" style="margin-left: 1%">
         <el-date-picker
-          v-model="filter.end_time"
+          v-model="end_time"
           value-format="yyyy-MM-dd"
           style="width: 135px;"
           type="date"
@@ -43,14 +43,13 @@
       </div>
       <!--按钮-->
       <div class="font" style="margin-left: 20px">
-        <el-button type="primary" icon="el-icon-search" @click="getList">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
         <el-button class="buttons3" icon="el-icon-refresh" @click="reset">重置</el-button>
       </div>
     </div>
     <!--表格-->
     <div class="head right">
       <div class="head1" style="cursor: pointer" @click="openExcel('alertData','用户反馈查看列表')">导出数据</div>
-      <!--<div class="head1">排列方式</div>-->
     </div>
     <div id="alertData">
       <el-table
@@ -59,6 +58,7 @@
         tooltip-effect="dark"
         style="width: 100%"
         @selection-change="handleSelectionChange"
+        @sort-change='sortChange'
         border>
         <el-table-column
           type="index"
@@ -67,11 +67,10 @@
           width="70">
         </el-table-column>
         <el-table-column
-          prop="user_code"
+          prop="mobile"
           label="用户账户"
           align="center"
           min-width="150">
-        
         </el-table-column>
         <el-table-column
           prop="nickname"
@@ -84,7 +83,7 @@
           min-width="100"
           align="center"
           label="反馈类型"
-          show-overflow-tooltip>
+          sortable="custom">
         </el-table-column>
         <el-table-column
           prop="content"
@@ -106,6 +105,7 @@
         <el-table-column
           prop="create_time"
           label="反馈时间"
+          sortable
           align="center"
           min-width="160">
         </el-table-column>
@@ -130,45 +130,67 @@
     data() {
       return {
         // 表单数组
-        filter: {
-          page: 1,
-          pageSize: 20,
-        },
+        page: 1,
+        pageSize: 20,
+        mobile: '',
+        type: "",
+        start_time: '',
+        end_time: '',
         //页码参数
         currentPage4: 1,
         totals: 20,
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
+        options: [],
         value: '',
         tableData3: [{}],
-        multipleSelection: []
+        multipleSelection: [],
+        Ftype: 'desc'
       }
     },
     methods: {
       getList() {
-        this._getData('/api/v1/user_feedback/index', this.filter,
+        var datas = {};
+        this.getInfos(datas);
+      },
+      getInfos(datas) {
+        datas.page = this.page;
+        datas.pageSize = this.pageSize;
+        this._getData('/api/v1/user_feedback/index', datas,
           data => {
             console.log(data.data);
             this.tableData3 = data.data;
             this.totals = data.total;
           })
       },
+      //反馈类型
+      getFeed() {
+        this._getData('/api/v1/feedback_type/index', {},
+          data => {
+            console.log(data);
+            this.options = data;
+          })
+      },
+      search() {
+        var datas = {};
+        if (this.mobile != '') {
+          datas.mobile = this.mobile;
+        }
+        if (this.type != '') {
+          datas.type = this.type;
+        }
+        if (this.start_time != '') {
+          datas.start_time = this.start_time;
+        }
+        if (this.end_time != '') {
+          datas.end_time = this.end_time;
+        }
+        this.getInfos(datas);
+      },
       reset() {
-        this.filter = {};
+        this.mobile = '';
+        this.type = "";
+        this.start_time = '';
+        this.end_time = '';
+        this.getList();
       },
       //导出EXCEL/exportFunc为elxel.js里方法
       openExcel(val, name) {
@@ -187,9 +209,22 @@
         this.page = val;
         this.getService();
       },
+      sortChange(column, prop, order) {
+        var datas = {};
+        if (column.prop == 'type') {
+          if (this.Ftype == 'asc') {
+            this.Ftype = 'desc';
+          } else {
+            this.Ftype = 'asc';
+          }
+          datas.order_type = this.Ftype;
+          this.getInfos(datas);
+        }
+      }
     },
     created() {
       this.getList();
+      this.getFeed();
     }
   }
 </script>

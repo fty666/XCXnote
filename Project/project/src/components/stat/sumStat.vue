@@ -2,11 +2,11 @@
   <div>
     <div class="head flex">
       <div class="font2">平台总营业额查询</div>
-      <div :class="['head1',yday==true?'bj':'']" style="margin: 10px 0px 0px 40%" @click="Xyday()">
+      <div :class="['head1','Mouse',yday==true?'bj':'']" style="margin: 10px 0px 0px 40%" @click="Xyday()">
         全部
       </div>
-      <div :class="['head1',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday">按月统计</div>
-      <div :class="['head1',Tday==true?'bj':'']" @click="XTday()">按年统计</div>
+      <div :class="['head1','Mouse',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday">按月统计</div>
+      <div :class="['head1','Mouse',Tday==true?'bj':'']" @click="XTday()">按年统计</div>
       <div class="head1" style="width: 150px;border: 1px solid #ddd">
         <el-date-picker
           v-model="Stimes"

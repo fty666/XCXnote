@@ -1,9 +1,5 @@
 <template>
   <div class="body">
-    <!--数量-->
-    <div>
-      <Ostate></Ostate>
-    </div>
     <!--搜索-->
     <div class="flex whiteT">
       <div class="font">用户账户：</div>
@@ -13,10 +9,10 @@
       
       <div class="font">商品名称：</div>
       <div class="input">
-        <el-input v-model="goods_name" placeholder="输入商品名称"></el-input>
+        <el-input v-model="goods_name" placeholder="输入商品名称" style="width: 200px"></el-input>
       </div>
       
-      <div class="font">提交时间：</div>
+      <div class="font" style="margin-left:8%;">提交时间：</div>
       <div class="input">
         <el-date-picker
           v-model="times"
@@ -30,7 +26,7 @@
       </div>
       
       <!--按钮-->
-      <div class="btn" style="margin-left: 20%" @click="search()">
+      <div class="btn" style="margin-left: 15%" @click="search()">
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
       </div>
       <div class="btn2" @click="res()">
@@ -39,11 +35,9 @@
     </div>
     <!--表格-->
     <div class="head right">
-      <div class="head1">导出数据</div>
-      <div class="head1">显示条数</div>
-      <div class="head1">排列方式</div>
+      <div class="head1 Mouse" @click="exportFunc('integral','已领取积分订单')">导出数据</div>
     </div>
-    <div>
+    <div id="integral">
       <el-table
         ref="multipleTable"
         :data="orderList"
@@ -65,6 +59,7 @@
         <el-table-column
           prop="create_time"
           label="提交时间"
+          sortable
           align="center"
           min-width="160">
         </el-table-column>
@@ -89,6 +84,7 @@
         <el-table-column
           prop="get_integral"
           label="领取积分"
+          sortable
           align="center"
           min-width="100">
         </el-table-column>
@@ -99,7 +95,7 @@
           min-width="120"
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <div style="color: #0099ce;" @click="del(scope.row.id)">查看订单</div>
+            <div style="color: #0099ce;" class="Mouse" @click="look(scope.row.id)">查看订单</div>
           </template>
         </el-table-column>
       </el-table>
@@ -110,7 +106,6 @@
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
         :page-sizes="[20, 50, 100]"
-        :page-size="5"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
       </el-pagination>
@@ -119,7 +114,6 @@
 </template>
 
 <script>
-  import Ostate from '@/components/orderStat'
   export default {
     data() {
       return {
@@ -132,13 +126,18 @@
         user_mobile: '',
         goods_name: '',
         times: '',
-        multipleSelection: []
+        multipleSelection: [],
+        orderStatus: [],
       }
     },
-    components:{
-      Ostate
-    },
     methods: {
+      //订单发货状态
+      Status() {
+        this._getData('/api/v1/order/status', {}, data => {
+          console.log(data)
+          this.orderStatus = data;
+        })
+      },
       //查看积分订单
       IntegralOrder() {
         this._getData('/api/v1/integral_record/getOrderIntegral', {
@@ -155,12 +154,20 @@
       //每页显示多少数据
       handleSizeChange(val) {
         this.pageSize = val;
-        this.IntegralOrder();
+        if (this.user_mobile != '' || this.goods_name != '' || this.times != '') {
+          this.search();
+        } else {
+          this.IntegralOrder();
+        }
       },
       //第几页
       handleCurrentChange(val) {
         this.page = val;
-        this.IntegralOrder();
+        if (this.user_mobile != '' || this.goods_name != '' || this.times != '') {
+          this.search();
+        } else {
+          this.IntegralOrder();
+        }
       },
       //  搜索
       search() {
@@ -194,9 +201,16 @@
         this.times = '';
         this.IntegralOrder();
       },
+      //  查看订单
+      look(val) {
+        sessionStorage.setItem('orderId', val);
+        sessionStorage.setItem('page', '已领取积分订单')
+        this.$router.push({name: 'orderInfo'})
+      },
     },
     created() {
       this.IntegralOrder();
+      this.Status();
     }
   }
 </script>

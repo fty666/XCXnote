@@ -40,8 +40,8 @@
     </div>
     <!--表格-->
     <div class="head right">
-      <div class="head1" @click="exportFunc('memberList','会员列表')">导出数据</div>
-      <div class="head1" @click="batch()">批量禁用</div>
+      <div class="head1 Mouse" @click="exportFunc('memberList','会员列表')">导出数据</div>
+      <div class="head1 Mouse" @click="batch()">批量禁用</div>
     </div>
     <div id="memberList">
       <el-table
@@ -50,6 +50,7 @@
         tooltip-effect="dark"
         style="width: 100%"
         @selection-change="handleSelectionChange"
+        @sort-change='sortChange'
         border>
         <el-table-column
           type="selection"
@@ -83,20 +84,21 @@
           min-width="120">
         </el-table-column>
         <el-table-column
-          prop="alliance.district"
+          prop="district"
           label="所属地区"
+          sortable="custom"
           align="center"
           min-width="102">
         </el-table-column>
         <el-table-column
-          prop="order[0].order_count"
+          prop="order_count"
           label="订单数"
           sortable
           align="center"
           min-width="120">
         </el-table-column>
         <el-table-column
-          prop="order[0].pay_sum"
+          prop="pay_sum"
           label="消费金额"
           sortable
           align="center"
@@ -106,15 +108,16 @@
           prop="status"
           label="账户启用状态"
           align="center"
+          sortable="custom"
           min-width="110">
           <template slot-scope="scope">
-            <div class="flex" v-if="scope.row.status=='关闭' || scope.row.status=='禁用'">
+            <div class="flex" v-if="scope.row.status=='关闭' || scope.row.status=='禁用'|| scope.row.status=='2' ">
               <div>&nbsp;&nbsp;已禁用</div>
-              <div @click="start(scope.row.id)" class="operate">&nbsp;&nbsp;启用</div>
+              <div @click="start(scope.row.id)"  class="operate Mouse">&nbsp;&nbsp;启用</div>
             </div>
             <div v-else class="flex">
               <div>&nbsp;&nbsp;已启用</div>
-              <div @click="disable(scope.row.id)" class="operate">&nbsp;&nbsp;禁用</div>
+              <div @click="disable(scope.row.id)" class="operate Mouse">&nbsp;&nbsp;禁用</div>
             </div>
           </template>
         </el-table-column>
@@ -123,7 +126,7 @@
           align="center"
           label="操作">
           <template slot-scope="scope">
-            <div style="color: #0099ce;" @click="look(scope.row)">查看</div>
+            <div style="color: #0099ce;" class="Mouse" @click="look(scope.row)">查看</div>
           </template>
         </el-table-column>
       </el-table>
@@ -159,20 +162,49 @@
         end_time: "",
         //批量删除
         multipleSelection: '',
-        ids: ''
+        ids: '',
+        //  排序
+        district: 'desc',
+        status: 'desc'
       };
     },
     methods: {
-      //获取用户
-      getUser() {
-        this._getData('/api/v1/user/index', {
-          page: this.page,
-          pageSize: this.pageSize
-        }, data => {
-          console.log(data)
+      //地区排序
+      sortChange(column, prop, order) {
+        var datas = {};
+        switch (column.prop) {
+          case'district':
+            if (this.district == 'asc') {
+              this.district = 'desc';
+            } else {
+              this.district = 'asc';
+            }
+            datas.order_district = this.district;
+            this.getInfo(datas);
+            break;
+          case'status':
+            if (this.status == 'asc') {
+              this.status = 'desc';
+            } else {
+              this.status = 'asc';
+            }
+            datas.order_user_status = this.status;
+            this.getInfo(datas);
+            break;
+        }
+      },
+      getInfo(datas) {
+        datas.page = this.page;
+        datas.pageSize = this.pageSize;
+        this._getData('/api/v1/user/index', datas, data => {
           this.userList = data.data;
           this.totals = data.total;
         })
+      },
+      //获取用户
+      getUser() {
+        var datas={};
+        this.getInfo(datas);
       },
       //  禁用
       disable(val) {
@@ -316,7 +348,7 @@
         }
       },
     },
-    created(){
+    created() {
       this.getUser();
     }
   }

@@ -2,18 +2,17 @@
   <div class="body">
     <router-link to="/warehouse/warehouseManage">
       <div class="clos" style="margin-left: 13px">返回列表</div>
-      修改操作者ID没写
     </router-link>
     <!--头部-->
     <div class="flex">
-      <div :class="['state', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
+      <div :class="['state','Mouse', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
         <div class="state2">全部商品</div>
         <!--<div class="state3">(1000)</div>-->
       </div>
-      <div :class="['state', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
+      <div :class="['state','Mouse', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
         <div class="state2">酒类商品</div>
       </div>
-      <div :class="['state', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
+      <div :class="['state','Mouse', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
         <div class="state2">非酒类商品</div>
       </div>
     </div>
@@ -46,7 +45,7 @@
     <!--表格-->
     <div>
       <div class="right tou">
-        <div class="tou1" @click="batch()">批量删除</div>
+        <div class="tou1 Mouse" @click="batch()">批量删除</div>
       </div>
       <div>
         <el-table
@@ -101,7 +100,7 @@
             min-width="100"
             show-overflow-tooltip>
             <template slot-scope="scope">
-              <div style="color: #0099ce;" @click="edit(scope.row)">修改</div>
+              <div style="color: #0099ce;" class="Mouse" @click="edit(scope.row)">修改</div>
             </template>
           </el-table-column>
         </el-table>
@@ -221,7 +220,7 @@
               warehouse_goods_num: this.editNum,
               goods_id: this.editList[0].goodsId,
               warehouse_goods_stock: this.editList[0].num,
-              operator: 1
+              operator: sessionStorage.getItem('userID')
             },
             data => {
               this.$message({

@@ -3,21 +3,56 @@
     <!--头部-->
     <div class="spaces whiteT kuan">
       <div style="width: 80%">
-        <div class="font1">当前订单转态：待发货</div>
+        <div class="font1">当前订单转态：{{this.order.status}}</div>
         <div class="flex">
-          <div class="bian">发货</div>
-          <div class="bian">修改收货信息</div>
-          <div class="bian">备注订单</div>
-          <div class="bian">修改归属</div>
-          <div class="bian">发起配货</div>
-          <div class="bian">订单退款</div>
+          <div class="bian Mouse" @click="remark()">备注订单</div>
+          <div class="bian Mouse" @click="editAff()">修改归属</div>
+          <div class="bian Mouse" v-if="this.order.status=='待收货' || this.order.status=='完成'">订单退款</div>
+          <!--待发货-->
+          <div class="bian Mouse" v-if="this.order.status=='待发货'">发货</div>
+          <div class="bian Mouse" v-if="this.order.status=='待发货'">修改收货信息</div>
+          <div class="bian Mouse" v-if="this.order.status=='待发货'" @click="refund()">订单退款</div>
         </div>
       </div>
-      <router-link to="/order/orderList">
+      <!--备注订单-->
+      <div>
+        <el-dialog
+          title=""
+          :visible.sync="markCenter"
+          width="30%"
+          center>
+            <div class="bjb">备注订单</div>
+            <div>
+              <el-input
+                type="textarea"
+                :rows="5"
+                placeholder="请输入内容"
+                v-model="textarea">
+              </el-input>
+            </div>
+          <div class="flex">
+            <div style="margin: 20px 0px 0px 30%"><el-button type="primary" @click="Tremark()">提交</el-button></div>
+            <div style="margin: 20px 0px 0px 18px"><el-button type="info" @click="Tesc()">取消</el-button></div>
+          </div>
+        </el-dialog>
+      </div>
+      <!--返回列表-->
+      <router-link to="/order/orderList" v-if="orderManag==1">
+        <div class="bian" style="margin: 40px 20px 0px 0px">返回列表</div>
+      </router-link>
+      <router-link to="/integral/getIntegral" v-if="orderManag==2">
+        <div class="bian" style="margin: 40px 20px 0px 0px">返回列表</div>
+      </router-link>
+      <router-link to="/integral/getConversion" v-if="orderManag==3">
+        <div class="bian" style="margin: 40px 20px 0px 0px">返回列表</div>
+      </router-link>
+      <router-link to="/member/memberInfo" v-if="orderManag==4">
+        <div class="bian" style="margin: 40px 20px 0px 0px">返回列表</div>
+      </router-link>
+      <router-link to="/dealer/dealerInfo" v-if="orderManag==5">
         <div class="bian" style="margin: 40px 20px 0px 0px">返回列表</div>
       </router-link>
     </div>
-    <!--订单信息-->
     <!--选择信息-->
     <div class="flex" style="margin-top: 30px;">
       <div :class="[ 'state','flex', dealer==true?'bj':'']" @click="dealerInfo()">
@@ -29,7 +64,7 @@
     </div>
     <!--订单信息-->
     <div v-if="dealer==true">
-      <orderInfo ref="headerChild"></orderInfo>
+      <orderInfo ref="headerChild" v-on:orderInfos="orderInfos"></orderInfo>
     </div>
     <!--收货信息-->
     <div v-else>
@@ -51,28 +86,23 @@
   export default {
     data() {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市'
-        }],
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }],
-        value: '',
-        //  经销商信息选择
         dealer: true,
-        members: false
+        members: false,
+        orderManag: false,
+        order:{},
+      //操作
+        markCenter:false,
+        textarea:''
       }
     },
     components: {
       orderInfo
     },
     methods: {
+      orderInfos(orderInfos){
+        console.log(orderInfos);
+        this.order=orderInfos;
+      },
       //经销商信息
       dealerInfo() {
         this.dealer = true;
@@ -82,12 +112,110 @@
       member() {
         this.dealer = false;
         this.members = true;
+      },
+      //  页面跳转
+      skip(val) {
+        switch (val) {
+          case '订单管理':
+            this.orderManag = '1';
+            break;
+          case'已领取积分订单':
+            this.orderManag = '2';
+            break;
+          case'已兑换积分订单':
+            this.orderManag = '3';
+            break;
+          case'会员信息':
+            this.orderManag = '4';
+            break;
+          case'经销商信息':
+            this.orderManag = '5';
+            break;
+        }
+      },
+    // 修改归属
+        editAff() {
+          this.$confirm('是否修改此订单归属?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this._getData('/api/v1/order/editBelong', {
+                id: this.order.id,
+              },
+              data => {
+                this.$message({
+                  type: 'success',
+                  message: '操作成功'
+                });
+              })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            });
+          });
+        },
+      //订单退款
+      refund() {
+        this.$confirm('是否退款此订单?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/order/refund', {
+              id:this.order.id,
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      },
+    //  备注订单
+      remark(){
+        this.markCenter=true;
+      },
+      Tremark(){
+        this._getData('/api/v1/order/editBelong', {
+            orderCode:this.order.order_code,
+            remark: this.textarea
+          },
+          data => {
+            this.$message({
+              type: 'success',
+              message: '操作成功'
+            });
+            this.Tesc();
+          })
+      },
+      Tesc(){
+        this.markCenter=false;
       }
+    },
+    created() {
+      this.skip(sessionStorage.getItem('page'))
     }
   }
 </script>
-
 <style scoped>
+  .bjb{
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    background-color: rgba(51, 153, 255, 1);
+    border: none;
+    font-size: 18px;
+    color: #FFFFFF;
+  }
   .kuan {
     background-color: rgba(255, 204, 204, 0.498039215686275);
     height: 110px;

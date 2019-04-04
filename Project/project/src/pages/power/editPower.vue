@@ -8,7 +8,7 @@
         <el-input v-model="ruleForm.password" placeholder="请输入密码"></el-input>
       </el-form-item>
       <el-form-item label="邮箱:" prop="email">
-        <el-input v-model="ruleForm.email" placeholder="请输入手机号码"></el-input>
+        <el-input v-model="ruleForm.email" placeholder="请输入邮箱"></el-input>
       </el-form-item>
       <div class="tree">
         <el-form-item label="权限:" prop="auth">
@@ -26,7 +26,6 @@
     <div class="button">
       <el-button type="primary" @click="addSubmit()">保存</el-button>
       <el-button @click="cancel()">取消</el-button>
-    
     </div>
   </div>
 
@@ -57,13 +56,10 @@
     },
     methods: {
       handleCheckedCitiesChange(value) {
-        console.log(value)
-        
       },
       getList() {
         this._getData('/api/v1/auth/index', {},
           data => {
-            console.log(data)
             this.authBox = data;
           })
       },

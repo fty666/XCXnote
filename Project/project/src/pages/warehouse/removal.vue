@@ -1,21 +1,19 @@
 <template>
   <div class="body">
     <router-link to="/warehouse/warehouseManage">
-      <div class="clos">返回列表</div>
+      <div class="clos Mouse">返回列表</div>
     </router-link>
     <!--数量-->
     <div class="flex" style="margin-top: 20px;">
-      <div class="state flex" style="background-color:rgba(0, 153, 153, 1);">
-        <div class="state2" style="color: white">全部商品</div>
-        <div class="state3" style="color: white">(1000)</div>
+      <div :class="['state','Mouse', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
+        <div class="state2">全部商品</div>
+        <!--<div class="state3" style="color: white">(1000)</div>-->
       </div>
-      <div class="state flex">
+      <div :class="['state','Mouse', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
         <div class="state2">酒类商品</div>
-        <div class="state3">(1000)</div>
       </div>
-      <div class="state flex">
+      <div :class="['state','Mouse', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
         <div class="state2">非酒类商品</div>
-        <div class="state3">(1000)</div>
       </div>
     </div>
     <!--搜索-->
@@ -26,8 +24,11 @@
       </div>
       
       <div class="font">操作类型：</div>
-      <div class="input">
-        <el-input v-model="type" placeholder="输入操作类型"></el-input>
+      <div class="input" style="width: 140px">
+        <el-select v-model="type" placeholder="选择操作类型">
+          <el-option label="用户下单" value="1"></el-option>
+          <el-option label="编辑库存" value="2"></el-option>
+        </el-select>
       </div>
       
       <div class="font">操作时间：</div>
@@ -41,7 +42,6 @@
           value-format="yyyy-MM-dd">
         </el-date-picker>
       </div>
-      
       <!--按钮-->
       <div class="btn" style="margin-left: 20%" @click="submit()">
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
@@ -52,10 +52,10 @@
     </div>
     <!--表格-->
     <div class="head right">
-      <div class="head1">导出数据</div>
+      <div class="head1 Mouse"  @click="exportFunc('removList','出库管理清单')">导出数据</div>
       <!--<div class="head1" @click="batch()">批量删除</div>-->
     </div>
-    <div>
+    <div id="removList">
       <el-table
         ref="multipleTable"
         :data="runList"
@@ -144,7 +144,12 @@
         currentPage4: 1,
         totals: 20,
         multipleSelection: '',
-        runList: []
+        runList: [],
+        Wine: '',
+        //背景选择
+        sum: true,
+        month: false,
+        day: false,
       }
     },
     methods: {
@@ -156,9 +161,9 @@
       runInfo(datas) {
         datas.page = this.page;
         datas.pageSize = this.pageSize;
+        datas.warehouse_id = sessionStorage.getItem('wareId')
         this._getData('/api/v1/delivery_warehouse/index', datas,
           data => {
-            console.log(data)
             this.runList = data.data;
             this.totals = data.total;
           })
@@ -201,8 +206,8 @@
           datas.type = this.type;
         }
         if (this.stimes != '') {
-          datas.start_time = this.setimes[0];
-          datas.end_time = this.setimes[1];
+          datas.start_time = this.stimes[0];
+          datas.end_time = this.stimes[1];
         }
         this.runInfo(datas);
       },
@@ -215,16 +220,64 @@
       //每页显示多少数据
       handleSizeChange(val) {
         this.pageSize = val;
-        this.getService();
+        if (this.goods_id != '' || this.type != '' || this.stimes != '') {
+          this.submit();
+        } else if (this.Wine != '') {
+          var datas = {wine: this.Wine};
+          this.runInfo(datas)
+        } else {
+          this.getRun();
+        }
       },
       //第几页
       handleCurrentChange(val) {
         this.page = val;
-        this.getService();
+        if (this.goods_id != '' || this.type != '' || this.stimes != '') {
+          this.submit();
+        } else if (this.Wine != '') {
+          var datas = {wine: this.Wine};
+          this.runInfo(datas)
+        } else {
+          this.getRun();
+        }
       },
       //  查看退款信息
       look() {
         this.$router.push({name: 'RefundInfo'})
+      },
+      //  选择背景
+      Xsum() {
+        this.Wine = '';
+        this.getRun();
+        this.select(1);
+      },
+      Xmonth() {
+        this.Wine = 1;
+        var datas = {wine: 1};
+        this.runInfo(datas)
+        this.select(2);
+      },
+      Xday() {
+        this.Wine = 2;
+        var datas = {wine: 2};
+        this.runInfo(datas)
+        this.select(3);
+      },
+      select(flag) {
+        this.sum = false;
+        this.month = false;
+        this.day = false;
+        switch (flag) {
+          case 1:
+            this.sum = true;
+            break;
+          case 2:
+            this.month = true;
+            break;
+          case 3:
+            this.day = true;
+            break;
+        }
       }
     },
     created() {

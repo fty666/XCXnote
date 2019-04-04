@@ -50,6 +50,12 @@
               </el-select>
             </template>
           </el-table-column>
+          <!--<el-table-column-->
+            <!--prop="goods_name"-->
+            <!--label=""-->
+            <!--align="center"-->
+            <!--min-width="180">-->
+          <!--</el-table-column>-->
         </el-table>
       </div>
       <div class="flex" style="margin-bottom:20px ">
@@ -77,7 +83,6 @@
     },
     methods: {
       getInventory() {
-        console.log('kkkkk')
         this._getData('/api/v1/order/getWarehouse', {
             id: this.orderInfo.id,
           },
@@ -88,7 +93,6 @@
       trans() {
         //查看物流
         this._getData('/api/v1/trans_company/index', {}, data => {
-          console.log(data)
           this.trans_company = data;
         })
       },
@@ -100,6 +104,7 @@
     created() {
       this.trans();
       this.getInventory();
+      console.log('订单发货')
     }
   }
 </script>

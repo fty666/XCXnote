@@ -74,8 +74,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
-        :page-sizes="[20, 50, 100]"
-        :page-size="5"
+        :page-sizes="[5, 25, 50]"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
       </el-pagination>
@@ -151,9 +150,9 @@
         joinInfo: {},
         //页码参数
         page: 1,
-        pageSize: 10,
+        pageSize: 5,
         currentPage4: 1,
-        totals: 20,
+        totals: 5,
         shopList: [],
         inventory:[],
         submitData:'',

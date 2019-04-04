@@ -63,7 +63,9 @@
         :data="auditList"
         tooltip-effect="dark"
         style="width: 100%"
-        border>
+        border
+        @sort-change='sortChange'
+      >
         <el-table-column
           type="index"
           label="序号"
@@ -73,6 +75,7 @@
         <el-table-column
           label="申请时间"
           align="center"
+          sortable
           prop="create_time"
           min-width="130">
         </el-table-column>
@@ -110,6 +113,7 @@
           prop="status"
           label="审核状态"
           align="center"
+          sortable="custom"
           min-width="102">
         </el-table-column>
         <el-table-column
@@ -165,21 +169,24 @@
         nickname: '',
         district: '',
         start_time: '',
-        end_time: ''
+        end_time: '',
+        //  排序
+        Status: 'desc'
       }
     },
     methods: {
       //获取审核
       getAudit() {
-        this._getData('/api/v1/dealer_goods/examine', {
-            page: this.page,
-            pageSize: this.pageSize
-          },
-          data => {
-            console.log(data)
-            this.auditList = data.data;
-            this.totals = data.total;
-          })
+        var datas = {};
+        this.getInfos(datas)
+      },
+      getInfos(datas) {
+        datas.page = this.page;
+        datas.pageSize = this.pageSize;
+        this._getData('/api/v1/dealer_goods/examine', datas, data => {
+          this.auditList = data.data;
+          this.totals = data.total;
+        })
       },
       //通过
       pass(val) {
@@ -214,7 +221,7 @@
         }).then(() => {
           this._getData('/api/v1/dealer/reject', {
               userCode: val.user_code,
-              createTime:val.create_time
+              createTime: val.create_time
             },
             data => {
               this.$message({
@@ -236,46 +243,26 @@
       },
       //  搜索
       search() {
-        var data = {};
+        var datas = {};
         if (this.id != '') {
-          data.id = this.id;
+          datas.id = this.id;
         }
         if (this.mobile != '') {
-          data.mobile = this.mobile;
+          datas.mobile = this.mobile;
         }
         if (this.nickname != '') {
-          data.nickname = this.nickname;
+          datas.nickname = this.nickname;
         }
         if (this.district != '') {
-          data.district = this.district;
+          datas.district = this.district;
         }
         if (this.start_time != '') {
-          data.start_time = this.start_time;
+          datas.start_time = this.start_time;
         }
         if (this.end_time != '') {
-          data.end_time = this.end_time;
+          datas.end_time = this.end_time;
         }
-        this._getData('/api/v1/dealer/examine', {
-            page: this.page,
-            pageSize: this.pageSize,
-            id: data.id,
-            mobile: data.mobile,
-            nickname: data.nickname,
-            district: data.district,
-            start_time: data.start_time,
-            end_time: data.end_time
-          },
-          data => {
-            console.log(data)
-            this.auditList = data.data;
-            this.totals = data.total;
-            this.id = '';
-            this.mobile = '';
-            this.nickname = '';
-            this.district = '';
-            this.start_time = '';
-            this.end_time = '';
-          })
+        this.getInfos(datas);
       },
       //  重置
       res() {
@@ -304,6 +291,16 @@
         } else {
           this.getAudit();
         }
+      },
+      sortChange(column, prop, order) {
+        if (this.Status == 'asc') {
+          this.Status = 'desc';
+        } else {
+          this.Status = 'asc';
+        }
+        var datas = {};
+        datas.order_status = this.Status;
+        this.getInfos(datas);
       },
     },
     created() {

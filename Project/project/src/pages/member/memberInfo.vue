@@ -145,18 +145,14 @@
         <div style="margin-top: 10px">订单类型：</div>
         <div>
           <el-select v-model="Otype" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.index"
-              size="small"
-              :label="item.label"
-              :value="item.value"
-              @click.native="selec()">
-            </el-option>
+            <el-option size="small" label="经销商订单" value="2"></el-option>
+            <el-option size="small" label="自提订单" value="4"></el-option>
+            <el-option size="small" label="会员订单" value="1"></el-option>
+            <el-option size="small" label="积分兑换" value="3"></el-option>
           </el-select>
         </div>
-        <div class="btn" style="margin: -8px 0px 0px 40px">
-          <el-button type="primary" size="small" icon="el-icon-search">搜索</el-button>
+        <div class="btn" style="margin: -8px 0px 0px 40px" @click="rest()">
+          <el-button type="primary" size="small" icon="el-icon-refresh">重置</el-button>
         </div>
       </div>
       <div style="width: 100%">
@@ -203,8 +199,8 @@
           <el-table-column
             align="center"
             label="操作">
-            <template slot-sope="">
-              <div style="color: deepskyblue">查看</div>
+            <template slot-scope="scope">
+              <div style="color: deepskyblue" class="Mouse" @click="look(scope.row.id)">查看</div>
             </template>
           </el-table-column>
         
@@ -271,24 +267,7 @@
     name: "",
     data() {
       return {
-        options: [
-          {
-            value: '2',
-            label: '经销商订单'
-          },
-          {
-            value: '4',
-            label: '自提订单'
-          },
-          {
-            value: '1',
-            label: '会员订单'
-          },
-          {
-            value: '3',
-            label: '积分兑换'
-          }
-        ],
+        options: [],
         value: '',
         //参数
         userInfo: [],
@@ -324,14 +303,11 @@
       },
       //积分记录
       getInter() {
-        console.log('user_code')
-        console.log(this.userInfo)
         this._getData('/api/v1/integral_record/index', {
           page: this.Jpage,
           pageSize: this.JpageSize,
           user_code: this.userInfo.user_code,
         }, data => {
-          console.log(data)
           this.integralList = data.data;
           this.interTotal = data.total;
         })
@@ -343,10 +319,14 @@
           pageSize: this.pageSize,
           user_mobile: sessionStorage.getItem('mobile')
         }, data => {
-          console.log(data)
           this.orderList = data.data;
           this.totals = data.total;
         })
+      },
+      look(val) {
+        sessionStorage.setItem('orderId', val);
+        sessionStorage.setItem('page', '会员信息')
+        this.$router.push({name: 'orderInfo'})
       },
       //选择
       selec() {
@@ -359,6 +339,10 @@
           this.orderList = data.data;
           this.totals = data.total;
         })
+      },
+      rest() {
+        this.Otype = '';
+        this.getorder();
       },
       //每页显示多少数据
       handleSizeChange(val) {

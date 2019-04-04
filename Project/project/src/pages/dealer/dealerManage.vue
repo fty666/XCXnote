@@ -2,20 +2,20 @@
   <div class="body">
     <!--数量-->
     <div class="flex" style="margin-top: 20px;">
-      <div class="state flex" style="background-color:rgba(0, 153, 153, 1);">
-        <div class="state2" style="color: white">全部商品</div>
-        <div class="state3" style="color: white">({{this.wineState.allCount}})</div>
+      <div :class="['state','Mouse', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
+        <div class="state2">全部订单</div>
+        <div class="state3">({{this.wineState.allCount}})</div>
       </div>
-      <div class="state flex">
-        <div class="state2">已上架</div>
+      <div :class="['state','Mouse', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
+        <div class="state2">待付款</div>
         <div class="state3">({{this.wineState.goodsUp}})</div>
       </div>
-      <div class="state flex">
-        <div class="state2">已下架</div>
+      <div :class="['state', 'Mouse','flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
+        <div class="state2">待发货</div>
         <div class="state3">({{this.wineState.goodsDown}})</div>
       </div>
-      <div class="state flex">
-        <div class="state2">经销商酒</div>
+      <div :class="['state', 'Mouse','flex',bshop==true?'Xbj':'']" style="margin-left: 0px" @click="Xshop()">
+        <div class="state2">已发货</div>
         <div class="state3">({{this.wineState.dealer}})</div>
       </div>
     </div>
@@ -26,18 +26,14 @@
         <div class="input">
           <el-input v-model="order_code" style="width: 150px" placeholder="请输入订单单号"></el-input>
         </div>
-        
         <div class="font" style="margin-left: 10%">用户名：</div>
         <div class="input">
           <el-input v-model="nickname" style="width: 150px" placeholder="请输入用户名"></el-input>
         </div>
-        
-        
         <div class="font" style="margin-left: 10%">商品名称：</div>
         <div class="input">
           <el-input v-model="goods_name" style="width: 150px" placeholder="请输入商品名称"></el-input>
         </div>
-        
         <div class="font" style="margin-left: 5%">提交时间：</div>
         <div class="input">
           <el-date-picker
@@ -48,7 +44,6 @@
             placeholder="选择日期">
           </el-date-picker>
         </div>
-        
         <div class="font" style="margin-left: 55px">至</div>
         <div class="input">
           <el-date-picker
@@ -70,18 +65,18 @@
     </div>
     <!--表格头-->
     <div class="head right">
-      <div class="head1" @click="batchDel()">批量删除</div>
-      <div class="head1">导出订单</div>
-      <div class="head1">排序方式</div>
+      <div class="head1 Mouse" @click="batchDel()">批量删除</div>
+      <div class="head1 Mouse" @click="exportFunc('dealerTable','购入列表')">导出订单</div>
     </div>
     <!--表格-->
-    <div>
+    <div id="dealerTable">
       <el-table
         ref="multipleTable"
         :data="dealerList"
         tooltip-effect="dark"
         style="width: 100%"
         @selection-change="handleSelectionChange"
+        @sort-change='sortChange'
         border>
         <el-table-column
           type="selection"
@@ -96,6 +91,7 @@
         <el-table-column
           prop="create_time"
           label="提交时间"
+          sortable
           align="center"
           min-width="130">
         </el-table-column>
@@ -126,6 +122,7 @@
         <el-table-column
           prop="status"
           label="订单状态"
+          sortable="custom"
           align="center"
           min-width="130">
         </el-table-column>
@@ -137,8 +134,8 @@
           show-overflow-tooltip>
           <template slot-scope="scope">
             <div class="flex">
-              <div style="color: #0099ce;padding-left: 0px" @click="look(scope.row)">查看订单</div>
-              <div style="color: #0099ce;padding-left: 4px" @click="del(scope.row)">删除订单</div>
+              <div class="Mouse" style="color: #0099ce;padding-left: 0px" @click="look(scope.row)">查看订单</div>
+              <div class="Mouse" style="color: #0099ce;padding-left: 4px" @click="del(scope.row)">删除订单</div>
             </div>
           </template>
         </el-table-column>
@@ -174,17 +171,24 @@
         currentPage4: 1,
         totals: 10,
         dealerList: [],
-        wineState: {}
+        wineState: {},
+        Status: 'desc',
+        //背景选择
+        sum: true,
+        month: false,
+        day: false,
+        bshop: false,
+        putaway: ''
       }
     },
     methods: {
       //批量删除
       handleSelectionChange(val) {
-        for (let i=0;i<val.length;i++){
-          this.multipleSelection+=val[i].id+',';
+        for (let i = 0; i < val.length; i++) {
+          this.multipleSelection += val[i].id + ',';
         }
       },
-      batchDel(){
+      batchDel() {
         this.$confirm('是否删除此订单?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -216,11 +220,13 @@
       },
       //  查看购入
       buyList() {
-        this._getData('/api/v1/dealer/dealerBuy', {
-          page: this.page,
-          pageSize: this.pageSize
-        }, data => {
-          console.log(data)
+        var datas = {};
+        this.getInfos(datas);
+      },
+      getInfos(datas) {
+        datas.page = this.page;
+        datas.pageSize = this.pageSize;
+        this._getData('/api/v1/dealer/dealerBuy', datas, data => {
           this.dealerList = data.data;
           this.totals = data.total;
         })
@@ -300,13 +306,7 @@
         if (this.end_time != '') {
           datas.end_time = this.end_time;
         }
-        datas.page = this.page;
-        datas.pageSize = this.pageSize;
-        this._getData('/api/v1/dealer/dealerBuy', datas, data => {
-          console.log(data)
-          this.dealerList = data.data;
-          this.totals = data.total;
-        })
+        this.getInfos(datas);
       },
       res() {
         this.order_code = '';
@@ -316,6 +316,58 @@
         this.end_time = '';
         this.buyList();
       },
+      //  排序
+      sortChange(column, prop, order) {
+        var datas = {};
+        if (this.Status == 'asc') {
+          this.Status = 'desc';
+        } else {
+          this.Status = 'asc';
+        }
+        datas.order_status = this.Status;
+        this.getInfos(datas);
+      },
+      //  选择背景
+      Xsum() {
+        this.buyList();
+        this.select(1);
+      },
+      Xmonth() {
+        this.putaway = 1;
+        var datas = {status: 1};
+        this.getInfos(datas);
+        this.select(2);
+      },
+      Xday() {
+        var datas = {status: 2};
+        this.getInfos(datas);
+        this.select(3);
+      },
+      Xshop() {
+        var datas = {status: 3};
+        this.getInfos(datas);
+        this.select(4);
+      },
+      select(flag) {
+        this.sum = false;
+        this.month = false;
+        this.day = false;
+        this.bshop = false;
+        switch (flag) {
+          case 1:
+            this.sum = true;
+            break;
+          case 2:
+            this.month = true;
+            break;
+          case 3:
+            this.day = true;
+            break;
+          case 4:
+            this.bshop = true;
+            break;
+        }
+      }
     },
     created() {
       this.buyList();

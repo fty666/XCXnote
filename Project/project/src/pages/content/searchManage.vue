@@ -29,7 +29,7 @@
             align="center"
             min-width="150">
             <template slot-scope="scope">
-              <div style="color: deepskyblue" @click="edit(scope.row)">添加至热门搜索</div>
+              <div class="Mouse" style="color: deepskyblue" @click="edit(scope.row)">添加至热门搜索</div>
             </template>
           </el-table-column>
         </el-table>
@@ -53,7 +53,7 @@
       <div class="sequence" style="width: 80%;">
         <div class="flex" style="width: 300px" v-for="(item,index) in hotList">
           <div class="font">{{item.content}}</div>
-          <div class="font2" @click="Gdel(item.id)">删除</div>
+          <div class="font2 Mouse" @click="Gdel(item.id)">删除</div>
         </div>
       </div>
     </div>
@@ -131,6 +131,7 @@
                 message: '操作成功',
               });
               this.getOrder();
+              this.getHot();
             })
         }).catch(() => {
           this.$message({

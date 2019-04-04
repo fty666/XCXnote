@@ -2,17 +2,17 @@
   <div class="body">
     <!--数量-->
     <div class="flex" style="margin-top: 20px;">
-      <div :class="['state', 'flex',sum==true?'bj':'']" @click="Xsum()">
+      <div :class="['state', 'Mouse','flex',sum==true?'bj':'']" @click="Xsum()">
         <div class="state2">总营业额统计</div>
-        <div class="state3" style="color: white">(1000)</div>
+        <!--<div class="state3" style="color: white">(1000)</div>-->
       </div>
-      <div :class="['state', 'flex',month==true?'bj':'']" style="margin-left: 0px" @click="Xmonth()">
+      <div :class="['state','Mouse', 'flex',month==true?'bj':'']" style="margin-left: 0px" @click="Xmonth()">
         <div class="state2">月营业额统计</div>
       </div>
-      <div :class="['state', 'flex',day==true?'bj':'']" style="margin-left: 0px" @click="Xday()">
+      <div :class="['state','Mouse', 'flex',day==true?'bj':'']" style="margin-left: 0px" @click="Xday()">
         <div class="state2">日营业额统计</div>
       </div>
-      <div :class="['state', 'flex',bshop==true?'bj':'']" style="margin-left: 0px" @click="Xshop()">
+      <div :class="['state','Mouse', 'flex',bshop==true?'bj':'']" style="margin-left: 0px" @click="Xshop()">
         <div class="state2">商品成本列表</div>
       </div>
     </div>

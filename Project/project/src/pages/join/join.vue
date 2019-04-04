@@ -35,12 +35,12 @@
         </div>
       </router-link>
       <div class="right">
-        <div class="head1">导出数据</div>
-        <div class="head1" @click="batch()">批量删除</div>
+        <div class="head1 Mouse" @click="exportFunc('listTable','加盟商列表')">导出数据</div>
+        <div class="head1 Mouse" @click="batch()">批量删除</div>
       </div>
     </div>
     <!--表格-->
-    <div>
+    <div id="listTable">
       <el-table
         ref="multipleTable"
         :data="joinList"
@@ -55,6 +55,7 @@
         <el-table-column
           prop="id"
           label="加盟商ID"
+          sortable
           align="center"
           min-width="90">
         </el-table-column>
@@ -97,12 +98,14 @@
         <el-table-column
           prop="time"
           label="加盟时间"
+          sortable
           align="center"
           min-width="100">
         </el-table-column>
         <el-table-column
           prop="lack"
           label="有缺货商品"
+          sortable
           align="center"
           min-width="95">
         </el-table-column>
@@ -113,14 +116,24 @@
           show-overflow-tooltip>
           <template slot-scope="scope">
             <div class="sequence" style="width: 120px">
-              <div style="color: #0099ce;padding-left: 15px" @click="stock(scope.row.warehouseId)">库存</div>
-              <div style="color: #0099ce;padding-left: 10px" @click="edit(scope.row)">编辑</div>
-              <div style="color: #0099ce;padding-left: 16.5px" @click="order(scope.row)">订货</div>
-              <div style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除</div>
+              <div style="color: #0099ce;padding-left: 15px" class="Mouse" @click="stock(scope.row.warehouseId)">库存</div>
+              <div style="color: #0099ce;padding-left: 10px" class="Mouse" @click="edit(scope.row)">编辑</div>
+              <div style="color: #0099ce;padding-left: 16.5px" class="Mouse" @click="order(scope.row)">订货</div>
+              <div style="color: #0099ce;padding-left: 10px" class="Mouse" @click="del(scope.row.id)">删除</div>
             </div>
           </template>
         </el-table-column>
       </el-table>
+      <div class="pags">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage4"
+          :page-sizes="[20, 50, 100]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total=totals>
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -151,12 +164,10 @@
         }, data => {
           this.joinList = data.data;
           this.totals = data.total;
-          console.log(data)
         })
       },
       //库存
       stock(val) {
-        console.log(val)
         this.$router.push({name: 'joinStock'})
         sessionStorage.setItem('joinId', val);
       },
@@ -168,7 +179,6 @@
       },
       //编辑
       edit(val) {
-        console.log(val)
         sessionStorage.setItem('edits', JSON.stringify(val))
         this.$router.push({name: 'editJoin'});
       },
@@ -201,6 +211,24 @@
         this.name = '';
         this.district = '';
         this.getJoin();
+      },
+      //每页显示多少数据
+      handleSizeChange(val) {
+        this.pageSize = val;
+        if (this.id != '' || this.name != '' || this.district != '') {
+          this.search();
+        } else {
+          this.getJoin();
+        }
+      },
+      //第几页
+      handleCurrentChange(val) {
+        this.page = val;
+        if (this.id != '' || this.name != '' || this.district != '') {
+          this.search();
+        } else {
+          this.getJoin();
+        }
       },
       //删除
       del(val) {

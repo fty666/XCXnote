@@ -2,19 +2,19 @@
   <div class="body">
     <!--头部-->
     <div class="flex" style="margin-top: 60px;">
-      <div :class="['state', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
-        <div class="state2">全部</div>
+      <div :class="['state','Mouse', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
+        <div class="state2 ">全部</div>
         <div class="state3">({{this.stateList.allCount}})</div>
       </div>
-      <div :class="['state', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
+      <div :class="['state','Mouse', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
         <div class="state2">已上架</div>
         <div class="state3">({{this.stateList.goodsUp}})</div>
       </div>
-      <div :class="['state', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
+      <div :class="['state', 'Mouse','flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
         <div class="state2">已下架</div>
         <div class="state3">({{this.stateList.goodsDown}})</div>
       </div>
-      <div :class="['state', 'flex',bshop==true?'Xbj':'']" style="margin-left: 0px" @click="Xshop()">
+      <div :class="['state', 'Mouse','flex',bshop==true?'Xbj':'']" style="margin-left: 0px" @click="Xshop()">
         <div class="state2">经销商酒</div>
         <div class="state3">({{this.stateList.dealer}})</div>
       </div>
@@ -60,7 +60,7 @@
     </div>
     <!--表格-->
     <div>
-      <div class="right tou">
+      <div class="right tou Mouse">
         <div class="tou1" @click="batch()">批量删除</div>
       </div>
       <el-table
@@ -150,13 +150,13 @@
           show-overflow-tooltip>
           <template slot-scope="scope">
             <div class="sequence">
-              <div style="color: #0099ce;padding-left: 10px" @click="stand(scope.row)">
+              <div style="color: #0099ce;padding-left: 10px" class="Mouse" @click="stand(scope.row)">
                 <div v-if="scope.row.status=='下架'">上架</div>
                 <div v-else>下架</div>
               </div>
-              <div style="color: #0099ce;padding-left: 8px" @click="look(scope.row.id)">查看</div>
-              <div style="color: #0099ce;padding-left: 10px" @click="modifyShop(scope.row)">修改</div>
-              <div style="color: #0099ce;padding-left: 8px" @click="del(scope.row.id)">删除</div>
+              <div style="color: #0099ce;padding-left: 8px" class="Mouse" @click="look(scope.row.id)">查看</div>
+              <div style="color: #0099ce;padding-left: 10px" class="Mouse" @click="modifyShop(scope.row)">修改</div>
+              <div style="color: #0099ce;padding-left: 8px" class="Mouse" @click="del(scope.row.id)">删除</div>
             </div>
           </template>
         </el-table-column>
@@ -419,8 +419,11 @@
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
+          
+          
+          
         }).then(() => {
-          this._getData('/api/v1/goods/edit', {
+          this._getData('/api/v1/goods/editNum', {
               id: val.id,
               num: editNum
             },

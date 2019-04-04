@@ -114,8 +114,8 @@
         show-overflow-tooltip>
         <template slot-scope="scope">
           <div class="flex">
-            <div style="color: #0099ce;" @click="pass(scope.row.id)">&nbsp;&nbsp;通过</div>
-            <div style="color: #0099ce;" @click="down(scope.row)">&nbsp;&nbsp;驳回</div>
+            <div style="color: #0099ce;" class="Mouse" @click="pass(scope.row.id)">&nbsp;&nbsp;通过</div>
+            <div style="color: #0099ce;" class="Mouse" @click="down(scope.row)">&nbsp;&nbsp;驳回</div>
           </div>
         </template>
       </el-table-column>
@@ -179,7 +179,6 @@
           page: this.page,
           pageSize: this.pageSize
         }, data => {
-          console.log(data)
           this.Jterrace = data.data;
           this.Jtotal = data.total;
         })

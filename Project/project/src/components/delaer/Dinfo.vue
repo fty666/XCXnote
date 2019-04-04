@@ -238,7 +238,6 @@
             user_code: sessionStorage.getItem('userCode'),
           },
           data => {
-          console.log(data)
             this.cards = data;
           })
       },

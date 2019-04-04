@@ -2,7 +2,7 @@
   <div class="body">
     <!--标头-->
     <div class="spaces">
-      <div class="clos" @click="remark()">备注订单</div>
+      <div class="clos Mouse" @click="remark()">备注订单</div>
       <router-link to="/dealer/dealerManage">
         <div class="clos" style="margin-right: 30px">返回列表</div>
       </router-link>

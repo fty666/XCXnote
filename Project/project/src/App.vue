@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
 }
 </script>
 
@@ -22,6 +22,9 @@ export default {
 a{
   color:black;
   text-decoration:none;
+}
+.Mouse{
+  cursor: pointer;
 }
 .flex{
   display: flex;
