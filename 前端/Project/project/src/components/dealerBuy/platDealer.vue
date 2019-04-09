@@ -43,7 +43,7 @@
     
     </div>
     <!--表格头  平台强制回购 -->
-    <div class="head join">
+    <div class="head join Mouse">
       <div class="head1" style="margin-left: 20px" @click="manage()">回购规则设置</div>
     </div>
     <!--表格-->
@@ -139,7 +139,7 @@
           min-width="80"
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <div style="color: #0099ce;" @click="force(scope.row)">强制回购</div>
+            <div style="color: #0099ce;" class="Mouse" @click="force(scope.row)">强制回购</div>
           </template>
         </el-table-column>
       </el-table>
@@ -174,7 +174,7 @@
               <el-button size="medium" type="primary" @click="submit()">提交</el-button>
             </div>
             <div class="logBtn2">
-              <el-button size="medium">取消</el-button>
+              <el-button size="medium" @click="esc()">取消</el-button>
             </div>
           </div>
         </div>
@@ -205,6 +205,9 @@
     methods: {
       manage() {
         this.centerDialogVisible = true;
+      },
+      esc(){
+        this.centerDialogVisible = false;
       },
       //获取平台强制回购
       getdealer() {

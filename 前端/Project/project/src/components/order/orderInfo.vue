@@ -226,7 +226,6 @@
         this._getData('/api/v1/order/show', {
           id: sessionStorage.getItem('orderId'),
         }, data => {
-          console.log(data)
           if (data.invoice != null) {
             this.bill = true;
           }
@@ -234,7 +233,7 @@
           for (let i in data.goods) {
             this.goodsList.push(data.goods[i])
           }
-          this.$emit('Status',this.orderInfo.status)
+          this.$emit('orderInfos',this.orderInfo);
         })
       }
     },

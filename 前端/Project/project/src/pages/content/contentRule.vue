@@ -7,12 +7,11 @@
       <!--下拉-->
       <div class="selec">
         <el-select v-model="type" style="width: 500px" placeholder="回购规则提示文字">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option label="积分规则" value="1"></el-option>
+          <el-option label="经销商规则" value="2"></el-option>
+          <el-option label="回购规则" value="3"></el-option>
+          <el-option label="经销商余额" value="4"></el-option>
+          <el-option label="邀请规则" value="5"></el-option>
         </el-select>
       </div>
       <!--文字-->
@@ -47,10 +46,10 @@
             label="操作">
             <template slot-scope="scope">
               <div class="flex">
-                <div style="color: #0099ce;" @click="del(scope.row.id)">
+                <div class="Mouse" style="color: #0099ce;" @click="del(scope.row.id)">
                   &nbsp;&nbsp;&nbsp;&nbsp; 删除&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
-                <div style="color: #0099ce;" @click="edit(scope.row)">修改</div>
+                <div class="Mouse" style="color: #0099ce;" @click="edit(scope.row)">修改</div>
               </div>
             </template>
           </el-table-column>
@@ -120,34 +119,19 @@
           content: '',
           sort: '',
         },
-        modification:{},
+        modification: {},
         textarea: '',
-        options: [{
-          value: '1',
-          label: '积分规则'
-        }, {
-          value: '2',
-          label: '经销商规则'
-        }, {
-          value: '3',
-          label: '回购规则'
-        }, {
-          value: '4',
-          label: '经销商余额'
-        }, {
-          value: '5',
-          label: '邀请规则'
-        }],
+        options: [],
         value: '',
         centerDialogVisible: false,
-        centeredit:false
+        centeredit: false
       }
     },
     watch: {
       type(v, o) {
         this.getInfo();
       },
-      modification(v,o){
+      modification(v, o) {
         this.getInfo();
       }
     },
@@ -156,9 +140,7 @@
       getInfo() {
         this._getData('/api/v1/rule/show', {
             type: this.type
-          },
-          data => {
-            console.log(data)
+          }, data => {
             this.ruleList = data;
           })
       },
@@ -171,8 +153,7 @@
         }).then(() => {
           this._getData('/api/v1/rule/delete', {
               id: val,
-            },
-            data => {
+            }, data => {
               this.$message({
                 type: 'success',
                 message: '操作成功'
@@ -189,52 +170,52 @@
       //  保存修改
       edit(val) {
         console.log(val);
-        this.modification=val;
-        this.centeredit=true;
+        this.modification = val;
+        this.centeredit = true;
       },
       //  添加
       add() {
         this.centerDialogVisible = true;
       },
-    //  修改
-      editRul(){
-        this._getData('/api/v1/rule/edit',this.modification,
+      //  修改
+      editRul() {
+        this._getData('/api/v1/rule/edit', this.modification,
           data => {
             this.$message({
               type: 'success',
               message: '操作成功'
             });
-            this.centeredit=false;
+            this.centeredit = false;
             this.getInfo();
           })
       },
-    //  保存
-      save(){
-        if(this.type==''){
+      //  保存
+      save() {
+        if (this.type == '') {
           this.$message({
             type: 'info',
             message: '请选择规则'
           });
           return false;
         }
-        if(this.addList.sort==''){
-          this.addList.sort=1;
+        if (this.addList.sort == '') {
+          this.addList.sort = 1;
         }
-        if(this.addList.content==''){
+        if (this.addList.content == '') {
           this.$message({
             type: 'info',
             message: '请填写内容'
           });
           return false;
         }
-        this.addList.type=this.type;
-        this._getData('/api/v1/rule/create',this.addList,
+        this.addList.type = this.type;
+        this._getData('/api/v1/rule/create', this.addList,
           data => {
             this.$message({
               type: 'success',
               message: '操作成功'
             });
-            this.centerDialogVisible=false;
+            this.centerDialogVisible = false;
             this.getInfo();
           })
       }

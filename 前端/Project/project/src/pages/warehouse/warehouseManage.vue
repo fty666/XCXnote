@@ -25,10 +25,10 @@
       <div class="head1" style="margin-left: 20px" @click="manage()">
         <div class="flex">
           <div><img src="@/img/add.png" class="addimg" alt=""></div>
-          <div>&nbsp;&nbsp;添加仓库</div>
+          <div class="Mouse">&nbsp;&nbsp;添加仓库</div>
         </div>
       </div>
-      <div class="head1" style="margin-right: 50px" @click="batch()">批量删除</div>
+      <div class="head1 Mouse" style="margin-right: 50px" @click="batch()">批量删除</div>
     </div>
     <!--表格-->
     <div>
@@ -82,11 +82,11 @@
           show-overflow-tooltip>
           <template slot-scope="scope">
             <div class="flex">
-              <div style="color: #0099ce;padding-left: 8px" @click="inven(scope.row)">库存</div>
-              <div style="color: #0099ce;padding-left: 8px" @click="bank(scope.row.id)">入库管理</div>
-              <div style="color: #0099ce;padding-left: 4px" @click="removal(scope.row.id)">出库管理</div>
-              <div style="color: #0099ce;padding-left: 4px" @click="edit(scope.row)">编辑</div>
-              <div style="color: #0099ce;padding-left: 4px" @click="del(scope.row.id)">删除</div>
+              <div class="Mouse" style="color: #0099ce;padding-left: 8px" @click="inven(scope.row)">库存</div>
+              <div class="Mouse" style="color: #0099ce;padding-left: 8px" @click="bank(scope.row.id)">入库管理</div>
+              <div class="Mouse" style="color: #0099ce;padding-left: 4px" @click="removal(scope.row.id)">出库管理</div>
+              <div class="Mouse" style="color: #0099ce;padding-left: 4px" @click="edit(scope.row)">编辑</div>
+              <div class="Mouse" style="color: #0099ce;padding-left: 4px" @click="del(scope.row.id)">删除</div>
             </div>
           </template>
         </el-table-column>

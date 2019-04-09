@@ -2,11 +2,11 @@
   <div>
     <div class="head flex">
       <div class="font2">平台月营业额查询</div>
-      <div class="head1" style="margin-left: 30%">导出数据</div>
-      <div :class="['head1',yday==true?'bj':'']" style="margin: 10px 0px 0px 5%" @click="Xyday()">
+      <div class="head1" style="margin-left: 30%" @click="exportFunc('monthList','月营业额统计')">导出数据</div>
+      <div :class="['head1','Mouse',yday==true?'bj':'']" style="margin: 10px 0px 0px 5%" @click="Xyday()">
         过去12个月
       </div>
-      <div :class="['head1',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday">按年统计</div>
+      <div :class="['head1','Mouse',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday">按年统计</div>
       <div class="head1" style="width: 150px;border: 1px solid #ddd">
         <el-date-picker
           v-model="Stimes"
@@ -18,7 +18,7 @@
         </el-date-picker>
       </div>
     </div>
-    <div style="width: 99.8%;margin: 10px 0px 0px 0px">
+    <div style="width: 99.8%;margin: 10px 0px 0px 0px" id="monthList">
       <el-table
         :data="platformList"
         border

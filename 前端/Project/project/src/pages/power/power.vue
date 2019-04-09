@@ -2,11 +2,11 @@
   <div class="body">
     <!--表格头-->
     <div class="head join">
-      <div class="head1 flex" style="margin-left: 20px">
+      <div class="head1 flex Mouse" style="margin-left: 20px">
         <div><img src="@/img/add.png" class="addimg"></div>
         <div style="font-size: 11px" @click="addAccount">&nbsp;添加账号</div>
       </div>
-      <div class="head1 flex" style="margin-left: 20px">
+      <div class="head1 flex Mouse" style="margin-left: 20px">
         <div style="font-size: 11px" @click="batchDel()">&nbsp;批量删除</div>
       </div>
     </div>
@@ -50,8 +50,10 @@
           align="center"
           min-width="197">
           <template slot-scope="scope">
-            <div v-for="(item,index) in scope.row.user_auth">
-              <div>{{item}}</div>
+            <div class="sequence">
+              <div v-for="(item,index) in scope.row.user_auth" style="width: 26%;">
+                {{item}}
+              </div>
             </div>
           </template>
         </el-table-column>
@@ -76,9 +78,9 @@
           <template slot-scope="scope">
             <div class="flex">
               <!--<router-link to="/power/editPower">-->
-              <div style="color: #0099ce;padding-left: 10px" @click="edit(scope.row)">编辑</div>
+              <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="edit(scope.row)">编辑</div>
               <!--</router-link>-->
-              <div style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除</div>
+              <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除</div>
             </div>
           </template>
         </el-table-column>

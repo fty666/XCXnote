@@ -74,8 +74,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
-        :page-sizes="[20, 50, 100]"
-        :page-size="5"
+        :page-sizes="[5, 25, 50]"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
       </el-pagination>
@@ -151,9 +150,9 @@
         joinInfo: {},
         //页码参数
         page: 1,
-        pageSize: 10,
+        pageSize: 5,
         currentPage4: 1,
-        totals: 20,
+        totals: 5,
         shopList: [],
         inventory:[],
         submitData:'',
@@ -185,16 +184,31 @@
         })
       },
       handleSelectionChange(val) {
-        this.multipleSelection = val;
+        if(val.length>1) {
+          this.$message({
+            type: 'info',
+            message: '请选择选择一个进行添加'
+          });
+          this.multipleSelection = val;
+          return false;
+        }else{
+          this.multipleSelection = val;
+        }
       },
       //提交数据
       submit(){
-        console.log(this.multipleSelection)
-        if(this.multipleSelection.length>1){
+        if(this.multipleSelection.length>1 || this.multipleSelection.length==0){
           this.$message({
             type: 'info',
-            message: '添加选择只能选一个'
+            message: '请选择添加'
           });
+          return false;
+        } else if(this.num==''){
+          this.$message({
+            type: 'info',
+            message: '请填写数量'
+          });
+          return false;
         }else{
           this._getData('/api/v1/alliance/orderGoods', {
             allianceWarehouseId:this.joinInfo.id,

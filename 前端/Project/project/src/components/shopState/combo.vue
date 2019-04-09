@@ -3,15 +3,15 @@
     <!--表格-->
     <div class="head flex">
       <div class="font">套装统计</div>
-      <div class="head1" style="margin-left: 47%">导出数据</div>
-      <div :class="['head1',yday==true?'bj':'']" style="margin-right: 0px" @click="Xyday()">
+      <div class="head1 Mouse" style="margin-left: 47%"  @click="exportFunc('comboTable','套餐统计清单')">导出数据</div>
+      <div :class="['head1','Mouse',yday==true?'bj':'']" style="margin-right: 0px" @click="Xyday()">
         昨天
       </div>
-      <div :class="['head1',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday()">最近7天</div>
-      <div :class="['head1',Tday==true?'bj':'']" @click="XTday()">最近30天</div>
+      <div :class="['head1','Mouse',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday()">最近7天</div>
+      <div :class="['head1','Mouse',Tday==true?'bj':'']" @click="XTday()">最近30天</div>
     </div>
     <div style="border: 1px solid #ddd;height: 800px;">
-      <div class="tables">
+      <div class="tables" id="comboTable">
         <el-table
           :data="State"
           border

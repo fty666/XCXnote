@@ -93,7 +93,7 @@
           align="center"
           label="操作">
           <template slot-scope="scope">
-            <div style="color:deepskyblue" @click="save(scope.row)">保存</div>
+            <div style="color:deepskyblue" class="Mouse" @click="save(scope.row)">保存</div>
           </template>
         </el-table-column>
       </el-table>

@@ -1,101 +1,5 @@
 <template>
   <div class="body">
-    <!--banner管理-->
-    <div class="tou">
-      <div class="font">首页banner管理</div>
-    </div>
-    <div class="table sequence">
-      <div class="Tpic">
-        <div class="Tpic1">
-          <upali class="img_cha" ref="aliComponent" @getUrl="imgUrl1($event, 1)" :fileNumber="1"
-                 :imgWidth="250" :imgHeight="150"
-                 :defaultImg="photo"></upali>
-        </div>
-        <div style="margin-left: 10px">
-          <div class="font1">1</div>
-          <div style="margin-top: 15px">
-            <div>链接商品编号：</div>
-            <el-input v-model="gid1" style="width: 150px" size="small"></el-input>
-          </div>
-          <div style="margin-top: 10px" @click="save()">
-            <el-button class="buttons2">&nbsp;&nbsp;&nbsp;保&nbsp;存&nbsp;&nbsp;&nbsp;</el-button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="Tpic">
-        <div class="Tpic1">
-          <upali class="img_cha" ref="aliComponent" @getUrl="imgUrl2($event, 1)" :fileNumber="1"
-                 :imgWidth="250" :imgHeight="150"
-                 :defaultImg="photo2"></upali>
-        </div>
-        <div style="margin-left: 10px">
-          <div class="font1">2</div>
-          <div style="margin-top: 15px">
-            <div>链接商品编号：</div>
-            <el-input v-model="gid2" style="width: 150px" size="small"></el-input>
-          </div>
-          <div style="margin-top: 10px" @click="save2()">
-            <el-button class="buttons2">&nbsp;&nbsp;&nbsp;保&nbsp;存&nbsp;&nbsp;&nbsp;</el-button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="Tpic">
-        <div class="Tpic1">
-          <upali class="img_cha" ref="aliComponent" @getUrl="imgUrl3($event, 1)" :fileNumber="1"
-                 :imgWidth="250" :imgHeight="150"
-                 :defaultImg="photo3"></upali>
-        </div>
-        <div style="margin-left: 10px">
-          <div class="font1">3</div>
-          <div style="margin-top: 15px">
-            <div>链接商品编号：</div>
-            <el-input v-model="gid3" style="width: 150px" size="small"></el-input>
-          </div>
-          <div style="margin-top: 10px" @click="save3()">
-            <el-button class="buttons2">&nbsp;&nbsp;&nbsp;保&nbsp;存&nbsp;&nbsp;&nbsp;</el-button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="Tpic">
-        <div class="Tpic1">
-          <upali class="img_cha" ref="aliComponent" @getUrl="imgUrl4($event, 1)" :fileNumber="1"
-                 :imgWidth="250" :imgHeight="150"
-                 :defaultImg="photo4"></upali>
-        </div>
-        <div style="margin-left: 10px">
-          <div class="font1">4</div>
-          <div style="margin-top: 15px">
-            <div>链接商品编号：</div>
-            <el-input v-model="gid5" style="width: 150px" size="small"></el-input>
-          </div>
-          <div style="margin-top: 10px" @click="save4()">
-            <el-button class="buttons2">&nbsp;&nbsp;&nbsp;保&nbsp;存&nbsp;&nbsp;&nbsp;</el-button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="Tpic">
-        <div class="Tpic1">
-          <upali class="img_cha" ref="aliComponent" @getUrl="imgUrl5($event, 1)" :fileNumber="1"
-                 :imgWidth="250" :imgHeight="150"
-                 :defaultImg="photo5"></upali>
-        </div>
-        <div style="margin-left: 10px">
-          <div class="font1">5</div>
-          <div style="margin-top: 15px">
-            <div>链接商品编号：</div>
-            <el-input v-model="gid5" style="width: 150px" size="small"></el-input>
-          </div>
-          <div style="margin-top: 10px" @click="save5()">
-            <el-button class="buttons2">&nbsp;&nbsp;&nbsp;保&nbsp;存&nbsp;&nbsp;&nbsp;</el-button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
     <!--分类管理-->
     <div class="tou">
       <div class="font">分类banner/图标管理</div>
@@ -174,7 +78,6 @@
 
 <script>
   import upali from '@/components/upload-ali'
-  
   export default {
     name: "",
     data() {
@@ -200,18 +103,7 @@
         Roptions: [],
         Rimg: '',
         value: '',
-        photo: "",
-        photo2: "",
-        photo3: "",
-        photo4: "",
-        photo5: "",
         photo6: "",
-        gid1: "",
-        gid2: "",
-        gid3: "",
-        gid4: "",
-        gid5: "",
-        Yimgid: '',
       }
     },
     watch: {
@@ -220,38 +112,8 @@
       }
     },
     methods: {
-      imgUrl1(e) {
-        this.photo = e[0];
-      },
-      imgUrl2(e) {
-        this.photo2 = e[0];
-      },
-      imgUrl3(e) {
-        this.photo3 = e[0];
-      },
-      imgUrl4(e) {
-        this.photo4 = e[0];
-      },
-      imgUrl5(e) {
-        this.photo5 = e[0];
-      },
       imgUrl6(e) {
         this.photo6 = e[0];
-      },
-      save() {
-        this.btns(this.photo, this.gid1)
-      },
-      save2() {
-        this.btns(this.photo2, this.gid2)
-      },
-      save3() {
-        this.btns(this.photo3, this.gid3)
-      },
-      save4() {
-        this.btns(this.photo4, this.gid4)
-      },
-      save5() {
-        this.btns(this.photo5, this.gid5)
       },
       save6() {
         var type = '';

@@ -2,13 +2,13 @@
   <div class="body">
     <!--数量-->
     <div class="flex" style="margin-top: 20px;">
-      <div :class="['state','flex',wine==true?'bj':'']" @click="Xwine()">
+      <div :class="['state','Mouse','flex',wine==true?'bj':'']" @click="Xwine()">
         <div class="state2">酒品统计</div>
       </div>
-      <div :class="['state','flex',Nwine==true?'bj':'']" @click="XNwine()" style="margin-left: 0px">
+      <div :class="['state','Mouse','flex',Nwine==true?'bj':'']" @click="XNwine()" style="margin-left: 0px">
         <div class="state2">非酒品统计</div>
       </div>
-      <div :class="['state','flex',set==true?'bj':'']" @click="Xset()" style="margin-left: 0px">
+      <div :class="['state','Mouse','flex',set==true?'bj':'']" @click="Xset()" style="margin-left: 0px">
         <div class="state2">套餐统计</div>
       </div>
     </div>

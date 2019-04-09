@@ -2,10 +2,10 @@
   <div class="body">
     <!--数量-->
     <div class="flex" style="margin-top: 20px;">
-      <div :class="['state', 'flex',membe==true?'bj':'']" @click="Xmembe()">
+      <div :class="['state','Mouse', 'flex',membe==true?'bj':'']" @click="Xmembe()">
         <div class="state2">会员统计</div>
       </div>
-      <div :class="['state', 'flex',membe==false?'bj':'']" style="margin-left: 0px" @click="Xorder()">
+      <div :class="['state','Mouse', 'flex',membe==false?'bj':'']" style="margin-left: 0px" @click="Xorder()">
         <div class="state2">订单统计</div>
       </div>
     </div>

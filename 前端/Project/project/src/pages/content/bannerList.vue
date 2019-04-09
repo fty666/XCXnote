@@ -1,8 +1,11 @@
 <template>
   <div class="body">
     <!--banner管理-->
-    <div class="tou">
+    <div class="tou spaces">
       <div class="font">首页banner管理</div>
+      <div style="margin: 15px 30px 0px 0px">
+        <el-button type="primary" @click="addBan()">添加Banner图</el-button>
+      </div>
     </div>
     <div class="table">
       <el-table
@@ -38,8 +41,8 @@
           min-width="120">
           <template slot-scope="scope">
             <div class="flex">
-              <div class="addFont" style="margin-left: 66px" @click="edit(scope.row)">编辑</div>
-              <div class="addFont" style="margin-left: 10px" @click="del(scope.row.id)">删除</div>
+              <div class="addFont Mouse" style="margin-left: 66px" @click="edit(scope.row)">编辑</div>
+              <div class="addFont Mouse" style="margin-left: 10px" @click="del(scope.row.id)">删除</div>
             </div>
           </template>
         </el-table-column>
@@ -79,12 +82,22 @@
         </div>
       </el-dialog>
     </div>
-  
+    <!--添加-->
+    <div>
+      <el-dialog
+        title=""
+        :visible.sync="addCenter"
+        width="40%"
+        center>
+        <addbanner @Bclose="Bcloses()" @Binfos="getBanner()"></addbanner>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
   import upali from '@/components/upload-ali'
+  import addbanner from '@/components/addBanner'
   
   export default {
     data() {
@@ -93,14 +106,14 @@
         centerDialogVisible: false,
         editInfo: [],
         Gid: '',
-        editphoto: ''
+        editphoto: '',
+        addCenter: false
       }
     },
     watch: {},
     methods: {
       getBanner() {
         this._getData('/api/v1/slideshow/homePageBanner', {}, data => {
-          console.log(data)
           this.bannerList = data;
         })
       },
@@ -131,7 +144,7 @@
           });
         });
       },
-      esc(){
+      esc() {
         this.centerDialogVisible = false;
       },
       submit() {
@@ -170,9 +183,16 @@
       editimgUrl1(e) {
         this.editphoto = e[0];
       },
+      addBan(){
+        this.addCenter=true;
+      },
+      Bcloses(){
+        this.addCenter=false;
+      }
     },
     components: {
-      upali
+      upali,
+      addbanner
     },
     created() {
       this.getBanner();

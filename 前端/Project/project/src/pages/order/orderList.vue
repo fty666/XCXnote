@@ -1,29 +1,29 @@
 <template>
   <div class="body">
     <div class="flex" style="margin-top: 20px;">
-      <div :class="['state', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
+      <div :class="['state','Mouse', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
         <div class="state2">全部订单</div>
-        <div class="state3">({{this.orderStatus[7]}})</div>
+        <!--<div class="state3">({{this.orderStatus[7]}})</div>-->
       </div>
-      <div :class="['state', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
+      <div :class="['state','Mouse', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
         <div class="state2">待付款</div>
-        <div class="state3">({{this.orderStatus[0]}})</div>
+        <!--<div class="state3">({{this.orderStatus[0]}})</div>-->
       </div>
-      <div :class="['state', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
+      <div :class="['state','Mouse', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
         <div class="state2">待发货</div>
-        <div class="state3">({{this.orderStatus[2]}})</div>
+        <!--<div class="state3">({{this.orderStatus[2]}})</div>-->
       </div>
-      <div :class="['state', 'flex',bshop==true?'Xbj':'']" style="margin-left: 0px" @click="Xshop()">
+      <div :class="['state','Mouse', 'flex',bshop==true?'Xbj':'']" style="margin-left: 0px" @click="Xshop()">
         <div class="state2">已发货</div>
-        <div class="state3">({{this.orderStatus[3]}})</div>
+        <!--<div class="state3">({{this.orderStatus[3]}})</div>-->
       </div>
-      <div :class="['state', 'flex',finish==true?'Xbj':'']" style="margin-left: 0px" @click="Xfinish()">
+      <div :class="['state','Mouse', 'flex',finish==true?'Xbj':'']" style="margin-left: 0px" @click="Xfinish()">
         <div class="state2">已完成</div>
-        <div class="state3">({{this.orderStatus[5]}})</div>
+        <!--<div class="state3">({{this.orderStatus[5]}})</div>-->
       </div>
-      <div :class="['state', 'flex',Close==true?'Xbj':'']" style="margin-left: 0px" @click="Xclose()">
+      <div :class="['state','Mouse', 'flex',Close==true?'Xbj':'']" style="margin-left: 0px" @click="Xclose()">
         <div class="state2">已关闭</div>
-        <div class="state3">({{this.orderStatus[0]}})</div>
+        <!--<div class="state3">({{this.orderStatus[0]}})</div>-->
       </div>
     </div>
     <!--搜索-->
@@ -31,15 +31,20 @@
       <div class="sequence" style="width: 75%;">
         <div class="font">订单类型：</div>
         <div class="input">
-          <el-input v-model="type" placeholder="输入订单类型"></el-input>
+          <el-select v-model="orderType" placeholder="请选择">
+            <el-option size="small" label="经销商订单" value="2"></el-option>
+            <el-option size="small" label="自提订单" value="4"></el-option>
+            <el-option size="small" label="会员订单" value="1"></el-option>
+            <el-option size="small" label="积分兑换" value="3"></el-option>
+          </el-select>
         </div>
         
-        <div class="font" style="margin-left: 4%">输入地区：</div>
+        <div class="font" style="margin-left: 4%">所属地区：</div>
         <div class="input">
           <el-select v-model="consigner_type" placeholder="请选择">
             <el-option label="平台" value="1"></el-option>
             <el-option label="加盟商" value="2"></el-option>
-            <el-option label="经销商" value="3"></el-option>
+            <!--<el-option label="经销商" value="3"></el-option>-->
           </el-select>
         </div>
         
@@ -50,7 +55,6 @@
           type="daterange"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-          :default-time="['00:00:00', '23:59:59']"
           value-format="yyyy-MM-dd">
         </el-date-picker>
         
@@ -84,10 +88,8 @@
     </div>
     <!--表头-->
     <div class="head right">
-      <div class="head1" @click="batch()">批量删除</div>
-      <div class="head1" @click="exportFunc('orderTable','订单列表')">导出订单</div>
-      <div class="head1">显示条数</div>
-      <div class="head1">排序方式</div>
+      <div class="head1 Mouse" @click="batch()">批量删除</div>
+      <div class="head1 Mouse" @click="exportFunc('orderTable','订单列表')">导出订单</div>
     </div>
     <!--表格-->
     <div id="orderTable">
@@ -97,6 +99,7 @@
         tooltip-effect="dark"
         style="width: 100%"
         @selection-change="handleSelectionChange"
+        @sort-change='sortChange'
         border>
         <el-table-column
           type="selection"
@@ -104,13 +107,18 @@
         </el-table-column>
         <el-table-column
           label="所属地区"
-          prop="consigner_type"
+          sortable="custom"
           align="center"
           min-width="80">
+          <template slot-scope="scope">
+            <div v-if="scope.row.consigner_type=='平台'">平台</div>
+            <div v-else>{{scope.row.consigner_type}}</div>
+          </template>
         </el-table-column>
         <el-table-column
           label="订单类型"
           prop="type"
+          sortable="custom"
           align="center"
           min-width="80">
         </el-table-column>
@@ -164,35 +172,38 @@
           <template slot-scope="scope">
             <div>
               <div v-if="scope.row.status=='待支付'">
-                <div style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
               </div>
               <div class="sequence" v-if="scope.row.status=='待发货'">
-                <div style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
-                <div style="color: #0099ce;padding-left: 5px" @click="send(scope.row)">订单发货</div>
-                <div style="color: #0099ce;padding-left: 5px" @click="editAff(scope.row)">修改归属</div>
-                <div style="color: #0099ce;padding-left: 10px" @click="refund(scope.row.id)">订单退款</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 5px" @click="send(scope.row)">订单发货</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 5px" @click="editAff(scope.row.id)"
+                     v-if="scope.row.consigner_type!='加盟商'">修改归属
+                </div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="refund(scope.row.id)">订单退款</div>
               </div>
               <div class="sequence" v-if="scope.row.status=='待收货'">
-                <div style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
-                <div style="color: #0099ce;padding-left: 10px" @click="send(scope.row.id)">物流信息</div>
-                <div style="color: #0099ce;padding-left: 10px" @click="refund(scope.row.id)">订单退款</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="flow(scope.row.order_code)">物流信息
+                </div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="refund(scope.row.id)">订单退款</div>
               </div>
               <div class="sequence" v-if="scope.row.status=='待评价'">
-                <div style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
-                <div style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除订单</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除订单</div>
               </div>
               
               <div class="sequence" v-if="scope.row.status=='完成'">
-                <div style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
-                <div style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除订单</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除订单</div>
               </div>
               <div class="sequence" v-if="scope.row.status=='前台删除'">
-                <div style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
-                <div style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除订单</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除订单</div>
               </div>
               <div class="sequence" v-if="scope.row.status=='取消订单'">
-                <div style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
-                <div style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除订单</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除订单</div>
               </div>
             </div>
           </template>
@@ -205,7 +216,6 @@
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
         :page-sizes="[20, 50, 100]"
-        :page-size="5"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
       </el-pagination>
@@ -218,7 +228,6 @@
         width="34%"
         center>
         <delivergoods @closeSend="closeSend" :orderInfo="deliverGood"></delivergoods>
-      
       </el-dialog>
     </div>
     <!--修改归属-->
@@ -231,6 +240,16 @@
         <affiliationGoods @closeAff="closeAff" @getOrder="getOrder" :deliverGood="deliverGood"></affiliationGoods>
       </el-dialog>
     </div>
+    <!--物流信息-->
+    <div>
+      <el-dialog
+        title=""
+        :visible.sync="flowAcction"
+        width="34%"
+        center>
+        <flowinfo @closeflow="closeflow"></flowinfo>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -238,6 +257,7 @@
   import delivergoods from '@/components/order/deliverGoods'
   import alloctiongoods from '@/components/order/allocationGoods'
   import affiliationGoods from '@/components/order/affiliationGoods'
+  import flowinfo from '@/components/flowInfo'
   
   export default {
     data() {
@@ -249,10 +269,11 @@
         alliance_id: '',
         user_mobile: '',
         consigner_type: '',
+        orderType:'',
         multipleSelection: [],
         //页码参数
         page: 1,
-        pageSize: 10,
+        pageSize: 20,
         currentPage4: 1,
         totals: 20,
         orderList: [],
@@ -273,15 +294,21 @@
         //发起配货
         sendPicking: false,
         affiliation: false,
+        //物流
+        flowAcction: false,
         deliverGood: [],
         pickingId: '',
         orderID: '',
+        //  排序
+        district: 'desc',
+        Otype: 'deac'
       }
     },
     components: {
       delivergoods,
       alloctiongoods,
-      affiliationGoods
+      affiliationGoods,
+      flowinfo
     },
     methods: {
       //查看订单详情
@@ -294,7 +321,6 @@
         datas.pageSize = this.pageSize;
         this._getData('/api/v1/order/index', datas, data => {
           this.orderList = data.data;
-          console.log(data.data)
           this.totals = data.total;
         })
       },
@@ -328,6 +354,9 @@
         if (this.user_mobile != '') {
           datas.user_mobile = this.user_mobile;
         }
+        if(this.orderType!=''){
+          datas.type=this.orderType;
+        }
         this.getInfo(datas);
       },
       res() {
@@ -337,6 +366,7 @@
         this.goods_name = '';
         this.consigner_type = '';
         this.user_mobile = '';
+        this.orderType='';
         this.getOrder();
       },
       //查看订单详情
@@ -345,9 +375,16 @@
         sessionStorage.setItem('page', '订单管理')
         this.$router.push({name: 'orderInfo'})
       },
+      //物流
+      flow(val) {
+        sessionStorage.setItem('oderCode', val)
+        this.flowAcction = true;
+      },
+      closeflow() {
+        this.flowAcction = false;
+      },
       //订单发货
       send(val) {
-        console.log(val)
         this.deliverGood = val;
         this.centerDialogVisible = true;
       },
@@ -356,7 +393,6 @@
       },
       //发起配货
       picking(val) {
-        console.log(val)
         this.sendPicking = true;
         this.pickingId = val;
       },
@@ -365,8 +401,27 @@
       },
       //修改归属
       editAff(val) {
-        this.deliverGood = val;
-        this.affiliation = true;
+        this.$confirm('是否修改此订单归属?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/order/editBelong', {
+              id: val,
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+              this.getOrder();
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
       },
       closeAff() {
         this.affiliation = false;
@@ -453,17 +508,38 @@
       //每页显示多少数据
       handleSizeChange(val) {
         this.pageSize = val;
-        this.getOrder();
+        if (this.type != '' || this.stimes != '' || this.order_code != '' ||
+          this.goods_name != '' || this.consigner_type != '' || this.user_mobile != '') {
+          this.search();
+        } else if (this.Status != '') {
+          var datas = {
+            status: this.Status
+          };
+          this.getInfo(datas);
+        } else {
+          this.getOrder()
+        }
       },
       //第几页
       handleCurrentChange(val) {
         this.page = val;
-        this.getOrder();
+        if (this.type != '' || this.stimes != '' || this.order_code != '' ||
+          this.goods_name != '' || this.consigner_type != '' || this.user_mobile != '') {
+          this.search();
+        } else if (this.Status != '') {
+          var datas = {
+            status: this.Status
+          };
+          this.getInfo(datas);
+        } else {
+          this.getOrder()
+        }
       },
       //  选择背景
       Xsum() {
         this.getOrder();
         this.select(1);
+        this.Status = '';
       },
       Xmonth() {
         var datas = {status: 1};
@@ -495,11 +571,6 @@
         this.getInfo(datas);
         this.select(6)
       },
-      // Xall() {
-      //   var datas={consigner_type:1};
-      //   this.getInfo(datas);
-      //   this.select(7)
-      // },
       select(flag) {
         this.sum = false;
         this.month = false;
@@ -531,7 +602,30 @@
             this.all = true;
             break;
         }
-      }
+      },
+      //  排序
+      sortChange(column, prop, order) {
+        if (column.prop == 'district') {
+          var datas = {};
+          if (this.district == 'asc') {
+            this.district = 'desc';
+          } else {
+            this.district = 'asc';
+          }
+          datas.order_allianceId = this.district;
+          this.getInfo(datas);
+        }
+        if (column.prop == 'type') {
+          var datas = {};
+          if (this.Otype == 'asc') {
+            this.Otype = 'desc';
+          } else {
+            this.Otype = 'asc';
+          }
+          datas.order_type = this.Otype;
+          this.getInfo(datas);
+        }
+      },
     },
     created() {
       this.getOrder();

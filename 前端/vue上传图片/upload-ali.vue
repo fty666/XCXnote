@@ -1,17 +1,12 @@
 <template>
   <div class="clearfix">
-    <!--循环展示上传的图片-->
     <div
       v-for="(item, index) in fileArr"
       class="hj-upload f-l hj-show" :style="'width:'+imgWidth+'px;height:'+imgHeight+'px;'">
       <img :src="imggerUrl + item">
-      <!--查看大图片事件-->
       <i class="el-icon-search hj-icon" @click="magnifier(item)"></i>
-      <!--删除图片事件-->
       <i class="el-icon-delete hj-icon" @click="remoFile(index)"></i>
     </div>
-    <!--展示图片完-->
-
     <!-- 上传图片组件(阿里云) -->
     <div class="hj-upload f-l" v-if="fileArr.length != fileNumber" :style="'width:'+imgWidth+'px;height:'+imgHeight+'px;'">
       <input
@@ -23,12 +18,11 @@
         accept="image/jpeg,image/jpg,image/png">
       <i class="el-icon-plus hj-load"></i>
     </div>
-    <!--上传图片组件完-->
   </div>
 </template>
 
 <script type="text/javascript">
-  import OSS from 'ali-oss';
+  import OSS from 'ali-oss'
   import { Message } from 'element-ui';
   export default {
     name: 'UploadAli',
@@ -48,9 +42,6 @@
         this.$emit('getUrl', val);
       },
       defaultImg(val, oldval) {
-        console.log(val);
-        console.log(oldval);
-        console.log(this.fileArr);
         this.fileArr = [];
         if (this.defaultImg !== '') {
           this.fileArr.push(this.defaultImg);
@@ -61,21 +52,17 @@
       clearUrl () {
         this.fileArr = [];
       },
-      /**
-       * 删除图片事件
-       */
       remoFile (index) {
         this.fileArr.splice(index, 1);
         this.fileName.splice(index, 1);
+        // this.fileArr = [];
+        // this.fileName = [];
         //禁止点击上传取消
         this.upSee = true;
       },
       imgError (e) {                             //图片加载失败函数;
         e.target.src = '../../assets/logo.png';
       },
-      /**
-       * 查看大图片
-       */
       magnifier (url) {                          //查看大图函数;
         const h = this.$createElement;
         this.$msgbox({
@@ -100,37 +87,34 @@
           })
         });
       },
-
-      /**
-       * 上传图片事件
-       * @param event
-       */
       uploadAli (event) {
         //上传至阿里云OSS函数
         const _this = this;
-        const file = event.srcElement.files[0];     //获取要上传的图片
-        if (file == undefined) {return;}            //判断图片上传是否为空
+        const file = event.srcElement.files[0];
+        if (file == undefined) {return;}
         //创建名称
         _this.fileName.push(file.name);
-        let file_suffix = file.name.substr(file.name.lastIndexOf("."));     // substr截取file . 后面的是字符串
-        console.log(file_suffix)
+        let file_suffix = file.name.substr(file.name.lastIndexOf("."));
         ////限制火狐浏览器————上传图片限制
-        let suffix = ['.jpeg','.jpg','.png','.PNG','.JPG','JPEG','.gif'];
-        if(suffix.indexOf(file_suffix)<0){                                //indexOf判断字符串首次出现的位置，如果没有返回-1
+        let suffix = ['.jpeg','.jpg','.png','.PNG','.JPG','JPEG','.gif','.mp4'];
+        if(suffix.indexOf(file_suffix)<0){
+          /* this.$notify.error({
+			   title: '警告',
+			   message: '上传文件格式不正确',
+			   position: 'bottom-right',
+		   });*/
           Message.error({message: '上传文件格式不正确!'})
           return;
         }
         let file_name = (Date.parse(new Date()) / 1000) + file_suffix;
-        const client = new OSS.Wrapper(this.$ali);
+        const client = new OSS(this.$ali);
         client.multipartUpload(file_name, file, {
-          progress: function* (p) {
-            console.log('Progress: ' + p);
-          }
+          // progress: function* (p) {
+          //   console.log('Progress: ' + p);
+          // }
         }).then(function (result) {
           Message.success({message: '上传成功!'});
           _this.fileArr.push(result.name);
-          console.log(  _this.fileArr)
-
         }).catch(function (err) {
           Message.error({message: '上传失败!'});
         });
@@ -186,7 +170,7 @@
   .hj-upload{
     width: 175px;
     height: 105px;
-  // border: 1px dashed #8c939d;
+    border: 1px dashed #8c939d;
     border-radius: 6px;
     position: relative;
     display: flex;
@@ -221,7 +205,7 @@
     opacity: 0;
   }
   .hj-icon{
-    color: #000;
+    color: #ff0a14;
     margin-left: 16px;
     font-size: 22px;
     display: none;

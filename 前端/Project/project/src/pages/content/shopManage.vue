@@ -49,7 +49,7 @@
             min-width="100"
             label="操作">
             <template slot-scope="scope">
-              <div style="color: #0099ce;" @click="del(scope.row.id)">取消橱窗位</div>
+              <div class="Mouse" style="color: #0099ce;" @click="del(scope.row.id)">取消橱窗位</div>
             </template>
           </el-table-column>
         </el-table>

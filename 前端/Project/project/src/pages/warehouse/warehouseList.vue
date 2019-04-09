@@ -1,16 +1,15 @@
 <template>
   <div class="body">
-    <div>操作人ID没写</div>
     <div class="flex" style="margin-top: 20px;">
-      <div :class="['state', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
+      <div :class="['state','Mouse', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
         <div class="state2">全部商品</div>
         <!--<div class="state3">({{this.WList.allCount}})</div>-->
       </div>
-      <div :class="['state', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
+      <div :class="['state','Mouse','flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
         <div class="state2">酒类商品</div>
         <!--<div class="state3">({{this.WList.wine}})</div>-->
       </div>
-      <div :class="['state', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
+      <div :class="['state','Mouse', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
         <div class="state2">非酒类商品</div>
         <!--<div class="state3">({{this.WList.noWine}})</div>-->
       </div>
@@ -37,10 +36,9 @@
     </div>
     <!--表格-->
     <div class="head right">
-      <div class="head1">导出数据</div>
-      <div class="head1">排列方式</div>
+      <div class="head1 Mouse" @click="exportFunc('wareList','仓库清单')">导出数据</div>
     </div>
-    <div>
+    <div id="wareList">
       <el-table
         ref="multipleTable"
         :data="wareList"
@@ -102,8 +100,8 @@
           show-overflow-tooltip>
           <template slot-scope="scope">
             <div class="flex">
-              <div style="color: #0099ce;padding-left: 18px" @click="look(scope.row)">查看</div>
-              <div style="color: #0099ce;padding-left: 10px" @click="eidt(scope.row)">修改</div>
+              <div style="color: #0099ce;padding-left: 18px" class="Mouse" @click="look(scope.row)">查看</div>
+              <div style="color: #0099ce;padding-left: 10px" class="Mouse" @click="eidt(scope.row)">修改</div>
             </div>
           </template>
         </el-table-column>
@@ -128,7 +126,7 @@
         width="40%"
         center>
         <div class="xiu" style="height: auto">
-          <div class="edit" style="background-color: rgba(26, 188, 156, 1);">回购规则设置</div>
+          <div class="edit" style="background-color: rgba(26, 188, 156, 1);">库存详情</div>
           <div>
             <template>
               <el-table
@@ -197,7 +195,7 @@
         width="40%"
         center>
         <div class="xiu" style="height: auto">
-          <div class="edit" style="background-color: rgba(26, 188, 156, 1);">回购规则设置</div>
+          <div class="edit" style="background-color: rgba(26, 188, 156, 1);">修改库存</div>
           <div style="margin: 20px 0px 10px 20px;">商品名称：{{this.editWare.goods_name}}</div>
           <div>
             <template>
@@ -357,7 +355,7 @@
             warehouse_goods_num: val.editNum,
             goods_id: val.goodsId,
             warehouse_goods_stock: val.warehouse_goods_stock,
-            operator: ''
+            operator: sessionStorage.getItem('userID')
           }, data => {
             this.$message({
               type: 'success',

@@ -95,29 +95,15 @@
           <div>退款方式：</div>
           <div>退回到原支付渠道</div>
         </div>
-        <!--<div class="flex dfont" style="width: 100%;">-->
-        <!--<div>退款原因：</div>-->
-        <!--<div>订单的信息</div>-->
-        <!--</div>-->
         <div class="flex dfont" style="width: 100%;">
           <div>用户说明：</div>
           <div>{{this.orderInfo. remark}}</div>
         </div>
-        <!--<div class="flex dfont" style="width: 100%;">-->
-        <!--<div>凭证照片：</div>-->
-        <!--<div>{{this.orderInfo.payment_price}}</div>-->
-        <!--</div>-->
       </div>
-      <!--<div class="tui flex" style="height: 70px">-->
-        <!--<div class="fonts">处理备注：</div>-->
-        <!--<div>-->
-          <!--<el-input v-model="input" class="inpu" placeholder="请输入内容"></el-input>-->
-        <!--</div>-->
-      <!--</div>-->
-      <div class="btn" style="margin:30px 0px 5% 30% " @click="submit()">
+      <div class="btn" style="margin:30px 0px 5% 30% " @click="submit()" v-if="refunds==4">
         <el-button type="primary">确认退款</el-button>
       </div>
-      <div class="btn2" style="margin:30px 0px 5% 2% " @click="esc()">
+      <div class="btn2" style="margin:30px 0px 5% 2% " @click="esc()" v-if="refunds==4">
         <el-button type="danger">拒绝退款</el-button>
       </div>
     </div>
@@ -223,7 +209,8 @@
         goodList: [],
         input: '',
         bill: false,
-        detailId: ""
+        detailId: "",
+        refunds: ''
       }
     },
     methods: {
@@ -233,10 +220,8 @@
             id: sessionStorage.getItem('refoundId'),
           },
           data => {
-            console.log(data)
             for (let i in data.goods) {
               this.goodList.push(data.goods[i]);
-              console.log(this.goodList)
               this.detailId = this.goodList[0].detail_id;
             }
             if (data.invoice != null) {
@@ -274,7 +259,8 @@
       },
     },
     created() {
-      this.getOrder()
+      this.getOrder();
+      this.refunds = sessionStorage.getItem('StatusD')
     }
   }
 </script>

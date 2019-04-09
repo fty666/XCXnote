@@ -38,7 +38,7 @@
             align="center"
             label="操作">
             <template slot-scope="scope">
-              <div style="color: #0099ce;" @click="del(scope.row.id)">删除</div>
+              <div class="Mouse" style="color: #0099ce;" @click="del(scope.row.id)">删除</div>
             </template>
           </el-table-column>
         </el-table>

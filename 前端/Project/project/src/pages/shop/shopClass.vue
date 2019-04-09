@@ -79,8 +79,8 @@
             label="操作">
             <template slot-scope="scope">
               <div class="flex">
-                <div style="color: #0099ce;padding-left: 25px" @click="edit(scope.row)">修改</div>
-                <div style="color: #0099ce;padding-left: 10px" @click="del(scope.row)">删除</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 25px" @click="edit(scope.row)">修改</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="del(scope.row)">删除</div>
               </div>
             </template>
           </el-table-column>

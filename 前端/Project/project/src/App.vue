@@ -7,24 +7,6 @@
 <script>
 export default {
   name: 'App',
-  // provide(){
-  //   return{
-  //     reload:this.reload
-  //   }
-  // },
-  // data(){
-  //   return{
-  //     isRouterAlive:true
-  //   }
-  // },
-  // methods:{
-  //   reload(){
-  //     this.isRouterAlive=false;
-  //     this.$nextTick(function () {
-  //       this.isRouterAlivetrue=true;
-  //     })
-  //   }
-  // }
 }
 </script>
 
@@ -40,6 +22,9 @@ export default {
 a{
   color:black;
   text-decoration:none;
+}
+.Mouse{
+  cursor: pointer;
 }
 .flex{
   display: flex;

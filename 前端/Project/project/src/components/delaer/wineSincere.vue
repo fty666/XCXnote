@@ -6,7 +6,7 @@
     </div>
     <div class="flex xiu" style="height:auto">
       <el-table
-        :data="tableData"
+        :data="auditList"
         border
         style="width: 100%;margin-bottom: 25px">
         <el-table-column
@@ -16,7 +16,7 @@
           width="80">
         </el-table-column>
         <el-table-column
-          prop="date"
+          prop="goods.id"
           label="商品编号"
           align="center"
           min-width="180">
@@ -26,15 +26,18 @@
           label="商品图片"
           align="center"
           min-width="180">
+          <template slot-scope="scope">
+            <img :src="imggerUrl+scope.row.goods.list_img"class="imgs">
+          </template>
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="goods.goods_name"
           align="center"
           min-width="265"
           label="商品名称">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="goods.integral"
           label="商品可获得积分"
           align="center"
           min-width="160">
@@ -44,17 +47,21 @@
           label="价格"
           align="center"
           min-width="203">
+            <template slot-scope="scope">
+              <div>进货价：{{scope.row.goods.prime_price}}</div>
+              <div>会员价：{{scope.row.goods.member_price}}</div>
+              <div>原价：{{scope.row.goods.original_price}}</div>
+            </template>
         </el-table-column>
       </el-table>
     </div>
     <!--按钮-->
-    <!--按钮-->
-    <div class="flex">
+    <div class="flex" v-if="pass==true">
       <div class="font" style="margin: 42px 0px 50px 40%">
-        <el-button class="buttons" plain style="background-color: rgba(0, 153, 153, 1);color: white">通过</el-button>
+        <el-button class="buttons"  style="background-color: rgba(0, 153, 153, 1);color: white" @click="Tpass()">通过</el-button>
       </div>
       <div style="margin: 50px 0px 100px 60px">
-        <el-button class="buttons" plain>驳回</el-button>
+        <el-button class="buttons" @click="Tfalse()" >驳回</el-button>
       </div>
     </div>
   </div>
@@ -65,21 +72,73 @@
     name: "",
     data() {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市'
-        }],
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }],
-        value: ''
+        auditList: [],
+        value: '',
+        pass:false
       }
     },
+    methods:{
+      getAudit(){
+        this._getData('/api/v1/dealer_goods/dealerGoods', {
+            userCode: sessionStorage.getItem('userCode'),
+          },
+          data => {
+            if(data[0].status !='通过'){
+              this.pass=true;
+            }
+            this.auditList=data;
+          })
+      },
+      Tpass(){
+        this.$confirm('是否通过此审核?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/dealer/pass', {
+              id:sessionStorage.getItem('dealerId'),
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+              this.getAudit();
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      },
+      Tfalse(){
+        this.$confirm('是否拒绝此审核?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/dealer/reject', {
+              id:sessionStorage.getItem('dealerId'),
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+              this.getAudit();
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      }
+    },
+    created(){
+      this.getAudit();
+    }
   }
 </script>
 

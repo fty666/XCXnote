@@ -1,21 +1,37 @@
 <template>
-  <div class="login-box">
-    <h3 style="margin-bottom: 30px;font-weight: 900;font-size: 25px;">管理员后台登录</h3>
-    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="用户名" prop="account">
-        <el-input v-model="ruleForm.account" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item type="password" label="密码" prop="password">
-        <el-input v-model="ruleForm.password" type="password"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')" class="login">登陆</el-button>
-      </el-form-item>
-    </el-form>
+  <div>
+    <el-dialog
+      title=""
+      :visible.sync="centerDialogVisible"
+      width="30%"
+      center>
+      <editpass @close="Eclose"></editpass>
+    </el-dialog>
+    <div class="login-box">
+      <h3 style="margin-bottom: 30px;font-weight: 900;font-size: 25px;">管理员后台登录</h3>
+      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="用户名" prop="account">
+          <el-input v-model="ruleForm.account" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item type="password" label="密码" prop="password">
+          <el-input v-model="ruleForm.password" type="password"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')" class="login">登陆</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="info" @click="find()" class="login">找回密码</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    
   </div>
+ 
 </template>
 
 <script>
+  import editpass from '@/components/editPass'
+  
   export default {
     data() {
       return {
@@ -23,30 +39,39 @@
           account: "",
           password: ""
         },
+        centerDialogVisible: false,
         rules: {
           account: [{required: true, message: "请输入账户", trigger: "blur"}],
           password: [{required: true, message: "请输入密码", trigger: "blur"}]
         }
       };
     },
+    components: {
+      editpass
+    },
     methods: {
       register() {
         this.$router.push({path: "/register"});
       },
       submitForm(formName) {
-        console.log(this.ruleForm)
         this.$refs[formName].validate(valid => {
           this._getData('/api/v1/user_admin/login', this.ruleForm,
             data => {
-              console.log(data)
               this.$message({
                 type: 'success',
                 message: '登陆成功'
               });
               sessionStorage.setItem('userInfo', JSON.stringify(data.auth))
+              sessionStorage.setItem('userID', data.id)
               this.$router.push({path: "/index"});
             })
         });
+      },
+      find() {
+        this.centerDialogVisible = true;
+      },
+      Eclose() {
+        this.centerDialogVisible = false;
       }
     }
   }

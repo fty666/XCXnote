@@ -8,15 +8,15 @@
       <div class="head" style="margin-top: 0px">
         <div class="Jfont">&nbsp;&nbsp;&nbsp;&nbsp;库存详情</div>
         <div class="flex" style="margin-top: 10px;">
-          <div :class="['state', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
+          <div :class="['state','Mouse', 'flex',sum==true?'Xbj':'']" @click="Xsum()">
             <div class="state2">全部商品</div>
             <div class="state3">({{this.winState.all}})</div>
           </div>
-          <div :class="['state', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
+          <div :class="['state','Mouse', 'flex',month==true?'Xbj':'']" style="margin-left: 0px" @click="Xmonth()">
             <div class="state2">酒类商品</div>
             <div class="state3">({{this.winState.yes}})</div>
           </div>
-          <div :class="['state', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
+          <div :class="['state','Mouse', 'flex',day==true?'Xbj':'']" style="margin-left: 0px" @click="Xday()">
             <div class="state2">非酒类商品</div>
             <div class="state3">({{this.winState.no}})</div>
           </div>
@@ -43,7 +43,7 @@
         
         </div>
         <!--表格头-->
-        <div class="head right bianju">
+        <div class="head right bianju Mouse">
           <div class="head1" @click="exportFunc('joinList','加盟商列表')">导出表格</div>
         </div>
         <!--表格-->
@@ -63,6 +63,7 @@
             <el-table-column
               label="商品编号"
               align="center"
+              sortable
               prop="goodsId"
               min-width="140">
             </el-table-column>
@@ -90,12 +91,14 @@
             <el-table-column
               prop="num"
               label="加盟商库存"
+              sortable
               align="center"
               min-width="100">
             </el-table-column>
             <el-table-column
               prop="dealer_num"
               label="经销商库存"
+              sortable
               align="center"
               min-width="100">
             </el-table-column>
@@ -105,15 +108,6 @@
               align="center"
               min-width="130">
             </el-table-column>
-            <!--<el-table-column-->
-            <!--label="操作"-->
-            <!--align="center"-->
-            <!--min-width="100"-->
-            <!--show-overflow-tooltip>-->
-            <!--<template slot-scope="scope">-->
-            <!--<div style="color: #0099ce;" @click="add()">补货</div>-->
-            <!--</template>-->
-            <!--</el-table-column>-->
           </el-table>
           <div class="pag">
             <el-pagination
@@ -195,7 +189,6 @@
         datas.pageSize = this.pageSize;
         datas.warehouseId = sessionStorage.getItem('joinId');
         this._getData('/api/v1/alliance/getGoods', datas, data => {
-          console.log(data)
           this.stockInfo = data.data;
           this.totals = data.total;
         })
@@ -208,7 +201,6 @@
         this._getData('/api/v1/alliance/countStock', {
           id: sessionStorage.getItem('joinId')
         }, data => {
-          console.log(data)
           this.winState = data;
         })
       },
@@ -228,7 +220,6 @@
           goodsId: data.goodsId,
           goodsName: data.goodsName
         }, data => {
-          console.log(data)
           this.stockInfo = data.data;
           this.totals = data.total;
         })

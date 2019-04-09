@@ -45,30 +45,38 @@
         <div class="deal-1chi">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;待处理事务</div>
         <div class="deal-1-bot">
           <div class="deal-1-lef">
-            <div class="need">
-              <div class="need-lef">待发货订单</div>
-              <div class="need-rig">({{this.affairList.unsend}})</div>
-            </div>
-            
-            <div class="needs">
-              <span class="needs-lef">待发货配货订单</span>
-              <span class="needs-rig">({{this.affairList.unsend}})</span>
-            </div>
+            <router-link to="/order/orderList">
+              <div class="need Mouse">
+                <div class="need-lef">待发货订单</div>
+                <div class="need-rig">({{this.affairList.unsend}})</div>
+              </div>
+            </router-link>
+            <router-link to="/dealer/dealerAudit">
+              <div class="needs Mouse">
+                <span class="needs-lef">待审核经销商</span>
+                <span class="needs-rig">({{this.affairList.dealerCount}})</span>
+              </div>
+            </router-link>
           </div>
           <div class="deal-1-rig">
-            <div class="need">
-              <div class="need-lef-ano">待确认退款信息</div>
-              <div class="need-rig-ano">({{this.affairList.backOrderCount}})</div>
-            </div>
-            
-            <div class="needs">
-              <span class="needs-lef-ano">平台缺货商品</span>
-              <span class="needs-rig-ano">({{this.affairList.warnPingtaiGoodsCount}})</span>
-            </div>
-            <div class="need">
-              <span class="needs-lef-ano">加盟商缺货商品</span>
-              <span class="needs-rig-ano">({{this.affairList.warnAllianceGoodsCount}})</span>
-            </div>
+            <router-link to="/order/orderRefund">
+              <div class="need Mouse">
+                <div class="need-lef-ano">待确认退款信息</div>
+                <div class="need-rig-ano">({{this.affairList.backOrderCount}})</div>
+              </div>
+            </router-link>
+            <router-link to="/warehouse/warehouseList">
+              <div class="needs Mouse">
+                <span class="needs-lef-ano">平台缺货商品</span>
+                <span class="needs-rig-ano">({{this.affairList.warnPingtaiGoodsCount}})</span>
+              </div>
+            </router-link>
+            <router-link to="/warehouse/warehouseList">
+              <div class="need Mouse">
+                <span class="needs-lef-ano">加盟商缺货商品</span>
+                <span class="needs-rig-ano">({{this.affairList.warnAllianceGoodsCount}})</span>
+              </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -114,10 +122,10 @@
         <div class="date">
           <div class="flex">
             <div :class="[sum==true?'Xfonts':'']" @click="Xsum()">
-              <div class="state2 fontS">本周</div>
+              <div class="state2 fontS Mouse">本周</div>
             </div>
             <div :class="[month==true?'Xfonts':'']" style="margin-left: 0px" @click="Xmonth()">
-              <div class="state2 fontS">本月</div>
+              <div class="state2 fontS Mouse">本月</div>
             </div>
           </div>
           <div class="block">
@@ -155,10 +163,10 @@
         <div class="date">
           <div class="flex">
             <div :class="[Wsell==true?'Xfonts':'']" @click="XWsell()">
-              <div class="state2 fontS">本周</div>
+              <div class="state2 fontS Mouse">本周</div>
             </div>
             <div :class="[Msell==true?'Xfonts':'']" style="margin-left: 0px" @click="XMsell()">
-              <div class="state2 fontS">本月</div>
+              <div class="state2 fontS Mouse">本月</div>
             </div>
           </div>
           <div class="block">
@@ -234,6 +242,8 @@
       affair() {
         this._getData('/api/v1/data_statistics/b', {},
           data => {
+          console.log('处理事务')
+          console.log(data);
             this.affairList = data;
           })
       },
@@ -248,7 +258,6 @@
       orderProbability() {
         this._getData('/api/v1/data_statistics/d', {},
           data => {
-            console.log(data)
             this.orderPro = data;
           })
       },
@@ -256,7 +265,6 @@
       markProbability() {
         this._getData('/api/v1/data_statistics/h', {},
           data => {
-            console.log(data)
             this.markPro = data;
           })
       },
@@ -297,7 +305,6 @@
         var box = [];
         this._getData('/api/v1/data_statistics/g', datas,
           data => {
-            console.log(data)
             this.weekList = data;
             for (let i = 0; i < data.length; i++) {
               box.push({
@@ -465,7 +472,7 @@
   
   .number {
     color: #1ABC9C;
-    font-size: 25px;
+    font-size: 18px;
     text-align: left;
   }
   

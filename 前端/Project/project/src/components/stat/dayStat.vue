@@ -2,11 +2,11 @@
   <div>
     <div class="head flex">
       <div class="font2">平台日营业额查询</div>
-      <div class="head1" style="margin-left: 30%">导出数据</div>
-      <div :class="['head1',yday==true?'bj':'']" style="margin: 10px 0px 0px 5%" @click="Xyday()">
+      <div class="head1" style="margin-left: 30%" @click="exportFunc('dayList','月营业额统计')">导出数据</div>
+      <div :class="['head1','Mouse',yday==true?'bj':'']" style="margin: 10px 0px 0px 5%" @click="Xyday()">
         过去7天
       </div>
-      <div :class="['head1',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday">过去30天</div>
+      <div :class="['head1','Mouse',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday">过去30天</div>
       <div class="head1" style="width: 150px;border: 1px solid #ddd">
         <el-date-picker
           v-model="value1"
@@ -17,7 +17,7 @@
         </el-date-picker>
       </div>
     </div>
-    <div style="width: 99.8%;margin: 10px 0px 0px 0px">
+    <div style="width: 99.8%;margin: 10px 0px 0px 0px" id="dayList">
       <el-table
         :data="dayList"
         border

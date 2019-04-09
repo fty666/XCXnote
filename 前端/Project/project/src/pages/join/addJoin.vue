@@ -14,11 +14,16 @@
         <el-input v-model="addList.address" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="加盟费用" prop="fee">
-        <el-input v-model="addList.fee" autocomplete="off"></el-input>
+        <el-input v-model.number="addList.fee" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="分成比例" prop="divide">
-        <el-input v-model="addList.divide" autocomplete="off"></el-input>
-      </el-form-item>
+      <div class="flex">
+        <div>
+          <el-form-item label="分成比例" prop="divide">
+            <el-input v-model.number="addList.divide" autocomplete="off"></el-input>
+          </el-form-item>
+        </div>
+        <div style="margin: 10px 0px 0px 20px">%</div>
+      </div>
       <el-form-item label="后台登录账号" prop="account">
         <el-input v-model="addList.account" autocomplete="off"></el-input>
       </el-form-item>
@@ -37,7 +42,10 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('addList')">提交</el-button>
+        <el-button class="buttons" type="primary" @click="submitForm('addList')">提交</el-button>
+        <router-link to="/join/join">
+          <el-button class="buttons">返回</el-button>
+        </router-link>
       </el-form-item>
     </el-form>
   </div>
@@ -52,7 +60,6 @@
         } else if (value !== this.addList.password) {
           callback(new Error('两次输入密码不一致!'));
         } else if (value.length < 6 || value.length > 30) {
-          console.log(value.length)
           callback(new Error('密码不符合要求'));
         } else {
           callback();
@@ -98,10 +105,14 @@
           }],
           fee: [{
             required: true, message: '请输入加盟费', trigger: 'blur'
-          }],
+          },
+            { type: 'number', message: '必须为数字值'}
+          ],
           divide: [{
             required: true, message: '请输入分成比例1-100', trigger: 'blur'
-          }],
+          },
+            { type: 'number', message: '必须为数字值'}
+          ],
           account: [{
             required: true, message: '请输入登录账号', trigger: 'blur'
           }],

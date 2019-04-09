@@ -3,12 +3,12 @@
     <!--表格-->
     <div class="head flex">
       <div class="font">交易记录</div>
-      <div class="head1" style="margin-left: 35%">导出数据</div>
-      <div :class="['head1',yday==true?'bj':'']" style="margin-right: 0px" @click="Xyday()">
+      <div class="head1 Mouse" style="margin-left: 35%" @click="exportFunc('dealTable','交易记录统计')">导出数据</div>
+      <div :class="['head1','Mouse',yday==true?'bj':'']" style="margin-right: 0px" @click="Xyday()">
         昨天
       </div>
-      <div :class="['head1',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday">最近7天</div>
-      <div :class="['head1',Tday==true?'bj':'']" @click="XTday()">最近30天</div>
+      <div :class="['head1','Mouse',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday">最近7天</div>
+      <div :class="['head1','Mouse',Tday==true?'bj':'']" @click="XTday()">最近30天</div>
       <div class="head1" style="width: 150px;border: 1px solid #ddd">
         <el-date-picker
           v-model="times"
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="flex" style="border: 1px solid #ddd;height: 300px;">
-      <div class="tables">
+      <div class="tables" id="dealTable">
         <el-table
           ref="multipleTable"
           :data="State"
@@ -95,7 +95,6 @@
       getState() {
         this._getData('/api/v1/data_statistics/yesterdayBusiness', {},
           data => {
-            console.log(data)
             this.percent = data.payChangePercent;
             this.circulation(data, data => {
               this.State = data;
@@ -111,7 +110,6 @@
         let data = this.Tselect(2);
         this._getData('/api/v1/data_statistics/old7Business', {},
           data => {
-            console.log(data)
             this.percent = data.payChangePercent;
             this.circulation(data, data => {
               this.State = data;
@@ -122,7 +120,6 @@
         this.Tselect(3);
         this._getData('/api/v1/data_statistics/old30Business', {},
           data => {
-            console.log(data)
             this.percent = data.payChangePercent;
             this.circulation(data, data => {
               this.State = data;

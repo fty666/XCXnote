@@ -29,7 +29,7 @@
     
     <!--表格头-->
     <div class="head right">
-      <div class="head1" @click="exportFunc('dealerTable','经销商列表')">导出数据</div>
+      <div class="head1 Mouse" @click="exportFunc('dealerTable','经销商列表')">导出数据</div>
       <!--<div class="head1">批量删除</div>-->
     </div>
     
@@ -41,7 +41,8 @@
         tooltip-effect="dark"
         style="width: 100%"
         border
-        @selection-change="handleSelectionChange">
+        @selection-change="handleSelectionChange"
+        @sort-change='sortChange'>
         <el-table-column
           type="selection"
           min-width="55">
@@ -49,6 +50,7 @@
         <el-table-column
           prop="id"
           label="用户ID"
+          sortable
           align="center"
           min-width="120">
         </el-table-column>
@@ -79,16 +81,17 @@
         <el-table-column
           label="账户状态"
           align="center"
+          sortable="custom"
           prop="status"
           min-width="150">
           <template slot-scope="scope">
             <div class="flex" v-if="scope.row.status=='禁用'">
               <div>&nbsp;&nbsp;已禁用</div>
-              <div @click="start(scope.row.id)" class="operate">&nbsp;&nbsp;启用</div>
+              <div @click="start(scope.row.id)" class="operate Mouse">&nbsp;&nbsp;启用</div>
             </div>
             <div class="flex" v-if="scope.row.status=='启用'">
               <div>&nbsp;&nbsp;已启用</div>
-              <div @click="disable(scope.row.id)" class="operate">&nbsp;&nbsp;禁用</div>
+              <div @click="disable(scope.row.id)" class="operate Mouse">&nbsp;&nbsp;禁用</div>
             </div>
           </template>
         </el-table-column>
@@ -99,7 +102,7 @@
           min-width="100"
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <div style="color: #0099ce;" @click="info(scope.row)">查看详情</div>
+            <div class="Mouse" style="color: #0099ce;" @click="info(scope.row)">查看详情</div>
           </template>
         </el-table-column>
       </el-table>
@@ -133,7 +136,9 @@
         totals: 20,
         id: '',
         mobile: '',
-        nickname: ''
+        nickname: '',
+        //  排序
+        Status: 'desc'
       }
     },
     methods: {
@@ -197,8 +202,8 @@
       },
       //  查看详情
       info(val) {
-        sessionStorage.setItem('dealerId',val.id)
-        sessionStorage.setItem('userCode',val.user_code)
+        sessionStorage.setItem('dealerId', val.id)
+        sessionStorage.setItem('userCode', val.user_code)
         this.$router.push({name: 'dealerInfo'})
       },
       //搜索
@@ -228,7 +233,7 @@
         })
       },
       //重置
-      res(){
+      res() {
         this.id = '';
         this.mobile = '';
         this.nickname = '';
@@ -254,8 +259,24 @@
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
-      }
-    },
+      },
+      sortChange(column, prop, order) {
+        if (this.Status == 'asc') {
+          this.Status = 'desc';
+        } else {
+          this.Status = 'asc';
+        }
+        this._getData('/api/v1/dealer/index', {
+          page: this.page,
+          pageSize: this.pageSize,
+          order_status: this.Status
+        }, data => {
+          this.dealerList = data.data;
+          this.totals = data.total;
+        })
+      },
+    }
+    ,
     created() {
       this.getDear();
     }

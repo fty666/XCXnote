@@ -35,11 +35,9 @@
     </div>
     <!--表格-->
     <div class="head right">
-      <div class="head1">导出数据</div>
-      <div class="head1">显示条数</div>
-      <div class="head1">排列方式</div>
+      <div class="head1 Mouse" @click="exportFunc('integral','已领取积分订单')">导出数据</div>
     </div>
-    <div>
+    <div id="integral">
       <el-table
         ref="multipleTable"
         :data="orderList"
@@ -61,6 +59,7 @@
         <el-table-column
           prop="create_time"
           label="提交时间"
+          sortable
           align="center"
           min-width="160">
         </el-table-column>
@@ -85,6 +84,7 @@
         <el-table-column
           prop="get_integral"
           label="领取积分"
+          sortable
           align="center"
           min-width="100">
         </el-table-column>
@@ -95,7 +95,7 @@
           min-width="120"
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <div style="color: #0099ce;" @click="look(scope.row.id)">查看订单</div>
+            <div style="color: #0099ce;" class="Mouse" @click="look(scope.row.id)">查看订单</div>
           </template>
         </el-table-column>
       </el-table>

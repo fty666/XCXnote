@@ -2,16 +2,16 @@
   <div>
     <!--表格-->
     <div class="head flex">
-      <div class="font">会员统计</div>
-      <div class="head1" style="margin-left: 47%">导出数据</div>
+      <div class="font">酒品统计</div>
+      <div class="head1 Mouse" style="margin-left: 47%" @click="exportFunc('wineTable','酒品统计清单')">导出数据</div>
       <div :class="['head1',yday==true?'bj':'']" style="margin-right: 0px" @click="Xyday()">
         昨天
       </div>
-      <div :class="['head1',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday()">最近7天</div>
-      <div :class="['head1',Tday==true?'bj':'']" @click="XTday()">最近30天</div>
+      <div :class="['head1','Mouse',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday()">最近7天</div>
+      <div :class="['head1','Mouse',Tday==true?'bj':'']" @click="XTday()">最近30天</div>
     </div>
     <div class="Tabless">
-      <div class="tables">
+      <div class="tables" id="wineTable">
         <el-table
           :data="State"
           border

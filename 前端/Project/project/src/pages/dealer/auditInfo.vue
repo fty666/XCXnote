@@ -1,37 +1,46 @@
 <template>
   <div class="body">
     <div class="flex xiu" style="height: 120px;margin-top: 40px">
-      <div class="imgs" style="margin-left: 60px"></div>
-      <div class="sequence" style="width: 85%;margin: 30px 0px 0px 0px">
-        <div class="flex pian" style="margin-left: 20px">
+      <div style="margin-left: 60px">
+        <img :src="imggerUrl+this.dealerList.photo"  class="imgs">
+      </div>
+      <div class="sequence" style="width: 70%;margin: 30px 0px 0px 0px">
+        <div class="flex pian" style="margin-left: 30px">
           <div>用户ID：</div>
-          <div>高级会员</div>
+          <div>{{this.dealerList.id}}</div>
         </div>
         <div class="flex pian">
           <div>用户账号：</div>
-          <div>高级会员</div>
+          <div>{{this.dealerList.mobile}}</div>
         </div>
         <div class="flex pian">
           <div>注册时间：</div>
-          <div>高级会员</div>
+          <div>{{this.dealerList.create_time}}</div>
         </div>
-        <div class="flex pian" style="margin-left: 20px">
+        <div class="flex pian">
           <div>所属地区：</div>
-          <div>高级会员</div>
+          <div>{{this.dealerList.alliance}}</div>
         </div>
-        <div class="flex pian" style="margin-left: 20px">
+        <div class="flex pian" style="margin-left: 32px;">
           <div>昵称：</div>
-          <div>高级会员</div>
+          <div>{{this.dealerList.nickname}}</div>
         </div>
-        <div class="flex pian" >
+        <div class="flex pian">
           <div>生日：</div>
-          <div>高级会员</div>
+          <div>{{this.dealerList.birthday}}</div>
         </div>
-        <div class="flex pian" >
+        <div class="flex pian">
           <div>性别：</div>
-          <div>高级会员</div>
+          <div>{{this.dealerList.sex}}</div>
+        </div>
+        <div class="flex pian">
+          <div>余额：</div>
+          <div>{{this.dealerList.mobile}}</div>
         </div>
       </div>
+      <router-link to="/dealer/dealerAudit">
+        <div class="clos">返回列表</div>
+      </router-link>
     </div>
     <!--选择信息-->
     <div class="flex" style="margin-top: 30px;">
@@ -47,7 +56,7 @@
       <wineSincere></wineSincere>
     </div>
     <div v-else>
-      <auditInfo></auditInfo>
+      <MemberInfo ></MemberInfo>
     </div>
   </div>
 </template>
@@ -55,33 +64,31 @@
 <script>
   import wineSincere from '@/components/delaer/wineSincere'
   import auditInfo from '@/components/delaer/auditInfo'
+  import MemberInfo from '@/components/delaer/MemberInfo'
   export default {
     name: "",
     components: {
       wineSincere,
-      auditInfo
+      auditInfo,
+      MemberInfo
     },
     data() {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }],
-        value: '',
         //  经销商信息选择
         dealer:true,
-        members:false
+        members:false,
+        dealerList:{}
       }
     },
     methods:{
+      //  获取经销商信息
+      getDealer() {
+        this._getData('/api/v1/user/show', {
+          id: sessionStorage.getItem('dealerId'),
+        }, data => {
+          this.dealerList=data;
+        })
+      },
       //经销商信息
       dealerInfo(){
         this.dealer=true;
@@ -92,6 +99,9 @@
         this.dealer=false;
         this.members=true;
       }
+    },
+    created(){
+      this.getDealer();
     }
   }
 </script>

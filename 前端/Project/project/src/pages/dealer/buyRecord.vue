@@ -110,7 +110,14 @@
           align="center"
           min-width="80">
         </el-table-column>
+        <el-table-column
+          prop="update_time"
+          label="回购时间"
+          align="center"
+          min-width="110">
+        </el-table-column>
       </el-table>
+      
       <div class="pag">
         <el-pagination
           @size-change="JPhandleSizeChange"
@@ -149,7 +156,6 @@
       }
     },
     methods: {
-      //经销商页面
       JPhandleSizeChange(val) {
         this.pageSize = val;
         this.getJin();

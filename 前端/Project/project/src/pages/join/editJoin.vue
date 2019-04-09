@@ -16,9 +16,15 @@
       <el-form-item label="加盟费用" prop="fee">
         <el-input v-model="addList.fee" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="分成比例" prop="divide">
-        <el-input v-model="addList.divide" autocomplete="off"></el-input>
-      </el-form-item>
+      <div class="flex">
+        <div>
+          <el-form-item label="分成比例" prop="divide">
+            <el-input v-model="addList.divide" autocomplete="off"></el-input>
+          </el-form-item>
+        </div>
+        <div style="margin: 10px 0px 0px 20px">%</div>
+      </div>
+
       <el-form-item label="日期" prop="time">
         <el-date-picker
           v-model="addList.time"
@@ -28,7 +34,10 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('addList')">提交</el-button>
+        <el-button class="buttons" type="primary" @click="submitForm('addList')">提交</el-button>
+        <router-link to="/join/join">
+          <el-button class="buttons">返回</el-button>
+        </router-link>
       </el-form-item>
     </el-form>
   </div>
@@ -104,7 +113,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this._getData('/api/v1/alliance/edit', {
-              id:this.addList.id,
+              id: this.addList.id,
               fee: this.addList.fee,
               name: this.addList.name,
               time: this.addList.time,

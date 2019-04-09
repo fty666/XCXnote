@@ -4,6 +4,11 @@ vue init webpack '项目名称'						【esl为No】
 npm install       //下载依赖
 npm run dev       //运行项目
 
+打包
+修改，config下index.js 中  assetsPublicPath: '/项目名/',
+
+npm run build
+
 页面跳转
   <router-link  to="/logo">
             商城

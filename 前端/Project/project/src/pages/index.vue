@@ -10,9 +10,9 @@
           <el-tooltip class="item main-func" effect="dark" content="退出系统" placement="bottom-end">
             <el-button @click="exit()">&nbsp;&nbsp;&nbsp;&nbsp;退出&nbsp;&nbsp;&nbsp;&nbsp;</el-button>
           </el-tooltip>
-          <el-tooltip class="item main-func" style="margin-right: 30px" effect="dark" content="退出系统"
+          <el-tooltip class="item main-func" style="margin-right: 30px" effect="dark" content="修改密码"
                       placement="bottom-end">
-            <el-button>修改密码</el-button>
+            <el-button @click="editPass()">修改密码</el-button>
           </el-tooltip>
         </div>
       </el-header>
@@ -96,14 +96,14 @@
               <el-menu-item index="/integral/integralStat">积分统计</el-menu-item>
             </el-submenu>
             <!--仓库管理-->
-            <el-submenu index="8" v-if="authBox.includes('产库管理')==true">
+            <el-submenu index="8" v-if="authBox.includes('仓库管理')==true">
               <template slot="title">
                 <!--<i style="padding-right:10px;"></i>-->
                 <i style="padding-right:10px;"><img src="../assets/img/1.png"></i>
-                <span slot="title">产库管理</span>
+                <span slot="title">仓库管理</span>
               </template>
-              <el-menu-item index="/warehouse/warehouseList">产库总览</el-menu-item>
-              <el-menu-item index="/warehouse/warehouseManage">产库管理</el-menu-item>
+              <el-menu-item index="/warehouse/warehouseList">仓库总览</el-menu-item>
+              <el-menu-item index="/warehouse/warehouseManage">仓库管理</el-menu-item>
             </el-submenu>
             <!--内容管理-->
             <el-submenu index="9" v-if="authBox.includes('内容管理')==true">
@@ -112,7 +112,7 @@
                 <i style="padding-right:10px;"><img src="../assets/img/1.png"></i>
                 <span slot="title">内容管理</span>
               </template>
-              <el-menu-item index="/content/contentManage">BANNER图标管理</el-menu-item>
+              <el-menu-item index="/content/contentManage">分类图标管理</el-menu-item>
               <el-menu-item index="/content/bannerList">BANNER列表</el-menu-item>
               <el-menu-item index="/content/shopManage">橱窗商品管理</el-menu-item>
               <el-menu-item index="/content/searchManage">热门搜索管理</el-menu-item>
@@ -160,11 +160,22 @@
         </el-aside>
         <router-view/>
       </el-container>
+      <!--修改密码-->
+      <div>
+        <el-dialog
+          title=""
+          :visible.sync="centerDialogVisible"
+          width="30%"
+          center>
+          <editpass @close="Eclose"></editpass>
+        </el-dialog>
+      </div>
     </el-container>
   </div>
 </template>
 
 <script>
+  import editpass from '@/components/editPass'
   export default {
     data() {
       return {
@@ -173,7 +184,11 @@
         openeds: [],
         authBox: [],
         adminName: '',
+        centerDialogVisible: false
       };
+    },
+    components: {
+      editpass
     },
     methods: {
       //菜单点击事件
@@ -204,15 +219,20 @@
           });
         });
       },
+      //  修改密码
+      editPass() {
+        this.centerDialogVisible = true;
+      },
+      Eclose(){
+        this.centerDialogVisible = false;
+      }
     },
     created() {
       this.adminName = sessionStorage.getItem('admin_name');
-      // this.authBox
       let Boxs = JSON.parse(sessionStorage.getItem("userInfo"))
       for (let i = 0; i < Boxs.length; i++) {
         this.authBox.push(Boxs[i].name);
       }
-      console.log(this.authBox)
     }
   }
 </script>

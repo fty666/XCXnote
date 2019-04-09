@@ -4,13 +4,13 @@
       <div class="font" style="width: 30%">订单统计</div>
       <div style="width: 60%">
         <div class="flex">
-          <div class="head1" style="margin-left: 15%">导出数据</div>
-          <div :class="['head1',yday==true?'bj':'']" style="margin-right: 0px" @click="Xyday()">
+          <div class="head1 Mouse" style="margin-left: 15%" @click="exportFunc('orderTable','订单统计')">导出数据</div>
+          <div :class="['head1','Mouse',yday==true?'bj':'']" style="margin-right: 0px" @click="Xyday()">
             昨天
           </div>
-          <div :class="['head1',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday">按月统计</div>
-          <div :class="['head1',Tday==true?'bj':'']" @click="XTday()">按年统计</div>
-          <div :class="['head1',all==true?'bj':'']" @click="Xall()">全部</div>
+          <div :class="['head1','Mouse',Qday==true?'bj':'']" style="margin-right: 0px" @click="XQday">按月统计</div>
+          <div :class="['head1','Mouse',Tday==true?'bj':'']" @click="XTday()">按年统计</div>
+          <div :class="['head1','Mouse',all==true?'bj':'']" @click="Xall()">全部</div>
           <div class="head1" style="width: 150px;border: 1px solid #ddd">
             <el-date-picker
               v-model="times"
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div style="border: 1px solid #ddd;height: 600px;">
-      <div class="tables">
+      <div class="tables" id="orderTable">
         <el-table
           ref="multipleTable"
           :data="membeList"
