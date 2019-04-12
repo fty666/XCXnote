@@ -180,13 +180,13 @@
                 <div class="Mouse" style="color: #0099ce;padding-left: 5px" @click="editAff(scope.row.id)"
                      v-if="scope.row.consigner_type!='加盟商'">修改归属
                 </div>
-                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="refund(scope.row.id)">订单退款</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="refund(scope.row)">申请退款</div>
               </div>
               <div class="sequence" v-if="scope.row.status=='待收货'">
                 <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
                 <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="flow(scope.row.order_code)">物流信息
                 </div>
-                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="refund(scope.row.id)">订单退款</div>
+                <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="refund(scope.row)">申请退款</div>
               </div>
               <div class="sequence" v-if="scope.row.status=='待评价'">
                 <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
@@ -219,6 +219,54 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
       </el-pagination>
+    </div>
+    <!--订单退款-->
+    <div>
+      <el-dialog
+        title="订单退款"
+        :visible.sync="refundCenter"
+        width="30%"
+        center>
+        <el-table
+          ref="refundIds"
+          :data="refundInfo"
+          tooltip-effect="dark"
+          style="width: 100%"
+          border
+          @selection-change="refundFun">
+          <el-table-column
+            type="selection"
+            width="55">
+          </el-table-column>
+          <el-table-column
+            prop="goods_name"
+            label="商品名称"
+            align="center"
+            min-width="180">
+          </el-table-column>
+          <el-table-column
+            prop="goods_num"
+            label="商品数量"
+            align="center"
+            min-width="120">
+          </el-table-column>
+          <el-table-column
+            prop="detail_status"
+            label="状态"
+            align="center"
+            min-width="120">
+          </el-table-column>
+        </el-table>
+        <div class="flex" style="margin: 20px 0px 20px 20%;" v-if="this.refundShow==true">
+          <div  @click="refundSub()">
+            <el-button type="primary">提交申请</el-button>
+          </div>
+          <div @click="refunRes()" style="margin-left: 20px">
+            <el-button type="info">&nbsp;&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;&nbsp;</el-button>
+          </div>
+        </div>
+
+      </el-dialog>
     </div>
     <!--订单发货-->
     <div>
@@ -262,6 +310,7 @@
   export default {
     data() {
       return {
+        //搜索
         type: '',
         stimes: '',
         order_code: '',
@@ -269,7 +318,7 @@
         alliance_id: '',
         user_mobile: '',
         consigner_type: '',
-        orderType:'',
+        orderType: '',
         multipleSelection: [],
         //页码参数
         page: 1,
@@ -288,7 +337,6 @@
         Close: false,
         all: false,
         Status: '',
-        //  操作
         //订单退货
         centerDialogVisible: false,
         //发起配货
@@ -301,7 +349,12 @@
         orderID: '',
         //  排序
         district: 'desc',
-        Otype: 'deac'
+        Otype: 'deac',
+      //  订单退款
+        refundCenter:false,
+        refundInfo:[],
+        refundIds:'',
+        refundShow:false
       }
     },
     components: {
@@ -321,6 +374,7 @@
         datas.pageSize = this.pageSize;
         this._getData('/api/v1/order/index', datas, data => {
           this.orderList = data.data;
+          console.log(data.data);
           this.totals = data.total;
         })
       },
@@ -354,8 +408,8 @@
         if (this.user_mobile != '') {
           datas.user_mobile = this.user_mobile;
         }
-        if(this.orderType!=''){
-          datas.type=this.orderType;
+        if (this.orderType != '') {
+          datas.type = this.orderType;
         }
         this.getInfo(datas);
       },
@@ -366,7 +420,7 @@
         this.goods_name = '';
         this.consigner_type = '';
         this.user_mobile = '';
-        this.orderType='';
+        this.orderType = '';
         this.getOrder();
       },
       //查看订单详情
@@ -428,27 +482,44 @@
       },
       //订单退款
       refund(val) {
-        this.$confirm('是否退款此订单?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this._getData('/api/v1/order/refund', {
-              id: val,
-            },
-            data => {
-              this.$message({
-                type: 'success',
-                message: '操作成功'
-              });
-              this.getOrder();
-            })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消'
+        this.refundInfo=val.goods_info;
+        if(val.goods_info[0].detail_status=='正常'){
+          this.refundShow=true;
+        }
+        this.refundCenter=true;
+        console.log(val)
+      },
+      refundFun(val){
+        for (let i = 0; i < val.length; i++) {
+          this.refundIds +=val[i].detail_id + ',';
+        }
+        console.log(this.refundIds)
+      },
+      refundSub(){
+          this.$confirm('是否申请此订单退款?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this._getData('/api/v1/order_detail/applyRefund', {
+                ids: this.refundIds,
+              },
+              data => {
+                this.$message({
+                  type: 'success',
+                  message: '申请成功，到退款处理操作'
+                });
+                this.getOrder();
+              })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            });
           });
-        });
+      },
+      refunRes(){
+        this.refundCenter=false;
       },
       //删除订单
       del(val) {

@@ -90,7 +90,7 @@ a{
 /*返回样式*/
 .clos {
   text-align: left;
-  width: 130px;
+  width: 100px;
   height: 30px;
   border: 1px solid black;
   font-size: 15px;

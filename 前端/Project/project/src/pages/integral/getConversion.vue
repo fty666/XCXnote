@@ -81,21 +81,21 @@
           prop="mobile"
           label="用户账户"
           align="center"
-          min-width="120">
+          min-width="110">
         </el-table-column>
         <el-table-column
           prop="use_integral"
           label="消耗积分"
           sortable
           align="center"
-          min-width="90">
+          min-width="100">
         </el-table-column>
         <el-table-column
           prop="integral_money"
           label="抵扣金额"
           sortable
           align="center"
-          min-width="90">
+          min-width="100">
         </el-table-column>
         <el-table-column
           prop="address"

@@ -57,7 +57,7 @@
           label="加盟商ID"
           sortable
           align="center"
-          min-width="90">
+          min-width="100">
         </el-table-column>
         <el-table-column
           prop="district"
@@ -69,7 +69,7 @@
           prop="name"
           label="加盟商名称"
           align="center"
-          min-width="150">
+          min-width="110">
         </el-table-column>
         <el-table-column
           prop="address"
@@ -107,7 +107,7 @@
           label="有缺货商品"
           sortable
           align="center"
-          min-width="95">
+          min-width="120">
         </el-table-column>
         <el-table-column
           label="操作"

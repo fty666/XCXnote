@@ -101,7 +101,7 @@
           prop="mobile"
           align="center"
           label="用户账户"
-          min-width="150">
+          min-width="120">
         </el-table-column>
         <el-table-column
           prop="refund_price"
@@ -120,16 +120,10 @@
           sortable="custom"
           prop="status"
           label="申请状态"
-          min-width="80">
+          min-width="110">
           <template slot-scope="scope">
             {{scope.row.status|status}}
           </template>
-        </el-table-column>
-        <el-table-column
-          prop="mark"
-          align="center"
-          label="分类"
-          min-width="80">
         </el-table-column>
         <el-table-column
           prop="update_time"
@@ -157,7 +151,6 @@
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
         :page-sizes="[20, 50, 100]"
-        :page-size="5"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
       </el-pagination>
@@ -294,6 +287,7 @@
       },
       //  查看退款信息
       look(val) {
+        console.log(val);
         sessionStorage.setItem('refoundId', val.id);
         sessionStorage.setItem('StatusD', val.status)
         this.$router.push({name: 'RefundInfo'})
@@ -364,6 +358,7 @@
         datas.pageSize = this.pageSize;
         this._getData('/api/v1/order_detail/refund', datas,
           data => {
+          console.log(data)
             this.refundList = data.data;
             this.totals = data.total;
           })

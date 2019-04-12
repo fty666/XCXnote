@@ -121,19 +121,19 @@
             prop="type"
             label="订单类型"
             align="center"
-            min-width="160">
+            min-width="140">
           </el-table-column>
           <el-table-column
             prop="user_code"
             label="订单编号"
             align="center"
-            min-width="180">
+            min-width="140">
           </el-table-column>
           <el-table-column
             prop="create_time"
             label="提交时间"
             align="center"
-            min-width="160">
+            min-width="140">
           </el-table-column>
           <el-table-column
             prop="goods_names"
@@ -145,13 +145,13 @@
             prop="payment_price"
             label="金额"
             align="center"
-            min-width="120">
+            min-width="100">
           </el-table-column>
           <el-table-column
             prop="status"
             label="订单状态"
             align="center"
-            min-width="160">
+            min-width="90">
           </el-table-column>
           <el-table-column
             align="center"
@@ -204,7 +204,7 @@
             min-width="180">
           </el-table-column>
         </el-table>
-        <div class="pags" >
+        <div class="pags">
           <el-pagination
             @size-change="JhandleSizeChange"
             @current-change="JhandleCurrentChange"
@@ -242,8 +242,8 @@
         JcurrentPage4: 1,
       }
     },
-    watch:{
-      Otype(v,o){
+    watch: {
+      Otype(v, o) {
         this.selec();
       }
     },
@@ -261,8 +261,8 @@
       //积分记录
       getInter() {
         this._getData('/api/v1/integral_record/index', {
-          page:this.Jpage,
-          pageSize:this.JpageSize,
+          page: this.Jpage,
+          pageSize: this.JpageSize,
           user_code: this.userInfo.user_code,
         }, data => {
           this.integralList = data.data;
@@ -292,9 +292,9 @@
           this.totals = data.total;
         })
       },
-      rest(){
+      rest() {
         this.getorder();
-        this.Otype='';
+        this.Otype = '';
       },
       //每页显示多少数据
       handleSizeChange(val) {
@@ -324,10 +324,14 @@
         this.Jpage = val;
         this.getInter();
       },
-    //  查看订单
-      look(val){
+      //  查看订单
+      look(val) {
         sessionStorage.setItem('orderId', val.id);
-        sessionStorage.setItem('page', '经销商信息')
+        if (sessionStorage.getItem('page') == '资质审核') {
+          sessionStorage.setItem('page', '资质审核')
+        } else {
+          sessionStorage.setItem('page', '经销商信息')
+        }
         this.$router.push({name: 'orderInfo'})
       }
     },

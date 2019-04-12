@@ -48,10 +48,10 @@
           prop="account"
           label="权限"
           align="center"
-          min-width="197">
+          min-width="177">
           <template slot-scope="scope">
             <div class="sequence">
-              <div v-for="(item,index) in scope.row.user_auth" style="width: 26%;">
+              <div v-for="(item,index) in scope.row.user_auth" style="width: 50%;">
                 {{item}}
               </div>
             </div>
@@ -61,13 +61,13 @@
           prop="create_time"
           label="添加时间"
           align="center"
-          min-width="120">
+          min-width="130">
         </el-table-column>
         <el-table-column
           prop="update_time"
           label="修改时间"
           align="center"
-          min-width="120">
+          min-width="130">
         </el-table-column>
         <el-table-column
           prop="address"

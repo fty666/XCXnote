@@ -83,6 +83,9 @@
       <router-link to="/dealer/dealerInfo" v-if="orderManag==5">
         <div class="bian" style="margin: 40px 20px 0px 0px">返回列表</div>
       </router-link>
+      <router-link to="/dealer/dealerAudit" v-if="orderManag==6">
+        <div class="bian" style="margin: 40px 20px 0px 0px">返回列表</div>
+      </router-link>
     </div>
     <!--选择信息-->
     <div class="flex" style="margin-top: 30px;">
@@ -160,7 +163,6 @@
     },
     methods: {
       orderInfos(orderInfos) {
-        console.log(orderInfos);
         this.order = orderInfos;
       },
       //经销商信息
@@ -190,6 +192,9 @@
             break;
           case'经销商信息':
             this.orderManag = '5';
+            break;
+          case '资质审核':
+            this.orderManag='6';
             break;
         }
       },

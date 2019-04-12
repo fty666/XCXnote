@@ -77,7 +77,7 @@
           align="center"
           sortable
           prop="create_time"
-          min-width="130">
+          min-width="160">
         </el-table-column>
         <el-table-column
           prop="user_id"
@@ -89,7 +89,7 @@
           prop="user_mobile"
           label="账号"
           align="center"
-          min-width="150">
+          min-width="120">
         </el-table-column>
         <el-table-column
           prop="nickname"
@@ -240,6 +240,7 @@
       infos(val) {
         sessionStorage.setItem('userCode', val.user_code);
         sessionStorage.setItem('dealerId', val.user_id);
+        sessionStorage.setItem('page', '资质审核');
         this.$router.push({name: 'auditInfo'})
       },
       //  搜索

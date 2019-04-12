@@ -83,7 +83,7 @@
             userCode: sessionStorage.getItem('userCode'),
           },
           data => {
-            if(data[0].status !='通过'){
+            if(data[0].status =='申请'){
               this.pass=true;
             }
             this.auditList=data;

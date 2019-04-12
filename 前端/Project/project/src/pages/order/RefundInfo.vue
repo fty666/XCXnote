@@ -100,11 +100,26 @@
           <div>{{this.orderInfo. remark}}</div>
         </div>
       </div>
-      <div class="btn" style="margin:30px 0px 5% 30% " @click="submit()" v-if="refunds==4">
+      <div style="width: 80%;margin-left: 10%"
+           v-if="this.orderInfo.status=='申请退款' || this.orderInfo.status=='换货中'">
+        <el-input
+          type="textarea"
+          :rows="3"
+          placeholder="请输入订单备注"
+          v-model="Tmark">
+        </el-input>
+      </div>
+      <div class="btn" style="margin:30px 0px 5% 30% " @click="submit()"
+           v-if="this.orderInfo.status=='申请退款' || this.orderInfo.status=='换货中'">
         <el-button type="primary">确认退款</el-button>
       </div>
-      <div class="btn2" style="margin:30px 0px 5% 2% " @click="esc()" v-if="refunds==4">
-        <el-button type="danger">拒绝退款</el-button>
+      <div class="btn2" style="margin:30px 0px 5% 2% " @click="esc()"
+           v-if="this.orderInfo.status=='申请退款' || this.orderInfo.status=='换货中'">
+        <el-button type="info">拒绝退款</el-button>
+      </div>
+      <div class="btn2" style="margin:30px 0px 5% 2% " @click="receive()"
+           v-if="this.orderInfo.status=='申请退款' || this.orderInfo.status=='换货中'">
+        <el-button type="danger">收到货退款</el-button>
       </div>
     </div>
     <!--订单信息-->
@@ -210,7 +225,8 @@
         input: '',
         bill: false,
         detailId: "",
-        refunds: ''
+        refunds: '',
+        Tmark:''
       }
     },
     methods: {
@@ -237,8 +253,13 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this._getData('/api/v1/order/refund', {id: this.detailId},
+          this._getData('/api/v1/order_detail/refundDeal', {
+              detail_id: this.detailId,
+              admin_id: sessionStorage.getItem('userID'),
+              mark:this.Tmark
+            },
             data => {
+              this.Tmark='';
               this.$message({
                 type: 'success',
                 message: '操作成功'
@@ -252,11 +273,51 @@
         });
       },
       esc() {
-        this.$message({
-          type: 'info',
-          message: '已取消'
+        this.$confirm('是否拒绝退款此订单?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/order_detail/rejectRefund', {
+              id: this.detailId,
+              mark:this.Tmark
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
         });
       },
+    //  收到货后退款
+      receive(){
+        this.$confirm('是否收到货，确认退款?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/order_detail/confirmRefund', {
+              id: this.detailId,
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      }
     },
     created() {
       this.getOrder();
@@ -283,7 +344,7 @@
     width: 95%;
     height: 250px;
     margin: 10px 0px 0px 10px;
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
   }
   
   .fonts {

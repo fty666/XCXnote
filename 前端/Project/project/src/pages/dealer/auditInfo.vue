@@ -4,20 +4,20 @@
       <div style="margin-left: 60px">
         <img :src="imggerUrl+this.dealerList.photo"  class="imgs">
       </div>
-      <div class="sequence" style="width: 70%;margin: 30px 0px 0px 0px">
+      <div class="sequence" style="width: 72%;margin: 30px 0px 0px 0px">
         <div class="flex pian" style="margin-left: 30px">
-          <div>用户ID：</div>
+          <div class="fh">用户ID：</div>
           <div>{{this.dealerList.id}}</div>
         </div>
-        <div class="flex pian">
+        <div class="flex pian" style="width: 200px">
           <div>用户账号：</div>
-          <div>{{this.dealerList.mobile}}</div>
+          <div class="fh">{{this.dealerList.mobile}}</div>
         </div>
-        <div class="flex pian">
+        <div class="flex pian" style="width: 230px">
           <div>注册时间：</div>
-          <div>{{this.dealerList.create_time}}</div>
+          <div class="fh">{{this.dealerList.create_time}}</div>
         </div>
-        <div class="flex pian">
+        <div class="flex pian" style="margin-left: 10px">
           <div>所属地区：</div>
           <div>{{this.dealerList.alliance}}</div>
         </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="flex pian">
           <div>生日：</div>
-          <div>{{this.dealerList.birthday}}</div>
+          <div class="fh">{{this.dealerList.birthday}}</div>
         </div>
         <div class="flex pian">
           <div>性别：</div>
@@ -35,7 +35,7 @@
         </div>
         <div class="flex pian">
           <div>余额：</div>
-          <div>{{this.dealerList.mobile}}</div>
+          <div class="fh">{{this.dealerList.mobile}}</div>
         </div>
       </div>
       <router-link to="/dealer/dealerAudit">
@@ -44,10 +44,10 @@
     </div>
     <!--选择信息-->
     <div class="flex" style="margin-top: 30px;">
-      <div :class="[ 'state','flex', dealer==true?'bj':'']" @click="dealerInfo()">
+      <div :class="[ 'state','flex','Mouse', dealer==true?'bj':'']" @click="dealerInfo()">
         <div class="state2" >经销商信息</div>
       </div>
-      <div :class="[ 'state','flex', members==true?'bj':'']" @click="member()" style="margin-left: 0px">
+      <div :class="[ 'state','flex','Mouse', members==true?'bj':'']" @click="member()" style="margin-left: 0px">
         <div class="state2" >会员信息</div>
       </div >
     </div>
@@ -125,8 +125,11 @@
   }
   
   .pian {
-    width: 23%;
+    width: 20%;
     text-align: left;
     /*margin-left: 10px;*/
+  }
+  .fh{
+    line-height: 22px;
   }
 </style>

@@ -44,7 +44,7 @@
           :data="classList"
           highlight-current-row
           border
-          style="width: 80%;margin-bottom: 30px">
+          style="width: 90%;margin-bottom: 30px">
           <el-table-column
             type="index"
             align="center"
