@@ -11,13 +11,21 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  /*margin-left: 40px;*/
+/*#app {*/
+  /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
+  /*-webkit-font-smoothing: antialiased;*/
+  /*-moz-osx-font-smoothing: grayscale;*/
+  /*text-align: center;*/
+  /*color: #2c3e50;*/
+  /*!*margin-left: 40px;*!*/
+/*}*/
+#app{
+  width: 100%;
+  height: 100%;
+}
+* {
+  margin: 0;
+  padding: 0;
 }
 a{
   color:black;
@@ -53,6 +61,11 @@ a{
 .body{
   width: 82%;
   margin-left: 40px;
+}
+.bor{
+  border-bottom:1px solid #ddd;
+  border-left:1px solid #ddd;
+  border-right:1px solid #ddd;
 }
 .Tabless{
   border: 1px solid #ddd;
@@ -235,6 +248,10 @@ a{
   margin: 10px 10px 0px 0px;
   text-align: right
 }
+.pags{
+  margin: 10px 10px 0px 0px;
+  text-align: right
+}
 .btn{
   width: 100px;
   height: 40px;
@@ -282,6 +299,9 @@ a{
 .imgs{
   width: 150px;
   height: 150px;
+}
+body .el-table th.gutter {
+  display: table-cell !important;
 }
 /*修改样式完*/
 </style>

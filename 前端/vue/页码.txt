@@ -1,7 +1,7 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
+        :current-page.sync="page"
         :page-sizes="[20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
@@ -14,7 +14,6 @@
 			//页码参数
 			page: 1,
 			pageSize: 20,
-			currentPage4: 1,
 			totals: 20
 		}
 	}

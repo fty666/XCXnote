@@ -22,16 +22,16 @@
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
       </div>
       <div class="btn2" @click="res()">
-        <el-button type="primary" icon="el-icon-refresh">重置</el-button>
+        <el-button class="buttons3" icon="el-icon-refresh">重置</el-button>
       </div>
     
     </div>
     <!--表格头-->
     <div class="head join">
       <router-link to="/join/addJoin">
-        <div class="head1 flex" style="margin-left: 20px">
+        <div class="head1 flex" style="width:120px;margin-left: 20px">
           <div><img src="@/img/add.png" class="addimg"></img></div>
-          <div style="font-size: 11px">&nbsp;添加加盟商</div>
+          <div style="font-size: 11px;color: black">&nbsp;添加加盟商</div>
         </div>
       </router-link>
       <div class="right">
@@ -116,7 +116,8 @@
           show-overflow-tooltip>
           <template slot-scope="scope">
             <div class="sequence" style="width: 120px">
-              <div style="color: #0099ce;padding-left: 15px" class="Mouse" @click="stock(scope.row.warehouseId)">库存</div>
+              <div style="color: #0099ce;padding-left: 15px" class="Mouse" @click="stock(scope.row.warehouseId)">库存
+              </div>
               <div style="color: #0099ce;padding-left: 10px" class="Mouse" @click="edit(scope.row)">编辑</div>
               <div style="color: #0099ce;padding-left: 16.5px" class="Mouse" @click="order(scope.row)">订货</div>
               <div style="color: #0099ce;padding-left: 10px" class="Mouse" @click="del(scope.row.id)">删除</div>
@@ -124,11 +125,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pags">
+      <div class="pag">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage4"
+          :current-page.sync="page"
           :page-sizes="[20, 50, 100]"
           layout="total, sizes, prev, pager, next, jumper"
           :total=totals>
@@ -148,7 +149,6 @@
         joinList: [],
         page: 1,
         pageSize: 20,
-        currentPage4: 1,
         totals: 20,
         id: '',
         name: '',
@@ -175,7 +175,6 @@
       order(val) {
         sessionStorage.setItem('joinInfo', JSON.stringify(val));
         this.$router.push({name: 'joinOrder'});
-        
       },
       //编辑
       edit(val) {
@@ -184,6 +183,7 @@
       },
       //搜索
       search() {
+        this.page = 1;
         var data = {};
         if (this.id != '') {
           data.id = this.id;
@@ -207,6 +207,7 @@
       },
       //重置
       res() {
+        this.page = 1;
         this.id = '';
         this.name = '';
         this.district = '';
@@ -225,7 +226,26 @@
       handleCurrentChange(val) {
         this.page = val;
         if (this.id != '' || this.name != '' || this.district != '') {
-          this.search();
+          var data = {};
+          if (this.id != '') {
+            data.id = this.id;
+          }
+          if (this.name != '') {
+            data.name = this.name;
+          }
+          if (this.district != '') {
+            data.district = this.district;
+          }
+          this._getData('/api/v1/alliance/index', {
+            page: this.page,
+            pageSize: this.pageSize,
+            id: data.id,
+            name: data.name,
+            district: data.district
+          }, data => {
+            this.joinList = data.data;
+            this.totals = data.total;
+          })
         } else {
           this.getJoin();
         }

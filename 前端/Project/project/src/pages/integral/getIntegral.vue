@@ -16,8 +16,8 @@
       <div class="input">
         <el-date-picker
           v-model="times"
-          type="datetimerange"
-          style="width: 230px"
+          type="daterange"
+          style="width: 300px"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           value-format="yyyy-MM-dd"
@@ -82,7 +82,7 @@
           min-width="150">
         </el-table-column>
         <el-table-column
-          prop="get_integral"
+          prop="use_integral"
           label="领取积分"
           sortable
           align="center"
@@ -104,7 +104,7 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
+        :current-page.sync="page"
         :page-sizes="[20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
@@ -120,7 +120,6 @@
         //参数
         page: 1,
         pageSize: 20,
-        currentPage4: 1,
         totals: 20,
         orderList: [],
         user_mobile: '',
@@ -155,7 +154,7 @@
       handleSizeChange(val) {
         this.pageSize = val;
         if (this.user_mobile != '' || this.goods_name != '' || this.times != '') {
-          this.search();
+          this.Xpage();
         } else {
           this.IntegralOrder();
         }
@@ -164,13 +163,14 @@
       handleCurrentChange(val) {
         this.page = val;
         if (this.user_mobile != '' || this.goods_name != '' || this.times != '') {
-          this.search();
+          this.Xpage();
         } else {
           this.IntegralOrder();
         }
       },
       //  搜索
       search() {
+        this.page = 1;
         var data = {};
         if (this.user_mobile != '') {
           data.user_mobile = this.user_mobile;
@@ -178,9 +178,38 @@
         if (this.goods_name != '') {
           data.goods_name = this.goods_name;
         }
-        if (this.times != '') {
-          data.start_time = this.times[0];
-          data.end_time = this.times[1];
+        if (this.times != null) {
+          if (this.times != '') {
+            data.start_time = this.times[0];
+            data.end_time = this.times[1];
+          }
+        }
+        this._getData('/api/v1/integral_record/getOrderIntegral', {
+          page: this.page,
+          pageSize: this.pageSize,
+          goods_name: data.goods_name,
+          user_mobile: data.user_mobile,
+          start_time: data.start_time,
+          end_time: data.end_time
+        }, data => {
+          this.orderList = data.data;
+          this.totals = data.total;
+        })
+      },
+      //页码搜索
+      Xpage() {
+        var data = {};
+        if (this.user_mobile != '') {
+          data.user_mobile = this.user_mobile;
+        }
+        if (this.goods_name != '') {
+          data.goods_name = this.goods_name;
+        }
+        if (this.times != null) {
+          if (this.times != '') {
+            data.start_time = this.times[0];
+            data.end_time = this.times[1];
+          }
         }
         this._getData('/api/v1/integral_record/getOrderIntegral', {
           page: this.page,
@@ -196,6 +225,7 @@
       },
       //  重置
       res() {
+        this.page = 1;
         this.user_mobile = '';
         this.goods_name = '';
         this.times = '';

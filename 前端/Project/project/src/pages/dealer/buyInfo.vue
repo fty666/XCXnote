@@ -3,7 +3,7 @@
     <!--标头-->
     <div class="spaces">
       <div class="clos Mouse" @click="remark()">备注订单</div>
-      <router-link to="/dealer/dealerManage">
+      <router-link to="/dealer/dealerInfo">
         <div class="clos" style="margin-right: 30px">返回列表</div>
       </router-link>
     </div>
@@ -36,7 +36,7 @@
         </div>
         <div class="flex dfont">
           <div>交易号：</div>
-          <div>{{this.orderInfo.order_uuid}}</div>
+          <div>{{this.orderInfo.business_no}}</div>
         </div>
         <div class="flex dfont" style="width: 100%;">
           <div>用户备注：</div>
@@ -190,6 +190,7 @@
           id: sessionStorage.getItem('dealID')
         }, data => {
           this.goodInfo = [];
+          data.mobile=data.user.mobile;
           this.orderInfo = data;
           for (var x in data.goods) {
             this.goodInfo.push(data.goods[x])

@@ -1,7 +1,7 @@
 <template>
   <div class="body" style="text-align: left;">
     <div style="margin: 5% 12%;">
-      <h2>商品编号</h2>
+      <!--<h2>商品编号</h2>-->
       <el-form :inline="true" :model="goodsForm1" :rules="rules" ref="goodsForm1" label-width="100px">
         <el-form-item label="商品分类">
           <el-select v-model="yiji" placeholder="请选择商品分类" @change="getErji">
@@ -429,13 +429,13 @@
                   subObj.genre8 = this.goodsForm4.genre8;
                 }
                 subObj.status = 1;
-                console.log(subObj)
                 this._getData('/api/v1/goods/create', subObj, data => {
                   this.$message({
                     showClose: true,
                     message: '商品添加成功',
                     type: 'success'
                   });
+                  this.$router.push({name:'shopList'})
                   this.$refs.goodsForm1.resetFields();
                   if (this.yiji == '洋酒') {
                     this.$refs.goodsForm2.resetFields();

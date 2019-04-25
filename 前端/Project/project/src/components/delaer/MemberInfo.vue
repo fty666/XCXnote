@@ -124,7 +124,7 @@
             min-width="140">
           </el-table-column>
           <el-table-column
-            prop="user_code"
+            prop="order_code"
             label="订单编号"
             align="center"
             min-width="140">
@@ -168,7 +168,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
-          :page-sizes="[20, 50, 100]"
+          :page-sizes="[10, 20, 50]"
           layout="total, sizes, prev, pager, next, jumper"
           :total=totals>
         </el-pagination>
@@ -208,8 +208,8 @@
           <el-pagination
             @size-change="JhandleSizeChange"
             @current-change="JhandleCurrentChange"
-            :current-page="JcurrentPage4"
-            :page-sizes="[20, 50, 100]"
+            :current-page.sync="JcurrentPage4"
+            :page-sizes="[10, 20, 50]"
             layout="total, sizes, prev, pager, next, jumper"
             :total=interTotal>
           </el-pagination>
@@ -256,17 +256,7 @@
         }, data => {
           this.userInfo = data;
           this.getorder();
-        })
-      },
-      //积分记录
-      getInter() {
-        this._getData('/api/v1/integral_record/index', {
-          page: this.Jpage,
-          pageSize: this.JpageSize,
-          user_code: this.userInfo.user_code,
-        }, data => {
-          this.integralList = data.data;
-          this.interTotal = data.total;
+          this.getInter();
         })
       },
       //订单记录
@@ -324,6 +314,17 @@
         this.Jpage = val;
         this.getInter();
       },
+      //积分记录
+      getInter() {
+        this._getData('/api/v1/integral_record/index', {
+          page: this.Jpage,
+          pageSize: this.JpageSize,
+          user_code: this.userInfo.user_code,
+        }, data => {
+          this.integralList = data.data;
+          this.interTotal = data.total;
+        })
+      },
       //  查看订单
       look(val) {
         sessionStorage.setItem('orderId', val.id);
@@ -337,7 +338,6 @@
     },
     created() {
       this.userIn();
-      this.getInter();
     }
   }
 </script>

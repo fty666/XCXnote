@@ -14,27 +14,16 @@
       <div class="font">购入日期：</div>
       <div class="input">
         <el-date-picker
-          v-model="start_time"
-          style="width: 150px;"
-          type="date"
+          v-model="Stime"
           value-format="yyyy-MM-dd"
-          placeholder="选择日期">
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
         </el-date-picker>
       </div>
-      
-      <div class="font" style="margin-left: 4%">至</div>
-      <div class="input" style="margin-left: 2%">
-        <el-date-picker
-          v-model="end_time"
-          value-format="yyyy-MM-dd"
-          style="width: 150px;"
-          type="date"
-          placeholder="选择日期">
-        </el-date-picker>
-      </div>
-      
       <!--按钮-->
-      <div class="btn" style="margin-left:10%" @click="search()">
+      <div class="btn" style="margin-left:20%" @click="search()">
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
       </div>
       <div class="btn2" style="margin-left: 5px" @click="res()">
@@ -198,15 +187,14 @@
         Pterrace: [],
         user_mobile: '',
         goods_name: '',
-        start_time: '',
-        end_time: ''
+        Stime: []
       }
     },
     methods: {
       manage() {
         this.centerDialogVisible = true;
       },
-      esc(){
+      esc() {
         this.centerDialogVisible = false;
       },
       //获取平台强制回购
@@ -232,8 +220,8 @@
       //第几页
       PhandleCurrentChange(val) {
         this.page = val;
-        if (this.goods_name != '' || this.user_mobile != '' || this.start_time != '' || this.end_time != '') {
-          this.search();
+        if (this.goods_name != '' || this.user_mobile != '' || this.Stime != '') {
+          this.Xpag();
         } else {
           this.getdealer();
         }
@@ -269,10 +257,6 @@
             }, data => {
             })
           }
-          this.$message({
-            type: 'success',
-            message: '操作成功'
-          });
           this.getdealer();
         }).catch(() => {
           this.$message({
@@ -283,6 +267,7 @@
       },
       //搜索
       search() {
+        this.page = 1;
         var data = {};
         if (this.goods_name != '') {
           data.goods_name = this.goods_name;
@@ -290,17 +275,40 @@
         if (this.user_mobile != '') {
           data.user_mobile = this.user_mobile;
         }
-        if (this.start_time != '') {
-          data.start_time = this.start_time;
-        }
-        if (this.end_time != '') {
-          data.end_time = this.end_time;
+        if (this.Stime == null) {
+        } else {
+          if (this.Stime.length > 0) {
+            data.start_time = this.Stime[0];
+            data.end_time = this.Stime[1];
+          }
         }
         data.page = this.page;
         data.pageSize = this.pageSize;
         //获取平台
         this._getData('/api/v1/dealer/buyback', data, data => {
-          console.log(data)
+          this.Pterrace = data.data;
+          this.totals = data.total;
+        })
+      },
+      Xpag() {
+        var data = {};
+        if (this.goods_name != '') {
+          data.goods_name = this.goods_name;
+        }
+        if (this.user_mobile != '') {
+          data.user_mobile = this.user_mobile;
+        }
+        if (this.Stime == null) {
+        } else {
+          if (this.Stime.length > 0) {
+            data.start_time = this.Stime[0];
+            data.end_time = this.Stime[1];
+          }
+        }
+        data.page = this.page;
+        data.pageSize = this.pageSize;
+        //获取平台
+        this._getData('/api/v1/dealer/buyback', data, data => {
           this.Pterrace = data.data;
           this.totals = data.total;
         })
@@ -309,8 +317,8 @@
         this.goods_name = '';
         this.user_mobile = '';
         this.user_mobile = '';
-        this.start_time = ''
-        this.end_time = '';
+        this.Stime = [];
+        this.page = 1;
         this.getdealer();
       }
     },

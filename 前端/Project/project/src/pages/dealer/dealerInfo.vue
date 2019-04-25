@@ -2,7 +2,7 @@
   <div class="body">
     <div class="flex xiu" style="height: 120px;margin-top: 40px">
       <div style="margin-left: 60px">
-        <img :src="imggerUrl+this.dealerList.photo"  class="imgs">
+        <img :src="imggerUrl+this.dealerList.photo" class="imgs">
       </div>
       <div class="sequence" style="width: 70%;margin: 30px 0px 0px 0px">
         <div class="flex pian" style="margin-left: 30px">
@@ -35,7 +35,7 @@
         </div>
         <div class="flex pian">
           <div>余额：</div>
-          <div>{{this.dealerList.mobile}}</div>
+          <div>{{blance}}</div>
         </div>
       </div>
       <router-link to="/dealer/dealerList">
@@ -56,7 +56,7 @@
       <Dinfo ref="headerChild" :deInfo="dealerList"></Dinfo>
     </div>
     <div v-else>
-      <MemberInfo ></MemberInfo>
+      <MemberInfo></MemberInfo>
     </div>
   </div>
 </template>
@@ -76,10 +76,11 @@
         //  经销商信息选择
         dealer: true,
         members: false,
-        dealerList:{},
-      //  判断审核
-        audit:false,
-        userCodeL:''
+        dealerList: {},
+        //  判断审核
+        audit: false,
+        userCodeL: '',
+        blance: ''
       }
     },
     methods: {
@@ -93,7 +94,8 @@
         this._getData('/api/v1/user/show', {
           id: sessionStorage.getItem('dealerId'),
         }, data => {
-          this.dealerList=data;
+          this.dealerList = data;
+          this.blance = data.count[0].balance;
         })
       },
       //  会员信息
@@ -102,7 +104,7 @@
         this.members = true;
       },
     },
-    created(){
+    created() {
       this.getDealer();
     }
   }

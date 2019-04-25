@@ -23,27 +23,16 @@
       <div class="font">购入日期：</div>
       <div class="input">
         <el-date-picker
-          v-model="value1"
-          style="width: 150px;"
-          type="date"
+          v-model="stime"
+          type="daterange"
           value-format="yyyy-MM-dd"
-          placeholder="选择日期">
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
         </el-date-picker>
       </div>
-      
-      <div class="font" style="margin-left: 4%">至</div>
-      <div class="input" style="margin-left: 2%">
-        <el-date-picker
-          v-model="value2"
-          value-format="yyyy-MM-dd"
-          style="width: 150px;"
-          type="date"
-          placeholder="选择日期">
-        </el-date-picker>
-      </div>
-      
       <!--按钮-->
-      <div class="btn" style="margin-left:10%" @click="search()">
+      <div class="btn" style="margin-left:15%" @click="search()">
         <el-button type="primary" icon="el-icon-search">搜索</el-button>
       </div>
       <div class="btn2" style="margin-left: 5px" @click="res()">
@@ -139,6 +128,7 @@
       return {
         input: '',
         value1: '',
+        stime: '',
         multipleSelection: [],
         centerDialogVisible: false,
         //页码参数
@@ -151,19 +141,26 @@
         Jterrace: [],
         user_mobile: '',
         goods_name: '',
-        value1: "",
         value2: ''
       }
     },
     methods: {
       JPhandleSizeChange(val) {
         this.pageSize = val;
-        this.getJin();
+        if (this.goods_name != '' || this.user_mobile != '' || this.Stime != '') {
+          this.Xpag()
+        } else {
+          this.getJin();
+        }
       },
       //第几页
       JPhandleCurrentChange(val) {
         this.page = val;
-        this.getJin();
+        if (this.goods_name != '' || this.user_mobile != '' || this.Stime != '') {
+          this.Xpag()
+        } else {
+          this.getJin();
+        }
       },
       //获取销商申请回购
       getJin() {
@@ -179,8 +176,7 @@
       },
       //搜索
       search() {
-        console.log(value1)
-        console.log(value2)
+        this.page = 1;
         var data = this.goods_name;
         if (this.goods_name != '') {
           data.goods_name = this.goods_name;
@@ -188,22 +184,53 @@
         if (this.user_mobile != '') {
           data.user_mobile = this.user_mobile;
         }
-        if (this.value1 != '') {
-          data.start_time = this.value1;
-        }
-        if (this.value2 != '') {
-          data.end_time = this.end_time;
+        if (this.Stime == null) {
+        } else {
+          if (this.Stime.length > 0) {
+            data.start_time = this.Stime[0];
+            data.end_time = this.Stime[1];
+          }
         }
         //获取平台
         this._getData('/api/v1/buyback_record/dealerApply', {
           page: this.page,
           pageSize: this.pageSize
         }, data => {
-          console.log(data)
           this.Jterrace = data.data;
           this.totals = data.total;
         })
       },
+      Xpag() {
+        var data = this.goods_name;
+        if (this.goods_name != '') {
+          data.goods_name = this.goods_name;
+        }
+        if (this.user_mobile != '') {
+          data.user_mobile = this.user_mobile;
+        }
+        if (this.Stime == null) {
+        } else {
+          if (this.Stime.length > 0) {
+            data.start_time = this.Stime[0];
+            data.end_time = this.Stime[1];
+          }
+        }
+        //获取平台
+        this._getData('/api/v1/buyback_record/dealerApply', {
+          page: this.page,
+          pageSize: this.pageSize
+        }, data => {
+          this.Jterrace = data.data;
+          this.totals = data.total;
+        })
+      },
+      res() {
+        this.goods_name = '';
+        this.user_mobile = '';
+        this.Stime = '';
+        this.page = 1;
+        this.getJin();
+      }
     },
     created() {
       this.getJin();

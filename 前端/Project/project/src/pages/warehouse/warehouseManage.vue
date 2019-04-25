@@ -1,14 +1,14 @@
 <template>
   <div class="body">
     <div class="flex whiteT">
-      <div class="font">ID：</div>
+      <div class="font">仓库编号：</div>
       <div class="input">
-        <el-input v-model="id" style="width: 150px" placeholder="请输入ID"></el-input>
+        <el-input v-model="id" style="width: 150px" placeholder="请输入仓库编号"></el-input>
       </div>
       
       <div class="font" style="margin-left: 50px">名称：</div>
       <div class="input">
-        <el-input v-model="name" style="width: 250px" placeholder="请输入商品名称"></el-input>
+        <el-input v-model="name" style="width: 250px" placeholder="请输入仓库名"></el-input>
       </div>
       
       <!--按钮-->
@@ -23,9 +23,9 @@
     <!--表格头-->
     <div class="head join">
       <div class="head1" style="margin-left: 20px" @click="manage()">
-        <div class="flex">
+        <div class="flex" style="width: 200px">
           <div><img src="@/img/add.png" class="addimg" alt=""></div>
-          <div class="Mouse">&nbsp;&nbsp;添加仓库</div>
+          <div class="Mouse" style="width: 70px">&nbsp;&nbsp;添加仓库</div>
         </div>
       </div>
       <div class="head1 Mouse" style="margin-right: 50px" @click="batch()">批量删除</div>
@@ -128,13 +128,13 @@
           page: this.page,
           pageSize: this.pageSize
         }, data => {
-          console.log(data)
           this.wareList = data.data;
           this.totals = data.total;
         })
       },
       //搜索
       search() {
+        this.page=1;
         var data = {};
         if (this.id != '') {
           data.id = this.id;
@@ -148,13 +148,31 @@
           id: data.id,
           name: data.name
         }, data => {
-          console.log(data)
+          this.wareList = data.data;
+          this.totals = data.total;
+        })
+      },
+      Xpag(){
+        var data = {};
+        if (this.id != '') {
+          data.id = this.id;
+        }
+        if (this.name != '') {
+          data.name = this.name;
+        }
+        this._getData('/api/v1/warehouse/index', {
+          page: this.page,
+          pageSize: this.pageSize,
+          id: data.id,
+          name: data.name
+        }, data => {
           this.wareList = data.data;
           this.totals = data.total;
         })
       },
       //重置
       res() {
+        this.pag=1;
         this.id = '';
         this.name = '';
         this.getWare();
@@ -219,7 +237,7 @@
       handleSizeChange(val) {
         this.pageSize = val;
         if (this.id != '' || this.name != '') {
-          this.search();
+          this.Xpag();
         } else {
           this.getWare();
         }
@@ -228,7 +246,7 @@
       handleCurrentChange(val) {
         this.page = val;
         if (this.id != '' || this.name != '') {
-          this.search();
+          this.Xpag();
         } else {
           this.getWare();
         }

@@ -28,7 +28,6 @@
       //  查看酒品
       wineList() {
         this._getData('/api/v1/goods/wineOrNoStatistics', {}, data => {
-          console.log(data)
           this.WList = data;
         })
       }

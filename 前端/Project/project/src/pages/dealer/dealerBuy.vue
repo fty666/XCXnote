@@ -6,7 +6,7 @@
         <div class="state2">平台强制回购</div>
       </div>
       <div :class="[ 'state','Mouse','flex', members==true?'bj':'']" @click="member" style="margin-left: 0px">
-        <div class="state2">经销商申请回购</div>
+        <div class="state2" style="margin-left: 10px">经销商申请回购</div>
       </div>
       <router-link to="/dealer/buyRecord">
         <div :class="[ 'state','Mouse','flex']" style="margin-left: 0px">

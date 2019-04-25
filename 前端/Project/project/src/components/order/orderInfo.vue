@@ -22,10 +22,6 @@
           <div>订单归属：</div>
           <div>{{this.orderInfo.type}}</div>
         </div>
-        <!--<div class="fonts flex">-->
-          <!--<div>用户账户：</div>-->
-          <!--<div>{{this.orderInfo.user.mobile}}</div>-->
-        <!--</div>-->
         <div class="fonts flex">
           <div>支付方式：</div>
           <div>{{this.orderInfo.mode}}</div>
@@ -174,32 +170,18 @@
           <div class="cfont ckuan">{{item.goods_name}}</div>
           
           <div class="cfont">评价正文：</div>
-          <div class="cfont ckuan" >{{item.content}}</div>
+          <div class="cfont ckuan">{{item.content}}</div>
           <div style="width: 100%" class="flex">
             <div v-for="(items,index) in item.img.split(',')" :key="index" style="margin:15px 0px 0px 20px">
               <img :src="imggerUrl+items" style="width: 100px;height: 100px">
             </div>
           </div>
-          <!--<div class="cfont" style="margin-left: 0px">回复评价：</div>-->
-          <!--<div style="width: 90%">-->
-            <!--<div class="cfont ckuan" style="width: 20%">-->
-              <!--<el-input-->
-                <!--type="textarea"-->
-                <!--:rows="5"-->
-                <!--placeholder="请输入内容"-->
-                <!--v-model="textarea">-->
-              <!--</el-input>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div style="width: 100%">-->
-            <!--<div class="cfont">-->
-              <!--<el-button class="buttons" type="primary" size="small">确认</el-button>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="show">注：回复内容会在前台显示</div>-->
-          <!--<div class="selects">-->
-            <!--<el-checkbox v-model="checked2">显示此评价</el-checkbox>-->
-          <!--</div>-->
+          <div class="selects">
+              <el-checkbox
+                :checked="item.comment_status=='显示'?false:true" @change="shows(item)">
+                屏蔽此评价
+              </el-checkbox>
+          </div>
         </div>
       </div>
     </div>
@@ -217,7 +199,8 @@
         checked2: '',
         orderInfo: {},
         bill: false,
-        goodsList: []
+        goodsList: [],
+        hiddens:[]
       }
     },
     methods: {
@@ -230,11 +213,39 @@
             this.bill = true;
           }
           this.orderInfo = data;
+          console.log(this.orderInfo.comment)
           for (let i in data.goods) {
             this.goodsList.push(data.goods[i])
           }
-          this.$emit('orderInfos',this.orderInfo);
+          this.$emit('orderInfos', this.orderInfo);
         })
+      },
+      //  隐藏评论
+      shows(val) {
+        if (val.comment_status=='显示') {
+          this._getData('/api/v1/comment/commentDown', {
+              id: val.id,
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '隐藏成功'
+              });
+              this.getInfo();
+            })
+        } else {
+          this._getData('/api/v1/comment/commentUp', {
+              id: val.id,
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '显示成功'
+              });
+              this.getInfo();
+            })
+        }
+        
       }
     },
     created() {

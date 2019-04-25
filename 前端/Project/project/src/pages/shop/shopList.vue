@@ -72,7 +72,8 @@
         @selection-change="handleSelectionChange">
         <el-table-column
           type="selection"
-          width="55">
+          align="center"
+          min-width="55">
         </el-table-column>
         <el-table-column
           label="商品编号"
@@ -164,8 +165,8 @@
       <div class="pag">
         <el-pagination
           @current-change="handleCurrentChange"
-          :current-page="currentPage4"
-          :page-size="5"
+          :current-page.sync="page"
+          :page-sizes="[20, 50, 100]"
           layout="total, prev, pager, next"
           :total=totals>
         </el-pagination>
@@ -177,10 +178,10 @@
       :visible.sync="dialogVisible"
       width="50%"
       :before-close="handleClose">
-      <XiuGai @gets="getShop" @closY="closes" :goods="xShop" :dialogVisible="dialogVisible"></XiuGai>
+      <XiuGai @gets="getShop" @closY="closes" @HXsum="Xsum" :goods="xShop" :dialogVisible="dialogVisible"></XiuGai>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <!--<el-button type="primary" @click="dialogVisible = false">确 定</el-button>-->
       </span>
     </el-dialog>
     <!-- 修改商品弹窗 结束 -->
@@ -206,14 +207,15 @@
         bid: '',
         goods_name: '',
         id: '',
-        currentPage4: 1,
         totals: 10,
         stateList: [],  //统计参数
         //背景选择
         sum: true,
         month: false,
         day: false,
-        bshop: false
+        bshop: false,
+        Status:'',
+        isDeal:''
       };
     },
     methods: {
@@ -265,7 +267,16 @@
                   type: 'success',
                   message: '操作成功'
                 });
-                this.getShop();
+                if(this.Status!=''){
+                  let datas = {
+                    page: this.page,
+                    pageSize: this.pageSize,
+                    status: 1
+                  }
+                  this.condition(datas);
+                }else{
+                  this.getShop();
+                }
               })
           }).catch(() => {
             this.$message({
@@ -321,24 +332,28 @@
       //  获取商品分类
       gclass() {
         this._getData('/api/v1/goods_group/index', {}, data => {
+          var all={
+            id:'',
+            name:'全部分类'
+          };
+          data.push(all);
           this.options = data;
         })
       },
       //  搜索
       search() {
         var data = {};
+        this.page=1;
         if (this.id != '') {
           data.goods_groupId = this.id;
-        }
-        ;
+        };
         if (this.goods_name != '') {
           data.goods_name = this.goods_name;
-        }
-        ;
+        };
         if (this.bid != '') {
           data.id = this.bid;
         }
-        data.page = this.page;
+        data.page =this.page;
         data.pageSize = this.pageSize;
         this._getData('/api/v1/goods/index', {
           page: data.page,
@@ -356,6 +371,8 @@
         this.id = "";
         this.goods_groupId = "";
         this.goods_name = "";
+        this.bid = '';
+        this.page=1;
         this.getShop();
       },
       //关闭修改页面
@@ -366,27 +383,35 @@
       batch() {
         var ids = '';
         var len = this.multipleSelection.length;
-        for (var i = 0; i < len; i++) {
-          ids = ids + this.multipleSelection[i].id + ',';
-        }
-        this.$confirm('是否删除这些商品', '提示', {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: 'warning'
-        }).then(() => {
-          this._getData('/api/v1/goods/batchDelete', {ids: ids}, data => {
-            this.$message({
-              type: 'success',
-              message: '操作成功'
-            });
-            this.getShop();
-          })
-        }).catch(() => {
+        if (len==0) {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: '请勾选要删除的数据'
           });
-        });
+          return false;
+        } else {
+          for (var i = 0; i < len; i++) {
+            ids = ids + this.multipleSelection[i].id + ',';
+          }
+          this.$confirm('是否删除这些商品', '提示', {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: 'warning'
+          }).then(() => {
+            this._getData('/api/v1/goods/batchDelete', {ids: ids}, data => {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              });
+              this.getShop();
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            });
+          });
+        }
       },
       //获取统计
       getState() {
@@ -397,15 +422,15 @@
       //修改上架
       modify(val) {
         var editNum = '';
-        if (val.input!='') {
-          if(isNaN(val.input)){
+        if (val.input != '') {
+          if (isNaN(val.input)) {
             this.$message({
-              type:'info',
-              message:'修改失败，请输入正确数字'
+              type: 'info',
+              message: '修改失败，请输入正确数字'
             })
             return false;
           }
-            editNum = val.input;
+          editNum = val.input;
         } else {
           editNum = val.num;
         }
@@ -423,7 +448,11 @@
                 type: 'success',
                 message: '操作成功'
               });
-              this.getShop();
+              this._getData('/api/v1/goods/index', {page: this.page, pageSize: this.pageSize}, data => {
+                this.shopList = data.data;
+                this.totals = data.total;
+                this.getState();
+              })
             })
         }).catch(() => {
           this.$message({
@@ -440,6 +469,20 @@
         this.pageSize = val;
         if (this.id != '' || this.goods_name != '' || this.bid != '') {
           this.search()
+        }else if(this.Status!=''){
+          let datas = {
+            page: this.page,
+            pageSize: this.pageSize,
+            status: this.Status
+          };
+          this.condition(datas);
+        }else if(this.isDeal!=''){
+          let datas = {
+            page: this.page,
+            pageSize: this.pageSize,
+            is_dealer: this.isDeal
+          };
+          this.condition(datas);
         } else {
           this.getShop();
         }
@@ -448,7 +491,42 @@
       handleCurrentChange(val) {
         this.page = val;
         if (this.id != '' || this.goods_name != '' || this.bid != '') {
-          this.search()
+          var data = {};
+          if (this.id != '') {
+            data.goods_groupId = this.id;
+          };
+          if (this.goods_name != '') {
+            data.goods_name = this.goods_name;
+          };
+          if (this.bid != '') {
+            data.id = this.bid;
+          }
+          data.page =this.page;
+          data.pageSize = this.pageSize;
+          this._getData('/api/v1/goods/index', {
+            page: data.page,
+            pageSize: data.pageSize,
+            goods_groupId: data.goods_groupId,
+            goods_name: data.goods_name,
+            id: data.id
+          }, data => {
+            this.shopList = data.data;
+            this.totals = data.total;
+          })
+        }else if(this.Status!=''){
+          let datas = {
+            page: this.page,
+            pageSize: this.pageSize,
+            status: this.Status
+          };
+          this.condition(datas);
+        }else if(this.isDeal!=''){
+          let datas = {
+            page: this.page,
+            pageSize: this.pageSize,
+            is_dealer: this.isDeal
+          };
+          this.condition(datas);
         } else {
           this.getShop();
         }
@@ -456,6 +534,8 @@
       //  选择全部
       Xsum() {
         this.select(1);
+        this.isDeal='';
+        this.Status='';
         this.getShop();
       },
       Xmonth() {
@@ -463,7 +543,8 @@
           page: this.page,
           pageSize: this.pageSize,
           status: 2
-        }
+        };
+        this.Status=2;
         this.condition(datas);
         this.select(2);
       },
@@ -473,6 +554,7 @@
           pageSize: this.pageSize,
           status: 1
         }
+        this.Status=1;
         this.condition(datas);
         this.select(3);
       },
@@ -481,7 +563,9 @@
           page: this.page,
           pageSize: this.pageSize,
           is_dealer: 1
-        }
+        };
+        this.Status='';
+        this.isDeal=1;
         this.condition(datas);
         this.select(4);
       },
@@ -580,4 +664,5 @@
     margin-right: 10px;
     line-height: 30px;
   }
+ 
 </style>

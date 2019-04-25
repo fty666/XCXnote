@@ -167,7 +167,7 @@
             min-width="160">
           </el-table-column>
           <el-table-column
-            prop="user_code"
+            prop="order_code"
             label="订单编号"
             align="center"
             min-width="180">
@@ -209,7 +209,7 @@
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page="currentPage4"
+            :current-page="page"
             :page-sizes="[20, 50, 100]"
             layout="total, sizes, prev, pager, next, jumper"
             :total=totals>
@@ -272,8 +272,7 @@
         //参数
         userInfo: [],
         page: 1,
-        pageSize: 10,
-        currentPage4: 1,
+        pageSize: 20,
         totals: 10,
         orderList: [],
         Otype: '',

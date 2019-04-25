@@ -2,11 +2,11 @@
   <div>
     <el-container>
       <el-header style='background-color:rgb(0, 153, 153)' class='main-header'>
-        <div class="main-img-box">
-          <span class="merchant">管理员页面</span>
+        <div class="main-img-box flex">
+          <div class="merchant">你好！管理员{{adminName}}</div>
+          <div><img src="../assets/logo.png" alt=""></div>
         </div>
         <div class="main-func-box">
-          <router-link to="/"></router-link>
           <el-tooltip class="item main-func" effect="dark" content="退出系统" placement="bottom-end">
             <el-button @click="exit()">&nbsp;&nbsp;&nbsp;&nbsp;退出&nbsp;&nbsp;&nbsp;&nbsp;</el-button>
           </el-tooltip>
@@ -17,7 +17,7 @@
         </div>
       </el-header>
       <el-container>
-        <el-aside style="width:200px;overflow: hidden;">
+        <el-aside style="width:200px;overflow:hidden;">
           <el-menu class="el-menu-vertical-demo" :collapse-transition="true" :unique-opened='true'
                    @select="handleSelect" :collapse="isCollapse" background-color="rgba(118, 121, 128, 1)"
                    text-color="#fff"
@@ -25,11 +25,10 @@
             <!--首页-->
             <el-submenu index="1">
               <template slot="title">
-                <!--<i style="padding-right:10px;"></i>-->
                 <i style="padding-right:10px;"><img src="../assets/img/1.png"></i>
                 <span slot="title">首页</span>
               </template>
-              <el-menu-item index="/list/index">首页</el-menu-item>
+              <el-menu-item class="Mfont" index="/list/index">首页</el-menu-item>
             </el-submenu>
             <!--商品管理-->
             <el-submenu index="2" v-if="authBox.includes('商品管理')==true">
@@ -38,9 +37,9 @@
                 <!--<i style="padding-right:10px;"></i>-->
                 <span slot="title">商品管理</span>
               </template>
-              <el-menu-item index="/shop/shopList">商品列表</el-menu-item>
-              <el-menu-item index="/shop/addShop">添加商品</el-menu-item>
-              <el-menu-item index="/shop/shopClass">商品分类管理</el-menu-item>
+              <el-menu-item class="Mfont" index="/shop/shopList">商品列表</el-menu-item>
+              <el-menu-item  class="Mfont" index="/shop/addShop">添加商品</el-menu-item>
+              <el-menu-item  class="Mfont" index="/shop/shopClass">商品分类管理</el-menu-item>
             </el-submenu>
             <!--会员-->
             <el-submenu index="3" v-if="authBox.includes('会员管理')==true">
@@ -121,7 +120,6 @@
             <!--反馈设置-->
             <el-submenu index="10" v-if="authBox.includes('反馈管理')==true">
               <template slot="title">
-                <!--<i style="padding-right:10px;"></i>-->
                 <i style="padding-right:10px;"><img src="../assets/img/1.png"></i>
                 <span slot="title">反馈管理</span>
               </template>
@@ -131,7 +129,6 @@
             <!--财务统计-->
             <el-submenu index="11" v-if="authBox.includes('财务统计')==true">
               <template slot="title">
-                <!--<i style="padding-right:10px;"></i>-->
                 <i style="padding-right:10px;"><img src="../assets/img/1.png"></i>
                 <span slot="title">财务统计</span>
               </template>
@@ -184,7 +181,7 @@
         openeds: [],
         authBox: [],
         adminName: '',
-        centerDialogVisible: false
+        centerDialogVisible: false,
       };
     },
     components: {
@@ -246,7 +243,7 @@
   }
   
   .main-img-box {
-    width: 200px;
+    width: 500px;
     height: 50px;
     display: flex;
     justify-content: flex-start;
@@ -255,8 +252,8 @@
   }
   
   .main-img-box img {
-    width: auto;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     margin-left: 34px;
   }
   
@@ -280,12 +277,13 @@
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     min-height: calc(100vh - 50px);
+    height: 100%;
   }
   
   .merchant {
     display: inline-block;
-    width: 100%;
     color: #fff;
     text-align: center;
+    margin-left: 14px;
   }
 </style>

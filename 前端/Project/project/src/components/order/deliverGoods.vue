@@ -79,6 +79,15 @@
 <script>
   export default {
     name: "deliverGoods",
+    filters:{
+      Xname:function (arg) {
+        for(let i=0;i<this.orderInfo.goods_info.length;i++){
+          if(arg==this.orderInfo.goods_info[i].goods_id){
+            return this.orderInfo.goods_info[i].goods_name
+          }
+        }
+      }
+    },
     data() {
       return {
         shortName:'',
@@ -98,104 +107,7 @@
             id: this.orderInfo.id,
           },
           data => {
-            console.log(data)
-            this.recommend=
-              [
-                {
-                "suggest": [
-                  {
-                    "wgId": 1,
-                    "warehouseId": 1,
-                    "goodsId": 1,
-                    "reduceStock": 10,
-                    "warehouseName": "天津",
-                    "warehouseCity": "天津"
-                  }
-                ],
-                "sort": [
-                  {
-                    "orderCode": "1000001361988388",
-                    "wgId": 1,
-                    "goodsId": 1,
-                    "buyNum": 10,
-                    "stock": "100",
-                    "warehouseId": 1,
-                    "warehouseCity": "天津",
-                    "warehouseName": "天津",
-                    "distance": "74769"
-                  },
-                  {
-                    "orderCode": "1000001361988388",
-                    "wgId": 3,
-                    "goodsId": 1,
-                    "buyNum": 10,
-                    "stock": "100",
-                    "warehouseId": 2,
-                    "warehouseCity": "北京",
-                    "warehouseName": "北京",
-                    "distance": "162723"
-                  },
-                  {
-                    "orderCode": "1000001361988388",
-                    "wgId": 5,
-                    "goodsId": 1,
-                    "buyNum": 10,
-                    "stock": "100",
-                    "warehouseId": 3,
-                    "warehouseCity": "上海",
-                    "warehouseName": "上海",
-                    "distance": "1144840"
-                  },
-                  {
-                    "orderCode": "1000001361988388",
-                    "wgId": 6,
-                    "goodsId": 1,
-                    "buyNum": 10,
-                    "stock": "100",
-                    "warehouseId": 4,
-                    "warehouseCity": "上海",
-                    "warehouseName": "上海",
-                    "distance": "1144840"
-                  }
-                ]
-                },
-                {
-                  "suggest":
-                    [{
-                      "wgId": 4,
-                      "warehouseId": 2,
-                      "goodsId": 2,
-                      "reduceStock": 10,
-                      "warehouseName": "北京",
-                      "warehouseCity": "北京"
-                    }],
-                  "sort": [
-                    {
-                      "orderCode": "1000001361988388",
-                      "wgId": 2,
-                      "goodsId": 2,
-                      "buyNum": 10,
-                      "stock": "4",
-                      "warehouseId": 1,
-                      "warehouseCity": "天津",
-                      "warehouseName": "天津",
-                      "distance": "74769"
-                    },
-                    {
-                      "orderCode": "1000001361988388",
-                      "wgId": 4,
-                      "goodsId": 2,
-                      "buyNum": 10,
-                      "stock": "100",
-                      "warehouseId": 2,
-                      "warehouseCity": "北京",
-                      "warehouseName": "北京",
-                      "distance": "162723"
-                    }
-                  ]
-                },
-              ]
-   
+            this.recommend=data.data;
           })
       },
       //查看物流
@@ -225,7 +137,6 @@
         datas.package=pac;
         datas.orderCode=this.orderCode;
         datas.operator=sessionStorage.getItem('userID');
-        console.log(datas);
         this._getData('/api/v1/order/send',datas,
           data => {
             this.$message({
@@ -240,7 +151,6 @@
     created() {
       this.trans();
       this.getInventory();
-      console.log('订单发货')
     }
   }
 </script>

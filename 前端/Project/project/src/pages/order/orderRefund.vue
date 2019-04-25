@@ -149,7 +149,7 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
+        :current-page.sync="page"
         :page-sizes="[20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
@@ -184,8 +184,7 @@
         value6: '',
         //页码参数
         page: 1,
-        pageSize: 10,
-        currentPage4: 1,
+        pageSize: 20,
         totals: 20,
         refundList: [],
         multipleSelection: [],
@@ -217,10 +216,13 @@
         if (this.mobile != '') {
           datas.mobile = this.mobile;
         }
-        if (this.value6 != '') {
-          datas.start_time = this.value6[0];
-          datas.end_time = this.value6[1];
+        if (this.value6 != null) {
+          if (this.value6 != '') {
+            datas.start_time = this.value6[0];
+            datas.end_time = this.value6[1];
+          }
         }
+        this.page = 1;
         this.gain(datas);
       },
       //重置
@@ -228,6 +230,7 @@
         this.order_code = '';
         this.mobile = '';
         this.value6 = '';
+        this.page = 1;
         this.getRefund();
       },
       //批量删除
@@ -265,7 +268,21 @@
       handleSizeChange(val) {
         this.pageSize = val;
         if (this.order_code != '' || this.mobile != '' || this.value6 != '') {
-          this.search();
+          var datas = {};
+          if (this.order_code != '') {
+            datas.order_code = this.order_code;
+          }
+          if (this.mobile != '') {
+            datas.mobile = this.mobile;
+          }
+          if (this.value6 != null) {
+            if (this.value6 != '') {
+              datas.start_time = this.value6[0];
+              datas.end_time = this.value6[1];
+            }
+          }
+          this.page = this.page;
+          this.gain(datas);
         } else if (this.status != '') {
           var datas = {status: this.status};
           this.gain(datas);
@@ -277,7 +294,18 @@
       handleCurrentChange(val) {
         this.page = val;
         if (this.order_code != '' || this.mobile != '' || this.value6 != '') {
-          this.search();
+          var datas = {};
+          if (this.order_code != '') {
+            datas.order_code = this.order_code;
+          }
+          if (this.mobile != '') {
+            datas.mobile = this.mobile;
+          }
+          if (this.value6 != '') {
+            datas.start_time = this.value6[0];
+            datas.end_time = this.value6[1];
+          }
+          this.gain(datas);
         } else if (this.status != '') {
           var datas = {status: this.status};
           this.gain(datas);
@@ -358,7 +386,7 @@
         datas.pageSize = this.pageSize;
         this._getData('/api/v1/order_detail/refund', datas,
           data => {
-          console.log(data)
+            console.log(data)
             this.refundList = data.data;
             this.totals = data.total;
           })

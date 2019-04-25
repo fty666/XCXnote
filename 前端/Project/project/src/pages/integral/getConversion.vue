@@ -16,8 +16,8 @@
       <div class="input">
         <el-date-picker
           v-model="times"
-          type="datetimerange"
-          style="width: 230px"
+          type="daterange"
+          style="width: 300px"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           value-format="yyyy-MM-dd"
@@ -57,6 +57,9 @@
           prop="type"
           sortable="custom"
           min-width="110">
+          <template slot-scope="scope">
+            {{scope.row.type | Dstatu}}
+          </template>
         </el-table-column>
         <el-table-column
           prop="order_code"
@@ -113,7 +116,7 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
+        :current-page.sync="page"
         :page-sizes="[20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
@@ -129,7 +132,6 @@
         //参数
         page: 1,
         pageSize: 20,
-        currentPage4: 1,
         totals: 10,
         orderList: [],
         user_mobile: '',
@@ -137,6 +139,30 @@
         times: '',
         //排序
         Dotype: 'desc'
+      }
+    },
+    filters:{
+      Dstatu:function (arg) {
+        switch (arg) {
+          case 1:
+            return '签到';
+            break;
+          case 2:
+            return '订单';
+            break;
+          case 3:
+            return '邀请';
+            break;
+          case 4:
+            return '抵现';
+            break;
+          case 5:
+            return '兑换';
+            break;
+          case 6:
+            return '积分加金额';
+            break;
+        }
       }
     },
     methods: {
@@ -153,8 +179,9 @@
           this.totals = data.total;
         })
       },
-      //提交
+      //搜索
       submit() {
+        this.page=1;
         var datas = {};
         if (this.user_mobile != '') {
           datas.user_mobile = this.user_mobile;
@@ -162,14 +189,33 @@
         if (this.goods_name != '') {
           datas.goods_name = this.goods_name;
         }
-        if (this.times != '') {
-          datas.start_time = this.times[0];
-          datas.end_time = this.times[1];
+        if(this.times!=null){
+          if (this.times != '') {
+            datas.start_time = this.times[0];
+            datas.end_time = this.times[1];
+          }
+        }
+        this.getInfos(datas);
+      },
+      Xpag(){
+        var datas = {};
+        if (this.user_mobile != '') {
+          datas.user_mobile = this.user_mobile;
+        }
+        if (this.goods_name != '') {
+          datas.goods_name = this.goods_name;
+        }
+        if(this.times!=null){
+          if (this.times != '') {
+            datas.start_time = this.times[0];
+            datas.end_time = this.times[1];
+          }
         }
         this.getInfos(datas);
       },
       //重置
       res() {
+        this.page=1;
         this.goods_name = '';
         this.user_mobile = '';
         this.times = '';
@@ -179,7 +225,7 @@
       handleSizeChange(val) {
         this.pageSize = val;
         if (this.user_mobile != '' || this.goods_name != '' || this.times != '') {
-          this.submit();
+          this.Xpag()
         } else {
           this.getConversion();
         }
@@ -188,7 +234,7 @@
       handleCurrentChange(val) {
         this.page = val;
         if (this.user_mobile != '' || this.goods_name != '' || this.times != '') {
-          this.submit();
+          this.Xpag()
         } else {
           this.getConversion();
         }

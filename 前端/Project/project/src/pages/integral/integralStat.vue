@@ -11,11 +11,9 @@
       <div class="head1" style="width: 150px;border: 1px solid #ddd">
         <el-date-picker
           v-model="value1"
-          style="width: 150px"
-          @click=""
+          value-format="yyyy-MM-dd"
           type="date"
-          size="mini"
-          placeholder="选择日期">
+          placeholder="选择日期时间">
         </el-date-picker>
       </div>
     </div>
@@ -109,11 +107,16 @@
         input: '',
         value1: '',
         value6: '',
-        stateList:[],
+        stateList: [],
         //选择
         yday: true,
         Qday: false,
         Tday: false
+      }
+    },
+    watch: {
+      value1(v, o) {
+        this.getDate()
       }
     },
     methods: {
@@ -122,7 +125,13 @@
         this._getData('/api/v1/integral_record/statistics', {},
           data => {
             console.log(data)
-            this.stateList=data;
+            this.stateList = data;
+          })
+      },
+      getDate() {
+        this._getData('/api/v1/integral_record/statistics', {date: this.value1},
+          data => {
+            this.stateList = data;
           })
       },
       //全部
@@ -133,23 +142,23 @@
       //按月选择
       XQday() {
         this.Tselect(2);
-        var datas=new Date();
-        var year=datas.getFullYear();
-        var month=parseInt(datas.getMonth())+1;
+        var datas = new Date();
+        var year = datas.getFullYear();
+        var month = parseInt(datas.getMonth()) + 1;
         this._getData('/api/v1/integral_record/statistics', {
-            date:year+'-'+month
-          }, data => {
-            this.stateList=data;
-          })
+          date: year + '-' + month
+        }, data => {
+          this.stateList = data;
+        })
       },
       XTday() {
         this.Tselect(3);
-        var datas=new Date();
-        var year=datas.getFullYear();
+        var datas = new Date();
+        var year = datas.getFullYear();
         this._getData('/api/v1/integral_record/statistics', {
-          date:year
+          date: year
         }, data => {
-          this.stateList=data;
+          this.stateList = data;
         })
       },
       Tselect(flag) {
@@ -169,7 +178,7 @@
         }
       }
     },
-    created(){
+    created() {
       this.getState()
     }
   }
@@ -188,6 +197,7 @@
     width: 90%;
     margin: 40px 0px 0px 100px;
   }
+  
   .bj {
     background-color: rgba(0, 153, 153, 1);
     color: white;

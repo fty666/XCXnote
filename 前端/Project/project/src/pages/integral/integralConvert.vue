@@ -112,7 +112,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this._getData('/api/v1/integral/sign', this.addList, data => {
-              this.addList = '';
+              this.addList = {};
               this.$message({
                 type: 'success',
                 message: '添加成功'

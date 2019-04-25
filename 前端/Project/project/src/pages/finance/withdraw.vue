@@ -16,27 +16,16 @@
       <div class="font">申请时间：</div>
       <div class="input">
         <el-date-picker
-          v-model="start_time"
-          style="width: 150px;"
-          type="date"
+          v-model="Stimes"
+          type="daterange"
           value-format="yyyy-MM-dd"
-          placeholder="选择日期">
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
         </el-date-picker>
       </div>
-      
-      <div class="font" style="margin-left: 40px">至</div>
-      <div class="input">
-        <el-date-picker
-          v-model="end_time"
-          value-format="yyyy-MM-dd"
-          style="width: 150px;margin-left: 10px"
-          type="date"
-          placeholder="选择日期">
-        </el-date-picker>
-      </div>
-      
       <!--按钮-->
-      <div class="btn" style="margin-left: 6%" @click="search()">
+      <div class="btn" style="margin-left: 16%" @click="search()">
         <el-button type="primary" size="small" icon="el-icon-search">搜索</el-button>
       </div>
       <div class="btn2" style="margin-left: 5px" @click="res()">
@@ -45,7 +34,7 @@
     </div>
     <!--表格头-->
     <div class="head right">
-      <div class="head1 Mouse"  @click="exportFunc('withList','提现记录清单')">导出数据</div>
+      <div class="head1 Mouse" @click="exportFunc('withList','提现记录清单')">导出数据</div>
     </div>
     <!--表格-->
     <div id="withList">
@@ -147,8 +136,7 @@
         drawList: [],
         user_id: '',
         mobile: '',
-        start_time: '',
-        end_time: '',
+        Stimes: '',
         //页码参数
         page: 1,
         pageSize: 10,
@@ -267,6 +255,7 @@
       },
       //搜索
       search() {
+        this.page=1;
         var data = {};
         if (this.user_id != '') {
           data.user_id = this.user_id;
@@ -274,11 +263,35 @@
         if (this.mobile != '') {
           data.mobile = this.mobile;
         }
-        if (this.start_time != '') {
-          data.start_time = this.start_time;
+        if (this.Stimes == null) {
+        } else {
+          if (this.Stimes!='') {
+            data.start_time = this.Stimes[0];
+            data.end_time = this.Stimes[1];
+          }
         }
-        if (this.end_time != '') {
-          data.end_time = this.end_time;
+        data.page = this.page;
+        data.pageSize = this.pageSize;
+        this._getData('/api/v1/user_draw/index', data,
+          data => {
+            this.drawList = data.data;
+            this.totals = data.total;
+          })
+      },
+      Xpag(){
+        var data = {};
+        if (this.user_id != '') {
+          data.user_id = this.user_id;
+        }
+        if (this.mobile != '') {
+          data.mobile = this.mobile;
+        }
+        if (this.Stimes == null) {
+        } else {
+          if (this.Stimes!='') {
+            data.start_time = this.Stimes[0];
+            data.end_time = this.Stimes[1];
+          }
         }
         data.page = this.page;
         data.pageSize = this.pageSize;
@@ -289,6 +302,7 @@
           })
       },
       res() {
+        this.page=1;
         this.user_id = '';
         this.mobile = '';
         this.start_time = '';
@@ -301,8 +315,8 @@
       //每页显示多少数据
       handleSizeChange(val) {
         this.pageSize = val;
-        if (this.user_id != '' || this.mobile != '' || this.start_time != '' || this.end_time != '') {
-          this.search();
+        if (this.user_id != '' || this.mobile != '' || this.Stimes!='') {
+          this.Xpag();
         } else {
           this.getDraw();
         }
@@ -310,8 +324,8 @@
       //第几页
       handleCurrentChange(val) {
         this.page = val;
-        if (this.user_id != '' || this.mobile != '' || this.start_time != '' || this.end_time != '') {
-          this.search();
+        if (this.user_id != '' || this.mobile != '' || this.Stimes!='') {
+          this.Xpag();
         } else {
           this.getDraw();
         }

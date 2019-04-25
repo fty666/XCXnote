@@ -43,21 +43,12 @@
         <div class="font" style="margin-left: 5%">提交时间：</div>
         <div class="input">
           <el-date-picker
-            v-model="start_time"
-            style="width: 160px;"
-            type="date"
+            v-model="stime"
             value-format="yyyy-MM-dd"
-            placeholder="选择日期">
-          </el-date-picker>
-        </div>
-        <div class="font" style="margin-left: 55px">至</div>
-        <div class="input">
-          <el-date-picker
-            v-model="end_time"
-            style="width: 160px;margin-left: 15px"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择日期">
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期">
           </el-date-picker>
         </div>
       </div>
@@ -95,11 +86,17 @@
           min-width="130">
         </el-table-column>
         <el-table-column
+          prop="nickname"
+          label="用户名"
+          align="center"
+          min-width="100">
+        </el-table-column>
+        <el-table-column
           prop="create_time"
           label="提交时间"
           sortable
           align="center"
-          min-width="130">
+          min-width="100">
         </el-table-column>
         <el-table-column
           prop="goods_info"
@@ -109,7 +106,7 @@
         </el-table-column>
         <el-table-column
           prop="payment_price"
-          label="贷款"
+          label="货款"
           align="center"
           min-width="80">
         </el-table-column>
@@ -150,7 +147,7 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage4"
+          :current-page.sync="page"
           :page-sizes="[20, 50, 100]"
           layout="total, sizes, prev, pager, next, jumper"
           :total=totals>
@@ -167,14 +164,12 @@
       return {
         order_code: '',
         nickname: '',
-        start_time: '',
-        end_time: '',
+        stime:'',
         goods_name: '',
         multipleSelection: '',
         //页码参数
         page: 1,
         pageSize: 20,
-        currentPage4: 1,
         totals: 10,
         dealerList: [],
         wineState: {},
@@ -241,7 +236,7 @@
       handleSizeChange(val) {
         this.pageSize = val;
         if (this.order_code != '' || this.nickname != '' || this.goods_name != '' ||
-          this.start_time != '' || this.end_time != '') {
+          this.stime != '' ) {
           this.search();
         } else {
           this.buyList();
@@ -251,8 +246,29 @@
       handleCurrentChange(val) {
         this.page = val;
         if (this.order_code != '' || this.nickname != '' || this.goods_name != '' ||
-          this.start_time != '' || this.end_time != '') {
-          this.search();
+          this.stime != '') {
+          var datas = {};
+          if (this.order_code != '') {
+            if (this.order_code.length < 16 || this.order_code.length > 16) {
+              this.$message({
+                type: 'info',
+                message: '订单编号需是16位'
+              })
+            } else {
+              datas.order_code = this.order_code;
+            }
+          }
+          if (this.nickname != '') {
+            datas.nickname = this.nickname;
+          }
+          if (this.goods_name != '') {
+            datas.goods_name = this.goods_name;
+          }
+          if (this.stime != '') {
+            datas.start_time = this.stime[0];
+            datas.end_time = this.stime[1];
+          }
+          this.getInfos(datas);
         } else {
           this.buyList();
         }
@@ -306,20 +322,19 @@
         if (this.goods_name != '') {
           datas.goods_name = this.goods_name;
         }
-        if (this.start_time != '') {
-          datas.start_time = this.start_time;
+        if (this.stime != '') {
+          datas.start_time = this.stime[0];
+          datas.end_time = this.stime[1];
         }
-        if (this.end_time != '') {
-          datas.end_time = this.end_time;
-        }
+        this.page=1;
         this.getInfos(datas);
       },
       res() {
         this.order_code = '';
         this.nickname = '';
         this.goods_name = '';
-        this.start_time = '';
-        this.end_time = '';
+        this.stime = '';
+        this.page=1;
         this.buyList();
       },
       //  排序

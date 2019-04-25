@@ -21,7 +21,7 @@
       <div class="input" style="width: 100px">
         <el-date-picker
           v-model="value6"
-          style="width: 230px"
+          style="width: 250px"
           type="daterange"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
@@ -79,7 +79,7 @@
         <el-table-column
           prop="create_time"
           label="注册时间"
-          sortable
+          sortable="custom"
           align="center"
           min-width="120">
         </el-table-column>
@@ -113,7 +113,7 @@
           <template slot-scope="scope">
             <div class="flex" v-if="scope.row.status=='关闭' || scope.row.status=='禁用'|| scope.row.status=='2' ">
               <div>&nbsp;&nbsp;已禁用</div>
-              <div @click="start(scope.row.id)"  class="operate Mouse">&nbsp;&nbsp;启用</div>
+              <div @click="start(scope.row.id)" class="operate Mouse">&nbsp;&nbsp;启用</div>
             </div>
             <div v-else class="flex">
               <div>&nbsp;&nbsp;已启用</div>
@@ -133,8 +133,8 @@
       <div class="pag">
         <el-pagination
           @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage4"
+          @current-change ="handleCurrentChange"
+          :current-page.sync="page"
           :page-sizes="[10, 50, 100]"
           layout="total, sizes, prev, pager, next, jumper"
           :total=totals>
@@ -152,7 +152,6 @@
         userList: [],
         page: 1,
         pageSize: 10,
-        currentPage4: 1,
         totals: 10,
         id: '',
         mobile: '',
@@ -165,7 +164,8 @@
         ids: '',
         //  排序
         district: 'desc',
-        status: 'desc'
+        status: 'desc',
+        order_create_time: 'desc'
       };
     },
     methods: {
@@ -191,6 +191,15 @@
             datas.order_user_status = this.status;
             this.getInfo(datas);
             break;
+          case 'create_time':
+            if (this.order_create_time == 'asc') {
+              this.order_create_time = 'desc';
+            } else {
+              this.order_create_time = 'asc';
+            }
+            datas.order_create_time = this.order_create_time;
+            this.getInfo(datas);
+            break;
         }
       },
       getInfo(datas) {
@@ -203,7 +212,7 @@
       },
       //获取用户
       getUser() {
-        var datas={};
+        var datas = {};
         this.getInfo(datas);
       },
       //  禁用
@@ -257,6 +266,7 @@
       //搜索
       search() {
         var data = {};
+        this.page = 1;
         if (this.id != '') {
           data.id = this.id;
         }
@@ -266,9 +276,41 @@
         if (this.nickname != '') {
           data.nickname = this.nickname;
         }
-        if (this.value6 != '') {
-          data.start_time = this.value6[0];
-          data.end_time = this.value6[0];
+        if (this.value6 != null) {
+          if (this.value6 != '') {
+            data.start_time = this.value6[0];
+            data.end_time = this.value6[1];
+          }
+        }
+        this._getData('/api/v1/user/index', {
+          page: this.page,
+          pageSize: this.pageSize,
+          id: data.id,
+          mobile: data.mobile,
+          nickname: data.nickname,
+          start_time: data.start_time,
+          end_time: data.end_time
+        }, data => {
+          this.userList = data.data;
+          this.totals = data.total;
+        })
+      },
+      Xpag() {
+        var data = {};
+        if (this.id != '') {
+          data.id = this.id;
+        }
+        if (this.mobile != '') {
+          data.mobile = this.mobile;
+        }
+        if (this.nickname != '') {
+          data.nickname = this.nickname;
+        }
+        if (this.value6 != null) {
+          if (this.value6 != '') {
+            data.start_time = this.value6[0];
+            data.end_time = this.value6[0];
+          }
         }
         this._getData('/api/v1/user/index', {
           page: this.page,
@@ -289,6 +331,7 @@
         this.mobile = '';
         this.nickname = '';
         this.value6 = '';
+        this.page = 1;
         this.getUser();
       },
       //查看信息
@@ -342,7 +385,7 @@
       handleCurrentChange(val) {
         this.page = val;
         if (this.id != '' || this.mobile != '' || this.nickname != '' || this.value6 != '') {
-          this.search();
+          this.Xpag();
         } else {
           this.getUser();
         }

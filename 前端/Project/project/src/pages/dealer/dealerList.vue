@@ -106,11 +106,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pags">
+      <div class="pag">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage4"
+          :current-page.sync="page"
           :page-sizes="[10, 50, 100]"
           layout="total, sizes, prev, pager, next, jumper"
           :total=totals>
@@ -132,7 +132,6 @@
         //页码参数
         page: 1,
         pageSize: 10,
-        currentPage4: 1,
         totals: 20,
         id: '',
         mobile: '',
@@ -208,6 +207,7 @@
       },
       //搜索
       search() {
+        this.page = 1;
         var data = {};
         if (this.id != '') {
           data.id = this.id;
@@ -234,6 +234,7 @@
       },
       //重置
       res() {
+        this.page = 1;
         this.id = '';
         this.mobile = '';
         this.nickname = '';
@@ -252,7 +253,29 @@
       handleCurrentChange(val) {
         this.page = val;
         if (this.id != '' || this.mobile != '' || this.nickname != '') {
-          this.search();
+          var data = {};
+          if (this.id != '') {
+            data.id = this.id;
+          }
+          if (this.mobile != '') {
+            data.mobile = this.mobile;
+          }
+          if (this.nickname != '') {
+            data.nickname = this.nickname;
+          }
+          this._getData('/api/v1/dealer/index', {
+            page: this.page,
+            pageSize: this.pageSize,
+            id: data.id,
+            mobile: data.mobile,
+            nickname: data.nickname
+          }, data => {
+            this.dealerList = data.data;
+            this.totals = data.total;
+            this.id = '';
+            this.mobile = '';
+            this.nickname = '';
+          })
         } else {
           this.getDear();
         }

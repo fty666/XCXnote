@@ -2,9 +2,6 @@
   <div class="body">
     <el-form :model="addList" :rules="rules" ref="addList">
       <div class="flex">
-        <div class="font">仓库编号：</div>
-      </div>
-      <div class="flex">
         <div class="font">名称：</div>
         <div class="inputs">
           <el-form-item prop="name">
@@ -173,7 +170,7 @@
             this._getData('/api/v1/warehouse/edit', this.addList, data => {
               this.$message({
                 type: 'success',
-                message: '添加成功'
+                message: '修改成功'
               });
               this.$router.push({path: "/warehouse/warehouseManage"});
             })
@@ -205,6 +202,7 @@
 <style scoped>
   .body {
     margin-top: 100px;
+    font-weight: bold;
   }
   
   .font {

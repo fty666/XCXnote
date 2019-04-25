@@ -24,7 +24,7 @@
       <div class="han">
         <div class="Tfont">规格:&nbsp;&nbsp;&nbsp;&nbsp;{{shopInfo.genre5}}</div>
         <div class="Tfont">年份:&nbsp;&nbsp;&nbsp;&nbsp;{{shopInfo.genre6}}</div>
-        <div class="Tfont">包装:&nbsp;&nbsp;&nbsp;&nbsp;{{shopInfo.genre8}}</div>
+        <!--<div class="Tfont">包装:&nbsp;&nbsp;&nbsp;&nbsp;{{shopInfo.genre8}}</div>-->
       </div>
       <!--第四行-->
       <div class="han">
@@ -45,7 +45,7 @@
         <div class="Tfont">市场价:&nbsp;&nbsp;&nbsp;&nbsp;{{shopInfo.original_price}}</div>
         <div class="Tfont">会员价:&nbsp;&nbsp;&nbsp;&nbsp;{{shopInfo.member_price}}</div>
         <div class="Tfont">经销商价:&nbsp;&nbsp;&nbsp;&nbsp;{{shopInfo.trade_price}}</div>
-        <div class="Tfont" style="width: 20%;">经销商最低购入数:&nbsp;&nbsp;&nbsp;&nbsp;{{shopInfo.genre8}}</div>
+        <div class="Tfont" style="width: 20%;">经销商最低购入数:&nbsp;&nbsp;&nbsp;&nbsp;{{shopInfo.dealer_num}}</div>
         <div class="Tfont">可获取积分:&nbsp;&nbsp;&nbsp;&nbsp;{{shopInfo.integral}}</div>
       </div>
       <!--第七行-->
@@ -211,7 +211,6 @@
       //获取商品信息
       getInfo() {
         this._getData('/api/v1/goods/show', {id: sessionStorage.getItem('ids')}, data => {
-          console.log(data)
           this.shopInfo = data;
         })
       },
@@ -291,7 +290,8 @@
       }
     },
     created() {
-      this.sid = this.$route.params.id;
+      this.sid = sessionStorage.getItem('ids');
+      console.log(this.sid);
       this.getInfo();
       this.getComment();
     }

@@ -9,19 +9,15 @@
           <div class="fh">用户ID：</div>
           <div>{{this.dealerList.id}}</div>
         </div>
-        <div class="flex pian" style="width: 200px">
+        <div class="flex pian">
           <div>用户账号：</div>
           <div class="fh">{{this.dealerList.mobile}}</div>
         </div>
-        <div class="flex pian" style="width: 230px">
-          <div>注册时间：</div>
-          <div class="fh">{{this.dealerList.create_time}}</div>
-        </div>
-        <div class="flex pian" style="margin-left: 10px">
+        <div class="flex pian" style="margin-left: 20px">
           <div>所属地区：</div>
           <div>{{this.dealerList.alliance}}</div>
         </div>
-        <div class="flex pian" style="margin-left: 32px;">
+        <div class="flex pian">
           <div>昵称：</div>
           <div>{{this.dealerList.nickname}}</div>
         </div>
@@ -33,9 +29,9 @@
           <div>性别：</div>
           <div>{{this.dealerList.sex}}</div>
         </div>
-        <div class="flex pian">
-          <div>余额：</div>
-          <div class="fh">{{this.dealerList.mobile}}</div>
+        <div class="flex" >
+          <div>注册时间：</div>
+          <div class="fh">{{this.dealerList.create_time}}</div>
         </div>
       </div>
       <router-link to="/dealer/dealerAudit">
@@ -127,7 +123,7 @@
   .pian {
     width: 20%;
     text-align: left;
-    /*margin-left: 10px;*/
+    margin-left: 3%;
   }
   .fh{
     line-height: 22px;

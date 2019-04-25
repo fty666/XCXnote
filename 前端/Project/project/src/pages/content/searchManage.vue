@@ -44,7 +44,7 @@
       <div class="flex">
         <div class="ju">输入内容：</div>
         <div class="ju2">
-          <el-input v-model="filter.content" placeholder="请输入内容"></el-input>
+          <el-input v-model="contents" placeholder="请输入内容"></el-input>
         </div>
         <div class="ju2">
           <el-button class="buttons buttons2" @click="addnew">添加</el-button>
@@ -66,7 +66,7 @@
     data() {
       return {
         input: '',
-        filter: [],
+        contents:'',
         centerDialogVisible: false,
         multipleSelection: [],
         tableData: [],
@@ -143,10 +143,22 @@
       },
       // 添加
       addnew() {
-        this._getData('/api/v1/user_search/createHot', this.filter, data => {
-          this.shopList = data.data;
-          this.getHot();
-        })
+        if(this.contents!=''){
+          this._getData('/api/v1/user_search/createHot',{content:this.contents}, data => {
+            this.contents='';
+            this.$message({
+              type:'success',
+              message:'操作成功'
+            })
+            this.shopList = data.data;
+            this.getHot();
+          })
+        }else{
+          this.$message({
+            type: 'info',
+            message: '填写搜索内容'
+          });
+        }
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;

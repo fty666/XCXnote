@@ -302,7 +302,7 @@
         </el-form-item>
       </el-form>
       
-      <el-button type="primary" @click="submitForm">确定添加</el-button>
+      <el-button type="primary" @click="submitForm">确定</el-button>
     </div>
   </div>
 </template>
@@ -511,7 +511,7 @@
                 }
                 subObj.status = 1;
                 subObj.id = this.goods.id;
-                console.log(subObj)
+                // console.log(subObj)
                 this._getData('/api/v1/goods/edit', subObj, data => {
                   this.$message({
                     showClose: true,
@@ -520,6 +520,7 @@
                   });
                   this.$emit('gets');
                   this.$emit('closY');
+                  this.$emit('HXsum');
                   // this.$refs.goodsForm1.resetFields();
                   // if (this.yiji == '洋酒') {
                   //   this.$refs.goodsForm2.resetFields();

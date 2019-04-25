@@ -3,46 +3,45 @@
     <!--搜索-->
     <div class="flex whiteT" style="height: 120px">
       <div class="sequence" style="width: 71%;">
-        <div class="font" style="margin-left: 50px">ID：</div>
-        <div class="input">
-          <el-input v-model="id" style="width: 150px" placeholder="输入ID"></el-input>
+        <div class="kwidth">
+          <div class="font" style="margin-left: 50px">ID：</div>
+          <div class="input">
+            <el-input v-model="id" style="width: 150px" placeholder="输入ID"></el-input>
+          </div>
         </div>
         
-        <div class="font" style="margin-left: 12%">账号：</div>
-        <div class="input">
-          <el-input v-model="mobile" style="width: 150px" placeholder="输入账号"></el-input>
+        <div class="kwidth">
+          <div class="font" style="margin-left: 12%">账号：</div>
+          <div class="input">
+            <el-input v-model="mobile" style="width: 150px" placeholder="输入账号"></el-input>
+          </div>
         </div>
         
-        <div class="font" style="margin-left: 12%">昵称：</div>
-        <div class="input">
-          <el-input v-model="nickname" style="width: 150px" placeholder="输入昵称"></el-input>
+        <div class="kwidth">
+          <div class="font" style="margin-left: 12%">昵称：</div>
+          <div class="input">
+            <el-input v-model="nickname" style="width: 150px" placeholder="输入昵称"></el-input>
+          </div>
         </div>
         
-        <div class="font" style="margin-left: 6%">地区：</div>
-        <div class="input">
-          <el-input v-model="district" style="width: 150px" placeholder="输入地区"></el-input>
+        <div class="kwidth">
+          <div class="font" style="margin-left: 6%">地区：</div>
+          <div class="input">
+            <el-input v-model="district" style="width: 150px" placeholder="输入地区"></el-input>
+          </div>
         </div>
         
-        <div class="font" style="margin-left: 10%">提交时间：</div>
+        <div class="font" style="margin-left: 4%">提交时间：</div>
         <div class="input">
           <el-date-picker
-            v-model="start_time"
-            style="width: 140px;"
-            type="date"
-            placeholder="选择日期">
+            v-model="Stime"
+            value-format="yyyy-MM-dd"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期">
           </el-date-picker>
         </div>
-        
-        <div class="font" style="margin-left: 25px">至</div>
-        <div class="input">
-          <el-date-picker
-            v-model="end_time"
-            style="width: 140px;margin-left: 15px"
-            type="date"
-            placeholder="选择日期">
-          </el-date-picker>
-        </div>
-      
       </div>
       <!--按钮-->
       <div class="btn" style="margin-left: 88px;margin-top: 30px" @click="search()">
@@ -73,18 +72,24 @@
           width="55">
         </el-table-column>
         <el-table-column
+          prop="id"
+          label="ID"
+          align="center"
+          min-width="80">
+        </el-table-column>
+        <el-table-column
           label="申请时间"
           align="center"
           sortable
           prop="create_time"
-          min-width="160">
-        </el-table-column>
-        <el-table-column
-          prop="user_id"
-          label="用户ID"
-          align="center"
           min-width="130">
         </el-table-column>
+        <!--<el-table-column-->
+        <!--prop="user_id"-->
+        <!--label="用户ID"-->
+        <!--align="center"-->
+        <!--min-width="130">-->
+        <!--</el-table-column>-->
         <el-table-column
           prop="user_mobile"
           label="账号"
@@ -143,7 +148,7 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage4"
+          :current-page.sync="page"
           :page-sizes="[10, 50, 100]"
           layout="total, sizes, prev, pager, next, jumper"
           :total=totals>
@@ -160,7 +165,6 @@
         //页码参数
         page: 1,
         pageSize: 10,
-        currentPage4: 1,
         totals: 20,
         auditList: [],
         //搜索条件
@@ -168,8 +172,7 @@
         mobile: '',
         nickname: '',
         district: '',
-        start_time: '',
-        end_time: '',
+        Stime: [],
         //  排序
         Status: 'desc'
       }
@@ -258,12 +261,14 @@
         if (this.district != '') {
           datas.district = this.district;
         }
-        if (this.start_time != '') {
-          datas.start_time = this.start_time;
+        if (this.Stime == null || this.Stime == 'null') {
+        } else {
+          if (this.Stime.length > 0) {
+            datas.start_time = this.Stime[0];
+            datas.end_time = this.Stime[1];
+          }
         }
-        if (this.end_time != '') {
-          datas.end_time = this.end_time;
-        }
+        this.page = 1;
         this.getInfos(datas);
       },
       //  重置
@@ -274,7 +279,9 @@
         this.district = '';
         this.start_time = '';
         this.end_time = '';
-        this.getAudit();
+        this.page = 1;
+        var datas = {};
+        this.getInfos(datas);
       },
       //每页显示多少数据
       handleSizeChange(val) {
@@ -289,7 +296,27 @@
       handleCurrentChange(val) {
         this.page = val;
         if (this.id != '' || this.mobile != '' || this.nickname != '' || this.district != '' || this.start_time != '' || this.end_time != '') {
-          this.search();
+          var datas = {};
+          if (this.id != '') {
+            datas.id = this.id;
+          }
+          if (this.mobile != '') {
+            datas.mobile = this.mobile;
+          }
+          if (this.nickname != '') {
+            datas.nickname = this.nickname;
+          }
+          if (this.district != '') {
+            datas.district = this.district;
+          }
+          if (this.Stime == null || this.Stime == 'null') {
+          } else {
+            if (this.Stime.length > 0) {
+              datas.start_time = this.Stime[0];
+              datas.end_time = this.Stime[1];
+            }
+          }
+          this.getInfos(datas);
         } else {
           this.getAudit();
         }
@@ -312,4 +339,8 @@
 </script>
 
 <style scoped>
+  .kwidth {
+    width: 25%;
+    display: flex;
+  }
 </style>

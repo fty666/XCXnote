@@ -3,7 +3,7 @@
     <!--头部样式-->
     <div class="spaces head">
       <div class="Fheads">&nbsp;&nbsp;&nbsp;&nbsp;首页橱窗商品位管理</div>
-      <div v-if="six==true" @click="add()">
+      <div v-if="six=='1'" @click="add()">
         <el-button style="margin: 6px 50px 0px 0px">添加橱窗</el-button>
       </div>
     </div>
@@ -55,8 +55,7 @@
         </el-table>
       </div>
     </div>
-    
-    <!--修改-->
+    <!--填加商品-->
     <div>
       <el-dialog
         title=""
@@ -100,7 +99,7 @@
               style="width: 95%">
               <el-table-column
                 type="selection"
-                width="55">
+                width="80">
                 <template slot-scope="scope">
                   <el-radio v-model="goodsId" :label="scope.row.id"></el-radio>
                 </template>
@@ -150,7 +149,6 @@
         </div>
       </el-dialog>
     </div>
-  
   </div>
 
 </template>
@@ -170,31 +168,32 @@
         commonShop: [],
         showCase: [],
         goodsId: '',
-        six: false,
+        six: '1',
         id: '',
         goodsName: ''
       }
     },
     methods: {
-      //获取列表
+      //获取橱窗位列表
       getOrder() {
         this._getData('/api/v1/goods/index', {
-          // page: this.page,
-          // pageSize: this.pageSize,
           sort: 1
         }, data => {
-          console.log(data);
           this.showCase = data.data;
-          if (data.total < 6) {
-            this.six = true;
+          if (data.total >= 6) {
+            this.six = '2';
+          }else{
+            this.six = '1';
           }
         })
       },
+      //获取可以添加的商品
       getCommon() {
         this._getData('/api/v1/goods/index', {
+          page: this.page,
+          pageSize: this.pageSize,
           sort: 0
         }, data => {
-          console.log(data);
           this.commonShop = data.data;
           this.totals = data.total;
         })
@@ -254,18 +253,18 @@
       handleSizeChange(val) {
         this.pageSize = val;
         if (this.id != '' || this.goodsName != '') {
-          this.getCommon();
+          this.search();
         } else {
-          this.getOrder();
+          this.getCommon();
         }
       },
       //第几页
       handleCurrentChange(val) {
         this.page = val;
         if (this.id != '' || this.goodsName != '') {
-          this.getCommon();
+          this.search();
         } else {
-          this.getOrder();
+          this.getCommon();
         }
       },
       //  取消橱窗位

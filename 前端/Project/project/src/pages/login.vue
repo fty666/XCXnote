@@ -61,8 +61,10 @@
                 type: 'success',
                 message: '登陆成功'
               });
+              console.log(data);
               sessionStorage.setItem('userInfo', JSON.stringify(data.auth))
               sessionStorage.setItem('userID', data.id)
+              sessionStorage.setItem('admin_name', data.account)
               this.$router.push({path: "/index"});
             })
         });

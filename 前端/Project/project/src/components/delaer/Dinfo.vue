@@ -148,9 +148,7 @@
             align="center"
             label="操作">
             <template slot-scope="scope">
-              <div class="flex">
-                <div style="color: #0099ce;padding-left: 38px" @click="info(scope.row.id)">查看</div>
-              </div>
+              <div class="Mouse" style="color: #0099ce;padding-left: 38px" @click="info(scope.row.id)">查看</div>
             </template>
           </el-table-column>
         </el-table>
@@ -209,7 +207,7 @@
             min-width="80"
             align="center">
             <template slot-scope="scope">
-              <div style="color: #0099ce;" @click="info(scope.row.id)">查看</div>
+              <div class="Mouse" style="color: #0099ce;" @click="info(scope.row.id)">查看</div>
             </template>
           </el-table-column>
         </el-table>
@@ -269,7 +267,9 @@
             this.saleList = data.data;
           })
       },
-      info() {
+      info(val) {
+        sessionStorage.setItem('dealID', val);
+        sessionStorage.setItem('dealrRot', '经销商列表');
         this.$router.push({name: 'buyInfo'})
       },
     },

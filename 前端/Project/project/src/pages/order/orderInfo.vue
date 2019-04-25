@@ -7,7 +7,7 @@
         <div class="flex">
           <div class="bian Mouse" @click="remark()">备注订单</div>
           <div class="bian Mouse" @click="editAff()">修改归属</div>
-          <div class="bian Mouse" v-if="this.order.status=='待收货' || this.order.status=='完成'">订单退款</div>
+          <div class="bian Mouse" v-if="this.order.status=='待收货' || this.order.status=='完成'"  @click="refund()">订单退款</div>
           <!--待发货-->
           <div class="bian Mouse" v-if="this.order.status=='待发货'">发货</div>
           <div class="bian Mouse" v-if="this.order.status=='待发货'" @click="takeGood()">修改收货信息</div>

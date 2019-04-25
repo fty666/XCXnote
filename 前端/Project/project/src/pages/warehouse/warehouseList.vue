@@ -112,7 +112,7 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
+        :current-page.sync="page"
         :page-sizes="[20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
@@ -253,7 +253,6 @@
         //页码参数
         page: 1,
         pageSize: 20,
-        currentPage4: 1,
         totals: 10,
         //查看
         centerDialogVisible: false,
@@ -310,7 +309,7 @@
       handleCurrentChange(val) {
         this.page = val;
         if (this.id != '' || this.goods_name != '') {
-          this.search();
+          this.Xpag();
         } else if (this.Pwine != '') {
           var datas = {wine: this.Pwine};
           this.wareInfo(datas)
@@ -320,6 +319,25 @@
       },
       //搜索
       search() {
+        this.page=1;
+        var data = {};
+        if (this.id != '') {
+          data.id = this.id;
+        }
+        if (this.goods_name != '') {
+          data.goods_name = this.goods_name;
+        }
+        this._getData('/api/v1/goods/warehouse', {
+          page: this.page,
+          pageSize: this.pageSize,
+          id: data.id,
+          goods_name: data.goods_name
+        }, data => {
+          this.wareList = data.data;
+          this.totals = data.total;
+        })
+      },
+      Xpag(){
         var data = {};
         if (this.id != '') {
           data.id = this.id;
@@ -339,6 +357,7 @@
       },
       //重置
       res() {
+        this.page=1;
         this.id = '';
         this.goods_name = '';
         this.getWare();

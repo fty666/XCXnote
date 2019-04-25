@@ -29,7 +29,7 @@
     <!--搜索-->
     <div class="flex whiteT" style="height: 120px">
       <div class="sequence" style="width: 75%;">
-        <div class="font">订单类型：</div>
+        <div class="font" style="margin-left: 5%">订单类型：</div>
         <div class="input">
           <el-select v-model="orderType" placeholder="请选择">
             <el-option size="small" label="经销商订单" value="2"></el-option>
@@ -44,7 +44,6 @@
           <el-select v-model="consigner_type" placeholder="请选择">
             <el-option label="平台" value="1"></el-option>
             <el-option label="加盟商" value="2"></el-option>
-            <!--<el-option label="经销商" value="3"></el-option>-->
           </el-select>
         </div>
         
@@ -57,11 +56,6 @@
           end-placeholder="结束日期"
           value-format="yyyy-MM-dd">
         </el-date-picker>
-        
-        <div class="font">商品名称：</div>
-        <div class="input">
-          <el-input v-model="goods_name" placeholder="输入商品名称"></el-input>
-        </div>
         
         <div class="font">用户账户：</div>
         <div class="input">
@@ -193,7 +187,7 @@
                 <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除订单</div>
               </div>
               
-              <div class="sequence" v-if="scope.row.status=='完成'">
+              <div class="sequence" v-if="scope.row.status=='完成' || scope.row.status=='已完成'">
                 <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="infos(scope.row.id)">查看订单</div>
                 <div class="Mouse" style="color: #0099ce;padding-left: 10px" @click="del(scope.row.id)">删除订单</div>
               </div>
@@ -214,7 +208,7 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
+        :current-page.sync="page"
         :page-sizes="[20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
@@ -258,14 +252,14 @@
           </el-table-column>
         </el-table>
         <div class="flex" style="margin: 20px 0px 20px 20%;" v-if="this.refundShow==true">
-          <div  @click="refundSub()">
+          <div @click="refundSub()">
             <el-button type="primary">提交申请</el-button>
           </div>
           <div @click="refunRes()" style="margin-left: 20px">
             <el-button type="info">&nbsp;&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;&nbsp;</el-button>
           </div>
         </div>
-
+      
       </el-dialog>
     </div>
     <!--订单发货-->
@@ -312,7 +306,7 @@
       return {
         //搜索
         type: '',
-        stimes: '',
+        stimes: [],
         order_code: '',
         goods_name: '',
         alliance_id: '',
@@ -323,7 +317,6 @@
         //页码参数
         page: 1,
         pageSize: 20,
-        currentPage4: 1,
         totals: 20,
         orderList: [],
         ids: '',
@@ -350,11 +343,11 @@
         //  排序
         district: 'desc',
         Otype: 'deac',
-      //  订单退款
-        refundCenter:false,
-        refundInfo:[],
-        refundIds:'',
-        refundShow:false
+        //  订单退款
+        refundCenter: false,
+        refundInfo: [],
+        refundIds: '',
+        refundShow: false
       }
     },
     components: {
@@ -374,7 +367,6 @@
         datas.pageSize = this.pageSize;
         this._getData('/api/v1/order/index', datas, data => {
           this.orderList = data.data;
-          console.log(data.data);
           this.totals = data.total;
         })
       },
@@ -388,13 +380,17 @@
       },
       //搜索
       search() {
+        this.page = 1;
         var datas = {};
         if (this.type != '') {
           datas.type = this.type;
         }
-        if (this.stimes != '') {
-          datas.start_time = this.stimes[0];
-          datas.end_tiem = this.stimes[1];
+        if (this.stimes == null) {
+        } else {
+          if (this.stimes.length > 0) {
+            datas.start_time = this.stimes[0];
+            datas.end_tiem = this.stimes[1];
+          }
         }
         if (this.order_code != '') {
           datas.order_code = this.order_code;
@@ -414,6 +410,7 @@
         this.getInfo(datas);
       },
       res() {
+        this.page = 1;
         this.type = '';
         this.stimes = '';
         this.order_code = '';
@@ -482,44 +479,42 @@
       },
       //订单退款
       refund(val) {
-        this.refundInfo=val.goods_info;
-        if(val.goods_info[0].detail_status=='正常'){
-          this.refundShow=true;
+        this.refundInfo = val.goods_info;
+        if (val.goods_info[0].detail_status == '正常') {
+          this.refundShow = true;
         }
-        this.refundCenter=true;
-        console.log(val)
+        this.refundCenter = true;
       },
-      refundFun(val){
+      refundFun(val) {
         for (let i = 0; i < val.length; i++) {
-          this.refundIds +=val[i].detail_id + ',';
+          this.refundIds += val[i].detail_id + ',';
         }
-        console.log(this.refundIds)
       },
-      refundSub(){
-          this.$confirm('是否申请此订单退款?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this._getData('/api/v1/order_detail/applyRefund', {
-                ids: this.refundIds,
-              },
-              data => {
-                this.$message({
-                  type: 'success',
-                  message: '申请成功，到退款处理操作'
-                });
-                this.getOrder();
-              })
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消'
-            });
+      refundSub() {
+        this.$confirm('是否申请此订单退款?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this._getData('/api/v1/order_detail/applyRefund', {
+              ids: this.refundIds,
+            },
+            data => {
+              this.$message({
+                type: 'success',
+                message: '申请成功，到退款处理操作'
+              });
+              this.getOrder();
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
           });
+        });
       },
-      refunRes(){
-        this.refundCenter=false;
+      refunRes() {
+        this.refundCenter = false;
       },
       //删除订单
       del(val) {
@@ -581,7 +576,33 @@
         this.pageSize = val;
         if (this.type != '' || this.stimes != '' || this.order_code != '' ||
           this.goods_name != '' || this.consigner_type != '' || this.user_mobile != '') {
-          this.search();
+          var datas = {};
+          if (this.type != '') {
+            datas.type = this.type;
+          }
+          if (this.stimes == null) {
+          } else {
+            if (this.stimes.length > 0) {
+              datas.start_time = this.stimes[0];
+              datas.end_tiem = this.stimes[1];
+            }
+          }
+          if (this.order_code != '') {
+            datas.order_code = this.order_code;
+          }
+          if (this.goods_name != '') {
+            datas.goods_name = this.goods_name;
+          }
+          if (this.consigner_type != '') {
+            datas.consigner_type = this.consigner_type;
+          }
+          if (this.user_mobile != '') {
+            datas.user_mobile = this.user_mobile;
+          }
+          if (this.orderType != '') {
+            datas.type = this.orderType;
+          }
+          this.getInfo(datas);
         } else if (this.Status != '') {
           var datas = {
             status: this.Status
@@ -596,7 +617,33 @@
         this.page = val;
         if (this.type != '' || this.stimes != '' || this.order_code != '' ||
           this.goods_name != '' || this.consigner_type != '' || this.user_mobile != '') {
-          this.search();
+          var datas = {};
+          if (this.type != '') {
+            datas.type = this.type;
+          }
+          if (this.stimes == null) {
+          } else {
+            if (this.stimes.length > 0) {
+              datas.start_time = this.stimes[0];
+              datas.end_tiem = this.stimes[1];
+            }
+          }
+          if (this.order_code != '') {
+            datas.order_code = this.order_code;
+          }
+          if (this.goods_name != '') {
+            datas.goods_name = this.goods_name;
+          }
+          if (this.consigner_type != '') {
+            datas.consigner_type = this.consigner_type;
+          }
+          if (this.user_mobile != '') {
+            datas.user_mobile = this.user_mobile;
+          }
+          if (this.orderType != '') {
+            datas.type = this.orderType;
+          }
+          this.getInfo(datas);
         } else if (this.Status != '') {
           var datas = {
             status: this.Status

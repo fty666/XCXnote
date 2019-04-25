@@ -23,26 +23,16 @@
       <div class="font">反馈时间：</div>
       <div class="input">
         <el-date-picker
-          v-model="start_time"
-          style="width: 135px;"
-          type="date"
+          v-model="Stimes"
           value-format="yyyy-MM-dd"
-          placeholder="选择日期">
-        </el-date-picker>
-      </div>
-      
-      <div class="font" style="margin-left: 2%">至</div>
-      <div class="input" style="margin-left: 1%">
-        <el-date-picker
-          v-model="end_time"
-          value-format="yyyy-MM-dd"
-          style="width: 135px;"
-          type="date"
-          placeholder="选择日期">
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
         </el-date-picker>
       </div>
       <!--按钮-->
-      <div class="font" style="margin-left: 20px">
+      <div class="font" style="margin-left: 15%">
         <el-button type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
         <el-button class="buttons3" icon="el-icon-refresh" @click="reset">重置</el-button>
       </div>
@@ -115,7 +105,7 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
+        :current-page.sync="page"
         :page-sizes="[10, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
         :total=totals>
@@ -134,10 +124,8 @@
         pageSize: 20,
         mobile: '',
         type: "",
-        start_time: '',
-        end_time: '',
+        Stimes: '',
         //页码参数
-        currentPage4: 1,
         totals: 20,
         options: [],
         value: '',
@@ -156,7 +144,6 @@
         datas.pageSize = this.pageSize;
         this._getData('/api/v1/user_feedback/index', datas,
           data => {
-            console.log(data.data);
             this.tableData3 = data.data;
             this.totals = data.total;
           })
@@ -170,6 +157,7 @@
           })
       },
       search() {
+        this.page = 1;
         var datas = {};
         if (this.mobile != '') {
           datas.mobile = this.mobile;
@@ -177,19 +165,35 @@
         if (this.type != '') {
           datas.type = this.type;
         }
-        if (this.start_time != '') {
-          datas.start_time = this.start_time;
+        if (this.Stimes != null) {
+          if (this.Stimes != '') {
+            datas.start_time = this.Stimes[0];
+            datas.end_time = this.Stimes[1];
+          }
         }
-        if (this.end_time != '') {
-          datas.end_time = this.end_time;
+        this.getInfos(datas);
+      },
+      Xpag() {
+        var datas = {};
+        if (this.mobile != '') {
+          datas.mobile = this.mobile;
+        }
+        if (this.type != '') {
+          datas.type = this.type;
+        }
+        if (this.Stimes != null) {
+          if (this.Stimes != '') {
+            datas.start_time = this.Stimes[0];
+            datas.end_time = this.Stimes[1];
+          }
         }
         this.getInfos(datas);
       },
       reset() {
+        this.page = 1;
         this.mobile = '';
         this.type = "";
-        this.start_time = '';
-        this.end_time = '';
+        this.Stimes = '';
         this.getList();
       },
       //导出EXCEL/exportFunc为elxel.js里方法
@@ -202,12 +206,20 @@
       //每页显示多少数据
       handleSizeChange(val) {
         this.pageSize = val;
-        this.getService();
+        if (this.mobile != '' || this.type != "" || this.Stimes != '') {
+          this.Xpag();
+        } else {
+          this.getService();
+        }
       },
       //第几页
       handleCurrentChange(val) {
         this.page = val;
-        this.getService();
+        if (this.mobile != '' || this.type != "" || this.Stimes != '') {
+          this.Xpag();
+        } else {
+          this.getService();
+        }
       },
       sortChange(column, prop, order) {
         var datas = {};

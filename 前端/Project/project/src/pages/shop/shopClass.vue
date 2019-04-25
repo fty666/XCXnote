@@ -22,17 +22,17 @@
       <div class="flex" style="margin-left:25% ">
         <div style="margin-top: 40px ">分类名：</div>
         <div style="margin: 30px 0px 0px 50px">
-          <el-input v-model="name"  style="width: 450px;" placeholder="请输入分类"></el-input>
+          <el-input v-model="name" style="width: 450px;" placeholder="请输入分类"></el-input>
         </div>
       </div>
       <div class="flex" style="margin-left:25% ">
         <div style="margin-top: 40px ">分类图片：</div>
         <div style="margin: 30px 0px 0px 50px">
           <upali class="img_cha" ref="aliComponent" @getUrl="imgUrl1($event, 1)" :fileNumber="1"
-                  :imgWidth="120" :imgHeight="120"
-                  :defaultImg="photo"></upali>
+                 :imgWidth="120" :imgHeight="120"
+                 :defaultImg="photo"></upali>
         </div>
-        <div class="add1" style="text-align: center" @click="addClass()">
+        <div class="add1 Mouse" style="text-align: center" @click="addClass()">
           添加二级分类
         </div>
       </div>
@@ -98,7 +98,7 @@
             <div class="flex">
               <div class="edit1" style="margin-left:20%">修改为：</div>
               <div class="edit2" style="margin-left: 0px">
-                <el-input v-model="input" placeholder="请输入内容"></el-input>
+                <el-input v-model="Xgname" placeholder="请输入内容"></el-input>
               </div>
             </div>
             <div class="flex">
@@ -130,28 +130,29 @@
   export default {
     data() {
       return {
-        options: [{
-          value: '洋酒',
-          label: '洋酒'
-        }, {
-          value: '葡萄酒',
-          label: '葡萄酒'
-        }, {
-          value: '酒具周边',
-          label: '酒具周边'
-        }, {
-          value: '红酒套装',
-          label: '红酒套装'
-        }],
+        options: [
+          {
+            value: '洋酒',
+            label: '洋酒'
+          }, {
+            value: '葡萄酒',
+            label: '葡萄酒'
+          }, {
+            value: '酒具周边',
+            label: '酒具周边'
+          }, {
+            value: '红酒套装',
+            label: '红酒套装'
+          }],
         value: '洋酒',
         name: '',
         classList: [],
         centerDialogVisible: false,
         input: '',
-        eid: '',
-        photo:'',
-        editphoto:'',
-        eidtInfo:{}
+        //修改的内容
+        Xgname: '',
+        editphoto: '',
+        photo: '',
       }
     },
     watch: {
@@ -165,7 +166,7 @@
     methods: {
       //添加分类
       addClass() {
-        if (this.value == '' || this.name == ''|| this.photo=='') {
+        if (this.value == '' || this.name == '' || this.photo == '') {
           this.$message({
             showClose: true,
             message: '请完善分类信息',
@@ -180,10 +181,12 @@
             this._getData('/api/v1/goods_group/create', {
                 name: this.name,
                 group_name: this.value,
-                img:this.photo
+                img: this.photo
               },
               data => {
                 this.gclass();
+                this.name = '';
+                this.photo = '';
                 this.$message({
                   type: 'success',
                   message: '操作成功'
@@ -207,6 +210,9 @@
       edit: function (val) {
         this.centerDialogVisible = true;
         this.eid = val;
+        this.editphoto = this.eid.img
+        this.Xgname = this.eid.name
+        console.log(this.eid);
       },
       //删除
       del(val) {
@@ -250,10 +256,17 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          if (this.Xgname == '' || this.Xgname == null || this.editphoto == '' || this.editphoto == null) {
+            this.$message({
+              type: 'info',
+              message: '修改信息不能为空'
+            });
+            return false;
+          }
           this._getData('/api/v1/goods_group/edit', {
               id: this.eid.id,
-              name: this.input,
-              img:this.editphoto
+              name: this.Xgname,
+              img: this.editphoto
             },
             data => {
               this.$message({

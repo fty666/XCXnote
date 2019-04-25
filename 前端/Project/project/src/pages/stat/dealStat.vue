@@ -3,7 +3,9 @@
     <!--表格-->
     <div class="head flex">
       <div class="font">交易记录</div>
-      <div class="head1 Mouse" style="margin-left: 35%" @click="exportFunc('dealTable','交易记录统计')">导出数据</div>
+      <div class="head1 Mouse" style="margin-left: 35%" @click="exportFunc('dealTable','交易记录统计')">
+        导出数据
+      </div>
       <div :class="['head1','Mouse',yday==true?'bj':'']" style="margin-right: 0px" @click="Xyday()">
         昨天
       </div>
@@ -85,8 +87,8 @@
         Tday: false
       }
     },
-    watch:{
-      times(v,o){
+    watch: {
+      times(v, o) {
         this.selTime();
       }
     },
@@ -142,12 +144,12 @@
             break;
         }
       },
-    //  时间选择
-      selTime(){
+      //  时间选择
+      selTime() {
         console.log(this.times);
         this._getData('/api/v1/data_statistics/cycleBusiness', {
-            start_time:this.times[0],
-            end_time:this.times[1],
+            start_time: this.times[0],
+            end_time: this.times[1],
           },
           data => {
             console.log(data)
