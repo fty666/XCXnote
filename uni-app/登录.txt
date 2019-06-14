@@ -1,0 +1,22 @@
+1，请求接口：
+	uni.request({
+		url:'',
+		data:{},
+		method:'POST'，
+		success(userResult){
+			console.log(userResult)
+		}
+	})
+2，授权登录,qq,微信，微博，  配置SDK在配置文件中
+	uni.login({
+		provider:'',	//哪个授权提供商进行登录，QQ，微信或微博，官网上有
+		success(loginRes){
+			//授权登录成功获取用户信息
+			uni.getUserInfo({
+				provider:'',//和上面的一样
+				success(info){
+					console.log(JSON.stringfy(info))
+				}
+			})
+		}
+	})

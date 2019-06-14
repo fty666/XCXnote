@@ -1,0 +1,71 @@
+1，导航栏自定义按钮，在json文件中：
+	"style":{
+		"app-plus":{
+			"titleNView":{
+				"type":"transparent",
+				"buttons":[
+					{
+						"type":"share"  //分享
+					},	
+					{
+						"type":"home"	//回主页
+					}
+				]
+			}
+		}
+	}
+	
+2，监听导航栏原生按钮事件：(分享内容要先配置主配置内容，填写appid )
+	onNavigationBarButtonTap(e){
+		var index=e.index;    //打印触发那个按钮，判断index
+		if(index==0){		  //分享
+			uni.share({
+				provider: "weixin",			  			//判断要分享到哪里，微信，QQ，新浪	
+				scene: "WXSenceTimeline",				//分享场景值，如分享到朋友圈，聊天界面，或微信收藏
+				type: 0,								//分享内容说明，0->图文，1->纯文字。。。。。。
+				href: "http://uniapp.dcloud.io/",		//H5
+				title: "uni-app分享",					//标题内容
+				summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",		//内容
+				imageUrl: "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png",	//图片地址
+				success: function (res) {
+					console.log("success:" + JSON.stringify(res));
+				},
+				fail: function (err) {
+					console.log("fail:" + JSON.stringify(err));
+				}
+			});
+		}
+		
+	},
+3,处理小程序，app视频滚动继续播放功能，
+	<viede id='myTrailer'></video>
+	onReady(){
+		this.videoContext=uni.createVideoContext('myTrailer');   //根据ID绑定上下视频组件
+	}
+	onHide(){
+		//暂停视频
+		this.videoContext.pause();   //页面被隐藏时关闭
+	}
+	onShow(){
+		//页面再次显示时播放
+		this.videoContext.play()
+	}
+	
+4,播放一个视频时需要暂停其他的视频：
+	Html:
+		<video :id='item.id' :data-playingindex="item.id" @play='meIsPlay' v-for="item in hotList" :src="" ></video>
+	JS：
+		meIsPlay(e){
+			var that=this;
+			var trailerId='';
+			if(e){
+				trailerId=e.currentTarget.dataset.playingindex;
+			}
+			var hotList=that.hotList;
+			for(let i=0;i<hotList;i++){
+				let hId=hotList[i].id;
+				if(trailerId!=hId){
+					uni.createVideoContext(hId).pause()
+				}
+			}
+		}

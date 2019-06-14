@@ -1,0 +1,78 @@
+1，页面跳转
+	<navigator url=''></navigator>
+2,尺寸比例，像素，  upx,
+	width:750upx;height:750upx;
+3,页面数据绑定 ： {{data}}
+  标签数据绑定v-bind ：  v-bind:url='data' 或 :url='data'
+4,事件：
+	@input='change'     //input内容改变触发
+	@focus='focus'		//获取焦点事件
+	@blur='blur'		//失去焦点
+	@confirm='confirm'  //点击完成按钮时触发，在键盘中会有完成按钮或者回车按钮，触发事件
+	@click='click'		//单击事件
+	@tap='tap'			//组件被触摸事件
+5，条件渲染  
+	v-if和v-show 区别 if判断条件不满足，不会再控制器显示，show会在控制器中显示
+	<view v-if=''></view>
+	<view v-else-if></view>
+	<view v-else></view>
+	<view v-show=''></view>
+6,列表渲染
+	<view v-for="（item，index) in arr">
+		<view v-for="(res,resIndex) in item.twoArr">
+		</view>
+	</view>
+7,跨平台判断，显示  #ifdef  #endif ,可以在css,js,html页面中使用判断
+	<!--#ifdef H5-->
+	<view>只在H5编译</view>
+	<!--#endif>
+	<!--#ifdef APP-PLUS-->
+	<view>只在ios/安卓编译</view>
+	<!--#endif-->
+	<!--#ifdef MP-->
+	<view>只在小程序（微信，支付宝，百度）进行编译</view>
+	<!--endif-->
+	<!--#ifdef MP-->
+	<view>只在微信小程序进行编译</view>
+	<!--endif-->
+8，导入文件：
+	@import url('路径')
+9,安卓和ios头部导航栏去掉，官网配置中有api:
+	在page.json中来看页面路径，修改style
+	'style':{
+		'app-plus':{
+			'titleNivew':false   //禁用原生导航栏
+		}
+	}
+10，数据更新，修改
+	this.data=data;
+11,全局变量
+	1,新建common.js
+		const	serverUrl='http://www.123.com';
+		export default{
+			serverUrl
+		}
+	2,方法二，在main.js中使用Vue挂载
+		Vue.prototype.serverUrl='http://www.123.com'
+		使用：this.serverUrl直接拿去
+12，下拉刷新开启，在app.json中设置
+	"enablePullDownRefresh":true,    //打开下拉刷新功能，在每个页面的json文件中配置
+	JS文件：
+	onPullDownRefresh(){
+		需要下拉刷新的内容
+	}
+	
+	停止下拉刷新,可以在获取下拉刷新数据成功之后调用
+	complete:()=>{
+		uni.stopPullDownRefresh();
+	}
+13，页面交互和用户：
+	loading加载数据：
+		uni.showLoading({
+			mask:true        //在页面开启渲染层，禁止用户点击下面的数据
+		})
+		uni.hideLoading();
+14,数据缓存：
+	uni.setStorageSync('data',unserInfo);     //保存
+	uni.getStorageSync('data')				  //获取缓存
+	uni.clearStorageSync()					  //清除缓存
