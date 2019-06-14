@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box1{
+            width: 200px;
+            height: 200px;
+            background-color: red !important;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var box1 = document.getElementById("box1");
+            var btn01 = document.getElementById("btn01");
+            var btn02 = document.getElementById("btn02");
+            btn01.onclick = function () {
+                box1.style.width="300px" ;
+                box1.style.height="300px" ;
+            };
+            btn02.onclick = function () {
+                alert(box1.style.width);
+            };
+
+        };
+    </script>
+</head>
+<body>
+<button id="btn01">点我一下</button>
+<button id="btn02">点我一下</button>
+<br/><br/>
+<div id="box1"></div>
+
+</body>
+</html>

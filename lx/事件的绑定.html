@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = function () {
+            var btn01 = document.getElementById("btn01");
+            // btn01.onclick = function () {
+            //    alert("aaaa");
+            // };
+            btn01.addEventListener("click",function (){
+                alert(1);
+            },false );
+
+            btn01.addEventListener("click",function (){
+                alert(2);
+            },false );
+
+            btn01.addEventListener("click",function (){
+                alert(3);
+            },false );
+
+            function bind(obj,eventStr,callback) {
+                
+            }
+
+
+
+
+        };
+    </script>
+</head>
+<body>
+<button> id="btn01">点我一下</button>
+</body>
+</html>

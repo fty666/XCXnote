@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+    <script type="text/javascript" src="js/ZoomPic.js"></script>
+
+
+    <style>
+        .big{
+            font-family: "Arial Black";
+            width: 1330px;
+        }
+        .tittle{
+            height: 100px;
+            background-color: #FCD123;
+            width:1330px;
+            position: absolute;
+            background-position: center;
+            top: 0px;
+        }
+        .tt1{
+            height: 40px;
+            width: 40px;
+            margin-left: 100px;
+            padding-top: 35px;
+            float: left;
+        }
+        .tt2 {
+            height: 50px;
+            width: 100px;
+            margin-left: 20px;
+            padding-top: 15px;
+            float: left;
+        }
+        .tt3{
+            height: 100px;
+            width: 1000px;
+            float: left;
+            line-height: 55px;
+        }
+        .wzsy{
+            size: 16px;
+            margin-left: 60px;
+            float: left;
+            line-height: 100px;
+        }
+        .wwww{
+            color: black;
+        }
+        .wwwww{
+            color: white;
+        }
+        a:hover
+        {
+            color: white;
+        }
+        A {text-decoration:none}
+        .dqwz{
+            height: 40px;
+            width: 1330px;
+            float: left;
+            border-bottom:1px gray solid;
+            margin-top: 120px;
+            color: gray;
+        }
+
+
+
+
+        /* jswbox */
+        #jswbox {
+            width: 1100px;
+            height: 600px;
+            margin: 0 auto;
+            padding-top:50px;
+        }
+        #jswbox ul {
+            position: absolute;
+            height: 600px;
+        }
+        #jswbox li {
+            position: absolute;
+            width: 0;
+            height: 0;
+            z-index: 0;
+            cursor: pointer;
+            overflow: hidden;
+            top: 152px;
+            left: 10px;
+        }
+        #jswbox li img {
+            width: 100%;
+            height: 100%;
+            vertical-align: top;
+            float: left;
+        }
+        #jswbox .prev, #jswbox .next {
+            display: none;
+        }
+        .wenzi p{
+            line-height: 35px;
+            text-indent: 2em;
+        }
+        .jieshao{
+            color: red;
+            height: 200px;
+            width: 100%;
+            margin-top: 50px;
+            font-size: 14px;
+            margin-left: 50px;
+        }
+        .js1{
+            text-align: center;
+            float: left;
+            width: 250px;
+            margin: 0 30px;
+        }
+        .bq{
+            width: 1330px;
+            height: 70px;
+            float: left;
+            background-color: #2B2B2B;
+            color: white;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="big">
+    <div class="tittle">
+        <div class="tt1">
+            <img src="img/logo.png">
+        </div>
+        <div class="tt2">
+            <h3>某某宠物</h3>
+        </div>
+        <div class="tt3">
+            <div class="wzsy"> <a class="wwww" href="shouye.html">网站首页</a></div>
+            <div class="wzsy"> <a class="wwww" href="#">宠物用品</a></div>
+            <div class="wzsy"> <a class="wwww" href="#">宠物医疗</a></div>
+            <div class="wzsy"> <a class="wwww" href="#">宠物美容</a></div>
+            <div class="wzsy"> <a class="wwww" href="#">新闻动态</a></div>
+            <div class="wzsy"> <a class="wwwww" href="#">关于我们</a></div>
+            <div class="wzsy"> <a class="wwww" href="lianxiwomen.html">联系我们</a></div>
+        </div>
+    </div>
+    <div class="dqwz">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        当前位置： 网站首页 >> 关于我们</div>
+    <div id="jswbox">
+        <pre class="prev">prev</pre>
+        <pre class="next">next</pre>
+        <ul>
+            <li><img src="img/zs1.jpg"/></li>
+            <li><img src="img/zs_2.jpg"/></li>
+            <li><img src="img/zs_3.jpg"/></li>
+            <li><img src="img/zs_4.jpg"/></li>
+            <li><img src="img/zs_5.jpg"/></li>
+            <li><img src="img/zs_6.jpg"/></li>
+        </ul>
+    </div>
+    <div class="wenzi" style="margin: 0 100px;">
+        <p>对于国内越来越多的养宠人士来说，XXXX不是一个陌生的名字。在
+            国内宠物食品市场领导品牌名单中，除了国际大牌皇家、冠能……再往
+            下数的顶尖品牌中，XX一定位居前列。而XX旗下的“XXX”、“XX”、“XX
+            X”、“好之味”等品牌也已成为养宠一族眼中优质国产品牌的代名词了。是
+            什么让XX成为国内品牌中的佼佼者，在与国际品牌和众多国内低价品牌
+            的双重竞争中立于不败之地？
+        </p>
+
+        <p>“让天下宠物得到人间关爱”是XX始终不变的企业愿景。对生命的关
+            爱，带来对宠物需求的全新发现和产品开发的独特视角，也是XX追求消费
+            者价值较大化的动力之源。这就是XX步步领先的秘诀所在。
+        </p>
+
+        <p>因为国际品牌的影响，目前市场上的宠物食品几乎都在强调营养和
+            功能，大大小小的品牌象跟风似地产品按犬种、年龄段进行细分。而
+            XX却在纷繁芜杂的现象背后发现了众多宠物主人对于犬猫粮“美味”的
+            需求——他们疼爱自己的宠物，担心每天吃一样的干粮太单调。公司的
+            新产品“XXX”，正是在保证全面营养的基础上，从宠物的天性出发，将
+            食品的适口性发挥到极致，让宝贝的开饭时刻更加快乐，在国内市场上打
+            造了一种全新理念的宠物食品。“XXX”也因此赢得了良好的市场反响。
+        </p>
+
+        <p>XX吸收全球业界的先进经验，不断强化自身的研发实力，以多名动
+            物营养硕士和兽医为核心，建立了亚洲较大的宠物食品研发中心，制
+            定了适口性、营养全面提升的每年计划。由国内外知名学者教授为
+            核心的宠物营养研究所也在筹备中。除了XXX之外，公司还有深受
+            不同阶层消费者欢迎的更多产品系列：以北欧宠物营养为标准的高档
+            品牌“XXX”；面向普通大众的专业营养品牌“XX”和经济美味的品
+            牌“好之味”。他们贡献着中国宠物食品市场6％的销量以及高档宠物
+            食品市场5％的销量，并以每年30%的势头快速成长。
+        </p>
+
+        <p>XX的关爱，同样表现在对消费者价值的重视：一方面，不遗余力地提
+            升产品内在品质，接近甚至赶超国际品质；另一方面，利用本土化生产的
+            优势，确保让更多中国百姓消费得起的较优价格。</p>
+    </div>
+    <div class="jieshao">
+        <div class="js1">
+            <h1>168+</h1>
+            <br>
+            集聚168余位宠物行业医疗专家​​​​，工
+                作经验相当丰富
+        </div>
+        <div class="js1">
+            <h1>17+</h1>
+            <br>
+            公司成立于2000年，至今已有17年品牌经验
+        </div>
+        <div class="js1">
+            <h1>46+</h1>
+            <br>
+            营销网络遍布全国，至今已有46个办事处
+        </div>
+        <div class="js1">
+            <h1>500+</h1>
+            <br>
+            全国除西藏外的每个省市共派驻有近500名销售人员，11个销售大区
+        </div>
+    </div>
+    <div class="bq">
+        <div class="bqdyh" style="text-align: center;">地点：某某省某某市某某区
+            某某街道某某号X座XXX      电话：021-1234567XXX 021-5646452XX
+            邮箱：moumou123XXX@163.com
+        </div>
+        <div class="bqdeh" style="text-align: center; margin-top: 10px;">
+            Copyright 版权所有 © 某某宠物 www.xxxx.com 某某宠物    沪ICP备xxxxxx号-x
+        </div>
+    </div>
+
+
+</div>
+<script type="text/javascript">
+
+    $(function(){
+
+        new ZoomPic("jswbox");
+
+    })
+
+</script>
+
+</body>
+</html>

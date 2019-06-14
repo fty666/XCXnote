@@ -1,0 +1,34 @@
+ html:
+ <view bindtap="openmap">选择地图</view>
+ app.json配置：
+     "permission": {
+      "scope.userLocation": {
+        "desc": "你的位置信息将用于小程序位置接口的效果展示"
+      }
+    },
+JS事件：
+ openmap: function () {
+    var that = this;
+    //获取当前位置
+    wx.getLocation({
+      type: 'gcj02',
+      success: function (res) {
+        console.log(res)
+        // var latitude = res.latitude
+        // var longitude = res.longitude
+        // var speed = res.speed
+        // var accuracy = res.accuracy
+      }
+    })
+    wx.chooseLocation({
+      success: function (res) {
+        console.log(res);
+        // var latitude = res.latitude
+        // var longitude = res.longitude
+        // var speed = res.longitude
+        // var accuracy = res.accuracy
+        // that.setData({ latitude: latitude })
+        // that.setData({ longitude: longitude })
+      }
+    })
+  },

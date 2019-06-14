@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box1{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: fixed;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+          var box1 = document.getElementById("box1");
+          document.onmousemove = function (event) {
+           event = event || window.event;
+           var left = event.clientX;
+           var top = event.clientY;
+           box1.style.left = left + "px";
+           box1.style.top = top + "px";
+          };
+          var box2 = document.getElementById("box2");
+          box2.onmousemove = function (event) {
+              event = event || window.event;
+              event.cancelBubble = true;
+          };
+
+        };
+    </script>
+</head>
+<body style="height:1000px; width: 2000px;">
+<div id="box2" style="width: 500px; height: 500px; background-color: yellow;"></div>
+<div id="box1">
+
+</div>
+</body>
+</html>

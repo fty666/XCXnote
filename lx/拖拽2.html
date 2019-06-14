@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+        }
+
+        #box2 {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            position: absolute;
+            left: 200px;
+            top: 200px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var box1 = document.getElementById("box1");
+            var box2 = document.getElementById("box2");
+            var img1 = document.getElementById("img1");
+
+            drag(box1);
+            drag(box2);
+            drag(img1);
+
+            function drag(obj) {
+                obj.onmousedown = function (event) {
+
+                    event = event || window.event;
+                    var ol = event.clientX - obj.offsetLeft;
+                    var ot = event.clientY - obj.offsetTop;
+
+                    document.onmousemove = function (event) {
+                        event = event || window.event;
+                        var left = event.clientX - ol;
+                        var top = event.clientY - ot;
+                        obj.style.left = left + "px";
+                        obj.style.top = top + "px";
+                    };
+                    obj.onmouseup = function () {
+                        document.onmousemove = null;
+                        document.onmouseup = null;
+                        obj.releaseCapture && obj.release.releaseCapture();
+                    };
+                };
+                return false;
+            }
+        };
+    </script>
+</head>
+<body>
+蚊子蚊子蚊子
+<div id="box1"></div>
+<div id="box2"></div>
+<img src="sss.jpg" id="img1" style="width: 200px;height: 200px; position: absolute;">
+
+</body>
+</html>

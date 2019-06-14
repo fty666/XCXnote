@@ -1,0 +1,149 @@
+1，HTML页面
+	<canvas canvas-id="shareCanvas" style="width:600px;height:900px"></canvas>
+	<button catchtap='saveImageToPhoto'>下载图片</button>
+	<button open-type="openSetting" bindopensetting='getSetting'>授权保存</button>
+2，JS
+	const app = getApp();
+	//这是一个封装好的方法  
+	const promisify = api => {
+	  return (options, ...params) => {
+		return new Promise((resolve, reject) => {
+		  const extras = {
+			success: resolve,
+			fail: reject
+		  }
+		  api({
+			...options,
+			...extras
+		  }, ...params)
+		})
+	  }
+	}
+	const wxGetImageInfo = promisify(wx.getImageInfo)
+	Promise.all([
+	  wxGetImageInfo({
+		src: 'https://zuoanzac.oss-cn-beijing.aliyuncs.com/1.jpg'
+	  }),
+	  wxGetImageInfo({
+		src: 'https://zuoanzac.oss-cn-beijing.aliyuncs.com/2.jpg'
+	  })
+	]).then(res => {
+	  const ctx = wx.createCanvasContext('shareCanvas')
+	  // 底图
+	  console.log('生成海报图片');
+	  console.log(res)
+	  // 底部背景图片，路径，左右上下边距，宽，高，
+	  ctx.drawImage(res[0].path, 0, 0, 600, 900)
+	  // 作者名称
+	  ctx.setTextAlign('center') // 文字居中
+	  ctx.setFillStyle('#000000') // 文字颜色：黑色
+	  ctx.setFontSize(22) // 文字字号：22px
+	  // 字体设置左边距，上边距
+	  ctx.fillText('作者：张杰', 180, 100)
+	  ctx.fillText('歌曲：曹操', 180, 150)
+	  // 小程序码
+	  const qrImgSize = 180
+	  ctx.drawImage(res[1].path, 120, 200, 100, 100)
+	  ctx.stroke()
+	  ctx.draw()
+	})
+	
+	Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+  },
+  //保存海报
+  saveImageToPhoto: function() {
+    var that = this;
+    // 检测设置中是否允许保存到相册中去
+    wx.getSetting({
+      success(res) {
+        console.log(res)
+        // 第一，直接调取保存，系统会自动调取授权
+        if (res.authSetting['scope.writePhotosAlbum'] == undefined) {
+          wx.showToast({
+            title: '获取失败',
+            icon: 'none'
+          })
+        } else if (!res.authSetting['scope.writePhotosAlbum']) { // 不授权
+          wx.showToast({
+            title: '您还没有授权，请去授权',
+            icon: 'none'
+          })
+        } else { // 授权
+          that.saveImage()
+        }
+      }
+    })
+  },
+  saveImage() {
+    let that = this
+    //生成画布图片地址
+    var xj = '';
+    //输出图片的大小
+    wx.canvasToTempFilePath({
+      x: 0,
+      y: 0,
+      width: 500,
+      height: 800,
+      destWidth: 500,
+      destHeight: 800,
+      canvasId: 'shareCanvas',
+      success: function(res) {
+        xj = res.tempFilePath;
+        wx.saveImageToPhotosAlbum({
+          filePath: xj, // 这里是用canvas生成之后保存下来的图片地址
+          success(res) {
+            wx.showModal({
+              title: '温馨提示',
+              content: '已保存到系统相册中',
+              showCancel: false
+            })
+          },
+          fail(res) {
+            wx.showModal({
+              title: '温馨提示',
+              content: '保存失败',
+              showCancel: false
+            })
+          }
+        })
+      },
+      fail: function(res) {
+        wx.showModal({
+          title: '温馨提示',
+          content: '生成图片失败',
+          showCancel: false
+        })
+      }
+    })
+
+  },
+   /**
+   * 授权保存
+   * @private
+   */
+  getSetting(event) {
+    let that = this
+    // 对用户的设置进行判断，如果没有授权，即使用户返回到保存页面，显示的也是“去授权”按钮；同意授权之后才显示保存按钮
+    that.isShowToast = false
+    if (!event.detail.authSetting['scope.writePhotosAlbum']) {
+      wx.showModal({
+        title: '温馨提示',
+        content: '你关闭了访问相册的权限，无法保存，请允许访问相册',
+        showCancel: false
+      })
+    } else {
+      wx.showToast({
+        icon: 'success',
+        title: `授权成功`,
+        success(res) {
+          that.saveImage()
+        }
+      })
+    }
+  },
+})

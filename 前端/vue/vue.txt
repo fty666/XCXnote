@@ -70,6 +70,14 @@ element时间格式    value-format="yyyy-MM-dd"
 			{{msg | uppercase}}  将小写转化为大写
 			{{MSG | lowercase}}  将大写转化为小写
 			{{MSG | currency}}   金额标符
+			{{MS|fun}}自定义
+	filters:{
+		fun:function(arg){
+			console.log(arg)
+		}
+	}
+【		城市的联动：https://distpicker.pigjian.com/
+https://blog.csdn.net/weixin_37806077/article/details/80228908】
 13, 请求交互get post jsonp 
 	首先引入<script src="vue-resource.js"></script>
 		

@@ -28,7 +28,7 @@
       }
     }
 	
-	获取数据时 
+	获取数据时 (获取不到数据参考：https://blog.csdn.net/qq_25134721/article/details/84667981）
 	在app.wpy中引入polyfill  : 
 	import 'wepy-async-function'; 
 	在app.wpy中使API promise化
@@ -36,6 +36,7 @@
 
     constructor () {
         super();
+		this.use('requestfix');
         this.use('promisify');
     }
 

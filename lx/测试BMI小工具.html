@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        var weight = parseInt(prompt("请输入体重"));
+        var height = (prompt("请输入身高"));
+        var BMI = weight/(height*height);
+        if(BMI<18.5){
+            alert("过轻");
+        } else if (BMI>=18.5&&BMI<=24.99999999){
+            alert("正常");
+        }else if (BMI>=25&&BMI<=32){
+            alert("过重");
+        }else {
+            alert("肥胖");
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

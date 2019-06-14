@@ -1,0 +1,43 @@
+1，父向子传值	https://blog.csdn.net/qq_41550865/article/details/85759468
+	父组件：
+			//Fdata为父组件上data里的值，Zdata为子组件要接收的值的命名
+			//close为子组件中调用父组件的方法名，MsgShowClose为父组件中自己的方法名
+		   <user-msg :Zdata="Fdata" @close="MsgShowClose"></user-msg>
+	子组件：
+		    data() {
+				return {
+					data: this.Zdata    /*可以直接将传过来的值进行赋值*/
+				}
+			},
+			//传过来的如果是对象，则定义type类型
+			props: {
+				Zdata: {
+					type: Object,
+					default() {
+						return {
+						}
+					}
+				}
+			},
+			props: ['Zdata'],
+	父组件调用子组件方法：
+		<child ref='refName'></child>  /*相当于一个在子组件的占位符*/
+		function f(){
+			//调用子组件的方法
+			this.$refs.refName.子方法
+		}
+
+2，子组件传值给父组件 https://www.cnblogs.com/daiwenru/p/6694530.html
+	子组件：需要一个事件触发
+		<button @click='Fun()'></button>
+		fun(){
+			this.$emit('fatherFun',this.data)
+		}
+	父组件中：
+		<child v-on:fatherFun='shijian'></child>
+		shijian(data){
+			console.log(data);
+			data为子组件传来的数据
+		}
+	子组件调用父组件的方法：
+		$emit('close')

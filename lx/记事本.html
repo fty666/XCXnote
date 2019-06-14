@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background-color: #e3e3e3;
+        }
+
+        .wrap {
+            width: 500px;
+            margin: 0px auto;
+            background-color: white;
+            padding: 10px 0px;
+        }
+
+        .list {
+
+        }
+        .item {
+
+        }
+        .tittle{
+            font-size: 1.1em;
+        }
+        .content{
+            font-size: 0.9em;
+        }
+        .inputNote{
+            width: 100%;
+            font-size: 1em;
+            height: 30px;
+            box-sizing: border-box;
+            margin-bottom: 5px;
+        }
+
+        .addBtn{
+            width: 100%;
+            height: 30px;
+            display: inline-block;
+            cursor:  pointer;
+            padding-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <ul class="list" id="list">
+    </ul>
+    <input type="text" name="inputTittle" id="inputTittle" class="inputNote" placeholder="请输入标题">
+    <input type="text" name="inputContent" id="inputContent" class="inputNote" placeholder="请输入内容">
+    <button class="addBtn" id="addBtn">添加</button>
+</div>
+
+<script type="text/javascript">
+    var ul= document.getElementById('list');
+    var addBtn = document.getElementById('addBtn');
+    var inputTittle = document.getElementById('inputTittle');
+    var inputContent = document.getElementById('inputContent');
+     var list = [];
+
+     var tpl ='<li class="item"><p class="tittle">{%tittle%}</p><p class="content">{%content%}</p><button class="btn" type="button">修改</button> </li>';
+     var fillList = function () {
+             if (list.length == 0){
+                 ul.innerHTML='<li>没有内容</li>';
+                 return;
+             }
+         var str = '';
+         for (var i = 0 ; i<list.length; i++){
+         str += tpl.replace('{%tittle%}',list[i].tittle).replace('{%content%}',list[i].content);
+
+         }
+         ul.innerHTML = str;
+     }
+
+     addBtn.addEventListener('click',function (){
+         if(inputTittle.value == ''||inputContent.value == ''){
+             alert("存在为输入的内容")
+             return;
+         }
+         var obj = {
+             tittle: inputTittle.value,
+             content: inputContent.value
+         }
+        list.push(obj);
+         inputTittle.value='';
+         inputContent.value='';
+         savelist();
+         fillList();
+     })
+    var savelist = function () {
+        localStorage.setItem('listdata',JSON.stringify(list));
+    }
+    var getlist = function () {
+        var locallist = localStorage.getItem('listdata');
+        locallist = JSON.parse(locallist);
+        return locallist;
+    }
+    var main =function () {
+        if(localStorage.getItem('listdata')){
+            list = getlist();
+        } else {
+            list = [];
+        }
+        fillList();
+    }
+    main();
+</script>
+</body>
+</html>

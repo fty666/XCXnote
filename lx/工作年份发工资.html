@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        var year = parseInt(prompt("请输入工作了几年"));
+         var salary = parseInt(prompt("请输入多少工资"));
+
+         if (year == 0){
+             if(salary>8000){
+                 var bonus=1.2*salary;
+             }else  {
+                 var bonus=1*salary;
+             }
+         }
+        if (year==1){
+            if(salary>10000){
+                var bonus=1.7*salary;
+            }else  {
+                var bonus=1*salary;
+        }
+        }
+        if (year>=2){
+            if(salary>12000){
+                var bonus=3.2*salary;
+            }else  {
+                var bonus=1*salary;
+        }
+        }
+        alert(bonus);
+    </script>
+</head>
+<body>
+
+</body>
+</html>
