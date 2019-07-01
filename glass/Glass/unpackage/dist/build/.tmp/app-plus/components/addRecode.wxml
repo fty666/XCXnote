@@ -1,0 +1,1 @@
+<view bind:__l="__l"><view class="text"><textarea placeholder-class="font" placeholder="写下工作内容" data-event-opts="{{[['blur',[['detail',['$event']]]]]}}" bindblur="__e"></textarea></view><view data-event-opts="{{[['tap',[['add']]]]}}" class="add" bindtap="__e">保 存</view></view>

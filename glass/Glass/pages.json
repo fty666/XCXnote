@@ -1,0 +1,147 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "实时监测",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/record/record",
+			"style": {
+				"navigationBarTitleText": "监测警报",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/myInfo/myInfo",
+			"style": {
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": false
+				}
+			}
+		}, {
+			"path": "pages/service/service",
+			"style": {
+				"navigationBarTitleText": "维修详情",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/addRecod/addRecod",
+			"style": {}
+		}, {
+			"path": "pages/police/police",
+			"style": {
+				"navigationBarTitleText": "报警详情",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/dispose/dispose",
+			"style": {
+				"navigationBarTitleText": "处理记录",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/setInfo/setInfo",
+			"style": {
+				"navigationBarTitleText": "设置",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/editMoble/editMoble",
+			"style": {
+				"navigationBarTitleText": "修改手机号",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/mobleInfo/mobleInfo",
+			"style": {
+				"navigationBarTitleText": "更改绑定手机号",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/regards/regards",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/issue/issue",
+			"style": {
+				"navigationBarTitleText": "常见问题",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/answer/answer",
+			"style": {
+				"navigationBarTitleText": "解答",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/news/news",
+			"style": {
+				"navigationBarTitleText": "新消息通知",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#1769FF",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/imgs/tab-monitor-@2x.png",
+			"selectedIconPath": "static/imgs/tab-monito@2x.png",
+			"text": "监控"
+		}, {
+			"pagePath": "pages/record/record",
+			"iconPath": "static/imgs/tab-record-@2x.png",
+			"selectedIconPath": "static/imgs/tab-record@2x.png",
+			"text": "记录"
+		}, {
+			"pagePath": "pages/myInfo/myInfo",
+			"iconPath": "static/imgs/tab-my-@2x.png",
+			"selectedIconPath": "static/imgs/tab-my@2x.png",
+			"text": "我的"
+		}]
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
+	}
+}

@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/record/record",
+    "pages/myInfo/myInfo",
+    "pages/service/service",
+    "pages/addRecod/addRecod"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#1769FF",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/imgs/tab-monitor-@2x.png",
+        "selectedIconPath": "static/imgs/tab-monito@2x.png",
+        "text": "监控"
+      },
+      {
+        "pagePath": "pages/record/record",
+        "iconPath": "static/imgs/tab-record-@2x.png",
+        "selectedIconPath": "static/imgs/tab-record@2x.png",
+        "text": "记录"
+      },
+      {
+        "pagePath": "pages/myInfo/myInfo",
+        "iconPath": "static/imgs/tab-my-@2x.png",
+        "selectedIconPath": "static/imgs/tab-my@2x.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "splashscreen": {
+    "alwaysShowBeforeRender": true,
+    "autoclose": false
+  },
+  "appname": "Glass",
+  "compilerVersion": "1.9.9",
+  "usingComponents": {}
+}

@@ -1,0 +1,63 @@
+
+.flex {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+.service {
+	background: #FFFFFF;
+	width: 100%;
+	height: 280rpx;
+	margin-top: 20rpx;
+}
+.font {
+	width: 70%;
+	height: 100%;
+}
+.po {
+	width: 100%;
+	font-size: 15px;
+	font-weight: 400;
+	color: black;
+	font-size: 17px;
+	margin: 40rpx 40rpx;
+	line-height: 35rpx;
+}
+.call {
+	width: 100%;
+	height: 80rpx;
+	margin-left: 40rpx;
+}
+.title {
+	width: 30%;
+	color: #8B8A9A;
+	font-size: 14px;
+}
+.time {
+	width: 70%;
+	color: #3E3D67;
+	font-size: 15px;
+	line-height: 40rpx;
+}
+.mImg {
+	width: 200rpx;
+	height: 200rpx;
+	margin: 50rpx 20rpx;
+}
+.add {
+	width: 420rpx;
+	height: 88rpx;
+	background: -webkit-gradient(linear, left bottom, left top, from(rgba(13, 123, 253, 1)), to(rgba(88, 197, 255, 1)));
+	background: -o-linear-gradient(bottom, rgba(13, 123, 253, 1) 0%, rgba(88, 197, 255, 1) 100%);
+	background: linear-gradient(0deg, rgba(13, 123, 253, 1) 0%, rgba(88, 197, 255, 1) 100%);
+	margin-left: 150rpx;
+	border-radius: 44px;
+	font-size: 17px;
+	color: rgba(255, 255, 255, 1);
+	line-height: 80rpx;
+	text-align: center;
+	position: fixed;
+	bottom: 100rpx;
+}
+

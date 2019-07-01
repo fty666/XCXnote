@@ -1,3 +1,6 @@
+用git 或者shift键加ctrl
+ 安装node 
+ 安装 VUE
  npm install -g vue-cli				全局安装，脚手架构建工具
 安装完成vue之后
 vue init webpack '项目名称'						【esl为No】

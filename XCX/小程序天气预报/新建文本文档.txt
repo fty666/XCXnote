@@ -1,0 +1,28 @@
+1，调用百度地图api,   http://lbsyun.baidu.com/apiconsole/key
+注册百度地图，查看百度微信小程序文档api，设置ak
+
+2，小程序中
+	首先微信公众号中配置添加请求地址 restapi.amap.com，
+	下载百度封装的js，引入js文档
+	var bmap = require('../../../libs/bmap-wx.min.js'); 
+	data:{  weatherData:""}
+	onLoad:function(){
+		 var BMap = new bmap.BMapWX({
+		  ak: 'sqcvUl4HRNAFo8M68uTHd2AKxj4HGPWK'     //自己的百度ak
+		});
+		var fail = function (data) {
+		  console.log(data)
+		};
+		var success = function (data) {
+		  var weatherData = data.currentWeather[0];
+		  weatherData = '城市：' + weatherData.currentCity + '\n' + 'PM2.5：' + weatherData.pm25 + '\n' + '日期：' + weatherData.date + '\n' + '温度：' + weatherData.temperature + '\n' + '天气：' + weatherData.weatherDesc + '\n' + '风力：' + weatherData.wind + '\n';
+		  that.setData({
+			weatherData: weatherData
+		  });
+		}
+		// 发起weather请求 
+		BMap.weather({
+		  fail: fail,
+		  success: success
+		}); 
+	}

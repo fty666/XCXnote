@@ -1,4 +1,15 @@
-1，导航栏自定义按钮，在json文件中：
+微信小程序自定义分享，只能在微信小程序上用
+	onShareAppMessage(res) {
+			if (res.from == 'button') {
+				// 页面内转发
+			}
+			return ({
+				title: '分享功能',
+				path: '/路径'
+			})
+		},
+
+1，导航栏自定义按钮，在json文件中：app和IOS的分享功能
 	"style":{
 		"app-plus":{
 			"titleNView":{
@@ -15,7 +26,7 @@
 		}
 	}
 	
-2，监听导航栏原生按钮事件：(分享内容要先配置主配置内容，填写appid )
+	监听导航栏原生按钮事件：(分享内容要先配置主配置内容，填写appid )
 	onNavigationBarButtonTap(e){
 		var index=e.index;    //打印触发那个按钮，判断index
 		if(index==0){		  //分享
@@ -69,3 +80,37 @@
 				}
 			}
 		}
+		
+5,图片下载到本地
+		//下载图片到本地，获取临时目录
+		uni.downloadFile({
+					url: that.img,
+					success: (res) => {
+						if (res.statusCode === 200) {
+							//获取成功拿到路径
+							var imgs=res.tempFilePath;
+							uni.showModal({
+								title: '提示',
+								content: '是否保存图片到本地',
+								success: function(res) {
+									if (res.confirm) {
+									//保存图片到本地
+										uni.saveImageToPhotosAlbum({
+											filePath: imgs,
+											success: function() {
+												uni.showToast({
+													title: '保存图片成功'
+												})
+											}
+										});
+									} else if (res.cancel) {
+										
+									}
+								}
+							})
+
+						}
+					}
+				});
+			}
+	

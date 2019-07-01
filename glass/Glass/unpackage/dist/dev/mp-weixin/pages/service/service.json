@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "维修详情",
+  "usingComponents": {
+    "addrecode": "/components/addRecode"
+  }
+}

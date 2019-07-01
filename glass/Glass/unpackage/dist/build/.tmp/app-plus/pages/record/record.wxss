@@ -1,0 +1,98 @@
+
+.flex {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+.cut {
+	width: 100%;
+	height: 100rpx;
+	background: #FFFFFF;
+}
+.font {
+	font-size: 17px;
+	font-weight: 500;
+	color: rgba(11, 12, 60, 1);
+	line-height: 50px;
+	width: 100rpx;
+	height: 80rpx;
+	text-align: center;
+}
+.font1 {
+	margin-left: 250rpx;
+}
+.font2 {
+	margin-left: 70rpx;
+}
+.xia {
+	border-bottom: 2rpx solid #0D7BFD;
+	/* background: linear-gradient(0deg, rgba(13, 123, 253, 1), rgba(87, 196, 255, 1)); */
+	/* border-radius: 4px; */
+}
+
+/* 记录 */
+.record {
+	margin: 25rpx 30rpx;
+	background: #FFFFFF;
+	width: 92%;
+	height: 200rpx;
+	border-radius: 10rpx;
+}
+
+/* 记录破损 */
+.recordFont {
+	width: 75%;
+}
+.rFont {
+	width: 100%;
+	height: 80rpx;
+	margin: 15rpx 15rpx;
+}
+.rimg {
+	width: 40rpx;
+	height: 40rpx;
+}
+.po {
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 50rpx;
+	margin-left: 10rpx;
+}
+.rFont2 {
+	width: 100%;
+	height: 80rpx;
+	margin: 15rpx 15rpx;
+}
+.number {
+	width: 30%;
+	height: 23px;
+	font-size: 13px;
+	font-weight: 400;
+	color: rgba(139, 138, 154, 1);
+	margin-left: 40rpx;
+}
+.number2 {
+	width: 60%;
+	height: 23px;
+	font-size: 13px;
+	font-weight: 400;
+	color: rgba(139, 138, 154, 1);
+	margin-left: 10rpx;
+}
+
+/* 待处理 */
+.dispose {
+	width: 25%;
+	height: 100%;
+}
+.dfont {
+	height: 50rpx;
+	margin: 60rpx 10rpx;
+	border: 1px solid red;
+	border-radius: 35rpx;
+	font-size: 15px;
+	text-align: center;
+	color: #F3003F;
+}
+

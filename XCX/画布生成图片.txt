@@ -63,12 +63,13 @@
       success(res) {
         console.log(res)
         // 第一，直接调取保存，系统会自动调取授权
-        if (res.authSetting['scope.writePhotosAlbum'] == undefined) {
-          wx.showToast({
-            title: '获取失败',
-            icon: 'none'
-          })
-        } else if (!res.authSetting['scope.writePhotosAlbum']) { // 不授权
+        //if (res.authSetting['scope.writePhotosAlbum'] == undefined) {
+          //wx.showToast({
+            //title: '获取失败',
+            //icon: 'none'
+          //})
+        //} else 
+		if (!res.authSetting['scope.writePhotosAlbum']) { // 不授权
           wx.showToast({
             title: '您还没有授权，请去授权',
             icon: 'none'

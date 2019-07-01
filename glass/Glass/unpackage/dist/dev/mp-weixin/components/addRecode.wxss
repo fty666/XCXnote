@@ -1,0 +1,16 @@
+
+page{
+	background: #F8F8F8;
+}
+.text{
+	width: 95%;
+	height: 300rpx;
+	background: #FFFFFF;
+	margin:20rpx 20rpx;
+}
+.font{
+	width: 100%;
+	font-size: 15px;
+	margin-left: 30rpx;
+}
+

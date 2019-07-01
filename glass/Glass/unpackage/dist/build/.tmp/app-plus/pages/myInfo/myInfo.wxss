@@ -1,0 +1,134 @@
+
+.flex {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+.files {
+	width: 100%;
+	height: 452rpx;
+	background: -webkit-gradient(linear, left bottom, left top, from(rgba(13, 123, 253, 1)), to(rgba(88, 177, 253, 1)));
+	background: -o-linear-gradient(bottom, rgba(13, 123, 253, 1), rgba(88, 177, 253, 1));
+	background: linear-gradient(0deg, rgba(13, 123, 253, 1), rgba(88, 177, 253, 1));
+}
+.photo {
+	width: 100%;
+	height: 265rpx;
+	margin-top: 80rpx;
+}
+.photo image {
+	width: 160rpx;
+	height: 160rpx;
+	border-radius: 50%;
+	background: #FFFFFF;
+	margin: 100rpx 280rpx;
+}
+.name {
+	width: 97%;
+	height: 35rpx;
+	font-size: 16px;
+	font-weight: 500;
+	color: rgba(255, 255, 255, 1);
+	line-height: 27px;
+	text-align: center;
+}
+.phone {
+	height: 18rpx;
+	font-size: 14px;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 1);
+	line-height: 100rpx;
+	text-align: center;
+}
+
+/* 故障 */
+.flex-space {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-justify-content: space-around;
+	    -ms-flex-pack: distribute;
+	        justify-content: space-around;
+}
+.fault {
+	width: 90%;
+	height: 160rpx;
+	background: #FFFFFF;
+	border-radius: 12px;
+	margin: -50rpx 35rpx;
+	z-index: 88;
+}
+.content {
+	height: 80rpx;
+	font-size: 15px;
+	color: #8B8A9A;
+	line-height: 100rpx;
+}
+.day {
+	width: 30%;
+}
+.dnums {
+	width: 60%;
+	height: 30rpx;
+	font-size: 17px;
+	font-weight: 400;
+	color: rgba(11, 12, 60, 1);
+	line-height: 27px;
+	text-align: right;
+}
+.tian {
+	width: 35%;
+	height: 20rpx;
+	font-size: 12px;
+	font-weight: 400;
+	color: rgba(139, 138, 154, 1);
+	line-height: 27px;
+	text-align: left;
+	margin: 5rpx 5rpx;
+}
+
+/* 边框 */
+.kuan {
+	width: 100%;
+	height: 200rpx;
+	margin-top: 140rpx;
+	background: #FFFFFF;
+}
+.book {
+	width: 50rpx;
+	height: 50rpx;
+	margin: 35rpx 15rpx;
+}
+.manage {
+	width: 65%;
+	/* margin-left: 10upx; */
+	height: 115px;
+	font-size: 14px;
+	font-weight: 400;
+	color: rgba(62, 61, 103, 1);
+	line-height: 107rpx;
+	text-align: left;
+}
+.right {
+	width: 25rpx;
+	height: 25rpx;
+	margin-top: 35rpx;
+	-webkit-box-align: left;
+	-webkit-align-items: left;
+	    -ms-flex-align: left;
+	        align-items: left;
+}
+.yu {
+	width: 55rpx;
+	height: 35rpx;
+	margin-top: 35rpx;
+}
+.kxia {
+	width: 90%;
+	height: 3rpx;
+	background: #E5E5E5;
+	margin-left: 30rpx;
+}
+
