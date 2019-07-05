@@ -38,6 +38,10 @@
 			}
 		},
 		methods: {
+			handleMessage(evt) {
+				console.log(evt)
+				this.log('接收到的消息：' + JSON.stringify(evt.detail));
+			},
 
 		}
 	}

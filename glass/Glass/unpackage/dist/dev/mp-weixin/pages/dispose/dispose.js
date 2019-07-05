@@ -98,40 +98,70 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      arr: [1, 2, 3, 4] };
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
-  },
-  methods: {} };exports.default = _default;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _common = _interopRequireDefault(__webpack_require__(/*! ../../common/common.js */ "../../../../../传清科技/glass/Glass/common/common.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { page: 1, pageSize: 10, monitor: [] };}, onLoad: function onLoad() {this.getList();}, methods: { getList: function getList() {var repairMan = uni.getStorageSync('data');var that = this;var data = { page: that.page, pageSize: that.pageSize, repairMan: repairMan };_common.default.getData('/muqiang/invitation/getRepairRecord', data, function (res) {// console.log(res)
+        that.monitor = res.pageInfo.list;});}, // 滚动加载
+    lower: function lower() {var that = this;var pageSize = that.pageSize;pageSize = pageSize + 10;
+      that.pageSize = pageSize;
+      that.getList();
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

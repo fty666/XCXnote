@@ -98,66 +98,108 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      record: [1, 2, 3, 4, 5],
-      xia: 1 };
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
-  },
-  methods: {
-    // 底部下划线
-    worn: function worn() {
-      this.xia = 1;
-    },
-    full: function full() {
-      this.xia = 2;
-    },
-    // 跳转已完成详情
-    goInfo: function goInfo() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _common = _interopRequireDefault(__webpack_require__(/*! ../../common/common.js */ "../../../../../传清科技/glass/Glass/common/common.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { record: [], xia: 1, page: 1, pageSize: 10, warnType: 1 };}, onLoad: function onLoad() {this.getList();}, methods: { // 获取报警记录
+    getList: function getList() {var _this = this;var data = { page: this.page, pageSize: this.pageSize, isCheck: 1, warnType: this.warnType };var that = this;_common.default.getData('/muqiang/invitation/getWarnList', data, function (res) {_this.record = res.pageInfo.list;});}, // 下拉滑动
+    lower: function lower() {var pageSize = this.pageSize;pageSize = pageSize + 10;this.pageSize = pageSize;this.getList();}, // 底部下划线
+    worn: function worn() {this.xia = 1;this.warnType = 1;this.getList();}, full: function full() {this.xia = 2;this.warnType = 2;this.getList();}, // 跳转已完成详情
+    goInfo: function goInfo(e) {
+      var id = e.currentTarget.id;
       uni.navigateTo({
-        url: '../service/service' });
+        url: '../service/service?id=' + id });
 
     },
     // 跳转报警详情
-    police: function police() {
+    police: function police(e) {
+      var id = e.currentTarget.id;
       uni.navigateTo({
-        url: '../police/police' });
+        url: '../police/police?id=' + id });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ "./node_modules/@dcloudio/uni-app-plus/dist/index.js")["default"]))

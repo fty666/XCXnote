@@ -2,15 +2,29 @@
 page{
 	background: #F8F8F8;
 }
+.flex{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
 .text{
 	width: 95%;
 	height: 300rpx;
+	font-size: 13px;
 	background: #FFFFFF;
 	margin:20rpx 20rpx;
+	line-height: 5rpx;
 }
 .font{
 	width: 100%;
-	font-size: 15px;
+	font-size: 13px;
 	margin-left: 30rpx;
+}
+.img{
+	width: 160rpx;
+	height: 160rpx;
+	margin-top: 20rpx;
+	margin-left:50rpx;
 }
 

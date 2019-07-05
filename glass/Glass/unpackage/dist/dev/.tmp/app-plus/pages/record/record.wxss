@@ -27,37 +27,38 @@
 }
 .xia {
 	border-bottom: 2rpx solid #0D7BFD;
-	/* background: linear-gradient(0deg, rgba(13, 123, 253, 1), rgba(87, 196, 255, 1)); */
-	/* border-radius: 4px; */
 }
 
 /* 记录 */
 .record {
-	margin: 25rpx 30rpx;
+	margin-top: 25rpx;
+	margin-left: 10rpx;
 	background: #FFFFFF;
-	width: 92%;
+	width: 94%;
 	height: 200rpx;
 	border-radius: 10rpx;
 }
 
 /* 记录破损 */
 .recordFont {
-	width: 75%;
+	width: 85%;
 }
 .rFont {
 	width: 100%;
 	height: 80rpx;
-	margin: 15rpx 15rpx;
+	margin-top: 30rpx; 
+	margin-left: 15rpx;
 }
 .rimg {
-	width: 40rpx;
+	width: 30rpx;
 	height: 40rpx;
+	margin-top: 10rpx;
 }
 .po {
 	font-size: 15px;
 	font-weight: 400;
-	line-height: 50rpx;
-	margin-left: 10rpx;
+	line-height: 80rpx;
+	margin-left: 15rpx;
 }
 .rFont2 {
 	width: 100%;
@@ -67,15 +68,15 @@
 .number {
 	width: 30%;
 	height: 23px;
-	font-size: 13px;
+	font-size: 12px;
 	font-weight: 400;
 	color: rgba(139, 138, 154, 1);
 	margin-left: 40rpx;
 }
 .number2 {
-	width: 60%;
+	width: 65%;
 	height: 23px;
-	font-size: 13px;
+	font-size: 11px;
 	font-weight: 400;
 	color: rgba(139, 138, 154, 1);
 	margin-left: 10rpx;
@@ -83,16 +84,33 @@
 
 /* 待处理 */
 .dispose {
-	width: 25%;
+	width: 18%;
 	height: 100%;
 }
 .dfont {
 	height: 50rpx;
-	margin: 60rpx 10rpx;
+	margin-top: 60rpx;
+	margin-left: 20rpx;
 	border: 1px solid red;
 	border-radius: 35rpx;
-	font-size: 15px;
+	font-size: 11px;
 	text-align: center;
 	color: #F3003F;
+	line-height: 50rpx;
+}
+.dfont2 {
+	height: 50rpx;
+	margin-top: 60rpx;
+	margin-left: 20rpx;
+	border-radius: 35rpx;
+	font-size: 11px;
+	text-align: center;
+	color: #F8F8F8;
+	line-height: 50rpx;
+	background: -webkit-gradient(linear, left bottom, left top, from(rgba(13, 123, 253, 1)), to(rgba(88, 197, 255, 1)));
+	background: -o-linear-gradient(bottom, rgba(13, 123, 253, 1) 0%, rgba(88, 197, 255, 1) 100%);
+	background: linear-gradient(0deg, rgba(13, 123, 253, 1) 0%, rgba(88, 197, 255, 1) 100%);
+	-webkit-box-shadow: 0px 3px 6px 0px rgba(2, 99, 215, 0.3);
+	        box-shadow: 0px 3px 6px 0px rgba(2, 99, 215, 0.3);
 }
 

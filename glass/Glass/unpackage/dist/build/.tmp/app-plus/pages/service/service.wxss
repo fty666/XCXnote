@@ -43,7 +43,7 @@
 .mImg {
 	width: 200rpx;
 	height: 200rpx;
-	margin: 50rpx 20rpx;
+	margin: 50rpx 0rpx;
 }
 .add {
 	width: 420rpx;
@@ -59,5 +59,61 @@
 	text-align: center;
 	position: fixed;
 	bottom: 100rpx;
+}
+.replenish {
+	width: 90%;
+	height: 600rpx;
+	background: #FFFFFF;
+	margin-top: 40rpx;
+	margin-left: 40rpx;
+	border-radius: 12rpx;
+}
+.bodys {
+	width: 90%;
+	height: 320rpx;
+	margin-top: 20rpx;
+	margin-left: 20rpx;
+	border: 1px solid #DCDCDC;
+}
+.times {
+	width: 100%;
+	margin-top: 10rpx;
+}
+.refont {
+	width: 20%;
+	font-size: 12px;
+	font-weight: 400;
+	color: rgba(139, 138, 154, 1);
+	line-height: 70rpx;
+	margin-left: 40rpx;
+}
+.cause {
+	width: 65%;
+	margin-top: 15rpx;
+	font-size: 13px;
+	font-family: SourceHanSansCN-Regular;
+	font-weight: 400;
+	color: rgba(62, 61, 103, 1);
+}
+.casuFont {
+	width: 100%;
+	font-size: 13px;
+	font-family: SourceHanSansCN-Regular;
+	font-weight: 400;
+	color: rgba(62, 61, 103, 1);
+	/* line-height:27px; */
+	overflow: hidden;
+	-webkit-flex-wrap: wrap;
+	    -ms-flex-wrap: wrap;
+	        flex-wrap: wrap;
+	margin-top: 15rpx;
+}
+.caImg {
+	width: 80rpx;
+	height: 80rpx;
+}
+.caImg image {
+	width: 80rpx;
+	height: 80rpx;
 }
 

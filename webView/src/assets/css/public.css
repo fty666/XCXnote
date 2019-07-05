@@ -1,0 +1,82 @@
+/* 公用样式! */
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike,
+strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody,
+tfoot, thead, tr, th, td, textarea, input {
+    margin: 0;
+    padding: 0;
+    font-family: SourceHanSansCN-Regular;
+}
+
+html, body, #app {
+    height: 100%;
+    width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, th {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+button, input, select, textarea {
+    font-size: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #666;
+    background: none
+}
+
+:focus {
+    outline: none;
+}
+
+ol, ul {
+    list-style: none
+}
+
+.clearfix {
+    clear: both;
+    content: "";
+    display: block;
+    overflow: hidden
+}
+
+.clear {
+    clear: both;
+}
+
+.bs {
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.db {
+    display: block;
+}
+
+.df {
+    display: flex;
+}
+
+.jc {
+    justify-content: center;
+}
+
+.ac {
+    align-items: center;
+}
+
+.afe {
+    align-items: flex-end;
+}
+

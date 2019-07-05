@@ -43,7 +43,7 @@
 			</view>
 		</view>
 		<!-- 退出 -->
-		<view class="out">
+		<view class="out" @click="out">
 			退出登录
 		</view>
 	</view>
@@ -64,16 +64,38 @@
 				})
 			},
 			// 常见问题
-			isSue(){
+			isSue() {
 				uni.navigateTo({
-					url:'../issue/issue'
+					url: '../issue/issue'
 				})
 			},
 			// 消息通知
-			gnews(){
+			gnews() {
 				uni.navigateTo({
-					url:'../news/news'
+					url: '../news/news'
 				})
+			},
+			// 退出登录
+			out() {
+				uni.showModal({
+					title: '提示',
+					content: '确定要退出吗?',
+					success: function(res) {
+						if (res.confirm) {
+							uni.clearStorageSync('data');
+							uni.reLaunch({
+								url: '../login/login'
+							})
+						}else if(res.cancel){
+							uni.showToast({
+								title:'取消了退出',
+								icon:'none'
+							})
+						}
+
+					}
+				})
+
 			}
 		}
 	}
@@ -132,7 +154,7 @@
 	.out {
 		width: 90%;
 		height: 100upx;
-		background:linear-gradient(0deg,rgba(13,123,253,1) 0%,rgba(88,197,255,1) 100%);
+		background: linear-gradient(0deg, rgba(13, 123, 253, 1) 0%, rgba(88, 197, 255, 1) 100%);
 		border-radius: 30px;
 		font-size: 16px;
 		font-weight: 400;

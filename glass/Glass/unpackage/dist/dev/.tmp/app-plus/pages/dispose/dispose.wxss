@@ -35,5 +35,8 @@
 	text-align: left;
 	width: 65%;
 	color: #3E3D67;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
 }
 

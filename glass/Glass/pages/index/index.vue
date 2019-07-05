@@ -1,19 +1,41 @@
 <template>
-    <view style="width: 100%;height: 100%;margin-top: 30upx;background: #0D7BFD;">
-        <web-view src="https://www.baidu.com"></web-view>
-    </view>
+	<view>
+		<view>
+			<web-view src="http://39.106.155.211:8080/glass/#/" @message="handleMessage"></web-view>
+		</view>
+	</view>
 </template>
+<script type="text/javascript" src="https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.1.js"></script>
 <script>
-var wv;//计划创建的webview
-export default {
-    onReady() {
-        // #ifdef APP-PLUS
-        var currentWebview = this.$mp.page.$getAppWebview() //获取当前页面的webview对象
-        setTimeout(function() {
-            wv = currentWebview.children()[0]
-            wv.setStyle({top:50,height:750})
-        }, 1000); //如果是页面初始化调用时，需要延时一下
-        // #endif
-        }
-    };
+	export default {
+		onReady() {
+
+			// #ifdef APP-PLUS
+			var currentWebview = this.$mp.page.$getAppWebview() //获取当前页面的webview对象
+			console.log(currentWebview)
+			setTimeout(function() {
+				var wv = currentWebview.children()[0]
+				console.log(wv)
+				wv.setStyle({
+					top: 50,
+					height: 650
+				})
+			}, 1000); //如果是页面初始化调用时，需要延时一下
+			// #endif
+		},
+		data() {
+			return {
+				log: '1111'
+			}
+		},
+		methods: {
+			handleMessage(evt) {
+				this.log = JSON.stringify(evt.detail);
+				console.log('88' + JSON.stringify(evt.detail))
+				// uni.navigateTo({
+				// 	url: '../login/login'
+				// })
+			},
+		}
+	};
 </script>

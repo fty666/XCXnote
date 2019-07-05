@@ -98,108 +98,184 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
-  },
-  methods: {
-    // 处理记录
-    dispose: function dispose() {
-      uni.navigateTo({
-        url: '../dispose/dispose' });
 
-    },
-    // 设置
-    set: function set() {
-      uni.navigateTo({
-        url: '../setInfo/setInfo' });
 
-    },
-    // 关于我们
-    myInfo: function myInfo() {
-      uni.navigateTo({
-        url: '../regards/regards' });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _common = _interopRequireDefault(__webpack_require__(/*! ../../common/common.js */ "../../../../../传清科技/glass/Glass/common/common.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { call: true, monitor: {}, name: '', mobile: '' };}, onLoad: function onLoad() {this.getDays();this.name = uni.getStorageSync('data');this.mobile = uni.getStorageSync('mobile');}, methods: { // 获取监控天数
+    getDays: function getDays() {var that = this;var data = {};_common.default.getData('muqiang/invitation/getData', data, function (res) {that.monitor = res;});}, // 处理记录
+    dispose: function dispose() {uni.navigateTo({ url: '../dispose/dispose' });}, // 设置
+    set: function set() {uni.navigateTo({ url: '../setInfo/setInfo' });}, // 关于我们
+    myInfo: function myInfo() {uni.navigateTo({ url: '../regards/regards' });}, // 开启推送
+    pullOn: function pullOn() {var call = this.call;var that = this;if (call == true) {uni.showModal({ title: '提示', content: '是否关闭接收预警', success: function success(res) {if (res.confirm) {that.offPull();that.call = false;}} });} else if (call == false) {uni.showModal({ title: '提示', content: '是否打开接收预警', success: function success(res) {if (res.confirm) {that.pull();that.call = true;}} });}}, pull: function pull() {uni.getProvider({ service: 'push', success: function success(res) {console.log(res.provider); // 个推的名称为 igexin
+          if (~res.provider.indexOf('igexin')) {uni.subscribePush({ provider: 'igexin', success: function success(res) {console.log(res);console.log('success:' + JSON.stringify(res));} });}} });},
+    // 关闭推送
+    offPull: function offPull() {
+      uni.unsubscribePush({
+        provider: 'igexin',
+        success: function success(res) {
+          console.log(res);
+          console.log('success:' + JSON.stringify(res));
+        } });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

@@ -98,28 +98,109 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      adds: false };
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
-  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _common = _interopRequireDefault(__webpack_require__(/*! ../common/common.js */ "../../../../../传清科技/glass/Glass/common/common.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default2 = { data: function data() {return { adds: false, work: '', show: 'false', imgs: '', warNno: this.warnno, picUrl: '' };}, mounted: function mounted() {this.picUrl = _common.default.picUrl;}, props: { warnno: { type: String, default: function _default() {
+        return {};
+
+      } } },
+
+
   methods: {
-    detail: function detail() {},
-    add: function add() {
+    // 获取工作内容
+    getwork: function getwork(e) {
+      this.work = e.detail.value;
+    },
+    // 上传图片
+    addimg: function addimg() {
       var that = this;
-      this.$emit('fatherFun', true);
-    } } };exports.default = _default;
+      uni.chooseImage({
+        count: 1, //默认9
+        sizeType: ['original'], //可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], //从相册选择
+        success: function success(res) {
+          // console.log(res.tempFilePaths[0])
+          var files = res.tempFilePaths[0];
+          console.log(files);
+          uni.uploadFile({
+            url: 'http://39.106.155.211:8080/muqiang/invitation/UploadFiles',
+            filePath: files, //将小程序返回的路径上传给服务器
+            name: 'file',
+            formData: {
+              'user': 'test' },
+
+            success: function success(res) {
+              var res = JSON.parse(res.data);
+              that.imgs = res.data.img;
+              that.show = true;
+            },
+            fail: function fail(res) {
+              uni.showToast({
+                title: '上传失败',
+                icon: 'none' });
+
+            } });
+
+        } });
+
+    },
+    // 子传父值
+    add: function add() {var _this = this;
+      var repairMan = uni.getStorageSync('data');
+      var data = {
+        repairMan: repairMan,
+        warnNo: this.warNno,
+        repairReason1: this.work,
+        repairPhoto1: this.imgs };
+
+      _common.default.getData('/muqiang/invitation/addRepairRecord', data, function (res) {
+        if (res.state == 1) {
+          _this.$emit('fatherFun', true);
+        } else {
+          uni.showToast({
+            title: res.message,
+            icon: 'none' });
+
+        }
+      });
+
+    } } };exports.default = _default2;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

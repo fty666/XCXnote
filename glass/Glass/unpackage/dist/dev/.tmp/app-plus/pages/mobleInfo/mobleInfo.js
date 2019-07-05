@@ -137,7 +137,11 @@ var _default =
 
 
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    handleMessage: function handleMessage(evt) {
+      console.log(evt, " at pages\\mobleInfo\\mobleInfo.vue:42");
+      this.log('接收到的消息：' + JSON.stringify(evt.detail));
+    } } };exports.default = _default;
 
 /***/ }),
 

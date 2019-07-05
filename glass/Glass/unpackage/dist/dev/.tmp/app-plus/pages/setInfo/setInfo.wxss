@@ -51,9 +51,9 @@
 .out {
 	width: 90%;
 	height: 100rpx;
-	background:-webkit-gradient(linear,left bottom, left top,from(rgba(13,123,253,1)),to(rgba(88,197,255,1)));
-	background:-o-linear-gradient(bottom,rgba(13,123,253,1) 0%,rgba(88,197,255,1) 100%);
-	background:linear-gradient(0deg,rgba(13,123,253,1) 0%,rgba(88,197,255,1) 100%);
+	background: -webkit-gradient(linear, left bottom, left top, from(rgba(13, 123, 253, 1)), to(rgba(88, 197, 255, 1)));
+	background: -o-linear-gradient(bottom, rgba(13, 123, 253, 1) 0%, rgba(88, 197, 255, 1) 100%);
+	background: linear-gradient(0deg, rgba(13, 123, 253, 1) 0%, rgba(88, 197, 255, 1) 100%);
 	border-radius: 30px;
 	font-size: 16px;
 	font-weight: 400;

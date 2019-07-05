@@ -1,0 +1,2 @@
+<view bind:__l="__l"><view class="font">如果软件不能正常使用，找谁来解决?</view><view class="font2">1.在软件设置关于中找到联系电话</view><view class="font2">在软件点击【我的】-【设置】-【关于软件】，找到联
+		系电话，然后拨打电话。</view></view>

@@ -4,15 +4,15 @@
 			<view class="title">玻璃信息</view>
 			<view class="flex font">
 				<view class="font1">编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</view>
-				<view class="font2">43r-000071-07</view>
+				<view class="font2">{{info.warn_no}}</view>
 			</view>
 			<view class="flex font">
 				<view class="font1">破损位置:</view>
-				<view class="font2">A区&nbsp;A-12</view>
+				<view class="font2">{{info.warn_area}}</view>
 			</view>
 			<view class="flex font">
 				<view class="font1">监测时间:</view>
-				<view class="font2">43r-000071-07</view>
+				<view class="font2">{{info.create_time}}</view>
 			</view>
 			<view class="flex font">
 				<view class="font1">处理状态:</view>
@@ -20,12 +20,12 @@
 			</view>
 			<view class="flex font">
 				<view class="font1">报警时间:</view>
-				<view class="font2">2019-06-26&nbsp;&nbsp;10:30:52</view>
+				<view class="font2">{{info.create_time}}</view>
 			</view>
 			<view class="flex font">
 				<view class="font1">实景图片:</view>
 				<view class="img">
-					<image src="../../static/logo.png"></image>
+					<image :src="picUrl+info.warn_photo"></image>
 				</view>
 			</view>
 		</view>
@@ -33,14 +33,32 @@
 </template>
 
 <script>
+	import common from '../../common/common.js'
 	export default {
 		data() {
 			return {
-
+				info:{},
+				picUrl:''
 			}
 		},
+		onLoad(options) {
+			var id = options.id;
+			this.getInfo(id);
+			this.picUrl=common.picUrl
+		},
 		methods: {
-
+			getInfo(id) {
+				var data = {
+					page: 1,
+					pageSize: 5,
+					recordId:id,
+				}
+				var that = this;
+				common.getData('/muqiang/invitation/getWarnList', data, (res) => {
+					console.log(res);
+					this.info= res.pageInfo.list[0];
+				})
+			}
 		}
 	}
 </script>
@@ -85,12 +103,14 @@
 		width: 65%;
 		color: #3E3D67;
 	}
-	.img{
+
+	.img {
 		width: 60%;
 		height: 200upx;
 		margin-top: 25upx;
 	}
-	.img image{
+
+	.img image {
 		width: 180upx;
 		height: 180upx;
 	}

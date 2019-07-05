@@ -21,11 +21,10 @@
 	width: 160rpx;
 	height: 160rpx;
 	border-radius: 50%;
-	background: #FFFFFF;
 	margin: 100rpx 280rpx;
 }
 .name {
-	width: 97%;
+	width: 95%;
 	height: 35rpx;
 	font-size: 16px;
 	font-weight: 500;
@@ -34,6 +33,7 @@
 	text-align: center;
 }
 .phone {
+	width: 95%;
 	height: 18rpx;
 	font-size: 14px;
 	font-weight: 400;
@@ -70,7 +70,7 @@
 	width: 30%;
 }
 .dnums {
-	width: 60%;
+	width: 45%;
 	height: 30rpx;
 	font-size: 17px;
 	font-weight: 400;

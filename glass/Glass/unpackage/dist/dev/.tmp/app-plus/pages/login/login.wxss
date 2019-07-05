@@ -1,0 +1,54 @@
+
+page {
+	background: #FFFFFF;
+}
+.title {
+	width: 50%;
+	height: 100rpx;
+	font-size: 20px;
+	font-family: SourceHanSansCN-Bold;
+	font-weight: bold;
+	color: rgba(62, 61, 103, 1);
+	margin: 80rpx 80rpx;
+}
+.flex {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+.phone {
+	width: 80%;
+	height: 50rpx;
+	margin: 20rpx 80rpx;
+	border-bottom: 1px solid #DFDFDD;
+	font-size: 15px;
+}
+.number {
+	width: 80%;
+	height: 50rpx;
+	margin: 80rpx 80rpx;
+	font-size: 15px;
+	border-bottom: 1px solid #DFDFDD;
+}
+.yzm {
+	width: 150rpx;
+	height: 80rpx;
+	margin-top: 30rpx;
+}
+.out {
+	width: 85%;
+	height: 100rpx;
+	background: -webkit-gradient(linear, left bottom, left top, from(rgba(13, 123, 253, 1)), to(rgba(88, 197, 255, 1)));
+	background: -o-linear-gradient(bottom, rgba(13, 123, 253, 1) 0%, rgba(88, 197, 255, 1) 100%);
+	background: linear-gradient(0deg, rgba(13, 123, 253, 1) 0%, rgba(88, 197, 255, 1) 100%);
+	border-radius: 30px;
+	font-size: 16px;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 1);
+	line-height: 100rpx;
+	text-align: center;
+	margin-top: 350rpx;
+	margin-left: 60rpx;
+}
+

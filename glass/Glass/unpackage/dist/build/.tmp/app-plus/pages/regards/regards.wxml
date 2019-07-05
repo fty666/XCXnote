@@ -1,0 +1,1 @@
+<view bind:__l="__l"><view><view class="img"><image src="../../static/imgs/logo.png" mode></image></view><view class="font">玻璃幕墙智慧监测系统</view></view><view class="botom"><view class="font1">版本信息：  V1.1.00  联系电话:  000-400-600</view><view class="font2">Copyright © 2019-2020 天津传清科技集团有限公司</view></view></view>

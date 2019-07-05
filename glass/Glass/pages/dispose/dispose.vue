@@ -1,38 +1,66 @@
 <template>
-	<view>
-		<view v-for="item in arr" :key='index'>
-			<view class="head1">
-				<view class="title">2019-06-26&nbsp;10:30:52</view>
-				<view class="flex font">
-					<view class="font1">工作人员:</view>
-					<view class="font2">赵克生</view>
-				</view>
-				<view class="flex font">
-					<view class="font1">维修区域:</view>
-					<view class="font2">A-12</view>
-				</view>
-				<view class="flex font">
-					<view class="font1">工作内容:</view>
-					<view class="font2">玻璃幕墙破损</view>
-				</view>
-				<view class="flex font">
-					<view class="font1">工作状态:</view>
-					<view class="font2" style="color: #1769FF;">已完成</view>
+	<view style="width: 100%;height: 100%;">
+		<scroll-view scroll-y="true" style="width:100%;height: 100%;" @scrolltolower="lower">
+			<view v-for="item in monitor" :key='index'>
+				<view class="head1">
+					<view class="title">{{item.repairTime}}</view>
+					<view class="flex font">
+						<view class="font1">工作人员:</view>
+						<view class="font2">{{item.repair_man}}</view>
+					</view>
+					<view class="flex font">
+						<view class="font1">维修区域:</view>
+						<view class="font2">{{item.warn_area}}</view>
+					</view>
+					<view class="flex font">
+						<view class="font1">工作内容:</view>
+						<view class="font2">{{item.repair_reason1}}</view>
+					</view>
+					<view class="flex font">
+						<view class="font1">工作状态:</view>
+						<view class="font2" style="color: #1769FF;">已完成</view>
+					</view>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
+	import common from '../../common/common.js'
 	export default {
 		data() {
 			return {
-				arr: [1, 2, 3, 4]
+				page: 1,
+				pageSize: 10,
+				monitor: []
 			}
 		},
+		onLoad() {
+			this.getList();
+		},
 		methods: {
-
+			getList() {
+				var repairMan = uni.getStorageSync('data');
+				var that = this;
+				var data = {
+					page: that.page,
+					pageSize: that.pageSize,
+					repairMan: repairMan
+				}
+				common.getData('/muqiang/invitation/getRepairRecord', data, (res) => {
+					// console.log(res)
+					that.monitor = res.pageInfo.list;
+				})
+			},
+			// 滚动加载
+			lower(){
+				var that=this;
+				var pageSize=that.pageSize;
+				pageSize=pageSize+10;
+				that.pageSize=pageSize;
+				that.getList();
+			}
 		}
 	}
 </script>
@@ -76,5 +104,7 @@
 		text-align: left;
 		width: 65%;
 		color: #3E3D67;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 </style>

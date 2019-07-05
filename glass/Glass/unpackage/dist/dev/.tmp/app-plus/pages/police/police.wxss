@@ -36,12 +36,12 @@
 	width: 65%;
 	color: #3E3D67;
 }
-.img{
+.img {
 	width: 60%;
 	height: 200rpx;
 	margin-top: 25rpx;
 }
-.img image{
+.img image {
 	width: 180rpx;
 	height: 180rpx;
 }

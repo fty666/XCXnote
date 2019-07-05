@@ -85,9 +85,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-
-var wv; //计划创建的webview
-var _default = {
+//
+//
+//
+var _default =
+{
   onReady: function onReady() {
 
 
@@ -96,7 +98,26 @@ var _default = {
 
 
 
-  } };exports.default = _default;
+
+
+
+
+
+
+  },
+  data: function data() {
+    return {
+      log: '1111' };
+
+  },
+  methods: {
+    handleMessage: function handleMessage(evt) {
+      this.log = JSON.stringify(evt.detail);
+      console.log('88' + JSON.stringify(evt.detail));
+      // uni.navigateTo({
+      // 	url: '../login/login'
+      // })
+    } } };exports.default = _default;
 
 /***/ }),
 

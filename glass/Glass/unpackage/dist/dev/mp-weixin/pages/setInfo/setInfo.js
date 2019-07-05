@@ -174,6 +174,28 @@ var _default =
       uni.navigateTo({
         url: '../news/news' });
 
+    },
+    // 退出登录
+    out: function out() {
+      uni.showModal({
+        title: '提示',
+        content: '确定要退出吗?',
+        success: function success(res) {
+          if (res.confirm) {
+            uni.clearStorageSync('data');
+            uni.reLaunch({
+              url: '../login/login' });
+
+          } else if (res.cancel) {
+            uni.showToast({
+              title: '取消了退出',
+              icon: 'none' });
+
+          }
+
+        } });
+
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

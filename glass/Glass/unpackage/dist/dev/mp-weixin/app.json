@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
     "pages/record/record",
     "pages/myInfo/myInfo",
@@ -47,5 +48,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

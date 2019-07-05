@@ -1,10 +1,20 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
     "pages/record/record",
     "pages/myInfo/myInfo",
     "pages/service/service",
-    "pages/addRecod/addRecod"
+    "pages/addRecod/addRecod",
+    "pages/police/police",
+    "pages/dispose/dispose",
+    "pages/setInfo/setInfo",
+    "pages/editMoble/editMoble",
+    "pages/mobleInfo/mobleInfo",
+    "pages/regards/regards",
+    "pages/issue/issue",
+    "pages/answer/answer",
+    "pages/news/news"
   ],
   "subPackages": [],
   "window": {

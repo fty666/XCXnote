@@ -21,7 +21,6 @@
 	width: 160rpx;
 	height: 160rpx;
 	border-radius: 50%;
-	background: #FFFFFF;
 	margin: 100rpx 280rpx;
 }
 .name {
@@ -71,7 +70,7 @@
 	width: 30%;
 }
 .dnums {
-	width: 60%;
+	width: 45%;
 	height: 30rpx;
 	font-size: 17px;
 	font-weight: 400;

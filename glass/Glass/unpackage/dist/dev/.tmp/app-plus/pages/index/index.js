@@ -85,18 +85,39 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-
-var wv; //计划创建的webview
-var _default = {
+//
+//
+//
+var _default =
+{
   onReady: function onReady() {
 
+
     var currentWebview = this.$mp.page.$getAppWebview(); //获取当前页面的webview对象
+    console.log(currentWebview, " at pages\\index\\index.vue:15");
     setTimeout(function () {
-      wv = currentWebview.children()[0];
-      wv.setStyle({ top: 50, height: 750 });
+      var wv = currentWebview.children()[0];
+      console.log(wv, " at pages\\index\\index.vue:18");
+      wv.setStyle({
+        top: 50,
+        height: 650 });
+
     }, 1000); //如果是页面初始化调用时，需要延时一下
 
-  } };exports.default = _default;
+  },
+  data: function data() {
+    return {
+      log: '1111' };
+
+  },
+  methods: {
+    handleMessage: function handleMessage(evt) {
+      this.log = JSON.stringify(evt.detail);
+      console.log('88' + JSON.stringify(evt.detail), " at pages\\index\\index.vue:34");
+      // uni.navigateTo({
+      // 	url: '../login/login'
+      // })
+    } } };exports.default = _default;
 
 /***/ }),
 

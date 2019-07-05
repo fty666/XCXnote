@@ -98,7 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var addrecode = function addrecode() {return __webpack_require__.e(/*! import() | components/addRecode */ "components/addRecode").then(__webpack_require__.bind(null, /*! ../../components/addRecode.vue */ "../../../../../传清科技/glass/Glass/components/addRecode.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -133,20 +133,98 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _common = _interopRequireDefault(__webpack_require__(/*! ../../common/common.js */ "../../../../../传清科技/glass/Glass/common/common.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var addrecode = function addrecode() {return __webpack_require__.e(/*! import() | components/addRecode */ "components/addRecode").then(__webpack_require__.bind(null, /*! ../../components/addRecode.vue */ "../../../../../传清科技/glass/Glass/components/addRecode.vue"));};var _default =
 {
   data: function data() {
     return {
-      add: true };
+      add: true,
+      id: '', //警告id
+      info: {}, //已完成详情
+      replenish: [], //添加补充
+      warnNo: '', //报警编号
+      picUrl: '',
+      page: 1,
+      pageSize: 10 };
 
   },
   components: {
     addrecode: addrecode },
 
+  onLoad: function onLoad(options) {
+    var id = options.id;
+    this.id = id;
+    this.picUrl = _common.default.picUrl;
+    this.getInfo(id);
+  },
   methods: {
+    // 获取已完成信息
+    getInfo: function getInfo(id) {
+      var data = {
+        page: 1,
+        pageSize: 1,
+        recordId: id };
+
+      var that = this;
+      _common.default.getData('/muqiang/invitation/getWarnList', data, function (res) {
+        that.info = res.pageInfo.list[0];
+        var warnNo = res.pageInfo.list[0].warn_no;
+        that.warnNo = warnNo;
+        that.getAdd(warnNo);
+      });
+    },
+    getAdd: function getAdd(warnNo) {var _this = this;
+      var that = this;
+      var data = {
+        page: 1,
+        pageSize: that.pageSize,
+        warnNo: warnNo };
+
+      var that = this;
+      _common.default.getData('/muqiang/invitation/getDetailRepairList', data, function (res) {
+        _this.replenish = res.pageInfo.list;
+        // console.log(res)
+      });
+    },
+    // 下拉加载补充
+    lower: function lower() {
+      var that = this;
+      var pageSize = that.pageSize;
+      pageSize = pageSize + 10;
+      that.pageSize = pageSize;
+      var warnNo = that.warnNo;
+      that.getAdd(warnNo);
+    },
+    // 添加按钮
     adds: function adds() {
       this.add = false;
     },
+    // 子组件传递过来
     save: function save(e) {
+      var id = this.id;
+      this.getInfo(id);
       this.add = e;
     } } };exports.default = _default;
 
