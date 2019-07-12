@@ -101,6 +101,125 @@ createPage(_answer.default);
 
 /***/ }),
 
+/***/ "../../../../../传清科技/glass/Glass/main.js?{\"page\":\"pages%2Fanswer2%2Fanswer2\"}":
+/*!************************************************************************!*\
+  !*** D:/传清科技/glass/Glass/main.js?{"page":"pages%2Fanswer2%2Fanswer2"} ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../传清科技/glass/Glass/pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _answer = _interopRequireDefault(__webpack_require__(/*! ./pages/answer2/answer2.vue */ "../../../../../传清科技/glass/Glass/pages/answer2/answer2.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_answer.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "../../../../../传清科技/glass/Glass/main.js?{\"page\":\"pages%2Fanswer3%2Fanswer3\"}":
+/*!************************************************************************!*\
+  !*** D:/传清科技/glass/Glass/main.js?{"page":"pages%2Fanswer3%2Fanswer3"} ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../传清科技/glass/Glass/pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _answer = _interopRequireDefault(__webpack_require__(/*! ./pages/answer3/answer3.vue */ "../../../../../传清科技/glass/Glass/pages/answer3/answer3.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_answer.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "../../../../../传清科技/glass/Glass/main.js?{\"page\":\"pages%2Fanswer4%2Fanswer4\"}":
+/*!************************************************************************!*\
+  !*** D:/传清科技/glass/Glass/main.js?{"page":"pages%2Fanswer4%2Fanswer4"} ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../传清科技/glass/Glass/pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _answer = _interopRequireDefault(__webpack_require__(/*! ./pages/answer4/answer4.vue */ "../../../../../传清科技/glass/Glass/pages/answer4/answer4.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_answer.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "../../../../../传清科技/glass/Glass/main.js?{\"page\":\"pages%2Fanswer5%2Fanswer5\"}":
+/*!************************************************************************!*\
+  !*** D:/传清科技/glass/Glass/main.js?{"page":"pages%2Fanswer5%2Fanswer5"} ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../传清科技/glass/Glass/pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _answer = _interopRequireDefault(__webpack_require__(/*! ./pages/answer5/answer5.vue */ "../../../../../传清科技/glass/Glass/pages/answer5/answer5.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_answer.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "../../../../../传清科技/glass/Glass/main.js?{\"page\":\"pages%2Fanswer6%2Fanswer6\"}":
+/*!************************************************************************!*\
+  !*** D:/传清科技/glass/Glass/main.js?{"page":"pages%2Fanswer6%2Fanswer6"} ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../传清科技/glass/Glass/pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _answer = _interopRequireDefault(__webpack_require__(/*! ./pages/answer6/answer6.vue */ "../../../../../传清科技/glass/Glass/pages/answer6/answer6.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_answer.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "../../../../../传清科技/glass/Glass/main.js?{\"page\":\"pages%2Fanswer7%2Fanswer7\"}":
+/*!************************************************************************!*\
+  !*** D:/传清科技/glass/Glass/main.js?{"page":"pages%2Fanswer7%2Fanswer7"} ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../传清科技/glass/Glass/pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _answer = _interopRequireDefault(__webpack_require__(/*! ./pages/answer7/answer7.vue */ "../../../../../传清科技/glass/Glass/pages/answer7/answer7.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_answer.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "../../../../../传清科技/glass/Glass/main.js?{\"page\":\"pages%2Fanswer8%2Fanswer8\"}":
+/*!************************************************************************!*\
+  !*** D:/传清科技/glass/Glass/main.js?{"page":"pages%2Fanswer8%2Fanswer8"} ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../传清科技/glass/Glass/pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _answer = _interopRequireDefault(__webpack_require__(/*! ./pages/answer8/answer8.vue */ "../../../../../传清科技/glass/Glass/pages/answer8/answer8.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_answer.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
 /***/ "../../../../../传清科技/glass/Glass/main.js?{\"page\":\"pages%2Fdispose%2Fdispose\"}":
 /*!************************************************************************!*\
   !*** D:/传清科技/glass/Glass/main.js?{"page":"pages%2Fdispose%2Fdispose"} ***!

@@ -103,7 +103,7 @@
 		}, {
 			"path": "pages/answer/answer",
 			"style": {
-				"navigationBarTitleText": "解答",
+				"navigationBarTitleText": "如果软件不能正常使用，找谁来解决...",
 				"app-plus": {
 					"bounce": "none"
 				}
@@ -112,6 +112,62 @@
 			"path": "pages/news/news",
 			"style": {
 				"navigationBarTitleText": "新消息通知",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/answer2/answer2",
+			"style": {
+				"navigationBarTitleText": "在哪里可以下载iOS版和Android版手机应用",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/answer3/answer3",
+			"style": {
+				"navigationBarTitleText": "本手机应用是否支持所有iOS设备",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/answer4/answer4",
+			"style": {
+				"navigationBarTitleText": "本手机应用是否支持所有Android设备",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/answer5/answer5",
+			"style": {
+				"navigationBarTitleText": "不想再使用手机时，如何清除手机里的个人数据",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/answer6/answer6",
+			"style": {
+				"navigationBarTitleText": "如何在手机应用中登录我的帐户",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/answer7/answer7",
+			"style": {
+				"navigationBarTitleText": "如何在手机应用中退出登录帐户",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/answer8/answer8",
+			"style": {
+				"navigationBarTitleText": "为何帐号密码在后台可以登录成功，在手机应用中确提示密码错误",
 				"app-plus": {
 					"bounce": "none"
 				}

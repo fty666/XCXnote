@@ -79,17 +79,54 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
 {
   onLaunch: function onLaunch() {
-    console.log('App Launch', " at App.vue:4");
+
+    uni.getProvider({
+      service: 'push',
+      success: function success(res) {
+        console.log(res.provider, " at App.vue:8");
+        // 个推的名称为 igexin
+        if (~res.provider.indexOf('igexin')) {
+          uni.subscribePush({
+            provider: 'igexin',
+            success: function success(res) {
+              console.log('success:' + JSON.stringify(res), " at App.vue:14");
+            } });
+
+        }
+      } });
+
+    uni.onPush({
+      provider: 'igexin',
+      success: function success() {
+        console.log('监听透传成功', " at App.vue:23");
+      },
+      callback: function callback(data) {
+        console.log("接收到透传数据：" + JSON.stringify(data), " at App.vue:26");
+      } });
+
+    plus.push.addEventListener("click", function (msg) {
+      plus.ui.alert("click:" + JSON.stringify(msg));
+      plus.ui.alert(msg.payload);
+      // plus.ui.alert(JSON.stringify(msg));  
+
+    }, false);
+    // 监听在线消息事件    
+    plus.push.addEventListener("receive", function (msg) {
+      // plus.ui.alert(2);  
+      plus.ui.alert("recevice:" + JSON.stringify(msg));
+    }, false);
+
   },
   onShow: function onShow() {
-    console.log('App Show', " at App.vue:7");
+    console.log('App Show', " at App.vue:43");
   },
   onHide: function onHide() {
-    console.log('App Hide', " at App.vue:10");
+    console.log('App Hide', " at App.vue:46");
   } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ "./node_modules/@dcloudio/uni-app-plus/dist/index.js")["default"]))
 
 /***/ }),
 

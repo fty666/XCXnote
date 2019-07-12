@@ -26,7 +26,7 @@
 
 <style>
 	.font {
-		width: 95%;
+		width: 85%;
 		height: 100upx;
 		font-size: 18px;
 		font-family: SourceHanSansCN-Regular;
@@ -38,12 +38,12 @@
 	}
 
 	.font2 {
-		width: 95%;
-		font-size: 16px;
+		width: 90%;
+		font-size: 15px;
 		font-weight: 400;
 		color: rgba(102, 102, 102, 1);
 		line-height: 50upx;
-		margin: 10upx 35upx;
+		margin: 10upx 50upx;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		word-break: break-all;

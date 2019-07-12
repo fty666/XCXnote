@@ -112,8 +112,8 @@
 	text-align: left;
 }
 .right {
-	width: 25rpx;
-	height: 25rpx;
+	width: 23rpx;
+	height: 23rpx;
 	margin-top: 35rpx;
 	-webkit-box-align: left;
 	-webkit-align-items: left;

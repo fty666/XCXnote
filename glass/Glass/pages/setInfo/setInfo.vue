@@ -32,8 +32,8 @@
 				</view>
 			</view>
 			<view class="kxia"></view>
-			<view class="flex" style="height: 100upx;width: 100%;">
-				<view class="flex" style="width: 85%;">
+			<view class="flex" style="height: 100upx;width: 100%;" @click="myInfo()">
+				<view class="flex" style="width: 86.5%;">
 					<view class="manage">关于软件</view>
 					<view class="cache" style="text-align: right;margin-right: 25upx;">1.1.00</view>
 				</view>
@@ -75,6 +75,12 @@
 					url: '../news/news'
 				})
 			},
+			// 关于我们
+			myInfo() {
+				uni.navigateTo({
+					url: '../regards/regards'
+				})
+			},
 			// 退出登录
 			out() {
 				uni.showModal({
@@ -86,10 +92,10 @@
 							uni.reLaunch({
 								url: '../login/login'
 							})
-						}else if(res.cancel){
+						} else if (res.cancel) {
 							uni.showToast({
-								title:'取消了退出',
-								icon:'none'
+								title: '取消了退出',
+								icon: 'none'
 							})
 						}
 

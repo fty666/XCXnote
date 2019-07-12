@@ -129,13 +129,11 @@ var _common = _interopRequireDefault(__webpack_require__(/*! ../../common/common
 //
 //
 //
-var _default = { data: function data() {return { phones: '13879784645', codes: '123456' };}, onLoad: function onLoad(options) {console.log(options);var names = uni.getStorageSync('data');if (names != '') {uni.switchTab({ url: '../index/index' });}
-  },
+var _default = { data: function data() {return { phones: '', codes: '' };}, onLoad: function onLoad(options) {var names = uni.getStorageSync('data');if (names != '') {uni.switchTab({ url: '../index/index' });}},
   methods: {
     // 获取input值
     phone: function phone(e) {
       var mobile = e.detail.value;
-      console.log(_common.default.regular(1, mobile));
       this.phones = mobile;
     },
     code: function code(e) {
@@ -164,6 +162,7 @@ var _default = { data: function data() {return { phones: '13879784645', codes: '
         } else {
           uni.setStorageSync('data', res.name);
           uni.setStorageSync('mobile', res.mobile);
+          uni.setStorageSync('status', res.roles);
           uni.switchTab({
             url: '../index/index' });
 

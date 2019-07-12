@@ -1,0 +1,1 @@
+<view bind:__l="__l"><view class="font">如何在手机应用中登录我的帐户?</view><view class="font2">您可以通过输入账号和密码完成登录。</view></view>

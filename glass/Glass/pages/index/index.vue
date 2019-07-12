@@ -9,7 +9,6 @@
 <script>
 	export default {
 		onReady() {
-
 			// #ifdef APP-PLUS
 			var currentWebview = this.$mp.page.$getAppWebview() //获取当前页面的webview对象
 			console.log(currentWebview)
@@ -31,7 +30,6 @@
 		methods: {
 			handleMessage(evt) {
 				this.log = JSON.stringify(evt.detail);
-				console.log('88' + JSON.stringify(evt.detail))
 				// uni.navigateTo({
 				// 	url: '../login/login'
 				// })

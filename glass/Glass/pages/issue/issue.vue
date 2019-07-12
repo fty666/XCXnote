@@ -1,34 +1,63 @@
 <template>
 	<view>
 		<view class="nows">常见问题</view>
-		<view class="kuan" style="margin-top: 30upx;height: 410upx;">
-			<view class="flex" style="height: 100upx;width: 100%;" @click="answer()">
-				<view class="manage">玻璃幕墙破损通知会以什么方式通知用户</view>
+		<view class="kuan" style="margin-top: 30upx;height: 900upx;">
+			<view class="flex" style="height: 100upx;width: 100%;background: #FFFFFF;" @click="answer2()">
+				<view class="manage">在哪里可以下载iOS版和Android版手机应用</view>
 				<view>
 					<image src="../../static/imgs/more@2x.png" class="right"></image>
 				</view>
 			</view>
 			<view class="kxia"></view>
-			<view class="flex" style="height: 100upx;width: 100%;">
-				<view class="manage">当玻璃幕墙破损时多久会有人进行维修</view>
+			<view class="flex" style="height: 100upx;width: 100%;background: #FFFFFF;" @click="answer3()">
+				<view class="manage">本手机应用是否支持所有iOS设备</view>
 				<view>
 					<image src="../../static/imgs/more@2x.png" class="right"></image>
 				</view>
 			</view>
 			<view class="kxia"></view>
-			<view class="flex" style="height: 100upx;width: 100%;">
+			<view class="flex" style="height: 100upx;width: 100%;background: #FFFFFF;" @click="answer4()">
+				<view class="manage">本手机应用是否支持所有Android设备</view>
+				<view>
+					<image src="../../static/imgs/more@2x.png" class="right"></image>
+				</view>
+			</view>
+			<view class="kxia"></view>
+			<view class="flex" style="height: 100upx;width: 100%;background: #FFFFFF;" @click="answer()">
 				<view class="manage">如果软件不能正常使用，找谁来解决</view>
 				<view>
 					<image src="../../static/imgs/more@2x.png" class="right"></image>
 				</view>
 			</view>
 			<view class="kxia"></view>
-			<view class="flex" style="height: 100upx;width: 100%;">
-				<view class="manage">检测系统如何确定范围</view>
+			<view class="flex" style="height: 100upx;width: 100%;background: #FFFFFF;" @click="answer5()">
+				<view class="manage">不想再使用手机时如何清除手机里的个人数据</view>
 				<view>
 					<image src="../../static/imgs/more@2x.png" class="right"></image>
 				</view>
 			</view>
+			<view class="kxia"></view>
+			<view class="flex" style="height: 100upx;width: 100%;background: #FFFFFF;" @click="answer6()">
+				<view class="manage">如何在手机应用中登录我的帐户</view>
+				<view>
+					<image src="../../static/imgs/more@2x.png" class="right"></image>
+				</view>
+			</view>
+			<view class="kxia"></view>
+			<view class="flex" style="height: 100upx;width: 100%;background: #FFFFFF;" @click="answer7()">
+				<view class="manage">如何在手机应用中退出登录帐户</view>
+				<view>
+					<image src="../../static/imgs/more@2x.png" class="right"></image>
+				</view>
+			</view>
+			<view class="kxia"></view>
+			<view class="flex" style="height: 140upx;width: 100%;background: #FFFFFF;" @click="answer8()">
+				<view class="manage" style="line-height: 65upx;">为何帐号密码在后台可以登录成功在手机应用中确提示密码错误</view>
+				<view>
+					<image src="../../static/imgs/more@2x.png" class="right" style="margin-top: 60upx;"></image>
+				</view>
+			</view>
+			<view class="kxia"></view>
 		</view>
 	</view>
 </template>
@@ -41,12 +70,54 @@
 			}
 		},
 		methods: {
-			// 常见问题
+			// 常见问题,软件不能使用
 			answer() {
 				uni.navigateTo({
 					url: '../answer/answer'
 				})
-			}
+			},
+			// 在哪里下载版本
+			answer2() {
+				uni.navigateTo({
+					url: '../answer2/answer2'
+				})
+			},
+			//问题3
+			answer3() {
+				uni.navigateTo({
+					url: '../answer3/answer3'
+				})
+			},
+			// 问题4
+			answer4() {
+				uni.navigateTo({
+					url: '../answer4/answer4'
+				})
+			},
+			// 问题5
+			answer5() {
+				uni.navigateTo({
+					url: '../answer5/answer5'
+				})
+			},
+			// 问题6
+			answer6() {
+				uni.navigateTo({
+					url: '../answer6/answer6'
+				})
+			},
+			// 问题7
+			answer7() {
+				uni.navigateTo({
+					url: '../answer7/answer7'
+				})
+			},
+			// 问题8
+			answer8() {
+				uni.navigateTo({
+					url: '../answer8/answer8'
+				})
+			},
 		}
 	}
 </script>
@@ -57,7 +128,7 @@
 	}
 
 	.nows {
-		width: 100%;
+		width: 60%;
 		height: 60upx;
 		font-size: 13px;
 		font-weight: 400;
@@ -71,24 +142,26 @@
 		width: 100%;
 		height: 200upx;
 		margin-top: 140upx;
-		background: #FFFFFF;
 	}
 
 	.manage {
-		width: 80%;
+		width: 85%;
 		height: 115px;
 		font-size: 14px;
 		font-weight: 400;
 		color: #0B0C3C;
 		line-height: 107upx;
 		margin-left: 50upx;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		word-break: break-all;
 	}
 
 	.right {
 		width: 20upx;
 		height: 20upx;
 		margin-top: 35upx;
-		align-items: left;
+		margin-left: 15upx;
 	}
 
 	.yu {

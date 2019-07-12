@@ -133,6 +133,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
 var _common = _interopRequireDefault(__webpack_require__(/*! ../../common/common.js */ "../../../../../传清科技/glass/Glass/common/common.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -167,7 +168,8 @@ var _common = _interopRequireDefault(__webpack_require__(/*! ../../common/common
 //
 //
 //
-var _default = { data: function data() {return { info: {}, picUrl: '' };}, onLoad: function onLoad(options) {var id = options.id;this.getInfo(id);this.picUrl = _common.default.picUrl;}, methods: { getInfo: function getInfo(id) {var _this = this;var data = { page: 1, pageSize: 5, recordId: id };var that = this;_common.default.getData('/muqiang/invitation/getWarnList', data, function (res) {console.log(res, " at pages\\police\\police.vue:58");_this.info = res.pageInfo.list[0];});} } };exports.default = _default;
+//
+var _default = { data: function data() {return { info: {}, picUrl: '' };}, onLoad: function onLoad(options) {var id = options.id;this.getInfo(id);this.picUrl = _common.default.picUrl;}, methods: { getInfo: function getInfo(id) {var _this = this;var data = { page: 1, pageSize: 5, recordId: id };var that = this;_common.default.getData('/muqiang/invitation/getWarnList', data, function (res) {console.log(res, " at pages\\police\\police.vue:59");_this.info = res.pageInfo.list[0];});} } };exports.default = _default;
 
 /***/ }),
 

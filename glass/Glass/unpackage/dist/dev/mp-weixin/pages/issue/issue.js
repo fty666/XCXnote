@@ -133,6 +133,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -141,10 +170,52 @@ var _default =
 
   },
   methods: {
-    // 常见问题
+    // 常见问题,软件不能使用
     answer: function answer() {
       uni.navigateTo({
         url: '../answer/answer' });
+
+    },
+    // 在哪里下载版本
+    answer2: function answer2() {
+      uni.navigateTo({
+        url: '../answer2/answer2' });
+
+    },
+    //问题3
+    answer3: function answer3() {
+      uni.navigateTo({
+        url: '../answer3/answer3' });
+
+    },
+    // 问题4
+    answer4: function answer4() {
+      uni.navigateTo({
+        url: '../answer4/answer4' });
+
+    },
+    // 问题5
+    answer5: function answer5() {
+      uni.navigateTo({
+        url: '../answer5/answer5' });
+
+    },
+    // 问题6
+    answer6: function answer6() {
+      uni.navigateTo({
+        url: '../answer6/answer6' });
+
+    },
+    // 问题7
+    answer7: function answer7() {
+      uni.navigateTo({
+        url: '../answer7/answer7' });
+
+    },
+    // 问题8
+    answer8: function answer8() {
+      uni.navigateTo({
+        url: '../answer8/answer8' });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

@@ -92,12 +92,11 @@ var _default =
 {
   onReady: function onReady() {
 
-
     var currentWebview = this.$mp.page.$getAppWebview(); //获取当前页面的webview对象
-    console.log(currentWebview, " at pages\\index\\index.vue:15");
+    console.log(currentWebview, " at pages\\index\\index.vue:14");
     setTimeout(function () {
       var wv = currentWebview.children()[0];
-      console.log(wv, " at pages\\index\\index.vue:18");
+      console.log(wv, " at pages\\index\\index.vue:17");
       wv.setStyle({
         top: 50,
         height: 650 });
@@ -113,7 +112,6 @@ var _default =
   methods: {
     handleMessage: function handleMessage(evt) {
       this.log = JSON.stringify(evt.detail);
-      console.log('88' + JSON.stringify(evt.detail), " at pages\\index\\index.vue:34");
       // uni.navigateTo({
       // 	url: '../login/login'
       // })

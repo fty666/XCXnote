@@ -185,22 +185,26 @@ var _common = _interopRequireDefault(__webpack_require__(/*! ../../common/common
 //
 //
 //
-var _default = { data: function data() {return { record: [], xia: 1, page: 1, pageSize: 10, warnType: 1 };}, onLoad: function onLoad() {this.getList();}, methods: { // 获取报警记录
+var _default = { data: function data() {return { record: [], xia: 1, page: 1, pageSize: 10, warnType: 1 };}, onLoad: function onLoad() {this.getList();}, onShow: function onShow() {this.getList();}, methods: { // 获取报警记录
     getList: function getList() {var _this = this;var data = { page: this.page, pageSize: this.pageSize, isCheck: 1, warnType: this.warnType };var that = this;_common.default.getData('/muqiang/invitation/getWarnList', data, function (res) {_this.record = res.pageInfo.list;});}, // 下拉滑动
     lower: function lower() {var pageSize = this.pageSize;pageSize = pageSize + 10;this.pageSize = pageSize;this.getList();}, // 底部下划线
-    worn: function worn() {this.xia = 1;this.warnType = 1;this.getList();}, full: function full() {this.xia = 2;this.warnType = 2;this.getList();}, // 跳转已完成详情
-    goInfo: function goInfo(e) {
-      var id = e.currentTarget.id;
-      uni.navigateTo({
-        url: '../service/service?id=' + id });
-
+    worn: function worn() {this.xia = 1;this.warnType = 1;this.getList();}, full: function full() {this.xia = 2;this.warnType = 2;
+      this.getList();
     },
-    // 跳转报警详情
-    police: function police(e) {
+    // 跳转已完成详情
+    goInfo: function goInfo(e) {
+      var status = uni.getStorageSync('status');
       var id = e.currentTarget.id;
-      uni.navigateTo({
-        url: '../police/police?id=' + id });
+      console.log(status, " at pages\\record\\record.vue:98");
+      if (status == 3) {
+        uni.navigateTo({
+          url: '../service/service?id=' + id });
 
+      } else if (status == 2) {
+        uni.navigateTo({
+          url: '../police/police?id=' + id });
+
+      }
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ "./node_modules/@dcloudio/uni-app-plus/dist/index.js")["default"]))
 

@@ -103,7 +103,6 @@ var _default =
 
 
 
-
   },
   data: function data() {
     return {
@@ -113,7 +112,6 @@ var _default =
   methods: {
     handleMessage: function handleMessage(evt) {
       this.log = JSON.stringify(evt.detail);
-      console.log('88' + JSON.stringify(evt.detail));
       // uni.navigateTo({
       // 	url: '../login/login'
       // })

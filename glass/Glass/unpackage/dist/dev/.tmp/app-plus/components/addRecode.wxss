@@ -27,4 +27,10 @@ page{
 	margin-top: 20rpx;
 	margin-left:50rpx;
 }
+.dels{
+	position: absolute;
+	top:5rpx;
+	right: 10rpx;
+	z-index: 99;
+}
 

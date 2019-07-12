@@ -1,0 +1,29 @@
+
+.font {
+	width: 85%;
+	height: 160rpx;
+	font-size: 18px;
+	font-family: SourceHanSansCN-Regular;
+	font-weight: 400;
+	color: rgba(0, 0, 0, 1);
+	line-height: 70rpx;
+	margin: 50rpx 50rpx;
+	border-bottom: 1px solid #ddd;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+	word-break: break-all;
+}
+.font2 {
+	width: 90%;
+	font-size: 15px;
+	font-weight: 400;
+	color: rgba(102, 102, 102, 1);
+	line-height: 50rpx;
+	margin: 10rpx 50rpx;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+	word-break: break-all;
+}
+

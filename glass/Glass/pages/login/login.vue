@@ -18,12 +18,11 @@
 	export default {
 		data() {
 			return {
-				phones: '13879784645',
-				codes: '123456'
+				phones: '',
+				codes: ''
 			}
 		},
 		onLoad(options) {
-			console.log(options)
 			var names = uni.getStorageSync('data');
 			if (names != '') {
 				uni.switchTab({
@@ -35,7 +34,6 @@
 			// 获取input值
 			phone(e) {
 				var mobile = e.detail.value;
-				console.log(common.regular(1, mobile));
 				this.phones = mobile;
 			},
 			code(e) {
@@ -61,9 +59,10 @@
 							title: '账号或密码输入有误',
 							icon: 'none'
 						})
-					} else {
+					} else{
 						uni.setStorageSync('data', res.name);
 						uni.setStorageSync('mobile', res.mobile);
+						uni.setStorageSync('status', res.roles);
 						uni.switchTab({
 							url: '../index/index'
 						})

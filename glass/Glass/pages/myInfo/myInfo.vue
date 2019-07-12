@@ -42,15 +42,15 @@
 				</view>
 			</view>
 			<view class="kxia"></view>
-			<view class="flex-space" style="height: 100upx;width: 100%;" @click="pullOn">
+			<view class="flex-space" style="height: 100upx;width: 100%;">
 				<view>
-					<image src="../../static/imgs/333.png" class="book"></image>
+					<image src="../../static/imgs/333.png" class="book" style="margin-left: 20upx;"></image>
 				</view>
-				<view class="manage">接收预警</view>
-				<view v-if="call==true">
+				<view class="manage" style="margin-left: 30upx;">接收预警</view>
+				<view v-if="call==true" @click="pullOn">
 					<image src="../../static/imgs/open@2x.png" class="yu"></image>
 				</view>
-				<view v-if="call==false">
+				<view v-if="call==false" @click="pullOn">
 					<image src="../../static/imgs/shut@2x.png" class="yu"></image>
 				</view>
 			</view>
@@ -297,11 +297,12 @@
 		color: rgba(62, 61, 103, 1);
 		line-height: 107upx;
 		text-align: left;
+		
 	}
 
 	.right {
-		width: 25upx;
-		height: 25upx;
+		width: 23upx;
+		height: 23upx;
 		margin-top: 35upx;
 		align-items: left;
 	}

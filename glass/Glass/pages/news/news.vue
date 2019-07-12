@@ -2,7 +2,7 @@
 	<view>
 		<view class="nows">希望接收</view>
 		<view class="kuan" style="margin-top: 30upx;height: 200upx;">
-			<view class="flex" style="height: 100upx;width: 100%;" @click="answer()">
+			<view class="flex" style="height: 100upx;width: 100%;">
 				<view class="manage">接收玻璃幕墙破损通知</view>
 				<view>
 					<image src="../../static/imgs/shut@2x.png" class="right"></image>
@@ -51,7 +51,7 @@
 	}
 
 	.nows {
-		width: 100%;
+		width: 80%;
 		height: 60upx;
 		font-size: 13px;
 		font-weight: 400;

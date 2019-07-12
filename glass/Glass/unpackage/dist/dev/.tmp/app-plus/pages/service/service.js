@@ -98,7 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -176,6 +176,12 @@ var _common = _interopRequireDefault(__webpack_require__(/*! ../../common/common
   onLoad: function onLoad(options) {
     var id = options.id;
     this.id = id;
+    var status = uni.getStorageSync('status');
+    if (status == 2) {
+      uni.redirectTo({
+        url: '../police/police?id=' + id });
+
+    }
     this.picUrl = _common.default.picUrl;
     this.getInfo(id);
   },
@@ -208,6 +214,17 @@ var _common = _interopRequireDefault(__webpack_require__(/*! ../../common/common
         // console.log(res)
       });
     },
+    // 查看大图片
+    big: function big(e) {
+      console.log(e.currentTarget.id, " at pages\\service\\service.vue:119");
+      var imgs = e.currentTarget.id;
+      var arr = [];
+      arr.push(imgs);
+      uni.previewImage({
+        current: imgs,
+        urls: arr });
+
+    },
     // 下拉加载补充
     lower: function lower() {
       var that = this;
@@ -227,6 +244,7 @@ var _common = _interopRequireDefault(__webpack_require__(/*! ../../common/common
       this.getInfo(id);
       this.add = e;
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ "./node_modules/@dcloudio/uni-app-plus/dist/index.js")["default"]))
 
 /***/ }),
 

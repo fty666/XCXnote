@@ -1,0 +1,1 @@
+<view bind:__l="__l"><view class="font">本手机应用是否支持所有iOS设备?</view><view class="font2">iOS用户在下载本手机应用前，请确认您的设备至少为iPhone 4或iPod Touch 3，并且操作系统为iOS 10.0或更高版本。</view></view>

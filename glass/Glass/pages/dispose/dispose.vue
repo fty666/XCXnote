@@ -14,7 +14,8 @@
 					</view>
 					<view class="flex font">
 						<view class="font1">工作内容:</view>
-						<view class="font2">{{item.repair_reason1}}</view>
+						<view class="font2" v-if="item.warn_type==1">玻璃幕墙破损</view>
+						<view class="font2" v-if="item.warn_type==2">高空抛物</view>
 					</view>
 					<view class="flex font">
 						<view class="font1">工作状态:</view>

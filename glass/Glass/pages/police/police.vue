@@ -16,7 +16,8 @@
 			</view>
 			<view class="flex font">
 				<view class="font1">处理状态:</view>
-				<view class="font2" style="color: #F40250;">未处理</view>
+				<view class="font2" style="color: #F40250;" v-if="info.is_repair==0">未处理</view>
+				<view class="font2" style="color: #F40250;" v-if="info.is_repair==1">已处理</view>
 			</view>
 			<view class="flex font">
 				<view class="font1">报警时间:</view>
@@ -37,26 +38,26 @@
 	export default {
 		data() {
 			return {
-				info:{},
-				picUrl:''
+				info: {},
+				picUrl: ''
 			}
 		},
 		onLoad(options) {
 			var id = options.id;
 			this.getInfo(id);
-			this.picUrl=common.picUrl
+			this.picUrl = common.picUrl
 		},
 		methods: {
 			getInfo(id) {
 				var data = {
 					page: 1,
 					pageSize: 5,
-					recordId:id,
+					recordId: id,
 				}
 				var that = this;
 				common.getData('/muqiang/invitation/getWarnList', data, (res) => {
 					console.log(res);
-					this.info= res.pageInfo.list[0];
+					this.info = res.pageInfo.list[0];
 				})
 			}
 		}

@@ -57,12 +57,13 @@
 	color: rgba(255, 255, 255, 1);
 	line-height: 80rpx;
 	text-align: center;
-	position: fixed;
-	bottom: 100rpx;
+	/* position: fixed; */
+	/* bottom: 70upx; */
+	margin-top: 55rpx;
 }
 .replenish {
 	width: 90%;
-	height: 600rpx;
+	height: 685rpx;
 	background: #FFFFFF;
 	margin-top: 40rpx;
 	margin-left: 40rpx;
@@ -101,16 +102,17 @@
 	font-family: SourceHanSansCN-Regular;
 	font-weight: 400;
 	color: rgba(62, 61, 103, 1);
+	margin-top: 4rpx;
+	height: 100rpx;
 	/* line-height:27px; */
-	overflow: hidden;
-	-webkit-flex-wrap: wrap;
-	    -ms-flex-wrap: wrap;
-	        flex-wrap: wrap;
-	margin-top: 15rpx;
+	overflow-y: auto;
+	/* white-space: wrap; */
+	word-break: break-all;
 }
 .caImg {
 	width: 80rpx;
 	height: 80rpx;
+	margin-top: 10rpx;
 }
 .caImg image {
 	width: 80rpx;

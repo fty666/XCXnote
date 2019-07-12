@@ -26,7 +26,7 @@
 						</view>
 						<view class="dispose" @click="goInfo" v-if="item.is_repair==0" v-bind:id="item.recordId">
 							<view class="dfont">
-							待处理
+								待处理
 							</view>
 						</view>
 						<view class="dispose" @click="goInfo" v-if="item.is_repair==1" v-bind:id="item.recordId">
@@ -54,6 +54,9 @@
 			}
 		},
 		onLoad() {
+			this.getList();
+		},
+		onShow() {
 			this.getList();
 		},
 		methods: {
@@ -90,18 +93,19 @@
 			},
 			// 跳转已完成详情
 			goInfo(e) {
+				var status = uni.getStorageSync('status');
 				var id = e.currentTarget.id;
-				uni.navigateTo({
-					url: '../service/service?id='+id
-				})
+				console.log(status);
+				if (status == 3) {
+					uni.navigateTo({
+						url: '../service/service?id=' + id
+					})
+				} else if(status==2) {
+					uni.navigateTo({
+						url: '../police/police?id=' + id
+					})
+				}
 			},
-			// 跳转报警详情
-			police(e) {
-				var id = e.currentTarget.id;
-				uni.navigateTo({
-					url: '../police/police?id='+id
-				})
-			}
 		}
 	}
 </script>
@@ -142,7 +146,7 @@
 	/* 记录 */
 	.record {
 		margin-top: 25upx;
-		margin-left: 10upx;
+		margin-left: 20upx;
 		background: #FFFFFF;
 		width: 94%;
 		height: 200upx;
@@ -157,7 +161,7 @@
 	.rFont {
 		width: 100%;
 		height: 80upx;
-		margin-top: 30upx; 
+		margin-top: 30upx;
 		margin-left: 15upx;
 	}
 
@@ -206,8 +210,9 @@
 
 	.dfont {
 		height: 50upx;
+		width: 88%;
 		margin-top: 60upx;
-		margin-left: 20upx;
+		/* margin-left: 20upx; */
 		border: 1px solid red;
 		border-radius: 35upx;
 		font-size: 11px;
@@ -218,8 +223,9 @@
 
 	.dfont2 {
 		height: 50upx;
+		width: 88%;
 		margin-top: 60upx;
-		margin-left: 20upx;
+		/* margin-left: 20upx; */
 		border-radius: 35upx;
 		font-size: 11px;
 		text-align: center;

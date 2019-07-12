@@ -5,12 +5,22 @@
 			</view>
 		<view class="flex">
 			<!-- 显示上传的图片 -->
-			<view v-if="show==true">
-				<image :src="picUrl+imgs" class="img"></image>
+			<view v-if="show==true" style="position: relative;">
+					<!-- <icon type="clear" style="position: absolute;right: 0upx;top: 20upx;"></icon> -->
+					<image :src="picUrl+imgs" class="img" @click="big" v-bind:id="picUrl+imgs"></image>
 			</view>
-			<view style="background: #F8F8F8;">
-				<image src="../static/imgs/img.png" class="img" @click="addimg"></image>
+			<view>
+				<image :src="picUrl+'201907111036594800.png'" class="img" @click="addimg"></image>
 			</view>
+<!-- 			<view v-for="item in imgs" :key="index" v-if="imgs.length>0">
+				<view style="position: relative;">
+						<icon type="clear" style="position: absolute;right: 0upx;top: 20upx;" @click="del" v-bind:id='item'></icon>
+						<image :src="picUrl+item" class="img" @click="big" v-bind:id="picUrl+item"></image>
+				</view>
+			</view>
+			<view v-if="imgs.length<3">
+				<image :src="picUrl+'201907111036594800.png'" class="img" @click="addimg"></image>
+			</view> -->
 		</view>
 		<view class="add" @click="add()">保&nbsp;存</view>
 	</view>
@@ -66,7 +76,10 @@
 							},
 							success(res) {
 								var res =JSON.parse(res.data);
-								that.imgs=res.data.img
+								// var imgs=that.imgs;
+								// imgs.push(res.data.img);
+								// that.imgs=imgs;
+								that.imgs=res.data.img;
 								that.show=true;
 							},
 							fail(res){
@@ -77,6 +90,29 @@
 							}
 						})
 					}
+				});
+			},
+						// 删除图片
+			del(e){
+				var img=e.currentTarget.id;
+				var arr=this.imgs;
+				var that=this;
+				var newArr=[];
+				for(let i=0;i<arr.length;i++){
+					if(img==arr[i]){}else{
+						newArr.push(arr[i])
+					}
+				}
+				that.imgs=newArr;
+			},
+			// 查看大图片
+			big(e){
+				var imgs=e.currentTarget.id;
+				var arr=[];
+				arr.push(imgs)
+				uni.previewImage({
+					current:imgs,
+					urls: arr,
 				});
 			},
 			// 子传父值
@@ -129,5 +165,11 @@
 		height: 160upx;
 		margin-top: 20upx;
 		margin-left:50upx;
+	}
+	.dels{
+		position: absolute;
+		top:5upx;
+		right: 10upx;
+		z-index: 99;
 	}
 </style>

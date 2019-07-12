@@ -14,7 +14,14 @@
     "pages/regards/regards",
     "pages/issue/issue",
     "pages/answer/answer",
-    "pages/news/news"
+    "pages/news/news",
+    "pages/answer2/answer2",
+    "pages/answer3/answer3",
+    "pages/answer4/answer4",
+    "pages/answer5/answer5",
+    "pages/answer6/answer6",
+    "pages/answer7/answer7",
+    "pages/answer8/answer8"
   ],
   "subPackages": [],
   "window": {

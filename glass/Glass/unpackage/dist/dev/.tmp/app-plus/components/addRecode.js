@@ -117,6 +117,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
 var _common = _interopRequireDefault(__webpack_require__(/*! ../common/common.js */ "../../../../../传清科技/glass/Glass/common/common.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -135,18 +145,18 @@ var _common = _interopRequireDefault(__webpack_require__(/*! ../common/common.js
 //
 //
 //
-var _default2 = { data: function data() {return { adds: false, work: '', show: 'false', imgs: '', warNno: this.warnno, picUrl: '' };}, mounted: function mounted() {this.picUrl = _common.default.picUrl;}, props: { warnno: { type: String, default: function _default() {
-        return {};
-
-      } } },
-
-
-  methods: {
-    // 获取工作内容
-    getwork: function getwork(e) {
-      this.work = e.detail.value;
-    },
-    // 上传图片
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default2 = { data: function data() {return { adds: false, work: '', show: 'false', imgs: '', warNno: this.warnno, picUrl: '' };}, mounted: function mounted() {this.picUrl = _common.default.picUrl;}, props: { warnno: { type: String, default: function _default() {return {};} } }, methods: { // 获取工作内容
+    getwork: function getwork(e) {this.work = e.detail.value;}, // 上传图片
     addimg: function addimg() {
       var that = this;
       uni.chooseImage({
@@ -156,7 +166,7 @@ var _default2 = { data: function data() {return { adds: false, work: '', show: '
         success: function success(res) {
           // console.log(res.tempFilePaths[0])
           var files = res.tempFilePaths[0];
-          console.log(files, " at components\\addRecode.vue:59");
+          console.log(files, " at components\\addRecode.vue:69");
           uni.uploadFile({
             url: 'http://39.106.155.211:8080/muqiang/invitation/UploadFiles',
             filePath: files, //将小程序返回的路径上传给服务器
@@ -166,6 +176,9 @@ var _default2 = { data: function data() {return { adds: false, work: '', show: '
 
             success: function success(res) {
               var res = JSON.parse(res.data);
+              // var imgs=that.imgs;
+              // imgs.push(res.data.img);
+              // that.imgs=imgs;
               that.imgs = res.data.img;
               that.show = true;
             },
@@ -177,6 +190,29 @@ var _default2 = { data: function data() {return { adds: false, work: '', show: '
             } });
 
         } });
+
+    },
+    // 删除图片
+    del: function del(e) {
+      var img = e.currentTarget.id;
+      var arr = this.imgs;
+      var that = this;
+      var newArr = [];
+      for (var i = 0; i < arr.length; i++) {
+        if (img == arr[i]) {} else {
+          newArr.push(arr[i]);
+        }
+      }
+      that.imgs = newArr;
+    },
+    // 查看大图片
+    big: function big(e) {
+      var imgs = e.currentTarget.id;
+      var arr = [];
+      arr.push(imgs);
+      uni.previewImage({
+        current: imgs,
+        urls: arr });
 
     },
     // 子传父值

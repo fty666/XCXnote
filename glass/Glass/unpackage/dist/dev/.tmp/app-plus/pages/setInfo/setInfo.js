@@ -175,6 +175,12 @@ var _default =
         url: '../news/news' });
 
     },
+    // 关于我们
+    myInfo: function myInfo() {
+      uni.navigateTo({
+        url: '../regards/regards' });
+
+    },
     // 退出登录
     out: function out() {
       uni.showModal({

@@ -30,11 +30,11 @@
 						<view class="times flex">
 							<view class="refont">工作内容:</view>
 							<view class="cause">
-								<view class="casuFont" style="margin-top: 4upx;height: 100upx;">
-									<textarea :value="item.repair_reason1" disabled auto-height></textarea>
+								<view class="casuFont">
+									{{item.repair_reason1}}
 								</view>
 								<view class="caImg">
-									<image :src="picUrl+item.repair_photo1" mode=""></image>
+									<image :src="picUrl+item.repair_photo1" @click="big" v-bind:id="picUrl+item.repair_photo1"></image>
 								</view>
 							</view>
 						</view>
@@ -64,7 +64,7 @@
 				id: '', //警告id
 				info: {}, //已完成详情
 				replenish: [], //添加补充
-				warnNo:'',//报警编号
+				warnNo: '', //报警编号
 				picUrl: '',
 				page: 1,
 				pageSize: 10,
@@ -76,6 +76,12 @@
 		onLoad(options) {
 			var id = options.id;
 			this.id = id;
+			var status = uni.getStorageSync('status');
+			if (status == 2) {
+				uni.redirectTo({
+					url: '../police/police?id=' + id
+				})
+			}
 			this.picUrl = common.picUrl;
 			this.getInfo(id);
 		},
@@ -91,7 +97,7 @@
 				common.getData('/muqiang/invitation/getWarnList', data, (res) => {
 					that.info = res.pageInfo.list[0];
 					var warnNo = res.pageInfo.list[0].warn_no;
-					that.warnNo=warnNo;
+					that.warnNo = warnNo;
 					that.getAdd(warnNo)
 				})
 			},
@@ -108,13 +114,24 @@
 					// console.log(res)
 				})
 			},
+			// 查看大图片
+			big(e) {
+				console.log(e.currentTarget.id)
+				var imgs = e.currentTarget.id;
+				var arr = [];
+				arr.push(imgs)
+				uni.previewImage({
+					current: imgs,
+					urls: arr,
+				});
+			},
 			// 下拉加载补充
 			lower() {
 				var that = this;
 				var pageSize = that.pageSize;
 				pageSize = pageSize + 10;
 				that.pageSize = pageSize;
-				var warnNo=that.warnNo;
+				var warnNo = that.warnNo;
 				that.getAdd(warnNo);
 			},
 			// 添加按钮
@@ -193,13 +210,14 @@
 		color: rgba(255, 255, 255, 1);
 		line-height: 80upx;
 		text-align: center;
-		position: fixed;
-		bottom: 100upx;
+		/* position: fixed; */
+		/* bottom: 70upx; */
+		margin-top: 55upx;
 	}
 
 	.replenish {
 		width: 90%;
-		height: 800upx;
+		height: 685upx;
 		background: #FFFFFF;
 		margin-top: 40upx;
 		margin-left: 40upx;
@@ -243,15 +261,18 @@
 		font-family: SourceHanSansCN-Regular;
 		font-weight: 400;
 		color: rgba(62, 61, 103, 1);
+		margin-top: 4upx;
+		height: 100upx;
 		/* line-height:27px; */
-		overflow: hidden;
-		flex-wrap: wrap;
-		margin-top: 15upx;
+		overflow-y: auto;
+		/* white-space: wrap; */
+		word-break: break-all;
 	}
 
 	.caImg {
 		width: 80upx;
 		height: 80upx;
+		margin-top: 10upx;
 	}
 
 	.caImg image {
