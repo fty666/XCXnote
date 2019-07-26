@@ -1,0 +1,184 @@
+1， 全局安装开发环境：npm i -g @angular/cli@latest
+2，	创建新项目：ng new '项目名' --routing
+	安装依赖: cnpm install 
+	启动：ng serve --open
+	
+3,	创建组件：
+	ng g component 'components/news项目名'
+	命令行创建组件之后会默认在全局文件中引入，app.module.ts中会引入创建好的组件，
+	要显示在页面上只需要在根文件中引入使用，app.component.html中引入：	
+	组件名称   <new-component></new-component> 
+	
+4，定义数据，绑定数据：
+	在组件的ts中直接定义: 
+	public title='我是一个变量';  或  title='我是一个变量';
+	指定类型（推荐） title：string='张三'；      title：any='任意类型';
+	绑定在html中：{{title}}
+	
+	定义对象： public user:object={
+					userName:'张三',
+					age：18
+			   }
+	不赋值定义： public message:any；
+	构造函数赋值：constructor(){
+					this.message='函数内赋值';
+					console.log(获取定义好的值：this.user.age)
+				}
+5,动态绑定属性：
+	<div [title]="user.userName">动态绑定数据</div>
+	public content='<h2>定义的数据</h2>'
+	<span [innerHTML]='content'>动态绑定属性，并且解析变量的html标签</span>
+	
+	public pricur='http://www.1221122.png';
+	<img [src]="pricur"></img>
+	
+	声明属性的几种方式：
+	public 或者不写  ：   共有属性，可以在这个类中使用，也可以在其他类中使用
+	protected	     :    保护类型，他只有在当前类和他的自雷里面反问使用
+	private			 : 	   私有，只有在当前类才可以访问
+	
+6,数组循环：*ngFor="let item of arr"
+	public arr=[1,2,3,4,5];
+	<li *ngFor="let item of arr;let key=index">
+		{{key}}--------{item}}
+	</li>
+	
+	二：
+	public  lists:any=[
+    {
+      carts:'宝马',
+      list:[
+        {price:50,type:'宝马'}
+      ]
+    },
+    {
+      carts:'宝马',
+      list:[
+        {price:50,type:'宝马'}
+        ]
+    }
+  ]
+	<div *ngFor="let item of lists">
+	  <div>{{item.carts}}</div>
+	  <div *ngFor="let car of item.list">
+		{{car.type}}------{{car.price}}
+	  </div>
+	</div>
+	
+7,判断语句 *ngIf 
+	<div *ngIf="flag==true"></div>
+	//隐藏   hidden
+	<div [hidden]="flag==true"></div>
+	
+8,switch判断 *ngSwitch
+	public status=1;   1支付2未支付3发货
+	
+	<div [ngSwitch]="status">
+	  <p *ngSwitchCase="1">待支付</p>
+	  <p *ngSwitchCase="2">未支付</p>
+	  <p *ngSwitchCase="3">已发货</p>
+	</div>
+	
+9,*ngClass	动态绑定样式
+	  public  status=2;
+	  <div [ngClass]="{'red':status==1,'red2':status!=1}" ></div>
+
+10，管道，转化格式：相当于vue的filter
+	<div>{{tody : data:'yyyy-MM-dd'}} </div>  时间转化
+11，事件，方法实现
+	<button (click)="fun()" >按钮</button>
+	fun(){
+		this.status='修改不'
+		alert(this.status)
+	  }
+	获取input框的值
+	<input type="text" (blur)="key($event)">
+	key(e){
+		console.log(e.target.value)
+	}
+12，数据的双向绑定  [(ngModel)]
+	在app.modules.ts中
+	要先引入import {FormsModule} from '@angular/forms'
+	声明:  imports: [
+			BrowserModule,
+			FormsModule
+		  ],
+		  public user={name:''};
+	    <input type="text" [(ngModel)]="user.name">
+
+13，服务引入,创建服务是指放入缓存的数据，然后再在哪个页面需要再引入服务
+	创建服务： ng g service server/any	创建服务名称
+	
+	引入在app.module.ts：
+		import {any} from './services/any.services'
+		providers: [any]
+		
+	service文件中：
+		//存入数据
+		set(key,value){
+			localStorage.setItem(key,JSON.stringify(value))
+		}
+		//获取数据
+		get(key,value){
+			localStorage.getItem(key)
+		}
+		//删除数据
+		remove(key){
+			localStorage.removeItem(key);
+		}
+	存入数据(调用函数)：
+		this.any.set(key,value)
+		
+	使用哪里需要，在ts中引入：
+		import {any} from './services/any.services'
+		constructor(public any:any){
+			lt s=this.any.get();
+		}，
+14，组件和指令初始化完成时触发的函数
+		ngOnInit(){}
+	视图加载完成以后触发的方法：
+		ngAfterViewInit(){}
+		
+15,父组件调用子组件方法：
+	<app-header #header></header>
+	ts中定义赋值：
+		@ViewChild('header') header:any;
+	
+	this.header.子组件的方法名
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

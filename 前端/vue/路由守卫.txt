@@ -1,0 +1,42 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import HelloWorld from '@/components/HelloWorld'
+import index from '@/page/index'
+
+
+Vue.use(Router)
+
+//new出一个路由const
+const router = new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'index',
+      component: index
+    },
+    {
+      path: '/hello',
+      name: 'HelloWorld',
+      component: HelloWorld
+    }
+  ]
+})
+
+//路由每次跳转之后都走这个
+router.beforeEach((to,from,next)=>{
+  if (to.path == "/") {
+    next()
+  }else{
+    if (localStorage.getItem('user')) {
+      next()
+    }else{
+      next()
+      setTimeout(()=>{
+        alert('请先登录')
+        next({path:'/'})
+      },2000)
+    }
+  }
+})
+export default router
+

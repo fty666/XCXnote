@@ -1,0 +1,38 @@
+1，父组件给子组件传值：
+		父组件：
+			public title:ang='我是父组件的值';
+			父组件中的引用： <app-child [title]='title' [home]="this"></app-child>     【home 代表把父组件所有实例都传给子组件】]
+		子组件：
+			在ts文件中引入input
+				import { Component, OnInit，Input } from '@angular/core';
+				子组件中接收父组件传来的值：
+				@Input() title:any;
+				//子组件获取父组件所有实例
+				@input() home：any;
+				【直接调用】
+				this.home.父组件的数据；
+				this.home.父组件的方法
+				
+2，子组件获取父组件的方法：
+		父组件:
+			<appp-child [run]="run"></app-child>
+			fun(){}
+		子组件：	
+				在ts文件中引入input
+				import { Component, OnInit，Input } from '@angular/core';
+				子组件中接收父组件传来的值：
+				@Input() title:any;
+				调用方法——>this.run()
+
+3，父组件获取子组件数据
+		子组件中设置一个id：
+		<div #child></div>
+		
+		父组件的ts中：
+		首先引入ViewChild:
+			import {Component,OnInit，ViewChild} from '@angular/core'
+		定义获取:
+			@ViewChild('child') child:any;
+		使用获取：
+			this.child.子组件的数组;    //获取子组件的定义好的数组
+			this.child.方法				//获取子组件的定义的方法

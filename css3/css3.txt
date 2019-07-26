@@ -1,0 +1,57 @@
+1，字体阴影：
+	text-shadow:水平距离 垂直距离 模糊 阴影颜色
+	text-shadow:10px 3px 3px rgba(0,0,0,.5)
+2,盒子阴影
+	box-shadow:水平位置 垂直位置 模糊距离 阴影尺寸 颜色  内外阴影 （inset内阴影，默认外阴影）
+	box-shadow:5px 5px 3px 4px rgba(0,0,0,.4)
+3，过渡效果,变化效果（transition）：
+	transition:指定样式，如高度，宽度等  过渡的时长  速度的变化  延迟的时间
+	transition:all 3s linear 3s;
+	
+	
+	1,速度的变化值：linear ->动画从头到尾的速度是相同的
+					ease   ->默认，动画从低速开始，然后加快，在结束前变慢
+					ease-in   ->动画从低速开始
+					ease-out  ->动画从低速结束
+					ease-in-out  ->动画从低速开始和结束
+
+4,动态效果，具体变化（transform）:
+	transform: 变化（旋转，位移，缩放）
+	transform:scale(1.5);
+	
+	1，缩放：
+		scale(倍数)		->缩放效果
+		scaleX(1.5)		->只缩放宽
+		scaleY(1.5)		->缩放高度
+	2，位移：
+		translate(20px)		->位移效果
+	    translateX(20px)	->X轴位移
+		translateY(20px)	->Y轴位移
+	3, 旋转：
+		rotate(30deg)		->旋转
+		rotateX(30deg)
+		rotateY(30deg)
+		rotateZ(30deg)
+	
+	4,多个样式需求，写到一块
+		transform:rotate(360deg) translate(100px,100px) scale(1);
+		
+5，多次动画效果，animation
+	1,animation-name:change    			->动画定义效果的名称
+	2,animation-duration:3s				->动画改变的时间,持续时间
+	3,animation-timing-function:linear	->速度变化曲线
+	4,animation-delay:2s				->延迟时间
+	5,animation-iteration-count:1(默认为1)   infinite(循环多次)  ->动画的次数
+	
+	定义的动画效果名称：
+		@keyframs change{
+			0%{
+				background-color:pink;
+			}
+			50%{
+				background-color:blue;
+			}
+			100%{
+				background-color:pink;
+			}
+		}
