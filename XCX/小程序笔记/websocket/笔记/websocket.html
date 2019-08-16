@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Java后端WebSocket的Tomcat实现</title>
+	</head>
+	<body>
+		Welcome<br /><input id="text" type="text" />
+		<button onclick="send()">发送消息</button>
+		<hr />
+	</body>
+
+	<script type="text/javascript">
+		//创建连接
+		var webs = new WebSocket('ws://localhost:2333');
+		console.log(webs)
+		//连接失败返回参数
+		webs.onerror = function() {
+			console.log('连接失败')
+		}
+		//连接成功返回
+		webs.onopen = function() {
+			console.log('连接成功')
+		}
+		//服务器返回消息
+		webs.onmessage = function(e) {
+				console.log(e)
+				alert(e.data)
+		}
+		function send() {
+			var value = document.getElementById('text').value;
+			//向服务器发送消息
+			webs.send(value);
+		}
+	</script>
+</html>

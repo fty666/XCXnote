@@ -1,0 +1,103 @@
+1，npm create-react-app   '项目名'
+2,数据绑定：
+	页面初始化加载最先运行：
+	constructor(props){
+		super(props);
+		this.state={
+			inputeValue:''，
+			list:['学习英文','学习react']
+		}
+	}
+	
+	render(){
+		return{
+			<input value="{this.state.inputeValue}"
+			//会转化输入内容中的html标签，
+			dangerouslySetInnerHTML={{__html:item}}
+			onChange="{this.change.bind(this)}"></input>
+		}
+		change(e){
+			const value=e.target.value;
+			this.setState(()=>({
+				inputeValue:value
+			})
+			)}
+	}
+3,循环：
+	<div>
+		{
+			this.state.list.map((item,index)=>{
+				return <div key={index}>{item}</div>
+			})
+			}
+	</div>
+	//往数组里面追加数据
+	sub(){
+		this.setState((prevState)=>({
+			//提供的语法，首先获取原数据，再追加要追加的数据
+			list:[...prevState.list,prevState.inputeValue]
+		}))
+	}
+4，绑定事件：
+		<div>
+		{
+			this.state.list.map((item,index)=>{
+				return <div key={index} onClick={this.del.bind(this,index)}>{item}</div>
+			})
+		}
+		</div>
+		
+		del(index){
+			console.log(index);
+			//获取list数组
+			const list=[...this.state.list];
+			//删除获取下标的一个数组
+			list.splice(index,1)
+		}
+		
+5,组件间的引用：
+	父组件：
+		import React from 'react';
+		import './App.css';
+		import Todilist from './Todilist'
+
+		function App() {
+		  return (
+			  <div>
+				<div className="App">
+				  hello word
+				</div>
+				//父组件传递子组件的值content随便命名
+				<Todilist content={要传递子组件的值}></Todilist>
+				//父组件传递子组件方法;
+				<Todilist delteItem={this.fdelete.bind(this)}></Todilist>
+			  </div>
+
+		  );
+		  //父组件中的方法
+		  fdelete(){
+		  }
+		}
+		export default App;
+	子组件：
+		import React,{ Component } from 'react'
+		class  Todilist extends Component{
+			render() {
+				return (
+					<div>
+						//子组件接收父组件传递过来的值
+						<div>{this.props.content}</div>	
+	`					//方法
+						<div onClick={this.ziDel()}>子组件调用父组件方法</div>
+					</div>
+				);
+			}
+			//子组件方法
+			ziDel(){
+				this.props.delteItem(this.props.index);
+			}
+		}
+		export default Todilist;
+		
+6，组件库Antd：
+   安装：yarn add antd

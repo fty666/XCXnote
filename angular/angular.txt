@@ -1,5 +1,6 @@
 1， 全局安装开发环境：npm i -g @angular/cli@latest
 2，	创建新项目：ng new '项目名' --routing
+				ng new '项目名' --skip-install
 	安装依赖: cnpm install 
 	启动：ng serve --open
 	

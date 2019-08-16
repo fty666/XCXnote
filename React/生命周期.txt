@@ -1,0 +1,40 @@
+1，页面初始化时触发
+	constroctor(){
+	
+	}
+2，页面加载前执行,(只执行一次，挂载页面执行一次)
+	componentWillMount(){
+	
+	}
+3，加载页面
+	render(){
+	
+	}
+4,组件挂载到页面时执行，(只执行一次，挂载页面执行一次)
+	componentDidMount(){
+		//ajax请求放在这里比较好
+		
+	}
+5,组件更新之前执行
+	shouldComponentUpdate(){
+		
+	}
+6,Ajax请求数据,安装请求：
+	yarn add axios
+	使用：
+		import axios from 'axios'
+		axios.get('路由').then(
+		()=>{
+			alert('成功获取')
+		}).catch(()=>{
+			alert('失败')
+		})
+		
+7,安装css3动画效果，
+	yarn add react-transition-group
+  使用：
+	import { CSSTransition } from  'react-transition-group'
+	<CSSTransition in={添加判断显示样式，什么时候显示：this.state.show}
+				   timeout={动画时间}>
+			<div>显示样式</div>
+	</CSSTransition>

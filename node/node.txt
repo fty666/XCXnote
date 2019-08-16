@@ -1,0 +1,59 @@
+1，读取文件：
+	//首先引入核心api->fs
+	var fs=require('fs');     
+	//读取文件，readFile('',function(){error,data})
+	fs.readFile('需要读取的文件路径',function(error,data){
+		console.log(data)
+	});
+	
+2,模板引擎安装：
+	 npm install art-template
+3,获取get请求
+	var url=require('geturl');
+	var obj=url.parse('地址',true);
+	//获取请求路径
+	var pathUrl=obj.pathname;
+	
+	//收到数据之后跳转到浏览器首页
+	res.statusCode=302;
+	res.setHeader('loaction','/');
+	res.end();
+4,module.exports={
+	导出对象
+}
+
+5，修改完代码自动重启,安装nodemon工具
+	npm install --gloabl nodemon
+	安装完成之后使用,修改完成之后会自动重启
+	nodemon app.js
+		
+
+	
+
+
+框架express:
+	1,安装   
+		npm install express --save
+	2,引入：
+		var express=require('express');
+		//相当于创建一个新的服务器请求    http.createServer
+		var app=express();
+		
+		//获取请求数据返回内容
+		app.get('/',function(req,res){
+			//获取get请求值
+			console.log(req.query)
+			res.send('返回浏览器内容');
+		})
+		app.get('/about',function(req,res){
+			res.send('返回浏览器内容');
+		})
+		
+		//开放某些公共目录
+		app.use('/public/',express.static('./public/'))
+		
+		//监听端口
+		app.listen(3000,function(err){
+			console.log('监听成功')
+		})
+			 

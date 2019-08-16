@@ -113,10 +113,34 @@
 				id:123
 			}
 		});
-						  
+		
+10，父子路由嵌套路由：
+		{
+			path:'home',component:HomeComponent,
+			children:[
+				{path:'welcome',component:WelcomeComponent},
+				{path:'setting',component:SettingComponent}
+			]
+			//默认跳转
+			{path:'**',redirectTo:'welcome'}
+		}
+	使用：
+		<a [routerLink]="['/home/welcome']">欢迎首页</a>
+		<a [routerLink]="['/home/setting']">系统设置</a>
+		<router-outlet></router-outlet>		
+11,路由模块的懒加载：
+	创建模块：
+		ng g module module/product --routing  			//新建一个模块
+		ng g component module/product			//新建模块下的跟组件
+		
+	外部模块调用新建模块的页面，需要全局抛出页面：
+		export:[Info,userComponent]      		//引入的模块化抛出
+		
 				  
-				  
-				  
+	根模块要先引入新建模块：
+		import {Product} from './module/product/product.module'
+		
+		imports:[Product]
 				  
 				  
 				  
