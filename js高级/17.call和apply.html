@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			//apply和call都可以改变this的指向,返回值就是函数的返回值
+			
+			//apply和call是f1的构造函数的原型里的(也就是Function的原型对象里的)
+			
+			console.dir(Function)
+			function f1(x,y){
+				console.log(x+y,this)
+				return "return"
+			}
+			
+			var obj = {
+				sex:"男"
+			}
+			
+			var r1 = f1.apply(obj,[1,2])
+			var r2 = f1.call(obj,1,2)
+			
+			console.log(r1,r2)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			// "use strict" //严格模式下,省略window就不行,也就是方法必须是对象调用的
+			//谁调用this就是谁
+			
+			//对象.方法,里的this就是实例
+			
+			function f1(){
+				console.log(this) //普通函数中的this是window
+			}
+			window.f1()
+			 
+			 function Per(name){
+			 	this.name = name  //构造函数当中的this是实例p
+			 }
+			 Per.prototype.eat = function(){
+			 	console.log(this) //这里的this也是实例p
+			 }
+			 
+			 
+			 let p = new Per("yuchunhui")
+			 
+			 
+			 p.eat()
+			
+			// window.setInterval(()=>{
+			// 	console.log(this) //定时器中的this是window
+			// },1000)
+			
+			// 之前知道的构造函数中和原型对象中的this都是当前实例
+			
+			
+		</script>
+	</body>
+</html>

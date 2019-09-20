@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			// //指数运算符号
+			// console.log(3**3)
+			// //判断数组中是否包含指定value
+			// const arr= [1,2,3]
+			// console.log(arr.includes(1))
+			// console.log(Array.prototype.includes.call(arr,2))
+			var arr = [1, 9, 20, 5, 3];
+			// 从小到大
+			function add(arr) {
+				var len = arr.length-1;
+				for (let i = 0; i < len; i++) {
+					for (let j = 0; j < len - i; j++) {
+						if (arr[j] > arr[j+1]) {
+							var temp = arr[j];
+							arr[j] = arr[j + 1];
+							arr[j + 1] = temp;
+						}
+					}
+					console.log(arr);
+
+				}
+			}
+			// 从大到小
+			function minish(arr){
+				var len=arr.length-1;
+				for(let i=0;i<len;i++){
+					for(let j=0;j<len-i;j++){
+						if(arr[j]<arr[j+1]){
+							var temp=arr[j];
+							arr[j]=arr[j+1];
+							arr[j+1]=temp;
+						}
+						console.log(arr);
+					}
+				}
+			}
+			add(arr);
+			minish(arr);
+		</script>
+	</body>
+</html>

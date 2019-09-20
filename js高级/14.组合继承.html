@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function Person(name){
+				this.name = name
+			}
+			Person.prototype.eat = function(){
+				alert("吃饭")
+			}
+			function Student(score,name){
+				//构造函数继承
+				Person.call(this,name) // 等于在这里写 this.name = name
+				this.score = score
+			}
+			Student.prototype = new Person()  //原形继承
+			const s1 = new Student(100,"yu")
+			const s2 = new Student(99,"chun")
+			console.log(s1.name,s1.score)
+			console.log(s2.name,s2.score)
+			s1.eat()
+			console.log(s1)
+			
+		</script>
+	</body>
+</html>

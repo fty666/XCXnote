@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function Per(name){
+				this.name = name
+				this.eat = function(){
+					alert("吃肉")
+				}
+			}
+			var per = new Per("小苏")
+			var per1 = new Per("小苏1")
+			Per('kk');
+			console.dir(Per) //输出结构
+			console.dir(per)
+			
+			console.log(per.constructor == Per) // true 判断对象属于哪个类
+			console.log(per.__proto__.constructor == Per) //true 和上面其实是一回事
+			
+			console.log(per instanceof Per) //另一种判断属于哪一个类的方法
+			
+			//尽可能使用第二种方式识别,因为还有可能指向Object
+						
+		</script>
+	</body>
+</html>

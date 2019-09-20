@@ -1,0 +1,73 @@
+//选取搜索要连接的设备的ID
+  createBLEConnection(e) {
+    const ds = e.currentTarget.dataset
+    const deviceId = ds.deviceId
+    const name = ds.name
+    this._createBLEConnection(deviceId, name)
+  },
+  
+//进行连接
+  _createBLEConnection(deviceId, name) {
+    wx.showLoading()
+    wx.createBLEConnection({
+      deviceId,
+      success: () => {
+        console.log('createBLEConnection success');
+        this.setData({
+          connected: true,
+          name,
+          deviceId,
+        })
+        this.getBLEDeviceServices(deviceId)
+      },
+      complete() {
+        wx.hideLoading()
+      },
+      fail: (res) => {
+        console.log('createBLEConnection fail', res)
+      }
+    })
+    this.stopBluetoothDevicesDiscovery()
+  },  
+ //获取蓝牙设备的服务 
+    getBLEDeviceServices(deviceId) {
+    wx.getBLEDeviceServices({
+      deviceId,
+      success: (res) => {
+        console.log('getBLEDeviceServices', res)
+        for (let i = 0; i < res.services.length; i++) {
+          if (res.services[i].isPrimary) {
+            this.getBLEDeviceCharacteristics(deviceId, res.services[i].uuid)
+            return
+          }
+        }
+      }
+    })
+  },
+  //连接蓝牙校对属性值
+    getBLEDeviceCharacteristics(deviceId, serviceId) {
+    wx.getBLEDeviceCharacteristics({
+      deviceId,
+      serviceId,
+      success: (res) => {
+        console.log('getBLEDeviceCharacteristics success', res.characteristics)
+        // 这里会存在特征值是支持write，写入成功但是没有任何反应的情况
+        // 只能一个个去试
+        for (let i = 0; i < res.characteristics.length; i++) {
+          const item = res.characteristics[i]
+          if (item.properties.write) {
+            this.setData({
+              canWrite: true
+            })
+            this._deviceId = deviceId
+            this._serviceId = serviceId
+            this._characteristicId = item.uuid
+            break;
+          }
+        }
+      },
+      fail(res) {
+        console.error('getBLEDeviceCharacteristics', res)
+      }
+    })
+  },

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function Per(){
+				this.name = "per"
+			}
+			
+			Per.prototype.f = function(){
+				console.log(this.name)
+			}
+			
+			function Stu(){
+				this.name  = "stu"
+			}
+			
+			var p = new Per()
+			var s = new Stu()
+			//bind和call的区别是他复制了一份函数并改变this指向
+			var ff =p.f.bind(s)
+			ff()
+		</script>
+	</body>
+</html>

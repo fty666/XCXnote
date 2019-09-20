@@ -1,0 +1,88 @@
+1，初始化蓝牙模块  
+  openBluetoothAdapter() {
+    if (!wx.openBluetoothAdapter) {
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+      })
+      return
+    }
+	//初始化蓝牙模块  
+    wx.openBluetoothAdapter({
+      success: (res) => {
+		//初始化蓝牙模块成功，开启搜索蓝牙设备
+        this.startBluetoothDevicesDiscovery()
+      },
+      fail: (res) => {
+        //10001为当前蓝牙适配不可用
+        if (res.errCode === 10001) {
+          wx.showModal({
+            title: '错误',
+            content: '未找到蓝牙设备, 请打开蓝牙后重试。',
+            showCancel: false
+          })
+		  //继续监听蓝牙适配变化
+          wx.onBluetoothAdapterStateChange((res) => {
+			//返回avabilable  返回true表示适配器可用
+            if (res.available) {
+              // 取消监听，否则stopBluetoothDevicesDiscovery后仍会继续触发onBluetoothAdapterStateChange，
+              // 导致再次调用startBluetoothDevicesDiscovery
+              wx.onBluetoothAdapterStateChange(() => {});
+              this.startBluetoothDevicesDiscovery()
+            }
+          })
+        }
+      }
+    })
+	//监听蓝牙连接状态
+    wx.onBLEConnectionStateChange((res) => {
+      // 该方法回调中可以用于处理连接意外断开等异常情况
+	  //connected  表示蓝牙连接状态
+      this.setData({
+        connected: res.connected
+      })
+      if (!res.connected) {
+        wx.showModal({
+          title: '错误',
+          content: '蓝牙连接已断开',
+          showCancel: false
+        })
+      }
+    });
+  },
+  
+ 2，开启搜索蓝牙设备
+   startBluetoothDevicesDiscovery() {
+    if (this._discoveryStarted) {
+      return
+    }
+    this._discoveryStarted = true
+    wx.startBluetoothDevicesDiscovery({
+      success: (res) => {
+        this.onBluetoothDeviceFound()
+      },
+      fail: (res) => {
+        console.log('startBluetoothDevicesDiscovery fail', res)
+      }
+    })
+  },
+  
+3，监听到新的设备，返回设备的一些基本信息
+  onBluetoothDeviceFound() {
+    wx.onBluetoothDeviceFound((res) => {
+      res.devices.forEach(device => {
+        if (!device.name && !device.localName) {
+          return
+        }
+        const foundDevices = this.data.devices
+        const idx = inArray(foundDevices, 'deviceId', device.deviceId)
+        const data = {}
+        if (idx === -1) {
+          data[`devices[${foundDevices.length}]`] = device
+        } else {
+          data[`devices[${idx}]`] = device
+        }
+        this.setData(data)
+      })
+    })
+  },

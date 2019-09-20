@@ -1,9 +1,10 @@
-1，父向子传值	https://blog.csdn.net/qq_41550865/article/details/85759468
-	父组件：
+一，父向子传值和传递方法
+	1， 传递值：
 			//Fdata为父组件上data里的值，Zdata为子组件要接收的值的命名
 			//close为子组件中调用父组件的方法名，MsgShowClose为父组件中自己的方法名
-		   <user-msg :Zdata="Fdata" @close="MsgShowClose"></user-msg>
-	子组件：
+		父组件传值：
+			<user-msg :Zdata="Fdata"></user-msg>
+		子组件使用：
 		    data() {
 				return {
 					data: this.Zdata    /*可以直接将传过来的值进行赋值*/
@@ -13,47 +14,44 @@
 			props: {
 				Zdata: {
 					type: Object,
-					default() {
-						return {
-						}
-					}
+					default:'默认值'
 				}
 			},
 			props: ['Zdata'],
-	父组件调用子组件方法：
-		<child ref='refName'></child>  /*相当于一个在子组件的占位符*/
-		function f(){
-			//调用子组件的方法
-			this.$refs.refName.子方法
-		}
-
-2，子组件传值给父组件 https://www.cnblogs.com/daiwenru/p/6694530.html
-	子组件：需要一个事件触发
-		<button @click='Fun()'></button>
-		fun(){
-			this.$emit('fatherFun',this.data)
-		}
-	父组件中：
-		<child v-on:fatherFun='shijian'></child>
-		shijian(data){
-			console.log(data);
-			data为子组件传来的数据
-		}
-	子组件调用父组件的方法：
-		$emit('close')
-		props:['fun'],
-		<div @click='zfun()'></div>
-		zfun(){
-			this.fun()
-		}
-		
-
-主动获取：
-	子组件主动获取父组件的数据和方法：
-		this.$parent.数据；
-		this.$parent.方法；
-	父组件获取子组件的方法和数据：
-		<child ref="refname"></child>
-		调用：
-		this.$refs.refname.方法；
-		this.$refs.refname.属性；
+	2，传递方法
+			@close为子组件调用的方法名
+			MsgShowClose 为父组件的方法名
+			父组件规定方法：
+				<user-msg  @close="MsgShowClose"></user-msg>
+			子组件调用：
+			child(){
+				this.$emit('close',{参数})
+			}
+				
+二，子向父传值和传递方法：
+	1，传值
+		//子组件：需要一个事件触发
+		//fatherFun为子组件向父传递的方法名，通过方法名绑定传值
+		//shijian是父组件的方法获取子组件传递的值
+		子组件规定传值：	
+			<button @click='Fun()'></button>
+			fun(){
+				this.$emit('fatherFun',this.data)
+			}
+		父组件使用：
+			<child v-on:fatherFun='shijian'></child>
+			shijian(data){
+				console.log(data);
+				data为子组件传来的数据
+			}
+	2，方法
+		//ref相当于一个占位符，里面的取名为引用子组件的方法名
+		子组件中定义好的方法：
+			child(){
+				console.log('要传递的方法');
+			}
+		父组件中直接使用：
+			<orderList ref='fun'></orderList>
+			father(){
+				this.$refs.fun.child()
+			}

@@ -1,0 +1,13 @@
+1，初始化：
+	npm init --yes
+2,安装koa:
+	cnpm install koa
+	cnpm install koa-router 
+3,安装nodemon:
+	cnpm install -g nodemon
+4,,安装数据库模块：
+	cnpm install mongoose --save
+5,POST获取请求数据：
+	cnpm i koa-bodyparser  --save
+6,密码加密：
+	cnpm i bcryptjs --save

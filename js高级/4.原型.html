@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function Per(name){
+				this.name = name
+// 				this.eat = function(){
+// 					console.log("今天吃土豆")
+// 				}
+			}
+			var per1 = new Per("小白")
+			var per2 = new Per("小黑")
+			
+			console.log(per1.eat == per2.eat) //false
+			// 作用一:解决数据共享,节省内存空间
+			Per.prototype.eat = function(){
+				alert(1)
+			}
+			//想要数据共享就写在原型里
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function Per(name){
+				// this.name = name
+			}
+			Per.prototype.name = 2
+			var per = new Per(1)
+			console.dir(per.name)
+			
+			//构造函数里的属性会放在自己的实例里,只有实力自己没有,才会通过原型链__proto__寻找
+		</script>
+	</body>
+</html>

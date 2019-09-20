@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			//立即调用的一次性函数
+			(function(win){
+				win.num = 10;
+			})(window)
+			console.log(window) //window可省略,因为对象传参给地址
+			
+		</script>
+	</body>
+</html>

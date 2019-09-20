@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+</head>
+<body>
+	<button>1</button>
+	<button>2</button>
+	<button>3</button>
+	<button>4</button>
+	<script>
+		//1. 闭包解决循环添加单机事件总是打印最后一个的索引的问题
+		var l = document.querySelectorAll("button")
+		for(var i = 0;i < l.length; i++){
+			(function(i){
+				l[i].onclick = function(){
+					alert(i)
+				}
+			})(i)
+		}
+		
+		
+		
+		//2.解决定时器不能传参的问题
+		// function f(a){
+		// 	setTimeout(function(a){
+		// 		alert(a)  //即使传了也是undefined
+		// 	},3000)
+		// }
+		// f(3)
+		//解决
+		function f(x){
+			return function f1(){
+				alert(x)
+			}
+		}
+		setTimeout(f(100),3000) //闭包向定时器传参
+		
+		
+		
+		//3.闭包持续增加一个值得大小(可以写在外面定义成全局变量,可是万一别人改了怎么办)
+		function ff(){
+			var num = 1
+			return function(){
+				num ++
+				alert(num)
+			}
+		}
+		
+		var ff1 = ff()
+		ff1()
+		ff1()
+		ff1()
+		ff1()
+		console.log(num) //报错,函数内能访问函数外的变量,反之不行
+		
+	</script>
+</body>
+</html>

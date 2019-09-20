@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div style="height: 3000px;background: red;">
+			
+		</div>
+		<div id="btn" style="width: 100px;height: 100px;background: blue;position: fixed;right: 0;bottom: 10px;">111</button>
+		<script>
+			    var btn=document.getElementById("btn");  
+			 
+				var timer
+			 
+				
+				window.onscroll = function(){
+					 var dtop=document.documentElement.scrollTop;
+					 var clientHeight=document.documentElement.clientHeight;
+					 // console.log(dtop)
+					 // console.log(clientHeight)
+					if(dtop>= 30){
+						btn.style.display="block";
+					}else{
+						btn.style.display="none";
+					}
+					if(dtop == 0){
+						clearInterval(timer);
+					}
+				}
+				btn.onclick = function(){
+					timer = setInterval(function(){
+						var dtop=document.documentElement.scrollTop;
+						console.log(dtop)
+						var speed=Math.floor(-dtop/10);
+						document.documentElement.scrollTop = dtop+speed;
+					},20)
+				}
+				
+				
+				// btn.οnclick = function(){
+				//  
+				//         timer=setInterval(function(){                               //6
+				//  
+				//             var dtop=document.documentElement.scrollTop;            //4
+				//  
+				//             var speed=Math.floor(-dtop/10);                         //8
+				//  
+				//             document.documentElement.scrollTop = dtop+speed;        //5、document.documentElement.scrollTop -= dtop;
+				//                                                                     //9
+				//         
+				//         },1000)   
+				//     }
+
+			 
+  
+		</script>
+	</body>
+</html>

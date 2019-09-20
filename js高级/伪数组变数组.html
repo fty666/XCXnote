@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		
+		<script>
+			const btnList = document.querySelectorAll("button")
+			
+			//ES6
+			const l1 =  Array.from(btnList)
+			
+ 			//ES6
+			const l2 = [...btnList]
+			
+			//ES6
+			const l3 = [].slice.call(btnList)
+			const l4 = Array.prototype.slice.call(btnList)
+			
+ 			//ES6
+			const l5 = [].slice.apply(btnList)
+			const l6 = Array.prototype.slice.apply(btnList)
+ 			
+			const l7 = []
+			for(let i = 0; i < btnList.length; i++){
+				l7.push(btnList[i])
+			}
+ 
+		</script>
+	</body>
+</html>

@@ -1,0 +1,16 @@
+              <view class="item yhqbj" style="height:{{px2rpxHeight*290}}px;">
+                <view class="content">
+                  <view class="left">
+                    <view class="name">优惠：￥{{coupon.reductionPrice}}</view>
+                    <view class="time">开始时间 {{coupon.startTime}}</view>
+                    <view class="time">结束时间 {{coupon.endTime}}</view>
+                  </view>
+                  <view class="right" style="width:{{px2rpxWidth*162}}px;">
+                    <button catchtap='editCoupon' class="go" data-couponId='{{coupon.reductionId}}' style="width:{{px2rpxWidth*162}}px;height:{{px2rpxHeight*48}}px;line-height:{{px2rpxHeight*50}}px">修改</button>
+                    <button catchtap='delCoupon' class="go mt5" data-index='{{index}}' data-couponid='{{coupon.reductionId}}' style="width:{{px2rpxWidth*162}}px;height:{{px2rpxHeight*48}}px;line-height:{{px2rpxHeight*50}}px">删除</button>
+                  </view>
+                </view>
+                <view class="condition" style="height:{{px2rpxHeight*78}}px;">
+                  <text class="txt" style="height:{{px2rpxHeight*30}}px;">满¥{{coupon.full}}使用满减</text>
+                </view>
+              </view>

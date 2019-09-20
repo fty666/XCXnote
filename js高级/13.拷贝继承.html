@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function Person(){
+				
+			}
+			Person.prototype.name = "于春辉"
+			Person.prototype.eat = function(){
+				alert("吃饭")
+			}
+			
+			const obj = {}
+			for(let key in Person.prototype){
+				obj[key] = Person.prototype[key]
+			}
+			obj.eat()
+		</script>
+	</body>
+</html>

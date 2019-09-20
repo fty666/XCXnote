@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<button>点击</button>
+		<div style="background: red;width: 100px;height: 100px;">
+			
+		</div>
+		<script>
+			function Obj(a,b,json){
+				this.a = a
+				this.b = b
+				this.json = json
+			}
+			Obj.prototype.init = function(){
+				var that = this
+				this.a.onclick = function(){
+					for(var key in that.json){
+						that.b.style[key] = that.json[key]
+					}
+				}
+			}
+			var o = new Obj(document.querySelector("button"),document.querySelector("div"),{width:"200px"})
+			o.init()
+		</script>
+	</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.map {
+				width: 600px;
+				height: 600px;
+				background: #808080;
+				position: relative;
+				margin: 100px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div class='map'></div>
+		<script>
+			// 实物
+			var elements = [];
+			function food(x, y, width, height, color) {
+				this.x = x || 20;
+				this.y = y || 50;
+				this.width = width || 30;
+				this.height = height || 30;
+				this.color = color || 'yellow';
+			}
+			function remove(){
+				for(let i=0;i<elements.length;i++){
+					var ele= elements[i];
+					ele.parentNode.removeChild(ele);
+					elements.splice(i,1);
+				}
+			}
+			food.prototype.init = function(map) {
+				remove();
+				var div = document.createElement("div");
+				map.appendChild(div);
+				div.style.width = this.width + 'px';
+				div.style.height = this.height + 'px';
+				div.style.background = this.color;
+				div.style.position = "relative";
+				this.x = parseInt(Math.random() * (map.offsetWidth / this.width)) * this.width;
+				this.y = parseInt(Math.random() * (map.offsetHeight / this.height)) * this.height;
+				div.style.left = this.x + 'px';
+				div.style.top = this.y + 'px';
+				elements.push(div)
+			}
+			// 蛇的长度
+			function snake(width,height,diection){
+				var elements=[];
+				this.width=width || 30;
+				this.height=height || 30;
+				this.body=[
+					{x:3,y:2,color:'red'},
+					{x:2,y:2,color:'blue'},
+					{x:1,y:2,color:'blue'}
+				];
+				this.diection=diection || 'right';
+			};
+			snake.prototype.init=function(map){
+				for(var i=0;i<this.body.length;i++){
+					var obj=this.body[i];
+					var div=document.createElement("div");
+					map.appendChild(div);
+					div.style.position="absolute";
+					div.style.width=this.width+'px';
+					div.style.height=this.height+'px';
+					div.style.left=obj.x*this.width+'px';
+					div.style.top=obj.y*this.height+'px';
+					div.style.background=obj.color;
+					elements.push(div)
+				}
+			}
+			snake.prototype.move=function(food,map){
+				var i=this.body.length-1;
+				for(;i>0;i--){
+					this.body[i].x=this.body[i-1].x;
+					this.body[i].y=this.body[i-1].y;
+				}
+				switch(this.direction){
+					case 'right':this.body[0].x+=1;break;
+					case 'left':this.body[0].x-=1;break;
+					case 'top':this.body[0].y-=1;break;
+					case 'bottom':this.body[0].y+=1;break;
+				}
+			}
+			window.onload = function() {
+				var fd = new food();
+				fd.init(document.querySelector(".map"))
+				fd.init(document.querySelector(".map"))
+				var snck=new snake();
+				snck.init(document.querySelector(".map"))
+			}
+		</script>
+	</body>
+</html>

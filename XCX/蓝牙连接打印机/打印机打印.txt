@@ -1,0 +1,65 @@
+const PrinterJobs = require('../../../printer/printerjobs') 
+
+ writeBLECharacteristicValue() {
+    let that = this;
+    wx.showModal({
+      title: '提示',
+      content: '您已成功连接请确认打印',
+      success(res) {
+        if (res.confirm) {
+          printerJobs
+            .setSize(2, 2)
+            .print('***/每派外卖/***')
+            .setSize(1, 1)
+            .setAlign('ct')
+            .setSize(2, 2)
+            .print(orderInfo.shop_name)
+            .setSize(1, 1)
+            .print(printerUtil.fillAround('已在线支付'))
+            .print('下单时间：' + orderInfo.createTime)
+            .print(printerUtil.fillLine())
+          订单列表
+          allMsg.forEach((item, index) => {
+            var good_name = item.goods_name.toString();
+            var num = item.num.toString();
+            var price = item.price.toString();
+            printerJobs.print(printerUtil.inline(goods_name + '  * ' + num, price))
+          })
+          let money = orderInfo.money.toString();
+          let reduced_price = orderInfo.reduced_price.toString();
+          let real_money = orderInfo.real_money.toString();
+          printerJobs
+            .print(printerUtil.fillAround('其他费用'))
+            .print(printerUtil.inline('餐盒', '0'))
+            .print(printerUtil.inline('配送费', money))
+            .print(printerUtil.inline('满减', reduced_price))
+            .print(printerUtil.fillLine())
+            .print(printerUtil.inline('实际支付', real_money))
+            .print(printerUtil.fillLine())
+            .setAlign('lt')
+            .setSize(2, 2)
+            .print('地址：' + orderInfo.area_path + orderInfo.area_detail)
+            .setSize(1, 1)
+            .print(printerUtil.fillLine())
+            .setSize(2, 2)
+            .print('电话:' + orderInfo.addr_mobile)
+            .setSize(1, 1)
+            .print(printerUtil.fillLine())
+            .println()
+
+          let buffer = printerJobs.buffer();
+          console.log('ArrayBuffer', 'length: ' + buffer.byteLength, ' hex: ' + ab2hex(buffer));
+          // 1.并行调用多次会存在写失败的可能性
+          // 2.建议每次写入不超过20字节
+          // 分包处理，延时调用
+          const maxChunk = 20;
+          const delay = 20;
+          for (let i = 0, j = 0, length = buffer.byteLength; i < length; i += maxChunk, j++) {
+            let subPackage = buffer.slice(i, i + maxChunk <= length ? (i + maxChunk) : length);
+            setTimeout(that._writeBLECharacteristicValue, j * delay, subPackage);
+          }
+          that.closeBluetoothAdapter()
+        }
+      }
+    })
+  },

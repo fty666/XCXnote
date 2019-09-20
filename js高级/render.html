@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			
+		</div>
+		
+		<script>
+			var tem = {
+				template:"<h1>1</h1>"
+			}
+			
+			var vm = new Vue({
+				el:"#app",
+				data:{},
+				methods:{},
+				render:function(x){
+					return x(tem)
+				}
+			})
+			
+		</script>
+	</body>
+</html>

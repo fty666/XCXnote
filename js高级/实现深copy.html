@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			// JSON.parse(JSON.stringify())  里面不能有函数
+			// for in 枚举对象时得到的是键值,枚举数组时得到的是索引
+			//封装检测数据类型的函数
+			function checkedType(data){
+				return Object.prototype.toString.call(data).slice(8,-1)
+			}
+			//实现深度拷贝
+			function clone(target){
+				let result,targetType = checkedType(target)
+				if(targetType == 'Object'){
+					result = {}
+				}else if(targetType == 'Array'){
+					result = []
+				}else{
+					return target  //普通数据类型直接返回
+				}
+				
+				for(let i in target){
+					let value = target[i]
+					if(checkedType(value) == 'Object' || checkedType(value) == 'Array'){
+						result[i] = clone(value)
+					}else{
+						result[i] = value
+					}					
+				}
+				return result
+			}
+			const arr = [1,function(){}]
+			const arr1 = clone(arr)
+			console.log(arr1)
+		</script>
+	</body>
+</html>
