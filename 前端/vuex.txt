@@ -1,46 +1,101 @@
 		https://www.bilibili.com/video/av36610432/?redirectFrom=h5
 		
 		
-		1，/*
-			  state中相当于定义一个全局的变量，存储数据，
-			  页面如果调用这个全局的变量
-			  this.$store.state.变量名
-		 */
-		 
-		 
-		 
-		 
-		2 ，/*
-			1，mutations中为修改state变量的方法
-			方法名（state，要修改的内容）
-
-			页面调用方法名：
-			this.$store.commit('方法名')
-
-		   2， 获取state变量数据的第二种方法，了解就行
-			getters:{
-			  方法名：addcount(state){
-				return state.变量名
-			  }
-			}
-			页面使用：
-			this.$store.getters.方法名
-		   */
-		   
-		   
-		   
-		   
-		   
-		   
-		3， /*
-			  actions与mutations一样修改state变量，
-			  mutations必须是同步请求
-			  actions修改可以使异步请求
-			  1，方法名（context）{}   context为一个容器，容器内有许多封装好的方法调用
-			  2，{commit}为异步请求方法，省略context，{}直接调用方法
-				方法名（{commit}）{
-				  commit('修改的变量'，'修改的内容')   调用的为mutations方法中的变量
+vuex的使用：
+	一，定义变量的使用和定义
+	1,安装  npm install vuex
+	2,创建，引入：在src目录下创建vuex目录便于集中管理，创建store.js文件：
+		store.js文件：
+			import Vue from 'vue';
+			import vuex from 'vuex';
+			Vue.use(vuex);
+			//创建一个常量
+			const store = new vuex.Store({
+				//定义数据
+				state: {
+					isRed:false,
+					num:0
+				},
+				//修改方法，里面的方法都是同步事务
+				mutations: {
+					addCount(state,aa) {
+						console.log(aa)
+						state.num++
+					}
+				},
+				//异步请求数据
+				//context固定语法，可以获取同步事务方法，定义好的state值
+				actions:{
+					addcount2(context,aa){
+						var aas =parseInt(aa)
+						//获取state定义的值
+						var nums=context.state.num
+						for (let a=0;a<5;a++){
+							aas=aas+1;
+						}
+						console.log('异步操作')
+						console.log(aas)
+						context.commit('addCount',aas)
+					}
 				}
-			  页面使用：
-			  this.$store.dispatch(方法名)
-			  * */
+			})
+			//抛出能让全局使用
+			export default store
+		main.js中全局引入定义：
+			//引入
+			import store from '@/vuex/store'
+			//挂载
+			new Vue({
+				el: '#app',
+				router,
+				store,
+				components: {App},
+				template: '<App/>'
+			})
+	3,在文件中使用变量：
+		$store.state.isRed
+	4,使用方法修改变量：
+		//页面中自定义的方法名
+		add(){
+			//commit 固定用法同步操作，传入内容 mutations定义好的方法名，以及要传入的参数
+			this.$store.commit('addCount','555')
+		}
+	5，异步请求数据
+		adds() {
+			//dispatch表示异步请求数据
+			this.$store.dispatch('addCount2', '1');
+		},
+二，modules模块化的使用
+	1，store.js文件中
+		//引入module的独立分写出来的页面
+		import add from './module'
+		import vuex from 'vuex';
+		Vue.use(vuex);
+		const store = new vuex.Store({
+			//模块存放容器
+			modules:{
+				add:add,
+			}
+		})
+		export default store
+	2，module.js文件内容：
+		//定义值
+		const state = {age: 18};
+		//定义方法
+		const mutations = {
+			addage() {
+				state.age = state.age + 1;
+				console.log(state.age)
+				}
+		}
+		//全局抛出
+		export default {
+			state, mutations
+		}
+	3，html页面调用
+		//获取模块下的值
+		{{$store.state.add.age}}
+		//调用方法
+		adds2() {
+			this.$store.commit('addage')
+		},
