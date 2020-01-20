@@ -101,3 +101,47 @@
 		
 6，组件库Antd：
    安装：yarn add antd
+   
+   
+二，新添加
+/* 1，基本结构：*/
+import React, {Component} from 'react';
+class Nmae extends Component{
+	/*初始化加载页面事件*/
+	constructor(){
+		//基本结构
+		super()
+		//定义Data值
+		this.state={
+			equity: [
+				{name: '京门权益卡', num: 5, prices: '12.00', times: '2020-01-17 13:58'},
+				{name: '达令权益卡', num: 15, prices: '12.00', times: '2020-01-07 13:58'},
+				{name: '达令权益卡', num: 3, prices: '12.00', times: '2020-01-07 13:58'},
+			]
+		},
+		//函数绑定this，必须事先定义
+		this.getList=this.getList.bind(this);
+	}
+	//方法事件直接定义
+	getList(index){
+		console.log(index)
+	}
+	//页面布局
+	render(){
+		return(
+			//书写html内容
+			//循环数组,动态绑定Style样式，动态绑定Class样式，点击事件获取index值
+			{this.state.equity.map((value,index)=>{
+				<div className="conts flexs" key={index}
+					 style={{background: (index % 2 === 0) ? '#f6f6f6' : 'white'}}
+					 onClick={(e)=>{this.getList(index)}
+				>
+					<div className="equity Xscroll">{value.name}</div>
+					<div className="num Xscroll">{value.num}</div>
+					<div className="price Xscroll">{value.prices}</div>
+					<div className="date Xscroll">{value.times}</div>
+				</div>
+			})}
+		)
+	}
+}
