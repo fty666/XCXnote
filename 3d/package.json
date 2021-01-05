@@ -15,7 +15,7 @@
   "dependencies": {
     "ali-oss": "^4.15.1",
     "animate.css": "^3.7.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "element-ui": "^2.10.1",
     "heyui": "^1.16.0",
     "is-class-hotfix": "^0.0.6",
