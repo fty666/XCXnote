@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "ali-oss": "^4.15.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "element-ui": "^2.4.7",
     "es6-promise": "^4.2.4",
     "vue": "^2.5.2",
